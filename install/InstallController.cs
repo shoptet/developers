@@ -40,6 +40,7 @@ namespace WebApplication2.Controllers
                     var postData = new System.Collections.Specialized.NameValueCollection();
                     postData.Add("redirect_uri", "https://webinstallapplication.azurewebsites.net/api/install");
                     postData.Add("client_id", "3owcl3g1imxdltpp");
+                    postData.Add("client_secret", "UZL8GIl9CkEhERCwUItT8ErwLFAUL4dW");
                     postData.Add("code", code);
                     postData.Add("scope", "api");
                     postData.Add("grant_type", "authorization_code");
