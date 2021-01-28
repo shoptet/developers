@@ -58,4 +58,35 @@
     // parameters modalContent, onComplete and onClosed are required
     // optionally you can use also modalWidth and modalClass parameters
     // default values are shoptet.modal.config.widthMd and shoptet.modal.config.classMd
+
+    // below are examples of events you should listen to
+    // ShoptetBaseShippingInfoObtained is fired only once after page load
+    // ShoptetShippingMethodUpdated and ShoptetBillingMethodUpdated are fired every time
+    // when the shipping/billing method is changed/confirmed; even if it is caused by your shipping method
+    document.addEventListener('ShoptetBaseShippingInfoObtained', function() {
+        console.log(
+            '%cdeliveryCountryId: ' + shoptet.checkoutShared.deliveryCountryId,
+            'color: violet; font-size: 16px;'
+        );
+        console.log(
+            '%cregionCountryId: ' + shoptet.checkoutShared.regionCountryId,
+            'color: violet; font-size: 16px;'
+        );
+        console.log(
+            '%ccurrencyCode: ' + shoptet.checkoutShared.currencyCode,
+            'color: violet; font-size: 16px;'
+        );
+    });
+    document.addEventListener('ShoptetShippingMethodUpdated', function() {
+        console.log('%cactiveShipping:', 'color: orangered; font-size: 16px;');
+        // currently the shoptet.checkoutShared.activeShipping is HTML div element containing
+        // all information about shipping, you can access necessary information by query selector
+        console.log(shoptet.checkoutShared.activeShipping);
+    });
+    document.addEventListener('ShoptetBillingMethodUpdated', function() {
+        // currently the shoptet.checkoutShared.activeBilling is HTML div element containing
+        // all information about billing, you can access necessary information by query selector
+        console.log('%cactiveBilling:', 'color: orangered; font-size: 16px;');
+        console.log(shoptet.checkoutShared.activeBilling);
+    });
 })(shoptet);
