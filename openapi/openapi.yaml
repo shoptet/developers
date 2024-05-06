@@ -63619,7 +63619,7 @@ tags:
       letters, a dash, etc.
   - name: Delivery notes
     description: >-
-      The code (`code`) is the credit notes identifier. Although this is usually
+      The code (`code`) is the credit note identifier. Although this is usually
       a number, it is necessary to take into account that this might also
       include
 
