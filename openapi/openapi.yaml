@@ -116,7 +116,6 @@ info:
     for example `https://api.myshoptet.com/api/eshop`. Send the API access token
     in each request in the HTTP header`Shoptet-Access-Token`.
 
-
     You can have several valid API access tokens available at any one time.
     Should the validity of the API access token expire, you will receive a HTTP
     status code 401 and message about token expiration.
