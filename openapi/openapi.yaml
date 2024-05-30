@@ -9,7 +9,6 @@ info:
     <img src="https://www.mzv.cz/public/fe/30/dd/3705578_2234497__867990_sm.png"
     />
 
-
     This documentation provides information about the interface for developers
     who would like to gain access to Shoptet
 
@@ -246,7 +245,7 @@ info:
     ```
 
     curl --include \
-        -H 'Shoptet-Access-Token: 123456-a-111-cd03d85722b135929cde27e8799de3d0' \
+        -H 'Shoptet-Access-Token: XXXXXXXXXX' \
         -H 'Content-Type: application/vnd.shoptet.v1.0' \
        'https://api.myshoptet.com/api/eshop'
     ```
@@ -258,7 +257,7 @@ info:
     ```
 
     curl --include \
-        -H 'Shoptet-Private-API-Token: 123456-p-100-cd03d85722b135929c7de27e8799de30' \
+        -H 'Shoptet-Private-API-Token: XXXXXXXXXX' \
         -H 'Content-Type: application/vnd.shoptet.v1.0' \
        'https://api.myshoptet.com/api/eshop'
     ```
@@ -50029,7 +50028,7 @@ paths:
                 additionalProperties: false
               example:
                 data:
-                  signatureKey: 8a5e881b19ad6cc0bc986587b22e30be
+                  signatureKey: XXXXXXXXXX
                 errors: null
       summary: Generating of signature key
       operationId: Generating of signature key
