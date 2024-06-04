@@ -13,7 +13,7 @@ If you use Postman as an API platform for building and using APIs, we provide yo
 ## Collection settings
 
 1. Click the **Shoptet API** collection name.
-2. Go to **Authorization** tab.
-3. Replace `your-shoptet-access-token` placeholder with your token.
-4. Collection is using `baseUrl` variable, that can be changed in the tab **Variables** if needed.
+2. Go to **Variables** tab.
+3. Set your access token into the `shoptetAccessToken` variable.
+4. You can set `baseUrl` variable in the same place.
 
