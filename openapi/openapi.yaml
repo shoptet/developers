@@ -2064,12 +2064,14 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     properties: {  }
-                    nullable: true
                 required:
                   - data
                   - errors
@@ -2086,8 +2088,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -2106,8 +2109,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     type: array
                     items:
@@ -2583,8 +2587,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -2603,8 +2608,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -2623,8 +2629,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -2733,8 +2740,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -3064,12 +3072,14 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     properties: {  }
-                    nullable: true
                 required:
                   - data
                   - errors
@@ -3505,9 +3515,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -3526,8 +3537,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -3546,8 +3558,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               examples:
@@ -3698,8 +3711,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -4194,9 +4208,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -4963,9 +4978,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -5001,9 +5017,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -5607,9 +5624,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -5645,9 +5663,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -6160,9 +6179,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -6198,9 +6218,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -7122,17 +7143,20 @@ paths:
                     type: object
                     properties:
                       data:
-                        type: object
-                        nullable: true
+                        type:
+                          - object
+                          - ~
                       errors:
-                        type: object
-                        nullable: true
+                        type:
+                          - object
+                          - ~
                   -
                     type: object
                     properties:
                       data:
-                        type: object
-                        nullable: true
+                        type:
+                          - object
+                          - ~
                       errors:
                         type: array
                         items:
@@ -7178,8 +7202,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     type: array
                     items:
@@ -7409,8 +7434,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -7429,8 +7455,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     type: array
                     items:
@@ -7458,8 +7485,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     type: array
                     items:
@@ -9188,9 +9216,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -9206,8 +9235,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -10415,8 +10445,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -10863,9 +10894,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -11855,8 +11887,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     type: array
                     items:
@@ -11884,8 +11917,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     type: array
                     items:
@@ -12009,8 +12043,9 @@ paths:
                           - object
                           - 'null'
                   errors:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
               example:
                 data: ~
                 errors: ~
@@ -12023,8 +12058,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -12067,11 +12103,13 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
               example:
                 data: ~
                 errors: ~
@@ -12084,8 +12122,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     type: array
                     items:
@@ -12500,8 +12539,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -13394,8 +13434,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -13633,8 +13674,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -13653,8 +13695,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     type: array
                     items:
@@ -13987,8 +14030,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -14028,8 +14072,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -14048,8 +14093,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     type: array
                     items:
@@ -14563,8 +14609,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -14795,13 +14842,15 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     properties: {  }
-                    nullable: true
                 required:
                   - data
                   - errors
@@ -14818,8 +14867,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -14879,8 +14929,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -14899,8 +14950,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -15464,13 +15516,15 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     properties: {  }
-                    nullable: true
                 required:
                   - data
                   - errors
@@ -15487,8 +15541,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -15536,8 +15591,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -15556,8 +15612,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -15899,8 +15956,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -15940,8 +15998,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -15960,8 +16019,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -16179,17 +16239,20 @@ paths:
                     type: object
                     properties:
                       data:
-                        type: object
-                        nullable: true
+                        type:
+                          - object
+                          - ~
                       errors:
-                        type: object
-                        nullable: true
+                        type:
+                          - object
+                          - ~
                   -
                     type: object
                     properties:
                       data:
-                        type: object
-                        nullable: true
+                        type:
+                          - object
+                          - ~
                       errors:
                         $ref: '#/components/schemas/Errors'
               examples:
@@ -16226,8 +16289,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               examples:
@@ -16425,9 +16489,10 @@ paths:
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     properties: {  }
-                    nullable: true
                 required:
                   - data
                   - errors
@@ -16441,10 +16506,11 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     properties: {  }
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -17044,8 +17110,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -17262,9 +17329,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -17659,9 +17727,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -18025,9 +18094,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -18340,9 +18410,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -18655,8 +18726,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -18730,9 +18802,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -18834,8 +18907,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -18854,8 +18928,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19044,8 +19119,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19107,8 +19183,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19170,9 +19247,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -19191,8 +19269,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19620,8 +19699,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19640,8 +19720,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19706,8 +19787,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19726,8 +19808,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -20020,8 +20103,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -20273,9 +20357,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
+                    type:
+                      - object
+                      - ~
                     additionalProperties: false
-                    nullable: true
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -21152,8 +21237,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: string
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -21172,8 +21258,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -21410,8 +21497,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -21430,8 +21518,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     type: array
                     items:
@@ -21735,8 +21824,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: string
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -21755,8 +21845,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -21775,8 +21866,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -22073,8 +22165,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -22183,8 +22276,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -22199,8 +22293,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -22852,8 +22947,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -22872,8 +22968,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                      - object
+                      - ~
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -23069,7 +23166,9 @@ paths:
 components:
   schemas:
     Errors:
-      type: array
+      type:
+        - array
+        - ~
       items:
         type: object
         properties:
@@ -23090,7 +23189,6 @@ components:
           - message
           - instance
         additionalProperties: false
-      nullable: true
     typeConstSymbol:
       type: string
       pattern: '^[0-9]{1,4}$'
