@@ -25671,7 +25671,8 @@ components:
             - 'null'
           $ref: '#/components/schemas/typeDateTime'
           description: 'article date of the last modification'
-          example: '2014-11-19T00:00:00+0100'
+          examples:
+            - '2014-11-19T00:00:00+0100'
         visible:
           type: boolean
           description: 'flag whether the article is visible on web'
