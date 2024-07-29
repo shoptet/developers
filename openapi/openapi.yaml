@@ -2066,11 +2066,11 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     properties: {  }
                 required:
                   - data
@@ -2090,7 +2090,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -2111,7 +2111,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type: array
                     items:
@@ -2589,7 +2589,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -2610,7 +2610,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -2631,7 +2631,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -2742,7 +2742,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -3074,11 +3074,11 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     properties: {  }
                 required:
                   - data
@@ -3517,7 +3517,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -3539,7 +3539,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -3560,7 +3560,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               examples:
@@ -3713,7 +3713,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -4210,7 +4210,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -4980,7 +4980,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -5019,7 +5019,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -5626,7 +5626,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -5665,7 +5665,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -6181,7 +6181,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -6220,7 +6220,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -7145,18 +7145,18 @@ paths:
                       data:
                         type:
                           - object
-                          - ~
+                          - 'null'
                       errors:
                         type:
                           - object
-                          - ~
+                          - 'null'
                   -
                     type: object
                     properties:
                       data:
                         type:
                           - object
-                          - ~
+                          - 'null'
                       errors:
                         type: array
                         items:
@@ -7204,7 +7204,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type: array
                     items:
@@ -7436,7 +7436,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -7457,7 +7457,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type: array
                     items:
@@ -7487,7 +7487,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type: array
                     items:
@@ -9218,7 +9218,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -9237,7 +9237,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -10447,7 +10447,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -10896,7 +10896,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -11889,7 +11889,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type: array
                     items:
@@ -11919,7 +11919,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type: array
                     items:
@@ -12045,7 +12045,7 @@ paths:
                   errors:
                     type:
                       - object
-                      - ~
+                      - 'null'
               example:
                 data: ~
                 errors: ~
@@ -12060,7 +12060,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -12105,11 +12105,11 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type:
                       - object
-                      - ~
+                      - 'null'
               example:
                 data: ~
                 errors: ~
@@ -12124,7 +12124,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type: array
                     items:
@@ -12541,7 +12541,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -13436,7 +13436,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -13676,7 +13676,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -13697,7 +13697,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type: array
                     items:
@@ -14032,7 +14032,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -14074,7 +14074,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -14095,7 +14095,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type: array
                     items:
@@ -14611,7 +14611,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -14844,12 +14844,12 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     properties: {  }
                 required:
                   - data
@@ -14869,7 +14869,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -14931,7 +14931,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -14952,7 +14952,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -15518,12 +15518,12 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     properties: {  }
                 required:
                   - data
@@ -15543,7 +15543,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -15593,7 +15593,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -15614,7 +15614,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -15958,7 +15958,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -16000,7 +16000,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -16021,7 +16021,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -16241,18 +16241,18 @@ paths:
                       data:
                         type:
                           - object
-                          - ~
+                          - 'null'
                       errors:
                         type:
                           - object
-                          - ~
+                          - 'null'
                   -
                     type: object
                     properties:
                       data:
                         type:
                           - object
-                          - ~
+                          - 'null'
                       errors:
                         $ref: '#/components/schemas/Errors'
               examples:
@@ -16291,7 +16291,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               examples:
@@ -16491,7 +16491,7 @@ paths:
                   errors:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     properties: {  }
                 required:
                   - data
@@ -16508,7 +16508,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     properties: {  }
                     additionalProperties: false
                   errors:
@@ -17112,7 +17112,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -17331,7 +17331,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -17729,7 +17729,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -18096,7 +18096,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -18412,7 +18412,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -18728,7 +18728,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -18804,7 +18804,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -18909,7 +18909,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -18930,7 +18930,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19121,7 +19121,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19185,7 +19185,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19249,7 +19249,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -19271,7 +19271,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19701,7 +19701,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19722,7 +19722,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19789,7 +19789,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -19810,7 +19810,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -20105,7 +20105,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -20359,7 +20359,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                     additionalProperties: false
                   errors:
                     $ref: '#/components/schemas/Errors'
@@ -21239,7 +21239,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -21260,7 +21260,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -21499,7 +21499,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -21520,7 +21520,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     type: array
                     items:
@@ -21826,7 +21826,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -21847,7 +21847,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -21868,7 +21868,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -22167,7 +22167,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -22278,7 +22278,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -22295,7 +22295,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -22949,7 +22949,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -22970,7 +22970,7 @@ paths:
                   data:
                     type:
                       - object
-                      - ~
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
@@ -23168,7 +23168,7 @@ components:
     Errors:
       type:
         - array
-        - ~
+        - 'null'
       items:
         type: object
         properties:
