@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: 'Shoptet API'
   version: 1.0.0
-  description: "Created in cooperation with the Ministry of Industry and Trade of the Czech Republic within the \"The Country for the Future\" programme.\n<img src=\"https://www.mzv.cz/public/fe/30/dd/3705578_2234497__867990_sm.png\" />\n\nThis documentation provides information about the interface for developers who would like to gain access to Shoptet\ne-shops. For more information about Shoptet, see https://www.shoptet.cz/.\n\nThe API is available in two access modes:\n\n- for \"Shoptet partner” developers who create the interconnection with the services and extend the Shoptet system's\n  functions for public usage.  For more information about API and conditions, under which\n  it can be used, see https://developers.shoptet.com/addons/.\n- direct private access to eshop data for eshop owner - available only for [Premium Members](https://www.shoptetpremium.cz/).\n  See https://developers.shoptet.com/premium for more information about API access.\n# Basic principles of working with API\n\n## How to call API\n\nAPI supports communication in JSON format. The URL for calling API requests is https://api.myshoptet.com. The API calls\n(endpoints and message formats) are common for private as well as addons access, it however uses different authentication\nand authorization principles.\n\n### For Addons\n\nAPI is made to create the supplements for the Shoptet system and uses OAuth2 authorization principles.\nTo access the API it is necessary to implement a web service at your side, which will communicate with our OAuth server.\n\nIn your e-shop administration, which you are using to work with our API, you must search in the `API Partner` section for the `Access to API` tab.\nHere, you will find your clientID and addresses, from where you can call our OAuth server.\n\nThe work with API begins with e-shop addon installation. (The installation process can be tested in the addon detail in the `Users` section, where you can cause the installation for your e-shop.)\nIn your addon detail, in the `Settings` section, enter URL to gain a OAuth code. The URL must be linked to your server, where the script is prepared, which is able to gain an OAuth access token.\nAt this address, you will receive the HTTP request with a GET parameter `code`, when installing the addon, with unique value (a 255 character long string).\nThe `code` provided only has short-term validity and can be used only once. With this code, request our OAuth server to provide an `OAuth access token`.\nSuch a request shall follow within the same script that received the `code`.\nDo not put off gaining the OAuth access token for a later time, and do not reply to our request with a `200 OK` status, until you gain the OAuth access token.\nThe address for you to call, and an example of implementation, can be found in e-shop administration in the `Access to API` section.\n\nAs a response you will obtain a JSON with your OAuth access token. Save this token securely. Never send this token to the client computer, and use it only\nfor communication between the servers and for gaining the temporary token for access to API.\n\nIf you have successfully received an OAuth access token, your script must end with the HTTP status code “200”.\n\nNow you have your OAuth access token, which links your addon with a specific e-shop, perhaps you would like to communicate with the e-shop via API.\n\nFrom your server, call `https://<eshop-address.tld>/action/ApiOAuthServer/getAccessToken` address with HTTP header `Authorization: Bearer <OAuth access token>`.\nAs the reply, you will receive a JSON containing an API access token value and the token expiration time value. An example of calling can be found in e-shop administration in the `Access to API` section.\nIt is possible to request a maximum of 5 valid tokens.\n\nThe API access token will enable you to call an individual URL of our API, for example `https://api.myshoptet.com/api/eshop`. Send the API access token in each request in the HTTP header`Shoptet-Access-Token`.\nYou can have several valid API access tokens available at any one time. Should the validity of the API access token expire, you will receive a HTTP status code 401 and message about token expiration.\n\n```\n{\n    \"data\": null,\n    \"errors\": [\n        {\n            \"errorCode\": \"expired-token\",\n            \"message\": \"Token is expired. Please ask for new one.\",\n            \"instance\": \"unknown\"\n        }\n    ]\n}\n```\n\nIf your token does not have the access right for a specific endpoint, you will obtain a reply with HTTP status code 403 Forbidden.\n\n```\n{\n    \"data\": null,\n    \"errors\": [\n        {\n            \"errorCode\": \"invalid-token-no-rights\",\n            \"message\": \"Your access token \\\"afd..123\\\" has no defined rights for this resource.\",\n            \"instance\": \"access-token\"\n        }\n    ]\n}\n```\n\n### For private API access (Premium)\n\nYou can create API access tokens simply in the eshop administration. Send them in the request header `Shoptet-Private-API-Token`.\nYou can automatically access all API endpoints.\n\n## Rate limiting\n\nRate limiting is only at the level of server overload protection (DDoS), whereas the quantity of queries or total volume of data are unlimited.\nThese are therefore the limits of the maximum number of coincident active connections. A maximum of 50 from a single IP address, and a maximum of\n3 connections for a single token. If the limit is exceeded, the HTTP code 429 is returned. See also Nginx configuration:\n\n```\n    limit_conn per_ip 50;\n    limit_conn per_token 3;\n    limit_conn_status 429;\n```\n\nSome URLs, for example for bulk operations, can have their own specific limits, which are mentioned in this documentation.\n\n<a name=\"locks\"></a>\n\n## Locks\n\nWrite endpoints (DELETE, PATCH, POST, PUT methods) can take longer and may be prone to two concurrent matching requests.\nTo avoid problems with retrying identical write requests, we have added the locking function of these requests to the application.\nIf you execute the same request two times in quick succession, the second request receives error response with a 423 code.\nThe lock is only valid for a specific called URL, for the duration of the request processing, but no longer than 5 seconds.\n\n<a name=\"versioning\"></a>\n\n## API versioning\n\nCurrent version of API: v1.0\n\nThe client must send a `Content-Type` header with value of `application/vnd.shoptet.v1.0`,\nwhere `v1.0` is the API version supported by the client. If there is any change in the API, then we are trying to make it\nreverse compatible, therefore it is not necessary to regularly update your connection after each change in our interface.\n\nThe version is the same for all endpoints described here.\n\n## Server response format\n\nAll JSON responses from the server have the same format, as a base.\nIf any of the sections is not present in the response, a `null` value is then received.\n\nExample of call for addons:\n\n```\ncurl --include \\\n    -H 'Shoptet-Access-Token: 123456-a-111-cd03d85722b135929cde27e8799de3d0' \\\n    -H 'Content-Type: application/vnd.shoptet.v1.0' \\\n   'https://api.myshoptet.com/api/eshop'\n```\n\nExample of call for private API access:\n\n```\ncurl --include \\\n    -H 'Shoptet-Private-API-Token: 123456-p-100-cd03d85722b135929c7de27e8799de30' \\\n    -H 'Content-Type: application/vnd.shoptet.v1.0' \\\n   'https://api.myshoptet.com/api/eshop'\n```\n\nExample of response:\n\n```\nHTTP/2 200\ndate: Fri, 13 Jul 2018 15:57:29 GMT\ncontent-type: application/vnd.shoptet.v1.0+json; charset=utf-8\n\n{\n    \"data\": {\n        \"contactInformation\": {\n            \"eshopName\": \"www.domena-eshopu.cz\",\n            \"url\": \"https:\\/\\/www.domena-eshopu.cz\\/\",\n            \"companyId\": \"28935675\",\n           ...\n        }\n        ...\n    },\n    \"errors\": null\n}\n```\n\nThe basic structure of the response in the event of an error is as follows:\n\n```\n{\n    \"data\": null,\n    \"errors\": [\n        {\n            \"errorCode\": \"missing-access-token\",\n            \"message\": \"Missing access token. Please add `Shoptet-Access-Token` header to your request.\",\n            \"instance\": \"unknown\"\n        }\n    ]\n}\n```\n\nMost of the endpoints are synchronous, i.e. your answer is provided immediately and contains the data requested. There\nare however some endpoints, where either the request or the response processing takes longer time. These are implemented as\n[Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/). Your request will be queued and you\nreceive only job identification in the response. You will be notified using a\n[webhook](https://developers.shoptet.com/api/documentation/webhooks/) when the job is completed and your results\ndownloadable. Be aware, that registration of webhook `job:finished` is required to be able to run asynchronous requests.\nIf webhook is not registered, you will receive an error response with HTTP status code 403 and job won`t be queued.\n\nSome attributes may be added to the new API version, or the sequence of attributes can be changed.\nYour software, therefore, shall not rely on either of these.\nIf some attributes are renamed or removed, you will be informed in an additional\nheader - see also [API versioning](#versioning) and [Deprecated header + Sunset](#deprecated).\n\n<a name=\"deprecated\"></a>\n\n## Deprecated header + Sunset\n\nIf you are calling some endpoint in a version that will not be supported in the future, you will receive a response with the header\n`X-Shoptet-Deprecated`. If you detect this header within the response and its presence is logged,\nyou should be aware of the support termination for a specific endpoint in advance and thus have enough time for correction.\n\nFurthermore, you shall also receive the response with a`Sunset` header with the date when the support for this endpoint is to be terminated.\nFor more information about the header, see [Sunset](https://tools.ietf.org/id/draft-wilde-sunset-header-03.html).\n\n## Status codes\n\nWhen processing the response, the client shall first detect, what response status code was received.\n\nFor GET requests for responses with 200 code, it is not necessary to explore the `errors` part of the response.\nFor PATCH/PUT requests, which can process more records at the same time and some records\nare not processed successfully, these end with a 200 response code and the errors key contains info\n on skipped rows.\nThe unknown record is returned with a 404 code, etc. These responses have the error field filled in, where you can\nfind detailed info about the error.\n\nThe following errors might be expected:\n\n* 400 - Some of the validations on item level have failed. There is no reason to retry, it will fail always.\n\n* 401 - Invalid token or the token has expired (for addons access tokens). You have to ask for another one.\n\n* 403 - Forbidden. The token has no rights to the endpoint called. The endpoints must be allowed for an addon\n  and the eshop must have approved them. Valid for addons access tokens, private tokens can always access all\n  endpoints. Can be also returned when required module for request is missing.\n* 404 - Either the endpoint is wrong; or most commonly, an entity identifier, which is part of the URL, does\n  not exist.\n* 409 - Conflict - the action could not be completed for some consistency rules, such as duplicate data\n  or relation, which would be broken.\n* 413 - Payload too large - update requests can sometimes contain multiple entities to be amended. There is\n  however a limit (varying for each request), how many can be specified within one request. If you breach the\n  limit, you will get this error and nothing will be updated.\n* 422 - Unprocessable entity - we were not able to parse the request - it does not match the expected format.\n  Something is wrong with the request as whole, it might not be a correct JSON or it does not match the expected\n  JSON schema. There is no reason to retry, it will always fail.\n* 423 - Locked - for update and some read request we apply locks, usually on an URL level, which should avoid\n  consistency problems possibly occuring from parallel updates. See [chapter about locks](#locks). Retry later,\n  try to avoid parallel update requests.\n* 500 - General server error. Yes, this might happen to our software, too. Most commonly this is a temporary\n  database issue and it might (but might not), work a few minutes later. We monitor all such errors and we\n  try to analyze and fix them.\n* 503 - System maintenance. Most commonly we move a database to another database cluster or a database migration is\n  pending and it will be available in a few minutes. Please try later.\n<a name=\"paginator\"></a>\n\n## Paging\n\nSome endpoints can return larger quantity of records. Such endpoints do not return the entire result, but support pagination of results.\nYou can page using `page` (int) and `itemsPerPage` (int) parameters. The first page has number 1. If you require a different\nquantity of items per page, use the `itemsPerPage` parameter. CAUTION: the number of items per page can be decreased only, the default\nvalue is maximum. The default value can be different for each endpoint.\n\nWhen paging, check the total number of items, if not altered (`totalCount`), then the\nitems on pages could be shifted and some of them could be missed or processed twice.\n\n<a name=\"include\"></a>\n\n## Section on demand\n\nSome endpoints return the data sections as optional, on demand. The request is done by giving the section name in the\n`include` parameter. Part of the data is returned each time, the other section only on demand. This makes the responses smaller for those, who do not need the data\n, thus saving the volume of data transmitted and shortening the time to process the request.\n\nFor example, for \"Eshop Info\" endpoint, you will gain basic info when simply calling `[GET] /api/eshop`, but payment\nmethods and transport options only when using `[GET] /api/eshop?include=paymentMethods,shippingMethods`.\n\nMore values are separated by a comma, no sequencing, no upper/lower case differentiation. Other blocks are available on demand\nand each endpoint informs you which identifier to request.\n\n## Testing against mock server\n\nIf you want to receive a specific (error) response from the apiary mock server,\nyou can force this using the `Prefer` header. For more information, see:\nhttps://help.apiary.io/tools/mock-server/#multiple-responses\n\n## Translations\n\nFor proper functionality in translations you will have to get module Foreign languages (Cizí jazyky) activated on customer e-shop. Multi-language support in API is handled by query parameter `language`, which can be used in whole API. If parameter is not set, default shop language is used.\nRead endpoints (HTTP verb GET) will return corresponding language version of texts where applicable.\n\nFor write endpoints, first use POST endpoint to create entity and then use PATCH endpoint with corresponding language query parameter to set language fields.\n\nPlease note that in some endpoints (typically surcharge/filtering/variant parameters) you must use the identifier's currently selected language variant (which is filtered in list).\n\n<a name=\"files\"></a>\n\n## Files\n\nFor files upload, there are [Files endpoints](#files-endpoint).\n\nThe file is uploaded to a temporary storage which is not accessible publicly. The file is kept there for 7 days and then deleted.\n\nAfter you upload a file, you may copy it to some API entities in their endpoints - you specify filename returned in response of upload job.\n\nPlease note that currently only images (png, jpg, gif) are allowed filetypes for file upload.\n\n<a name=\"product-images\"></a>\n\n# Product images\n\nShoptet saves the product images in their original size and then prepares several sizes for standardized usage (called\nimage cuts). These cuts are created in advance and saved on the disk, so they are readily available. The list of cuts is\nthe same for each e-shop, and each e-shop can theoretically have different cut sizes. In practice, their size is given\nby the template and most templates use the same sizes. The list of provided cuts is given by\nthe [Image cuts](#image-cuts) code list.\n\nThe `/api/eshop?include=imageCuts` endpoint returns the `imageCuts` field in the response, where each cut has the actual\nsize defined, and the URL base path. There are two base URLs (example for classic.shoptet.cz, cut `detail`):\n\n- `urlPath`: \"https://classic.shoptet.cz/user/shop/detail/\"\n\n- `cdnPath`: \"https://cdn-api.myshoptet.com/usr/classic.shoptet.cz/user/shop/detail/\"\n\nUse the `urlPath` in case you need an up-to-date image right now. Use the url for your backend processing and you\nwill retrieve the images only once. Images retrieved via `urlPath` are not cached. You can use image name or SEO version\nof the image name - see below.\n\nUse the `cdnPath` in case you want to use the image url on the frontend and users of your application will display it,\ne.g. if you provide an alternative frontend, mobile application etc. The images are cached and provided with lower\nlatency. Use `cdnName` retrieved from the product detail endpoint (or similar) - see below.\n\nOnce you determine the URL based on the purpose and image cut size (for example `detail` for product detail, or `related`\nfor product preview), just append the filename you need. The filename can be retrieved from Product detail endpoint.\n\nAlthough the e-shop is behind the content delivery network (Cloudflare CDN), API still returns the same domain. Whether\nthe e-shop is behind the Cloudflare CDN, you can find out from response headers (`CDN-Loop: cloudflare` header).\n\nThe product detail endpoint `/api/products/{guid}?include=images` returns the image field `data.images[]` in the same\nsequence, as these are entered in administration. The file name `name` (for example `100.jpg`) needs to be connected\nto the URL cut and then you have complete path to the image of a given cut (size), for example\n`https://classic.shoptet.cz/user/shop/detail/100.jpg`. You can also use `seoName`, which also contains a description\nof the image - you will be redirected to the same image. The `cdnName` is intended for use with the `cdnUrl` only.\nThe fields look like: (excerpt)\n\n```json\n    \"name\": \"106.png\",\n    \"description\": \"shamrock 2115611 640\",\n    \"seoName\": \"106_shamrock-2115611-640.png\",\n    \"cdnName\": \"106_shamrock-2115611-640.png?5b2a41f5\"\n```\n\nOne of the images mentioned for the product can be selected as the default image for the product variant. The selected\nimage is in `data.variants[].image` item and contains the name of the image – this can be searched for in the image\nlist, in the `name` item. Should the variant have no preselected default image, the parameter `image` is `null`.\n\nThe item `data.items[].mainImage` contains the main image in order detail - this is either a default variant image,\nor, if not set (or product does not have variants), the default product image is given. The structure is the same as\nin product details, but not all images are given here, only the default one – representative image. The full path can\nbe gained by assembling the `urlPath` from the e-shop info and the `name` or `seoName` items, given for the order item.\n\nSimilarly, the product list gives `data.products[].mainImage`, which mentions the initial image for each product.\n\n# Code lists\n\n<a name=\"image-cuts\"></a>\n\n## Image cuts\n\nValue | Description\n-------- | ---------\norig | original image (in the original resolution)\nbig | big image (typically 1024x768 px)\ndetail |image detail (typically 360x270 px)\ncategory | size for listing in category (typically 216x105 px)\n\n<a name=\"product-visibility\"></a>\n\n## Product visibility\n\nValue  | Description\n-------- | ---------\nhidden | Hide product\nvisible | Show product\nblocked | Cannot be ordered\nshow-registered | Show only to logged-in users\nblock-unregistered | Do not allow order to logged-out users\ncash-desk-only | Show only in cash desk\ndetail-only | Do not show e-shop navigation\n\n<a name=\"product-item-types\"></a>\n\n## Product types\n\nValue  | Description\n-------- | ---------\nproduct | Product\nbazar | Second-hand product\nservice | Service\ngift-certificate | Gift (deprecated)\nproduct-set | Product set\n\n<a name=\"order-item-type\"></a>\n\n## Types of order items\n\nValue  | Description\n-------- | ---------\nproduct | Product\nbazar | Second-hand product\nservice | Service\nshipping | Transportation\nbilling | Payment method\ndiscount-coupon | Discount coupon\nvolume-discount | Volume discount\ngift | Gift\ngift-certificate | Gift certificate\ngeneric-item | Non-specific item\nproduct-set | Product set\nproduct-set-item | Product set item\ndeposit | Deposit\n\n<a name=\"category-sorting\"></a>\n\n## Sorting of products in category\n\nValue  | Description\n-------- | ---------\ndefault | Default\nmost-selling | Most selling first\ncheapest | Cheapest first\nmost-expensive | Most expensive first\noldest | Oldest first\nnewest | Newest first\nalphabetically | Alphabetically\nalphabetically-desc | Alphabetically, descending\nproduct-code | Per product code\nproduct-code-desc  | Per product code, descending\ncategory-priority | Category priority\ncategory-priority-desc | Category priority, descending\n\n<a name=\"webhook-event-type\"></a>\n\n## Webhook event types\n\nValue  | Description | Identifier meaning\n-------- | --------- | ---------\ncreditNote:create | Credit note creation event | Number (`code`) of credit note\ncreditNote:delete | Credit note deleting event   | Number (`code`) of credit note\ncreditNote:update | Credit note change event     | Number (`code`) of credit note\ncustomer:create | New customer was created | Customer GUID\ncustomer:import | Import of 1 and more customers was executed | Fixed string \"customers\"\ndeliveryNote:create | Delivery note creation event  | Number (`code`) of delivery note\ndeliveryNote:delete | Delivery note deleting event    | Number (`code`) of delivery note\ndeliveryNote:update | Delivery note change event      | Number (`code`) of delivery note\neshop:currencies | Currencies settings change event | ID of eshop\neshop:design | Design settings (template, colors, fonts, layout) | ID of eshop\neshop:mandatoryFields | Mandatory fields of customer were updated | ID of eshop\neshop:projectDomain | Domain of eshop was changed | ID of eshop\ninvoice:create | Invoice creation event  | Number (`code`) of invoice\ninvoice:delete | Invoice deleting event    | Number (`code`) of invoice\ninvoice:update | Invoice change event      | Number (`code`) of invoice\njob:finished | Asynchronous request was finished | Job `id`\nmailingListEmail:create | E-mail addition event into the e-mail distribution list | Name (`code`) of e-mail distribution list\nmailingListEmail:delete | E-mail deleting event from the e-mail distribution list | Name (`code`) of e-mail distribution\norder:create | Order creation event | Number (`code`) of order\norder:delete | Order deleting event   | Number (`code`) of order\norder:update | Order change event     | Number (`code`) of order\npaymentMethod:change | Payment method change event | Payment method GUID\nproformaInvoice:create | Proforma invoice creation event | Number (`code`) of proforma invoice\nproformaInvoice:delete | Proforma invoice deleting event   | Number (`code`) of proforma invoice\nproformaInvoice:update | Proforma invoice change event     | Number (`code`) of proforma invoice\nshippingMethod:change | Shipping method change event | Shipping method GUID\nshippingRequest:cancelled | Shipping request was not chosen for order delivery | `shippingRequestCode` associated with the cart\nshippingRequest:confirmed | Shipping request was chosen for order delivery | `shippingRequestCode` associated with the cart\nstock:movement | Stock change event | Stock ID\n\n### Mass Webhooks\n\nThese webhooks are sent when a mass change of entities is performed. The payload contains a json serialized list of IDs of changed entities.\nPurpose of these webhooks is to downgrade number of requests, while i.e. administrator performs mass change of orders status at once etc.\nSo instead of emitting one event for every order, we emit one event for all of them.\n\n<strong>For now, if some mass event is performed, we also sent \"single\" webhook event for every updated entity as usual, but it will be changed in future,\nso please watch [release changes](https://developers.shoptet.com/category/api/) for more info </strong>\n\nValue  | Description | Identifier meaning\n-------- | --------- | ---------\ninvoice:massUpdate | Mass change of invoices event      | Json serialized list of number (`code`) of invoices\norder:massUpdate | Mass change of orders event      | Json serialized list of number (`code`) of orders\n\n### System Webhooks\n\nThese webhooks cannot be registered via API, they are setup in Partners' Addon administration section instead.\n\nValue | Description\n----- | -----------\naddon:suspend | The addon was suspended by the eshop or by Shoptet operations staff\naddon:approve | The addon was approved (resumed) after it was suspended\naddon:uninstall | The addon was uninstalled by the eshop admin or the eshop was terminated\n\n<a name=\"ident-urls\"></a>\n\n## URL address from endpoint [Eshop info](#eshop-info)\n\nIdent | Description\n------| -----\nadmin-orders-list | Listing of orders in administration\nadmin-customers-list | List of customers in administration\noauth | OAuth server address, used for [e-shop user verification](https://developers.shoptet.com/api/documentation/eshop-verification-using-oauth/)\n\n<a name=\"category-catalogues\"></a>\n\n## List of product catalogues\n\nProvider (identification) | Description\n------| -----\nglami | Glami\ngoogle | Google\nheureka | Heuréka\nzbozi | Zboží.cz\n\n<a name=\"billing-methods-invoice\"></a>\n\n## Invoice Billing Methods\n\nid | Description\n------| -----\n1 | COD (cz: Dobírka)\n2 | Wire transfer (cz: Převodem)\n3 | Cash (cz: Hotově)\n4 | Card (cz: Kartou)\n\n# Last changes\n\nLast API changes are published on the [API news] page (https://developers.shoptet.com/category/api/).\n\n# Backward incompatible changes\n\n## April 13<sup>th</sup> 2021\n\n- In the [GET] Templates of discount coupons we will remove the `data.couponsTemplates[].brandsExt` array.\n\n- Access tokens format will be changed - will ve of variable length of 38-50 characters. In addition to current\n  character set (a-z, 0-9) there will additionally be a dash (-) as well.\n## May 11<sup>th</sup> 2021\n\n- We will slightly modify error handling and reporting of Order status change and Order header change endpoints. See\n  https://developers.shoptet.com/changes-to-error-reporting-for-orders-modification/ for details.\nShould you find any error or inaccuracy in the API, please contact us at api@shoptet.cz. Thank you for your cooperation.\n\n<!-- ======================================== ESHOP ============================================================== -->"
+  description: "Created in cooperation with the Ministry of Industry and Trade of the Czech Republic within the \"The Country for the Future\" programme.\n<img src=\"https://www.mzv.cz/public/fe/30/dd/3705578_2234497__867990_sm.png\" />\n\nThis documentation provides information about the interface for developers who would like to gain access to Shoptet\ne-shops. For more information about Shoptet, see https://www.shoptet.cz/.\n\nThe API is available in two access modes:\n\n- for \"Shoptet partner” developers who create the interconnection with the services and extend the Shoptet system's\n  functions for public usage.  For more information about API and conditions, under which\n  it can be used, see https://developers.shoptet.com/addons/.\n- direct private access to eshop data for eshop owner - available only for [Premium Members](https://www.shoptetpremium.cz/).\n  See https://developers.shoptet.com/premium for more information about API access.\n# Basic principles of working with API\n\n## How to call API\n\nAPI supports communication in JSON format. The URL for calling API requests is https://api.myshoptet.com. The API calls\n(endpoints and message formats) are common for private as well as addons access, it however uses different authentication\nand authorization principles.\n\n### For Addons\n\nAPI is made to create the supplements for the Shoptet system and uses OAuth2 authorization principles.\nTo access the API it is necessary to implement a web service at your side, which will communicate with our OAuth server.\n\nIn your e-shop administration, which you are using to work with our API, you must search in the `API Partner` section for the `Access to API` tab.\nHere, you will find your clientID and addresses, from where you can call our OAuth server.\n\nThe work with API begins with e-shop addon installation. (The installation process can be tested in the addon detail in the `Users` section, where you can cause the installation for your e-shop.)\nIn your addon detail, in the `Settings` section, enter URL to gain a OAuth code. The URL must be linked to your server, where the script is prepared, which is able to gain an OAuth access token.\nAt this address, you will receive the HTTP request with a GET parameter `code`, when installing the addon, with unique value (a 255 character long string).\nThe `code` provided only has short-term validity and can be used only once. With this code, request our OAuth server to provide an `OAuth access token`.\nSuch a request shall follow within the same script that received the `code`.\nDo not put off gaining the OAuth access token for a later time, and do not reply to our request with a `200 OK` status, until you gain the OAuth access token.\nThe address for you to call, and an example of implementation, can be found in e-shop administration in the `Access to API` section.\n\nAs a response you will obtain a JSON with your OAuth access token. Save this token securely. Never send this token to the client computer, and use it only\nfor communication between the servers and for gaining the temporary token for access to API.\n\nIf you have successfully received an OAuth access token, your script must end with the HTTP status code “200”.\n\nNow you have your OAuth access token, which links your addon with a specific e-shop, perhaps you would like to communicate with the e-shop via API.\n\nFrom your server, call `https://<eshop-address.tld>/action/ApiOAuthServer/getAccessToken` address with HTTP header `Authorization: Bearer <OAuth access token>`.\nAs the reply, you will receive a JSON containing an API access token value and the token expiration time value. An example of calling can be found in e-shop administration in the `Access to API` section.\nIt is possible to request a maximum of 5 valid tokens.\n\nThe API access token will enable you to call an individual URL of our API, for example `https://api.myshoptet.com/api/eshop`. Send the API access token in each request in the HTTP header`Shoptet-Access-Token`.\nYou can have several valid API access tokens available at any one time. Should the validity of the API access token expire, you will receive a HTTP status code 401 and message about token expiration.\n\n```\n{\n    \"data\": 'null',\n    \"errors\": [\n        {\n            \"errorCode\": \"expired-token\",\n            \"message\": \"Token is expired. Please ask for new one.\",\n            \"instance\": \"unknown\"\n        }\n    ]\n}\n```\n\nIf your token does not have the access right for a specific endpoint, you will obtain a reply with HTTP status code 403 Forbidden.\n\n```\n{\n    \"data\": 'null',\n    \"errors\": [\n        {\n            \"errorCode\": \"invalid-token-no-rights\",\n            \"message\": \"Your access token \\\"afd..123\\\" has no defined rights for this resource.\",\n            \"instance\": \"access-token\"\n        }\n    ]\n}\n```\n\n### For private API access (Premium)\n\nYou can create API access tokens simply in the eshop administration. Send them in the request header `Shoptet-Private-API-Token`.\nYou can automatically access all API endpoints.\n\n## Rate limiting\n\nRate limiting is only at the level of server overload protection (DDoS), whereas the quantity of queries or total volume of data are unlimited.\nThese are therefore the limits of the maximum number of coincident active connections. A maximum of 50 from a single IP address, and a maximum of\n3 connections for a single token. If the limit is exceeded, the HTTP code 429 is returned. See also Nginx configuration:\n\n```\n    limit_conn per_ip 50;\n    limit_conn per_token 3;\n    limit_conn_status 429;\n```\n\nSome URLs, for example for bulk operations, can have their own specific limits, which are mentioned in this documentation.\n\n<a name=\"locks\"></a>\n\n## Locks\n\nWrite endpoints (DELETE, PATCH, POST, PUT methods) can take longer and may be prone to two concurrent matching requests.\nTo avoid problems with retrying identical write requests, we have added the locking function of these requests to the application.\nIf you execute the same request two times in quick succession, the second request receives error response with a 423 code.\nThe lock is only valid for a specific called URL, for the duration of the request processing, but no longer than 5 seconds.\n\n<a name=\"versioning\"></a>\n\n## API versioning\n\nCurrent version of API: v1.0\n\nThe client must send a `Content-Type` header with value of `application/vnd.shoptet.v1.0`,\nwhere `v1.0` is the API version supported by the client. If there is any change in the API, then we are trying to make it\nreverse compatible, therefore it is not necessary to regularly update your connection after each change in our interface.\n\nThe version is the same for all endpoints described here.\n\n## Server response format\n\nAll JSON responses from the server have the same format, as a base.\nIf any of the sections is not present in the response, a `null` value is then received.\n\nExample of call for addons:\n\n```\ncurl --include \\\n    -H 'Shoptet-Access-Token: 123456-a-111-cd03d85722b135929cde27e8799de3d0' \\\n    -H 'Content-Type: application/vnd.shoptet.v1.0' \\\n   'https://api.myshoptet.com/api/eshop'\n```\n\nExample of call for private API access:\n\n```\ncurl --include \\\n    -H 'Shoptet-Private-API-Token: 123456-p-100-cd03d85722b135929c7de27e8799de30' \\\n    -H 'Content-Type: application/vnd.shoptet.v1.0' \\\n   'https://api.myshoptet.com/api/eshop'\n```\n\nExample of response:\n\n```\nHTTP/2 200\ndate: Fri, 13 Jul 2018 15:57:29 GMT\ncontent-type: application/vnd.shoptet.v1.0+json; charset=utf-8\n\n{\n    \"data\": {\n        \"contactInformation\": {\n            \"eshopName\": \"www.domena-eshopu.cz\",\n            \"url\": \"https:\\/\\/www.domena-eshopu.cz\\/\",\n            \"companyId\": \"28935675\",\n           ...\n        }\n        ...\n    },\n    \"errors\": 'null'\n}\n```\n\nThe basic structure of the response in the event of an error is as follows:\n\n```\n{\n    \"data\": 'null',\n    \"errors\": [\n        {\n            \"errorCode\": \"missing-access-token\",\n            \"message\": \"Missing access token. Please add `Shoptet-Access-Token` header to your request.\",\n            \"instance\": \"unknown\"\n        }\n    ]\n}\n```\n\nMost of the endpoints are synchronous, i.e. your answer is provided immediately and contains the data requested. There\nare however some endpoints, where either the request or the response processing takes longer time. These are implemented as\n[Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/). Your request will be queued and you\nreceive only job identification in the response. You will be notified using a\n[webhook](https://developers.shoptet.com/api/documentation/webhooks/) when the job is completed and your results\ndownloadable. Be aware, that registration of webhook `job:finished` is required to be able to run asynchronous requests.\nIf webhook is not registered, you will receive an error response with HTTP status code 403 and job won`t be queued.\n\nSome attributes may be added to the new API version, or the sequence of attributes can be changed.\nYour software, therefore, shall not rely on either of these.\nIf some attributes are renamed or removed, you will be informed in an additional\nheader - see also [API versioning](#versioning) and [Deprecated header + Sunset](#deprecated).\n\n<a name=\"deprecated\"></a>\n\n## Deprecated header + Sunset\n\nIf you are calling some endpoint in a version that will not be supported in the future, you will receive a response with the header\n`X-Shoptet-Deprecated`. If you detect this header within the response and its presence is logged,\nyou should be aware of the support termination for a specific endpoint in advance and thus have enough time for correction.\n\nFurthermore, you shall also receive the response with a`Sunset` header with the date when the support for this endpoint is to be terminated.\nFor more information about the header, see [Sunset](https://tools.ietf.org/id/draft-wilde-sunset-header-03.html).\n\n## Status codes\n\nWhen processing the response, the client shall first detect, what response status code was received.\n\nFor GET requests for responses with 200 code, it is not necessary to explore the `errors` part of the response.\nFor PATCH/PUT requests, which can process more records at the same time and some records\nare not processed successfully, these end with a 200 response code and the errors key contains info\n on skipped rows.\nThe unknown record is returned with a 404 code, etc. These responses have the error field filled in, where you can\nfind detailed info about the error.\n\nThe following errors might be expected:\n\n* 400 - Some of the validations on item level have failed. There is no reason to retry, it will fail always.\n\n* 401 - Invalid token or the token has expired (for addons access tokens). You have to ask for another one.\n\n* 403 - Forbidden. The token has no rights to the endpoint called. The endpoints must be allowed for an addon\n  and the eshop must have approved them. Valid for addons access tokens, private tokens can always access all\n  endpoints. Can be also returned when required module for request is missing.\n* 404 - Either the endpoint is wrong; or most commonly, an entity identifier, which is part of the URL, does\n  not exist.\n* 409 - Conflict - the action could not be completed for some consistency rules, such as duplicate data\n  or relation, which would be broken.\n* 413 - Payload too large - update requests can sometimes contain multiple entities to be amended. There is\n  however a limit (varying for each request), how many can be specified within one request. If you breach the\n  limit, you will get this error and nothing will be updated.\n* 422 - Unprocessable entity - we were not able to parse the request - it does not match the expected format.\n  Something is wrong with the request as whole, it might not be a correct JSON or it does not match the expected\n  JSON schema. There is no reason to retry, it will always fail.\n* 423 - Locked - for update and some read request we apply locks, usually on an URL level, which should avoid\n  consistency problems possibly occuring from parallel updates. See [chapter about locks](#locks). Retry later,\n  try to avoid parallel update requests.\n* 500 - General server error. Yes, this might happen to our software, too. Most commonly this is a temporary\n  database issue and it might (but might not), work a few minutes later. We monitor all such errors and we\n  try to analyze and fix them.\n* 503 - System maintenance. Most commonly we move a database to another database cluster or a database migration is\n  pending and it will be available in a few minutes. Please try later.\n<a name=\"paginator\"></a>\n\n## Paging\n\nSome endpoints can return larger quantity of records. Such endpoints do not return the entire result, but support pagination of results.\nYou can page using `page` (int) and `itemsPerPage` (int) parameters. The first page has number 1. If you require a different\nquantity of items per page, use the `itemsPerPage` parameter. CAUTION: the number of items per page can be decreased only, the default\nvalue is maximum. The default value can be different for each endpoint.\n\nWhen paging, check the total number of items, if not altered (`totalCount`), then the\nitems on pages could be shifted and some of them could be missed or processed twice.\n\n<a name=\"include\"></a>\n\n## Section on demand\n\nSome endpoints return the data sections as optional, on demand. The request is done by giving the section name in the\n`include` parameter. Part of the data is returned each time, the other section only on demand. This makes the responses smaller for those, who do not need the data\n, thus saving the volume of data transmitted and shortening the time to process the request.\n\nFor example, for \"Eshop Info\" endpoint, you will gain basic info when simply calling `[GET] /api/eshop`, but payment\nmethods and transport options only when using `[GET] /api/eshop?include=paymentMethods,shippingMethods`.\n\nMore values are separated by a comma, no sequencing, no upper/lower case differentiation. Other blocks are available on demand\nand each endpoint informs you which identifier to request.\n\n## Testing against mock server\n\nIf you want to receive a specific (error) response from the apiary mock server,\nyou can force this using the `Prefer` header. For more information, see:\nhttps://help.apiary.io/tools/mock-server/#multiple-responses\n\n## Translations\n\nFor proper functionality in translations you will have to get module Foreign languages (Cizí jazyky) activated on customer e-shop. Multi-language support in API is handled by query parameter `language`, which can be used in whole API. If parameter is not set, default shop language is used.\nRead endpoints (HTTP verb GET) will return corresponding language version of texts where applicable.\n\nFor write endpoints, first use POST endpoint to create entity and then use PATCH endpoint with corresponding language query parameter to set language fields.\n\nPlease note that in some endpoints (typically surcharge/filtering/variant parameters) you must use the identifier's currently selected language variant (which is filtered in list).\n\n<a name=\"files\"></a>\n\n## Files\n\nFor files upload, there are [Files endpoints](#files-endpoint).\n\nThe file is uploaded to a temporary storage which is not accessible publicly. The file is kept there for 7 days and then deleted.\n\nAfter you upload a file, you may copy it to some API entities in their endpoints - you specify filename returned in response of upload job.\n\nPlease note that currently only images (png, jpg, gif) are allowed filetypes for file upload.\n\n<a name=\"product-images\"></a>\n\n# Product images\n\nShoptet saves the product images in their original size and then prepares several sizes for standardized usage (called\nimage cuts). These cuts are created in advance and saved on the disk, so they are readily available. The list of cuts is\nthe same for each e-shop, and each e-shop can theoretically have different cut sizes. In practice, their size is given\nby the template and most templates use the same sizes. The list of provided cuts is given by\nthe [Image cuts](#image-cuts) code list.\n\nThe `/api/eshop?include=imageCuts` endpoint returns the `imageCuts` field in the response, where each cut has the actual\nsize defined, and the URL base path. There are two base URLs (example for classic.shoptet.cz, cut `detail`):\n\n- `urlPath`: \"https://classic.shoptet.cz/user/shop/detail/\"\n\n- `cdnPath`: \"https://cdn-api.myshoptet.com/usr/classic.shoptet.cz/user/shop/detail/\"\n\nUse the `urlPath` in case you need an up-to-date image right now. Use the url for your backend processing and you\nwill retrieve the images only once. Images retrieved via `urlPath` are not cached. You can use image name or SEO version\nof the image name - see below.\n\nUse the `cdnPath` in case you want to use the image url on the frontend and users of your application will display it,\ne.g. if you provide an alternative frontend, mobile application etc. The images are cached and provided with lower\nlatency. Use `cdnName` retrieved from the product detail endpoint (or similar) - see below.\n\nOnce you determine the URL based on the purpose and image cut size (for example `detail` for product detail, or `related`\nfor product preview), just append the filename you need. The filename can be retrieved from Product detail endpoint.\n\nAlthough the e-shop is behind the content delivery network (Cloudflare CDN), API still returns the same domain. Whether\nthe e-shop is behind the Cloudflare CDN, you can find out from response headers (`CDN-Loop: cloudflare` header).\n\nThe product detail endpoint `/api/products/{guid}?include=images` returns the image field `data.images[]` in the same\nsequence, as these are entered in administration. The file name `name` (for example `100.jpg`) needs to be connected\nto the URL cut and then you have complete path to the image of a given cut (size), for example\n`https://classic.shoptet.cz/user/shop/detail/100.jpg`. You can also use `seoName`, which also contains a description\nof the image - you will be redirected to the same image. The `cdnName` is intended for use with the `cdnUrl` only.\nThe fields look like: (excerpt)\n\n```json\n    \"name\": \"106.png\",\n    \"description\": \"shamrock 2115611 640\",\n    \"seoName\": \"106_shamrock-2115611-640.png\",\n    \"cdnName\": \"106_shamrock-2115611-640.png?5b2a41f5\"\n```\n\nOne of the images mentioned for the product can be selected as the default image for the product variant. The selected\nimage is in `data.variants[].image` item and contains the name of the image – this can be searched for in the image\nlist, in the `name` item. Should the variant have no preselected default image, the parameter `image` is `null`.\n\nThe item `data.items[].mainImage` contains the main image in order detail - this is either a default variant image,\nor, if not set (or product does not have variants), the default product image is given. The structure is the same as\nin product details, but not all images are given here, only the default one – representative image. The full path can\nbe gained by assembling the `urlPath` from the e-shop info and the `name` or `seoName` items, given for the order item.\n\nSimilarly, the product list gives `data.products[].mainImage`, which mentions the initial image for each product.\n\n# Code lists\n\n<a name=\"image-cuts\"></a>\n\n## Image cuts\n\nValue | Description\n-------- | ---------\norig | original image (in the original resolution)\nbig | big image (typically 1024x768 px)\ndetail |image detail (typically 360x270 px)\ncategory | size for listing in category (typically 216x105 px)\n\n<a name=\"product-visibility\"></a>\n\n## Product visibility\n\nValue  | Description\n-------- | ---------\nhidden | Hide product\nvisible | Show product\nblocked | Cannot be ordered\nshow-registered | Show only to logged-in users\nblock-unregistered | Do not allow order to logged-out users\ncash-desk-only | Show only in cash desk\ndetail-only | Do not show e-shop navigation\n\n<a name=\"product-item-types\"></a>\n\n## Product types\n\nValue  | Description\n-------- | ---------\nproduct | Product\nbazar | Second-hand product\nservice | Service\ngift-certificate | Gift (deprecated)\nproduct-set | Product set\n\n<a name=\"order-item-type\"></a>\n\n## Types of order items\n\nValue  | Description\n-------- | ---------\nproduct | Product\nbazar | Second-hand product\nservice | Service\nshipping | Transportation\nbilling | Payment method\ndiscount-coupon | Discount coupon\nvolume-discount | Volume discount\ngift | Gift\ngift-certificate | Gift certificate\ngeneric-item | Non-specific item\nproduct-set | Product set\nproduct-set-item | Product set item\ndeposit | Deposit\n\n<a name=\"category-sorting\"></a>\n\n## Sorting of products in category\n\nValue  | Description\n-------- | ---------\ndefault | Default\nmost-selling | Most selling first\ncheapest | Cheapest first\nmost-expensive | Most expensive first\noldest | Oldest first\nnewest | Newest first\nalphabetically | Alphabetically\nalphabetically-desc | Alphabetically, descending\nproduct-code | Per product code\nproduct-code-desc  | Per product code, descending\ncategory-priority | Category priority\ncategory-priority-desc | Category priority, descending\n\n<a name=\"webhook-event-type\"></a>\n\n## Webhook event types\n\nValue  | Description | Identifier meaning\n-------- | --------- | ---------\ncreditNote:create | Credit note creation event | Number (`code`) of credit note\ncreditNote:delete | Credit note deleting event   | Number (`code`) of credit note\ncreditNote:update | Credit note change event     | Number (`code`) of credit note\ncustomer:create | New customer was created | Customer GUID\ncustomer:import | Import of 1 and more customers was executed | Fixed string \"customers\"\ndeliveryNote:create | Delivery note creation event  | Number (`code`) of delivery note\ndeliveryNote:delete | Delivery note deleting event    | Number (`code`) of delivery note\ndeliveryNote:update | Delivery note change event      | Number (`code`) of delivery note\neshop:currencies | Currencies settings change event | ID of eshop\neshop:design | Design settings (template, colors, fonts, layout) | ID of eshop\neshop:mandatoryFields | Mandatory fields of customer were updated | ID of eshop\neshop:projectDomain | Domain of eshop was changed | ID of eshop\ninvoice:create | Invoice creation event  | Number (`code`) of invoice\ninvoice:delete | Invoice deleting event    | Number (`code`) of invoice\ninvoice:update | Invoice change event      | Number (`code`) of invoice\njob:finished | Asynchronous request was finished | Job `id`\nmailingListEmail:create | E-mail addition event into the e-mail distribution list | Name (`code`) of e-mail distribution list\nmailingListEmail:delete | E-mail deleting event from the e-mail distribution list | Name (`code`) of e-mail distribution\norder:create | Order creation event | Number (`code`) of order\norder:delete | Order deleting event   | Number (`code`) of order\norder:update | Order change event     | Number (`code`) of order\npaymentMethod:change | Payment method change event | Payment method GUID\nproformaInvoice:create | Proforma invoice creation event | Number (`code`) of proforma invoice\nproformaInvoice:delete | Proforma invoice deleting event   | Number (`code`) of proforma invoice\nproformaInvoice:update | Proforma invoice change event     | Number (`code`) of proforma invoice\nshippingMethod:change | Shipping method change event | Shipping method GUID\nshippingRequest:cancelled | Shipping request was not chosen for order delivery | `shippingRequestCode` associated with the cart\nshippingRequest:confirmed | Shipping request was chosen for order delivery | `shippingRequestCode` associated with the cart\nstock:movement | Stock change event | Stock ID\n\n### Mass Webhooks\n\nThese webhooks are sent when a mass change of entities is performed. The payload contains a json serialized list of IDs of changed entities.\nPurpose of these webhooks is to downgrade number of requests, while i.e. administrator performs mass change of orders status at once etc.\nSo instead of emitting one event for every order, we emit one event for all of them.\n\n<strong>For now, if some mass event is performed, we also sent \"single\" webhook event for every updated entity as usual, but it will be changed in future,\nso please watch [release changes](https://developers.shoptet.com/category/api/) for more info </strong>\n\nValue  | Description | Identifier meaning\n-------- | --------- | ---------\ninvoice:massUpdate | Mass change of invoices event      | Json serialized list of number (`code`) of invoices\norder:massUpdate | Mass change of orders event      | Json serialized list of number (`code`) of orders\n\n### System Webhooks\n\nThese webhooks cannot be registered via API, they are setup in Partners' Addon administration section instead.\n\nValue | Description\n----- | -----------\naddon:suspend | The addon was suspended by the eshop or by Shoptet operations staff\naddon:approve | The addon was approved (resumed) after it was suspended\naddon:uninstall | The addon was uninstalled by the eshop admin or the eshop was terminated\n\n<a name=\"ident-urls\"></a>\n\n## URL address from endpoint [Eshop info](#eshop-info)\n\nIdent | Description\n------| -----\nadmin-orders-list | Listing of orders in administration\nadmin-customers-list | List of customers in administration\noauth | OAuth server address, used for [e-shop user verification](https://developers.shoptet.com/api/documentation/eshop-verification-using-oauth/)\n\n<a name=\"category-catalogues\"></a>\n\n## List of product catalogues\n\nProvider (identification) | Description\n------| -----\nglami | Glami\ngoogle | Google\nheureka | Heuréka\nzbozi | Zboží.cz\n\n<a name=\"billing-methods-invoice\"></a>\n\n## Invoice Billing Methods\n\nid | Description\n------| -----\n1 | COD (cz: Dobírka)\n2 | Wire transfer (cz: Převodem)\n3 | Cash (cz: Hotově)\n4 | Card (cz: Kartou)\n\n# Last changes\n\nLast API changes are published on the [API news] page (https://developers.shoptet.com/category/api/).\n\n# Backward incompatible changes\n\n## April 13<sup>th</sup> 2021\n\n- In the [GET] Templates of discount coupons we will remove the `data.couponsTemplates[].brandsExt` array.\n\n- Access tokens format will be changed - will ve of variable length of 38-50 characters. In addition to current\n  character set (a-z, 0-9) there will additionally be a dash (-) as well.\n## May 11<sup>th</sup> 2021\n\n- We will slightly modify error handling and reporting of Order status change and Order header change endpoints. See\n  https://developers.shoptet.com/changes-to-error-reporting-for-orders-modification/ for details.\nShould you find any error or inaccuracy in the API, please contact us at api@shoptet.cz. Thank you for your cooperation.\n\n<!-- ======================================== ESHOP ============================================================== -->"
 servers:
   -
     url: 'https://api.myshoptet.com'
@@ -1524,7 +1524,6 @@ paths:
                       minLength: 1
                     relatedVideos:
                       type: array
-                      additionalProperties: false
                       items:
                         type: object
                         additionalProperties: false
@@ -2033,7 +2032,6 @@ paths:
                       minLength: 1
                     relatedVideos:
                       type: array
-                      additionalProperties: false
                       items:
                         type: object
                         additionalProperties: false
@@ -2077,8 +2075,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -2094,7 +2092,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: product-not-found
@@ -2124,7 +2122,7 @@ paths:
                         instance:
                           type: string
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: product-used-in-set
@@ -2556,7 +2554,6 @@ paths:
                       minLength: 1
                     relatedVideos:
                       type: array
-                      additionalProperties: false
                       items:
                         type: object
                         additionalProperties: false
@@ -2597,8 +2594,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -2614,7 +2611,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: product-not-found
@@ -2635,7 +2632,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: product-used-in-set
@@ -2750,7 +2747,7 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: example-error-code
@@ -3085,8 +3082,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Delete one product''s image'
       operationId: 'Delete one product''s image'
       description: "Deletes product's image. If `removeReference` parameter is not present or set to `false` and if image is referenced\nas variant image, then image won't be deleted and response will have status code `409 Conflict`.\nIf `removeReference` is set to true, then this reference will be removed with the image."
@@ -3526,8 +3523,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -3543,7 +3540,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: category-not-found
@@ -3566,7 +3563,7 @@ paths:
               examples:
                 example1:
                   value:
-                    data: ~
+                    data: 'null'
                     errors:
                       -
                         errorCode: category-used-by-products
@@ -3574,7 +3571,7 @@ paths:
                         instance: 5c499200-70ac-11e9-9208-08002774f818
                 example2:
                   value:
-                    data: ~
+                    data: 'null'
                     errors:
                       -
                         errorCode: category-has-children
@@ -3688,11 +3685,11 @@ paths:
               examples:
                 example1:
                   value:
-                    data: ~
-                    errors: ~
+                    data: 'null'
+                    errors: 'null'
                 example2:
                   value:
-                    data: ~
+                    data: 'null'
                     errors:
                       -
                         errorCode: unknown-product
@@ -3717,7 +3714,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: unknown-product
@@ -4219,8 +4216,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Product flag delete'
       operationId: 'Product flag delete'
       parameters:
@@ -4989,8 +4986,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Removal of surcharge parameter'
       operationId: 'Removal of surcharge parameter'
       description: ''
@@ -5028,8 +5025,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Removal of surcharge parameter value'
       operationId: 'Removal of surcharge parameter value'
       description: ''
@@ -5635,8 +5632,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Removal of filtering parameter'
       operationId: 'Removal of filtering parameter'
       description: ''
@@ -5674,8 +5671,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Removal of filtering parameter value'
       operationId: 'Removal of filtering parameter value'
       description: ''
@@ -6190,8 +6187,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Removal of variant parameter'
       operationId: 'Removal of variant parameter'
       description: ''
@@ -6229,8 +6226,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Removal of variant parameter value'
       operationId: 'Removal of variant parameter value'
       description: ''
@@ -7175,11 +7172,11 @@ paths:
               examples:
                 example1:
                   value:
-                    data: ~
-                    errors: ~
+                    data: 'null'
+                    errors: 'null'
                 example2:
                   value:
-                    data: ~
+                    data: 'null'
                     errors:
                       -
                         errorCode: pricelist-code-not-found
@@ -7217,7 +7214,7 @@ paths:
                         instance:
                           type: string
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: pricelist-not-found
@@ -7225,7 +7222,7 @@ paths:
                     instance: '11'
       summary: 'Update price list'
       operationId: 'Update price list'
-      description: "This endpoint allows updating price fields and other attributes from a pricelist of a product (variant).\nYou can request multiple updates at once; the maximum is 100 updates per request.\nThe request must contain a product variant code `code` and at least one of the `price`,\n `priceWithVat`, `priceWithoutVat`, `orderableAmount` or `sales` objects.\nSend only fields you want to change, the others will stay untouched. Be aware of the difference between\n\n- not providing a field: the field will not be changed\n\n- providing e. g. `data.price.buyPrice: null` will remove the price\n\nIn case the request will be properly formatted, but an error occurs for one of the records, the correct records\nwill be updated, the response will be `200 OK` and there will be records in the `errors` array for each failed\nrecord. If all records are incorrect, the response code will be `400 BAD REQUEST` instead.\n\nIf you set `includingVat` or `vatRate` field, current data for product (or variant) will be recalculated. (even through untouched by your request)\nObject `price` directly sets price of product, without recalculating.\nObject `priceWithVat` sets price of product, respecting it is price **with** VAT and thus recalculating if needed.\nObject `priceWithoutVat` sets price of product, respecting it is price **without** VAT and thus recalculating if needed.\n\nNote, that you can change `buyPrice` only for default price list! For others price lists, value stays `null`.\n\nFor non-vat payer e-shops, `vatRate` and `includingVat` fields are forbidden to use and fields `price`, `priceWithVat` and `priceWithoutVat`\nall works the same."
+      description: "This endpoint allows updating price fields and other attributes from a pricelist of a product (variant).\nYou can request multiple updates at once; the maximum is 100 updates per request.\nThe request must contain a product variant code `code` and at least one of the `price`,\n `priceWithVat`, `priceWithoutVat`, `orderableAmount` or `sales` objects.\nSend only fields you want to change, the others will stay untouched. Be aware of the difference between\n\n- not providing a field: the field will not be changed\n\n- providing e. g. `data.price.buyPrice: 'null'` will remove the price\n\nIn case the request will be properly formatted, but an error occurs for one of the records, the correct records\nwill be updated, the response will be `200 OK` and there will be records in the `errors` array for each failed\nrecord. If all records are incorrect, the response code will be `400 BAD REQUEST` instead.\n\nIf you set `includingVat` or `vatRate` field, current data for product (or variant) will be recalculated. (even through untouched by your request)\nObject `price` directly sets price of product, without recalculating.\nObject `priceWithVat` sets price of product, respecting it is price **with** VAT and thus recalculating if needed.\nObject `priceWithoutVat` sets price of product, respecting it is price **without** VAT and thus recalculating if needed.\n\nNote, that you can change `buyPrice` only for default price list! For others price lists, value stays `null`.\n\nFor non-vat payer e-shops, `vatRate` and `includingVat` fields are forbidden to use and fields `price`, `priceWithVat` and `priceWithoutVat`\nall works the same."
       tags:
         - 'Price lists'
       parameters:
@@ -7444,8 +7441,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         422:
           description: 'Unprocessable Entity'
           headers: {  }
@@ -7470,7 +7467,7 @@ paths:
                         instance:
                           type: string
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: invalid-request-data
@@ -7500,7 +7497,7 @@ paths:
                         instance:
                           type: string
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: pricelist-blocked
@@ -9241,7 +9238,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: order-not-found
@@ -10455,8 +10452,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Order item delete'
       operationId: 'Order item delete'
       description: ''
@@ -10905,8 +10902,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Order item surcharge parameters deletion'
       operationId: 'Order item surcharge parameters deletion'
       description: 'You have to provide dynamically generated `relationId` which identify which surcharge parameter related to order item you want to delete.'
@@ -11902,7 +11899,7 @@ paths:
                         instance:
                           type: string
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: order-not-found
@@ -11932,7 +11929,7 @@ paths:
                         instance:
                           type: string
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: document-not-generated
@@ -12047,8 +12044,8 @@ paths:
                       - object
                       - 'null'
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -12064,7 +12061,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: order-not-found
@@ -12111,8 +12108,8 @@ paths:
                       - object
                       - 'null'
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -12137,7 +12134,7 @@ paths:
                         instance:
                           type: string
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: order-not-found
@@ -12545,7 +12542,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: order-not-found
@@ -13440,7 +13437,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: invoice-not-found
@@ -13680,7 +13677,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: invoice-not-found
@@ -13710,7 +13707,7 @@ paths:
                         instance:
                           type: string
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: document-not-generated
@@ -14036,7 +14033,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: proforma-invoice-not-found
@@ -14078,7 +14075,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: proforma-invoice-not-found
@@ -14101,7 +14098,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: document-not-generated
@@ -14615,7 +14612,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: credit-note-not-found
@@ -14856,8 +14853,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -14873,7 +14870,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: credit-note-not-found
@@ -14935,7 +14932,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: credit-note-not-found
@@ -14956,7 +14953,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: credit-note-already-restocked
@@ -15530,8 +15527,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -15547,7 +15544,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: invalid-request-data
@@ -15597,7 +15594,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: credit-note-not-found
@@ -15618,7 +15615,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: document-not-generated
@@ -15962,7 +15959,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: delivery-note-not-found
@@ -16004,7 +16001,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: delivery-note-not-found
@@ -16025,7 +16022,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: document-not-generated
@@ -16258,19 +16255,19 @@ paths:
               examples:
                 example1:
                   value:
-                    data: ~
-                    errors: ~
+                    data: 'null'
+                    errors: 'null'
                 example2:
                   value:
-                    data: ~
-                    errors: ~
+                    data: 'null'
+                    errors: 'null'
                 example3:
                   value:
-                    data: ~
-                    errors: ~
+                    data: 'null'
+                    errors: 'null'
                 example4:
                   value:
-                    data: ~
+                    data: 'null'
                     errors:
                       -
                         errorCode: unknown-product
@@ -16297,7 +16294,7 @@ paths:
               examples:
                 example1:
                   value:
-                    data: ~
+                    data: 'null'
                     errors:
                       -
                         errorCode: unknown-product
@@ -16305,7 +16302,7 @@ paths:
                         instance: '82'
                 example2:
                   value:
-                    data: ~
+                    data: 'null'
                     errors:
                       -
                         errorCode: stock-change-not-allowed
@@ -17116,7 +17113,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: customer-not-found
@@ -17340,8 +17337,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Deletion of customer'
       operationId: 'Deletion of customer'
       description: ''
@@ -17738,8 +17735,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Deletion of customer account'
       operationId: 'Deletion of customer account'
       description: ''
@@ -18105,8 +18102,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Deletion of customer delivery address'
       operationId: 'Deletion of customer delivery address'
       description: ''
@@ -18421,8 +18418,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Deletion of customer remark'
       operationId: 'Deletion of customer remark'
       description: ''
@@ -18732,7 +18729,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: template-include-location-invalid
@@ -18813,8 +18810,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Removal of code'
       operationId: 'Removal of code'
       description: "This call can be used to delete the existing code from the given location. if the code for the given `location` (position) does not exist, the\nAPI returns `404 NOT FOUND`"
@@ -18913,7 +18910,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: payment-not-found
@@ -18934,7 +18931,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: invalid-request-data
@@ -19125,7 +19122,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: webhook-not-found
@@ -19189,7 +19186,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: webhook-not-found
@@ -19258,8 +19255,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -19275,7 +19272,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: webhook-not-found
@@ -19705,7 +19702,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: shipping-request-not-found
@@ -19726,7 +19723,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: cart-data-missing
@@ -19793,7 +19790,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: shipping-request-not-found
@@ -19814,7 +19811,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: cart-data-missing
@@ -20093,7 +20090,7 @@ paths:
                 data:
                   status: open
                   orderCode: '20200010'
-                errors: ~
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -20109,7 +20106,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: shipping-request-not-found
@@ -20368,8 +20365,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
       summary: 'Payment method deletion'
       operationId: 'Payment method deletion'
       description: 'Deletes payment method by guid. Only payment methods related to your addon may be deleted. Private API tokens aren''t currently supported.'
@@ -20866,7 +20863,7 @@ paths:
                                 - cart
                                 - free
                                 - beforeDiscount
-                                - ~
+                                - 'null'
                             validFrom:
                               $ref: '#/components/schemas/typeDate'
                             validTo:
@@ -21011,7 +21008,7 @@ paths:
                                 - cart
                                 - free
                                 - beforeDiscount
-                                - ~
+                                - 'null'
                             validFrom:
                               $ref: '#/components/schemas/typeDate'
                             validTo:
@@ -21247,8 +21244,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -21264,7 +21261,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: discount-coupon-not-found
@@ -21361,7 +21358,7 @@ paths:
                                 - cart
                                 - free
                                 - beforeDiscount
-                                - ~
+                                - 'null'
                             validFrom:
                               $ref: '#/components/schemas/typeDate'
                             validTo:
@@ -21486,8 +21483,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -21503,7 +21500,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: order-not-found
@@ -21533,7 +21530,7 @@ paths:
                         instance:
                           type: string
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: discount-coupon-already-used
@@ -21834,8 +21831,8 @@ paths:
                   - errors
                 additionalProperties: false
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -21851,7 +21848,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: discount-coupon-template-not-found
@@ -21872,7 +21869,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: discount-coupon-template-used
@@ -22171,7 +22168,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: xy-discount-not-found
@@ -22282,8 +22279,8 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
-                errors: ~
+                data: 'null'
+                errors: 'null'
         404:
           description: 'Not Found'
           headers: {  }
@@ -22299,7 +22296,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: xy-discount-not-found
@@ -22953,7 +22950,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: job-detail-try-counter-exceeded-limit
@@ -22974,7 +22971,7 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
               example:
-                data: ~
+                data: 'null'
                 errors:
                   -
                     errorCode: job-not-found
@@ -23143,7 +23140,7 @@ paths:
                                 - add
                                 - edit
                                 - delete
-                                - ~
+                                - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -24069,7 +24066,7 @@ components:
             - unverified
             - verified
             - waiting
-            - ~
+            - 'null'
         taxId:
           type:
             - string
@@ -25748,8 +25745,9 @@ components:
             - string
             - 'null'
           $ref: '#/components/schemas/typeDateTime'
-          description: 'Date of publishing'
-          example: '2014-11-19T00:00:00+0100'
+          description: 'Date of publishing - test'
+          examples:
+            - '2014-11-19T00:00:00+0100'
         visible:
           type: boolean
           description: 'Flag whether the article is visible on web'
