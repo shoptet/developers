@@ -9003,7 +9003,7 @@ paths:
           description: 'Price list ID'
           required: true
           examples:
-            - '1'
+            - 1
           schema:
             type: number
         -
@@ -9753,7 +9753,7 @@ paths:
                               type: string
                               description: 'URL to administration leading to order detail. URL keeps the administration language settings.'
                               examples:
-                                'https://www.domena-eshopu.cz/admin/objednavky-detail?id': '2"'
+                                - 'https://www.domena-eshopu.cz/admin/objednavky-detail?id=2'
                             status:
                               type:
                                 - object
@@ -10188,7 +10188,7 @@ paths:
                             type: string
                             description: 'URL to administration leading to order detail. URL keeps the administration language settings.'
                             examples:
-                              'https://www.domena-eshopu.cz/admin/objednavky-detail?id': '2"'
+                              - 'https://www.domena-eshopu.cz/admin/objednavky-detail?id=2'
                           status:
                             type:
                               - object
@@ -11517,7 +11517,7 @@ paths:
                             type: string
                             description: 'URL to administration leading to order detail. URL keeps the administration language settings.'
                             examples:
-                              'https://www.domena-eshopu.cz/admin/objednavky-detail?id': '2"'
+                              - 'https://www.domena-eshopu.cz/admin/objednavky-detail?id=2'
                           status:
                             type:
                               - object
@@ -12091,7 +12091,7 @@ paths:
                             type: string
                             description: 'URL to administration leading to order detail. URL keeps the administration language settings.'
                             examples:
-                              'https://www.domena-eshopu.cz/admin/objednavky-detail?id': '2"'
+                              - 'https://www.domena-eshopu.cz/admin/objednavky-detail?id=2'
                           status:
                             type:
                               - object
@@ -12868,7 +12868,7 @@ paths:
                             type: string
                             description: 'URL to administration leading to order detail. URL keeps the administration language settings.'
                             examples:
-                              'https://www.domena-eshopu.cz/admin/objednavky-detail?id': '2"'
+                              - 'https://www.domena-eshopu.cz/admin/objednavky-detail?id=2'
                           status:
                             type:
                               - object
@@ -13839,7 +13839,7 @@ paths:
                             type: string
                             description: 'URL to administration leading to order detail. URL keeps the administration language settings.'
                             examples:
-                              'https://www.domena-eshopu.cz/admin/objednavky-detail?id': '2"'
+                              - 'https://www.domena-eshopu.cz/admin/objednavky-detail?id=2'
                           status:
                             type:
                               - object
@@ -14458,7 +14458,7 @@ paths:
                             type: string
                             description: 'URL to administration leading to order detail. URL keeps the administration language settings.'
                             examples:
-                              'https://www.domena-eshopu.cz/admin/objednavky-detail?id': '2"'
+                              - 'https://www.domena-eshopu.cz/admin/objednavky-detail?id=2'
                           status:
                             type:
                               - object
@@ -15104,7 +15104,7 @@ paths:
                             type: string
                             description: 'URL to administration leading to order detail. URL keeps the administration language settings.'
                             examples:
-                              'https://www.domena-eshopu.cz/admin/objednavky-detail?id': '2"'
+                              - 'https://www.domena-eshopu.cz/admin/objednavky-detail?id=2'
                           status:
                             type:
                               - object
@@ -16080,7 +16080,7 @@ paths:
                             type: string
                             description: 'URL to administration leading to order detail. URL keeps the administration language settings.'
                             examples:
-                              'https://www.domena-eshopu.cz/admin/objednavky-detail?id': '2"'
+                              - 'https://www.domena-eshopu.cz/admin/objednavky-detail?id=2'
                           status:
                             type:
                               - object
@@ -18724,7 +18724,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            documentRemark: 'remark on the document (can be `null`)'
+                            description: 'remark on the document (can be `null`)'
                             examples:
                               - 'This is a remark'
                           vatPayer:
@@ -18945,7 +18945,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            documentRemark: 'remark on the document (can be `null`)'
+                            description: 'remark on the document (can be `null`)'
                             examples:
                               - 'This is a remark'
                           vatPayer:
@@ -19346,7 +19346,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            documentRemark: 'remark on the document (can be `null`)'
+                            description: 'remark on the document (can be `null`)'
                             examples:
                               - 'This is a remark'
                           vatPayer:
@@ -19623,7 +19623,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            documentRemark: 'remark on the document (can be `null`)'
+                            description: 'remark on the document (can be `null`)'
                             examples:
                               - 'This is a remark'
                           vatPayer:
@@ -33507,42 +33507,45 @@ components:
             - string
             - 'null'
     shipmentCustomer:
-      name:
-        type:
-          - string
-          - 'null'
-      company:
-        type:
-          - string
-          - 'null'
-      street:
-        type:
-          - string
-          - 'null'
-      city:
-        type:
-          - string
-          - 'null'
-      zipCode:
-        type:
-          - string
-          - 'null'
-      countryCode:
-        type:
-          - string
-          - 'null'
-      phone:
-        type:
-          - string
-          - 'null'
-      email:
-        type:
-          - string
-          - 'null'
-      note:
-        type:
-          - string
-          - 'null'
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+            - string
+            - 'null'
+        company:
+          type:
+            - string
+            - 'null'
+        street:
+          type:
+            - string
+            - 'null'
+        city:
+          type:
+            - string
+            - 'null'
+        zipCode:
+          type:
+            - string
+            - 'null'
+        countryCode:
+          type:
+            - string
+            - 'null'
+        phone:
+          type:
+            - string
+            - 'null'
+        email:
+          type:
+            - string
+            - 'null'
+        note:
+          type:
+            - string
+            - 'null'
     shipmentPrice:
       type: object
       additionalProperties: false
