@@ -9002,16 +9002,14 @@ paths:
           in: path
           description: 'Price list ID'
           required: true
-          examples:
-            - 1
+          example: 1
           schema:
             type: number
         -
           name: code
           in: query
           description: 'Product variant code'
-          examples:
-            - 106/BIL
+          example: 106/BIL
           schema:
             type: string
         -
@@ -20830,12 +20828,10 @@ paths:
                       properties:
                         productCode:
                           type: string
-                          examples:
-                            - 106/BIL
+                          example: 106/BIL
                         realStock:
                           type: number
-                          examples:
-                            - 10
+                          example: 10
   '/api/stocks/{stockId}/movements/last':
     get:
       responses:
@@ -27048,8 +27044,7 @@ paths:
                   properties:
                     orderCode:
                       type: string
-                      examples:
-                        - '2015000010'
+                      example: '2015000010'
                       description: 'Code of order'
   /api/discount-coupons/templates:
     get:
