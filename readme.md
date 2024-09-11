@@ -30,7 +30,7 @@ Also check postman documentation for more details: [Fork a collection](https://l
 - Navigate to the workspace where you saved the forked collection.
 - You’ll now find the forked **Shoptet API** collection under the **Collections** tab, ready for you to use and modify.
 
-Now you have your own copy of the Shoptet API collection!
+Now you have your own copy of the Shoptet API collection! If you want to add changes from the original collection, you can do so by click on `pull changes` in collection settings.
 
 ## Import `openapi.yaml` into Postman as a Collection
 
