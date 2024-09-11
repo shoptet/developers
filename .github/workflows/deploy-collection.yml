@@ -1,7 +1,9 @@
 name: Deploy collection
 on:
   push:
-    branches: [master, main, postman-collection]
+    branches: [master]
+    paths:
+      - openapi/openapi.yaml
 jobs:
   build:
     runs-on: ubuntu-latest
