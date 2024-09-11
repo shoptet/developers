@@ -1,0 +1,15 @@
+name: Deploy collection
+on:
+  push:
+    branches: [master, main, postman-collection]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aanimesh23/openapi-publish-action@v1
+        with:
+          collectionName: Shoptet API
+          workspaceName: Shoptet public API Workspace
+          postmanApiKey: ${{ secrets.POSTMAN_API_KEY }}
+          openApiSpec: ./openapi/openapi.yaml
