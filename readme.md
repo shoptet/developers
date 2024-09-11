@@ -60,7 +60,8 @@ Now you can explore the API endpoints and use them directly within Postman!
 ## Collection settings
 
 1. Click the **Shoptet API** collection name.
-2. Go to **Variables** tab.
-3. Set your access token into the `shoptetAccessToken` variable.
-4. You can set `baseUrl` variable in the same place.
+2. Go to **Authorization** tab.
+3. Set your access token into the `value` of `Shoptet-Access-Token` key.
+4. Go to **Variables** tab.
+4. You can set `baseUrl` variable here.
 
