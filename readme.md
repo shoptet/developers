@@ -12,8 +12,7 @@ Also check postman documentation for more details: [Fork a collection](https://l
 
 ### Step 1: Navigate to Shoptet Public API Workspace
 - Launch Postman on your desktop or in the browser.
-- In the top-left, click on the **Workspaces** dropdown.
-- In the search bar, type **Shoptet Public API** and select the public workspace from the list.
+- In the search bar in the top header of app, type **Shoptet Public API** and select collection from Shoptet public API Workspace.
 
 ### Step 2: Locate the Shoptet API Collection
 - Once inside the Shoptet Public API Workspace, go to the **Collections** tab.
@@ -27,7 +26,7 @@ Also check postman documentation for more details: [Fork a collection](https://l
 - **It’s recommended to check `watch original collection` to get notified about changes in the original collection.**
 - Click **Fork Collection**.
 
-## Step 4: Access Your Forked Collection
+### Step 4: Access Your Forked Collection
 - Navigate to the workspace where you saved the forked collection.
 - You’ll now find the forked **Shoptet API** collection under the **Collections** tab, ready for you to use and modify.
 
@@ -36,6 +35,7 @@ Now you have your own copy of the Shoptet API collection!
 ## Import `openapi.yaml` into Postman as a Collection
 
 ### Step 1: Upload the `openapi.yaml` File
+- Download the [openapi.yaml](https://github.com/shoptet/developers/blob/master/openapi/openapi.yaml) file from this repository.
 - Launch Postman on your desktop or in the browser.
 - In the top-left corner of Postman, click the **Import** button.
 - A pop-up window will appear.
