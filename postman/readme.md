@@ -1,6 +1,6 @@
 # Postman collection for Shoptet API
 
-This postman collection is **deprecated**. We recommend using the [Shoptet Public API Workspace](https://www.postman.com/orange-rocket-771692/shoptet-public-api-workspace) instead.
+This postman collection is **deprecated**. We recommend using the [Shoptet Public API Workspace](https://www.postman.com/shoptet-developers/shoptet-public-api-workspace) instead.
 see readme.md in the root of this repository for more details.
 
 If you use Postman as an API platform for building and using APIs, we provide you a complex collection of Shoptet API.

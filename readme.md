@@ -6,7 +6,7 @@ You have 2 options how to import our postman collection (created from [openApi s
 
 ## Fork `Shoptet API Collection` from `Shoptet Public API Workspace` (recommended)
 
-See [Shoptet Public API Workspace](https://www.postman.com/orange-rocket-771692/shoptet-public-api-workspace).
+See [Shoptet Public API Workspace](https://www.postman.com/shoptet-developers/shoptet-public-api-workspace).
 
 Also check postman documentation for more details: [Fork a collection](https://learning.postman.com/docs/collaborating-in-postman/forking-collections/).
 

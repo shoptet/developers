@@ -18,7 +18,7 @@ info:
       See https://developers.shoptet.com/premium for more information about API access.
     # Basic principles of working with API
 
-    ## How to call API
+    ## How to call our API
 
     API supports communication in JSON format. The URL for calling API requests is https://api.myshoptet.com. The API calls
     (endpoints and message formats) are common for private as well as addons access, it however uses different authentication
