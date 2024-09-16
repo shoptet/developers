@@ -18,7 +18,7 @@ info:
       See https://developers.shoptet.com/premium for more information about API access.
     # Basic principles of working with API
 
-    ## How to call our API
+    ## How to call API
 
     API supports communication in JSON format. The URL for calling API requests is https://api.myshoptet.com. The API calls
     (endpoints and message formats) are common for private as well as addons access, it however uses different authentication
@@ -501,18 +501,85 @@ info:
     3 | Cash (cz: Hotově)
     4 | Card (cz: Kartou)
     ## VAT modes
-                 
-                 
+    
+    
     Value |
     ------|
     Normal |
     One Stop Shop |
     Mini One Stop Shop |
-                 
+    
     Reverse charge |
-                 
+    
     Outside the EU |
 
+    # Postman collection for Shoptet API
+
+    If you use Postman as an API platform for building and using APIs, we provide you a complex collection of Shoptet API.
+    You have 2 options how to import our postman collection (created from [openApi schema](https://swagger.io/specification/) - openapi.yaml ) into your postman client
+
+    ## Fork Shoptet API Collection from Shoptet Public API Workspace (recommended)
+
+    See [Shoptet Public API Workspace](https://www.postman.com/shoptet-developers/shoptet-public-api-workspace).
+    Also check postman documentation for more details: [Fork a collection](https://learning.postman.com/docs/collaborating-in-postman/forking-collections/).
+
+    ### Step 1: Navigate to Shoptet Public API Workspace
+
+    - Launch Postman on your desktop or in the browser.
+    - In the search bar in the top header of app, type **Shoptet Public API** and select collection from Shoptet public API Workspace.
+
+    ### Step 2: Locate the Shoptet API Collection
+
+    - Once inside the Shoptet Public API Workspace, go to the **Collections** tab.
+    - Find the **Shoptet API** collection.
+
+    ### Step 3: Fork the Collection
+
+    - Click on the **Shoptet API** collection to open it.
+    - In the collection view, click the **Fork** button in the top-right corner.
+    - In the fork dialog, choose a name for your forked collection.
+    - Select the workspace where you want to save the forked collection.
+    - **It’s recommended to check `watch original collection` to get notified about changes in the original collection.**
+    - Click **Fork Collection**.
+
+    ### Step 4: Access Your Forked Collection
+
+    - Navigate to the workspace where you saved the forked collection.
+    - You’ll now find the forked **Shoptet API** collection under the **Collections** tab, ready for you to use and modify.
+    Now you have your own copy of the Shoptet API collection! If you want to add changes from the original collection, you can do so by click on `pull changes` in collection settings.
+
+    ## Import openapi.yaml into Postman as a Collection
+
+    ### Step 1: Upload the `openapi.yaml` File
+
+    - Download the [openapi.yaml](https://github.com/shoptet/developers/blob/master/openapi/openapi.yaml) file from our developers [repository](https://github.com/shoptet/developers).
+    - Launch Postman on your desktop or in the browser.
+    - In the top-left corner of Postman, click the **Import** button.
+    - A pop-up window will appear.
+    - Drag and drop your `openapi.yaml` file into the window, or click **Upload Files** and browse to the file's location.
+
+    ### Step 2: Verify OpenAPI Import
+
+    - Postman will automatically recognize the OpenAPI schema.
+    - It will display a preview of the API schema.
+
+    ### Step 3: Import as Collection
+
+    - Once the file is recognized, click **Import**.
+    - Postman will convert the OpenAPI schema into a collection of requests, based on the defined endpoints in the `openapi.yaml` file.
+
+    ### Step 4: Access the Imported Collection
+
+    - After the import is successful, go to the **Collections** tab.
+    - You’ll find your new collection, named after the OpenAPI schema, containing all the API requests generated from the file.
+
+    Now you can explore the API endpoints and use them directly within Postman!
+    ## Collection settings
+    1. Click the **Shoptet API** collection name.
+    2. Go to **Authorization** tab.
+    3. Set your access token into the `value` of `Shoptet-Access-Token` key.
+    4. Go to **Variables** tab.
+    5. You can set `baseUrl` variable here.
     # Last changes
 
     Last API changes are published on the [API news] page (https://developers.shoptet.com/category/api/).
@@ -1563,6 +1630,8 @@ paths:
           example: 'orderAdditionalFields,orderStatuses,paymentMethods,shippingMethods,imageCuts,countries,cashDesk,languages'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/eshop/design:
     get:
       responses:
@@ -1815,6 +1884,9 @@ paths:
       description: 'Information about queried e-shop template setting (defined by token).          `backgroundImage` value can internally contain the link to a transparent        reference gif, in this case the API returns a NULL value.'
       tags:
         - Eshop
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/eshop/customer-fields:
     get:
       responses:
@@ -1953,6 +2025,9 @@ paths:
       description: 'Information about queried e-shop mandatory fields setting (defined by token).  Returns the values, which are set by e-shop administrator in  Settings -> Customers -> Mandatory fields.'
       tags:
         - Eshop
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products:
     get:
       responses:
@@ -2230,6 +2305,8 @@ paths:
           example: '2028-02-28T17:04:47+0100'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -2895,6 +2972,8 @@ paths:
           example: '2028-02-28T17:04:47+0100'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/products/{guid}':
     get:
       responses:
@@ -2953,6 +3032,8 @@ paths:
           example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,recyclingFee,warranty,gifts,alternativeProducts,relatedProducts,relatedVideos,relatedFiles,perStockAmounts,perPricelistPrices'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -3638,6 +3719,8 @@ paths:
           example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,perStockAmounts,sortVariants,perPricelistPrices'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -4322,6 +4405,8 @@ paths:
           example: shop
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     delete:
       responses:
         200:
@@ -4951,6 +5036,8 @@ paths:
           example: '2018-01-01T01:01:01+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/categories:
     get:
       responses:
@@ -4985,6 +5072,9 @@ paths:
       description: 'Returns the list of product categories.'
       tags:
         - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -5182,6 +5272,8 @@ paths:
           example: 5c498fb7-70ac-11e9-9208-08002774f818
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -5568,6 +5660,8 @@ paths:
           example: 5c498fb7-70ac-11e9-9208-08002774f818
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -5793,6 +5887,8 @@ paths:
           example: parameters
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/parametric-categories/{categoryGuid}':
     get:
       responses:
@@ -5923,6 +6019,8 @@ paths:
           example: 5c498fb7-70ac-11e9-9208-08002774f818
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products/flags:
     get:
       responses:
@@ -5995,6 +6093,9 @@ paths:
       description: 'Returns the list of product flags within the e-shop.'
       tags:
         - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         200:
@@ -6306,6 +6407,9 @@ paths:
       description: 'Returns the list of product measure units within the e-shop.'
       tags:
         - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products/availabilities:
     get:
       responses:
@@ -6441,6 +6545,9 @@ paths:
       description: 'Returns the list of product availabilities within the e-shop and default availabilities ids.'
       tags:
         - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products/surcharge-parameters:
     get:
       responses:
@@ -6548,6 +6655,9 @@ paths:
       description: 'Returns the list of available surcharge parameters with their available values within the e-shop.'
       tags:
         - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -6881,6 +6991,8 @@ paths:
           example: povinny
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -7548,6 +7660,9 @@ paths:
       description: 'Returns the list of available filtering parameters with their available values within the e-shop.'
       tags:
         - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -7774,6 +7889,8 @@ paths:
           example: material
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -8323,6 +8440,8 @@ paths:
           example: values
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -8491,6 +8610,8 @@ paths:
           example: barva
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -8907,6 +9028,9 @@ paths:
       description: 'Returns the list of recycling fee categories within the e-shop.'
       tags:
         - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products/warranties:
     get:
       responses:
@@ -8967,6 +9091,9 @@ paths:
       description: 'Returns list of product warranties.'
       tags:
         - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/products/{guid}/alternativeProducts':
     get:
       responses:
@@ -9004,6 +9131,8 @@ paths:
           example: 93bc0dbe-7481-11e8-8216-002590dad85e
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
       description: |-
         Returns list of alternative products related to product defined by `guid`, list is ordered by priority parameter.
         If `Pair reciprocally` option (`Settings > Product > Related and Alternative products`) is enabled, list of
@@ -9179,6 +9308,8 @@ paths:
           example: 93bc0dbe-7481-11e8-8216-002590dad85e
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
       description: |-
         Returns list of related products related to product defined by `guid`, list is ordered by priority parameter.
         If `Pair reciprocally` option (`Settings > Product > Related and Alternative products`) is enabled, list of
@@ -9370,6 +9501,9 @@ paths:
       description: ''
       tags:
         - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/products/{guid}/gifts':
     get:
       responses:
@@ -9405,6 +9539,8 @@ paths:
           example: 93bc0dbe-7481-11e8-8216-002590dad85e
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
       description: 'Returns list of gifts related (product variants) to product.'
       tags:
         - Products
@@ -9705,6 +9841,8 @@ paths:
           example: '2011000002'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/pricelists:
     get:
       responses:
@@ -9736,6 +9874,9 @@ paths:
       description: 'Listing of all price lists set up in e-shop. Does not contain the paging, always lists all price lists.'
       tags:
         - 'Price lists'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -9870,6 +10011,8 @@ paths:
           example: 94fe7ffc-7481-11e8-8216-002590dad85e
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -10441,6 +10584,8 @@ paths:
           example: '200'
           schema:
             type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/orders:
     get:
       responses:
@@ -10724,6 +10869,8 @@ paths:
           description: 'Order source filtering according to source id. For more information, see List of order sources endpoint.'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -12212,6 +12359,8 @@ paths:
           description: 'Order source filtering according to source id. For more information, see List of order sources endpoint.'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/orders/{code}':
     get:
       responses:
@@ -12761,6 +12910,8 @@ paths:
           example: 'notes,images,shippingDetails,stockLocation,productFlags'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     delete:
       responses:
         200:
@@ -16499,6 +16650,8 @@ paths:
           example: '2018000004'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/orders/{code}/history':
     get:
       responses:
@@ -16587,6 +16740,8 @@ paths:
           example: '2018000067'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -17489,6 +17644,9 @@ paths:
       description: 'Detailed information on order status within the e-shop.'
       tags:
         - Orders
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/orders/sources:
     get:
       responses:
@@ -17535,6 +17693,9 @@ paths:
       description: 'Detailed information on current possible order sources within the e-shop.'
       tags:
         - Orders
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/orders/changes:
     get:
       responses:
@@ -17604,6 +17765,8 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/orders/gifts:
     get:
       responses:
@@ -17635,6 +17798,9 @@ paths:
       description: 'This endpoint allow get, add or delete order related gifts. Gifts is relation to product variant by its `code` identifier and is ordered by `priority` field'
       tags:
         - Orders
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         200:
@@ -17785,6 +17951,9 @@ paths:
         - The behavior of the gifts - set if gifts are dependent on each product or whole order (stock dependent/independent) - Offer to wholesale customers - define if customer with wholesale module have gifts offer available - Gift to whole order or each product
       tags:
         - Orders
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -18022,6 +18191,8 @@ paths:
           description: 'filtering according to variable symbol of invoice'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/invoices/snapshot:
     get:
       responses:
@@ -18186,6 +18357,8 @@ paths:
           example: 'true'
           schema:
             type: boolean
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/invoices/{code}':
     get:
       responses:
@@ -18408,6 +18581,8 @@ paths:
           example: '2018000004'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/orders/{code}/invoice':
     post:
       responses:
@@ -19021,6 +19196,8 @@ paths:
           example: '2018000004'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/invoices/changes:
     get:
       responses:
@@ -19090,6 +19267,8 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/proforma-invoices:
     get:
       responses:
@@ -19213,6 +19392,8 @@ paths:
           description: 'filtering according to variable symbol of proforma invoice'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/proforma-invoices/{code}':
     get:
       responses:
@@ -19431,6 +19612,8 @@ paths:
           example: surchargeParameters
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/proforma-invoices/{code}/pdf':
     get:
       responses:
@@ -19488,6 +19671,8 @@ paths:
           example: '2018000035'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/proforma-invoices/changes:
     get:
       responses:
@@ -19567,6 +19752,8 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/proof-payments:
     get:
       responses:
@@ -19658,6 +19845,8 @@ paths:
           example: 'true'
           schema:
             type: boolean
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -19869,6 +20058,8 @@ paths:
           example: P--2015000170-1
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -20180,6 +20371,8 @@ paths:
           example: '2015000001'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -20293,6 +20486,8 @@ paths:
           example: '2015000170'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -20515,6 +20710,8 @@ paths:
           example: P-2014000004-01
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/proof-payments/changes:
     get:
       responses:
@@ -20621,6 +20818,8 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/credit-notes:
     get:
       responses:
@@ -20750,6 +20949,8 @@ paths:
           description: 'filtering according to variable symbol of credit note'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/credit-notes/snapshot:
     get:
       responses:
@@ -20918,6 +21119,8 @@ paths:
           example: surchargeParameters
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/credit-notes/{code}':
     get:
       responses:
@@ -21149,6 +21352,8 @@ paths:
           example: surchargeParameters
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         201:
@@ -22340,6 +22545,8 @@ paths:
           example: '0000000002'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/credit-notes/changes:
     get:
       responses:
@@ -22409,6 +22616,8 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/delivery-notes:
     get:
       responses:
@@ -22499,6 +22708,8 @@ paths:
           description: 'sorting according to number of order'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/delivery-notes/snapshot:
     get:
       responses:
@@ -22609,6 +22820,8 @@ paths:
           example: 'true'
           schema:
             type: boolean
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/delivery-notes/{code}':
     get:
       responses:
@@ -22743,6 +22956,8 @@ paths:
           example: surchargeParameters
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/delivery-notes/{code}/pdf':
     get:
       responses:
@@ -22800,6 +23015,8 @@ paths:
           example: '0000000001'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/stocks:
     get:
       responses:
@@ -22834,6 +23051,9 @@ paths:
       description: 'Returns the list of stocks. There are usually not many stocks, therefore the endpoint returns all of  them without [paging](/#section/Basic-principles-of-working-with-API/Paging).'
       tags:
         - Stocks
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/stocks/{stockId}':
     get:
       responses:
@@ -22872,6 +23092,8 @@ paths:
           example: '1'
           schema:
             type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/stocks/{stockId}/movements':
     get:
       responses:
@@ -23012,6 +23234,8 @@ paths:
           example: 'orderCode,productGuid,sumAmount'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -23208,6 +23432,8 @@ paths:
           example: '1'
           schema:
             type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/stocks/{stockId}/supplies':
     get:
       responses:
@@ -23335,9 +23561,13 @@ paths:
           in: query
           description: |
             return only product supplies, which amount has been changed since date value of this parameter.
-                                         It support maximum of 30 days in history. (optional, string). ISO 8601 format ("2017-12-12T22:08:01+0100"). Optional.
+            
+            
+            It support maximum of 30 days in history. (optional, string). ISO 8601 format ("2017-12-12T22:08:01+0100"). Optional.
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/suppliers:
     get:
       responses:
@@ -23406,6 +23636,9 @@ paths:
       description: 'Returns the list of brands. Supports the [paging](/#section/Basic-principles-of-working-with-API/Paging)'
       tags:
         - Brands
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -23550,6 +23783,8 @@ paths:
           example: 1e3f3f3f-3f3f-63ca-b93f-02423f1f0005
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -23884,6 +24119,8 @@ paths:
           example: '+420123456789'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -24241,6 +24478,8 @@ paths:
           example: '2018-12-31T00:00:00+0100'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/customers/{guid}':
     get:
       responses:
@@ -24460,6 +24699,8 @@ paths:
           example: 443cad54-73bc-11e8-8216-002590dad85e
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -24834,6 +25075,8 @@ paths:
           example: 45f0cc8c-b7a9-11ea-a7a1-08002746ad91
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -25066,6 +25309,8 @@ paths:
           example: 460e4fbe-b7a9-11ea-82ab-08002746ad91
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -25295,6 +25540,8 @@ paths:
           example: 45f0cc8c-b7a9-11ea-a7a1-08002746ad91
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -25482,6 +25729,8 @@ paths:
           example: 2592b624-b73f-11ea-8a73-08002746ad91
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -25733,6 +25982,8 @@ paths:
           example: 45f0cc8c-b7a9-11ea-a7a1-08002746ad91
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -25890,6 +26141,8 @@ paths:
           example: '1'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -26089,6 +26342,8 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/customers/regions:
     get:
       responses:
@@ -26149,6 +26404,9 @@ paths:
       description: 'Returns the list of customer regions. The regions are ordered by id. The list is not paginated.'
       tags:
         - Customers
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/customers/groups:
     get:
       responses:
@@ -26270,6 +26528,9 @@ paths:
       description: 'Returns list of customer groups ordered by priority. List is not paginated.'
       tags:
         - Customers
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/template-include:
     get:
       responses:
@@ -26322,6 +26583,9 @@ paths:
          it cannot see other codes of other addons, not even from the same developer. Also, it does not see the code inserted within the administration.
       tags:
         - Templates
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         200:
@@ -26511,6 +26775,8 @@ paths:
           example: os8FtURz7PpO46Z87euEAoBAn9RClB2d
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -26665,6 +26931,9 @@ paths:
         The addon does not have any access to another addon (not even for the same e-shop, or two addons from the same developer).
       tags:
         - Webhooks
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -26792,6 +27061,8 @@ paths:
           example: '3'
           schema:
             type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -27024,6 +27295,8 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/shipping-methods:
     get:
       responses:
@@ -27161,6 +27434,9 @@ paths:
         it always returns all methods at once.
       tags:
         - 'Shipping methods'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         200:
@@ -27423,7 +27699,7 @@ paths:
                           additionalProperties: false
                           properties:
                             productGuid:
-                              $ref: '#/components/schemas/typeGuid'
+                              $ref: '#/components/schemas/typeGuidUnlimited'
                               description: 'unique product indicator'
                             code:
                               type: string
@@ -27529,6 +27805,8 @@ paths:
           example: ecb3e399-2f57-11eb-8853-0800275177b9
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     put:
       responses:
         200:
@@ -27889,6 +28167,8 @@ paths:
           example: ecb3e399-2f57-11eb-8853-0800275177b9
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/payment-methods:
     get:
       responses:
@@ -28021,6 +28301,9 @@ paths:
       description: 'The endpoint returns the listing of all available payment methods and details about their settings. Paging is not used, it always returns all methods at once.'
       tags:
         - 'Payment methods'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         200:
@@ -28290,6 +28573,8 @@ paths:
           example: '2023-02-01T17:04:47+0100'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -28403,6 +28688,9 @@ paths:
       description: 'The e-mail distribution list named "newsletters" is the system one and is always available  (if the e-shop has the module installed). This e-mail distribution list includes the e-mails  of all customers who agreed to receiving e-mails.'
       tags:
         - 'E-mail distribution lists'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -28535,6 +28823,8 @@ paths:
           example: newsletters
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -28693,6 +28983,8 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/discount-coupons:
     get:
       responses:
@@ -28872,6 +29164,8 @@ paths:
           example: '2028-05-28'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -29227,6 +29521,8 @@ paths:
           example: cart
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/discount-coupons/{code}':
     delete:
       responses:
@@ -29735,6 +30031,9 @@ paths:
       description: 'Templates of discount coupons within the e-shop. All templates are listed at a time. Without possibility of  paging or filtering.'
       tags:
         - 'Discount coupons'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -30114,6 +30413,8 @@ paths:
           example: '2028-05-28'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -30302,6 +30603,8 @@ paths:
           example: '1'
           schema:
             type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -30584,6 +30887,9 @@ paths:
       description: 'Lists & updates settings of X + Y discounts. Please note, that `enableInCashdesk` setting is not supported on HU projects.'
       tags:
         - 'X + Y discounts'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
         200:
@@ -30752,6 +31058,9 @@ paths:
       description: 'Returns a list of articles with basic info.  Supports [paging](/#section/Basic-principles-of-working-with-API/Paging)'
       tags:
         - Articles
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         200:
@@ -30961,6 +31270,8 @@ paths:
           example: 'true'
           schema:
             type: boolean
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/articles/{articleId}':
     get:
       responses:
@@ -30997,6 +31308,8 @@ paths:
           example: '1'
           schema:
             type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
       tags:
         - Articles
     patch:
@@ -31186,6 +31499,9 @@ paths:
       description: 'Returns a list of article sections.'
       tags:
         - Articles
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/pages:
     get:
       responses:
@@ -31220,6 +31536,9 @@ paths:
       description: 'Returns a list of pages.'
       tags:
         - Pages
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/pages/{pageId}':
     get:
       responses:
@@ -31256,6 +31575,8 @@ paths:
           example: '1'
           schema:
             type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
       tags:
         - Pages
   /api/discussions-posts:
@@ -31321,6 +31642,8 @@ paths:
           example: '2022-12-31T23:59:59+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/system/jobs:
     get:
       responses:
@@ -31423,6 +31746,8 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/system/jobs/{jobId}':
     get:
       responses:
@@ -31559,7 +31884,7 @@ paths:
         Returns information about job. If job is completed, it will contain additional information about job result.
 
         Returns 404 if job does not exist.
-        Returns 403 response if job detail of unprocessed job is requested more than 50 times.
+        Returns 403 response if job detail of unprocessed job is requested more than 10 times.
       tags:
         - 'Job endpoints'
       parameters:
@@ -31571,6 +31896,8 @@ paths:
           example: 3ax1844
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/system/files:
     get:
       responses:
@@ -31612,6 +31939,9 @@ paths:
       description: 'Retrieves your uploaded files that can be copied in supported endpoints to entities within e-shop.'
       tags:
         - Files
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -31806,6 +32136,8 @@ paths:
           example: approved
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
 components:
   securitySchemes:
     shoptetAccessToken:
@@ -31816,6 +32148,14 @@ components:
       type: apiKey
       in: header
       name: Shoptet-Private-Api-Token
+  parameters:
+    DefaultContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/vnd.shoptet.v1.0
   schemas:
     Errors:
       type:
