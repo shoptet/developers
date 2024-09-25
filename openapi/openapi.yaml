@@ -2313,12 +2313,14 @@ paths:
                   type: object
                   minProperties: 1
                   additionalProperties: false
+                  required:
+                    - name
                   properties:
                     name:
                       type: string
                       minLength: 1
                       maxLength: 250
-                      description: 'Product`s name. Mandatory. Maximal length of 250 characters.'
+                      description: 'Product`s name. Maximal length of 250 characters. Mandatory.'
                       examples:
                         - 'Velká čokoláda'
                     isVisible:
@@ -2328,78 +2330,75 @@ paths:
                         - true
                     copyProperties:
                       type: object
-                      description: 'Must exist if set.'
-                      minItems: 1
-                      items:
-                        type: object
-                        additionalProperties: false
-                        description: 'Properties to copy. All properties are optional; if not set, the default value is true.'
+                      additionalProperties: false
+                      description: 'Properties to copy. All properties are optional; if not set, the default value is true.'
+                      minProperties: 1
+                      properties:
+                        generalData:
+                          type: boolean
+                          description: "Whether to copy general data, which includes 'shortDescription', 'description', 'internalNote', 'manufacturer', 'warranty', 'supplier', 'itemType' and 'visibility' (if not set `isVisible` property)."
+                          examples:
+                            - true
+                        images:
+                          type: boolean
+                          description: 'Whether to copy product gallery images.'
+                          examples:
+                            - true
+                        images360:
+                          type: boolean
+                          description: 'Whether to copy product 360° gallery images.'
+                          examples:
+                            - true
+                        pricelist:
+                          type: boolean
+                          description: 'Whether to copy the pricelist with all settings, including any variants from the source product.'
+                          examples:
+                            - true
+                        categories:
+                          type: boolean
+                          description: 'Whether to copy all categories.'
+                          examples:
+                            - true
                         properties:
-                          generalData:
-                            type: boolean
-                            description: "Whether to copy general data, which includes 'shortDescription', 'description', 'internalNote', 'manufacturer', 'warranty', 'supplier', 'itemType' and 'visibility' (if not set `isVisible` property)."
-                            examples:
-                              - true
-                          images:
-                            type: boolean
-                            description: 'Whether to copy product gallery images.'
-                            examples:
-                              - true
-                          images360:
-                            type: boolean
-                            description: 'Whether to copy product 360° gallery images.'
-                            examples:
-                              - true
-                          pricelist:
-                            type: boolean
-                            description: 'Whether to copy the pricelist with all settings, including any variants from the source product.'
-                            examples:
-                              - true
-                          categories:
-                            type: boolean
-                            description: 'Whether to copy all categories.'
-                            examples:
-                              - true
-                          properties:
-                            type: boolean
-                            description: 'Whether to copy properties, which includes `descriptiveParameters` and `surchargeParameters`.'
-                            examples:
-                              - true
-                          related:
-                            type: boolean
-                            description: 'Whether to copy all related properties. It includes `relatedProducts` (only when the relatedProducts module is active), `alternativeProducts` (only when the `alternativeProducts` module is active), `relatedVideos` (only when the `relatedVideos` module is active), `relatedGifts` (only when the `gifts` module is active) and `downPayments` (only when the `downPayments` module is active).'
-                            examples:
-                              - true
-                          advanced:
-                            type: boolean
-                            description: 'Whether to copy advanced properties like `metaDescription`, `appendix`, `xmlFeedName`, `seoTitle`, `IPlatba`, `PayOnline`, `adult`. If `categoryPairing` is set to `true`, the `categoryPairing` settings for Google, Glami, Heureka, Zbozi.cz will be copied.'
-                            examples:
-                              - true
-                          stocks:
-                            type: boolean
-                            description: 'Whether to copy stocks. Available only with active `Stock` module. The pricelist must be also setted to `true` in order for the stock requirements to be copied.'
-                            examples:
-                              - true
-                          globalSaleVat:
-                            type: boolean
-                            description: 'Whether to copy global sale VAT. Available only with active `GlobalSaleVat` module.'
-                            examples:
-                              - true
-                          zboziCzSettings:
-                            type: boolean
-                            description: 'Whether to copy Zboží.cz settings. Available only with active `Seznam` module.'
-                            examples:
-                              - true
-                          heurekaSettings:
-                            type: boolean
-                            description: 'Whether to copy Heureka settings. Available only with active `HeurekaCZ` module.'
-                            examples:
-                              - true
-                          categoryPairing:
-                            type: boolean
-                            description: 'Whether to copy category pairing settings for Google, Glami, Heureka, Zbozi.cz. Property `advanced` must be set to `true`.'
-                            examples:
-                              - true
+                          type: boolean
+                          description: 'Whether to copy properties, which includes `descriptiveParameters` and `surchargeParameters`.'
+                          examples:
+                            - true
+                        related:
+                          type: boolean
+                          description: 'Whether to copy all related properties. It includes `relatedProducts` (only when the relatedProducts module is active), `alternativeProducts` (only when the `alternativeProducts` module is active), `relatedVideos` (only when the `relatedVideos` module is active), `relatedGifts` (only when the `gifts` module is active) and `downPayments` (only when the `downPayments` module is active).'
+                          examples:
+                            - true
+                        advanced:
+                          type: boolean
+                          description: 'Whether to copy advanced properties like `metaDescription`, `appendix`, `xmlFeedName`, `seoTitle`, `IPlatba`, `PayOnline`, `adult`. If `categoryPairing` is set to `true`, the `categoryPairing` settings for Google, Glami, Heureka, Zbozi.cz will be copied.'
+                          examples:
+                            - true
+                        stocks:
+                          type: boolean
+                          description: 'Whether to copy stocks. Available only with active `Stock` module. The pricelist must be also setted to `true` in order for the stock requirements to be copied.'
+                          examples:
+                            - true
+                        globalSaleVat:
+                          type: boolean
+                          description: 'Whether to copy global sale VAT. Available only with active `Global Sale` module.'
+                          examples:
+                            - true
+                        zboziCzSettings:
+                          type: boolean
+                          description: 'Whether to copy Zboží.cz settings. Available only with active `Seznam` module.'
+                          examples:
+                            - true
+                        heurekaSettings:
+                          type: boolean
+                          description: 'Whether to copy Heureka settings. Available only with active `HeurekaCZ` module.'
+                          examples:
+                            - true
+                        categoryPairing:
+                          type: boolean
+                          description: 'Whether to copy category pairing settings for Google, Glami, Heureka, Zbozi.cz. Property `advanced` must be set to `true`.'
+                          examples:
+                            - true
   /api/products/snapshot:
     get:
       responses:
