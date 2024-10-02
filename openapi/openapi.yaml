@@ -25494,7 +25494,9 @@ paths:
                               examples:
                                 - '0.55'
                             priority:
-                              type: integer
+                              type:
+                                - integer
+                                - 'null'
                               description: 'Priority of customer group'
                               examples:
                                 - 100
