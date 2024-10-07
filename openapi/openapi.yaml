@@ -9093,6 +9093,7 @@ paths:
                             - authorized
                             - visible
                             - reaction
+                            - changed
                           properties:
                             date:
                               $ref: '#/components/schemas/typeDateTime'
@@ -9188,6 +9189,9 @@ paths:
                                     - string
                                   examples:
                                     - 'Thank you for your review!'
+                            updated:
+                              $ref: '#/components/schemas/typeDateTime'
+                              description: 'Timestamp whenever the rating is changed'
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -9214,6 +9218,14 @@ paths:
           name: dateTo
           in: query
           description: 'Filter reviews with creation date before date'
+          required: true
+          example: '2019-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: changeTimeFrom
+          in: query
+          description: 'Filter reviews changed after this date (included)'
           required: true
           example: '2019-09-05T00:00:00%2B0000'
           schema:
@@ -15762,12 +15774,18 @@ paths:
                           type: object
                           additionalProperties: false
                           required:
+                            - id
                             - creationTime
                             - text
                             - user
                             - system
                             - type
                           properties:
+                            id:
+                              type: number
+                              description: 'order history identifier'
+                              examples:
+                                - 1
                             creationTime:
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'Creation time of the order history record.'
@@ -15819,11 +15837,18 @@ paths:
         -
           name: code
           in: path
-          description: ''
+          description: 'Order code'
           required: true
           example: '2018000067'
           schema:
             type: string
+        -
+          name: system
+          in: query
+          description: 'allows filtering only system/non-system remarks'
+          example: 'true'
+          schema:
+            type: boolean
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -15849,6 +15874,24 @@ paths:
                           - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
+        403:
+          description: Forbidden
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: order-history-item-exceeded-limit
+                    message: 'Order history item count limit exceeded (100) for order "2018000012".'
+                    instance: 2018000012
         404:
           description: 'Not Found'
           content:
@@ -15906,6 +15949,66 @@ paths:
                       minLength: 1
                       examples:
                         - comment
+  '/api/orders/{code}/history/{id}':
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Order history item deletion failed'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: order-history-deletion-failed
+                    message: 'Cannot delete order history item "2073".'
+                    instance: 2073
+      summary: 'Delete order history item'
+      operationId: deleteOrderHistoryItem
+      description: 'Delete order history item by primary key.'
+      tags:
+        - Orders
+      parameters:
+        -
+          name: code
+          in: path
+          description: 'Order code'
+          required: true
+          example: '2018000067'
+          schema:
+            type: string
+        -
+          name: id
+          in: path
+          description: 'ID of history item'
+          required: true
+          example: '4'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/orders/{code}/notes':
     patch:
       responses:
@@ -29982,6 +30085,582 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/quantity-discounts:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - discounts
+                      - paginator
+                    properties:
+                      discounts:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - id
+                            - title
+                            - validFrom
+                            - validTo
+                            - customerGroups
+                            - priority
+                            - includeUnregisteredCustomers
+                            - status
+                            - isActive
+                          properties:
+                            id:
+                              type: integer
+                              description: 'discount ID'
+                              examples:
+                                - 1
+                            title:
+                              type: string
+                              description: 'discount title'
+                              examples:
+                                - '18 + 4 free'
+                            validFrom:
+                              $ref: '#/components/schemas/typeDate'
+                              description: 'date of discount validity from'
+                              examples:
+                                - '2014-11-19'
+                            validTo:
+                              $ref: '#/components/schemas/typeDate'
+                              description: 'date of discount validity to'
+                              examples:
+                                - '2014-12-19'
+                            customerGroups:
+                              type:
+                                - array
+                                - 'null'
+                              description: 'customer groups connected to discount'
+                              items:
+                                type: object
+                                additionalProperties: false
+                                required:
+                                  - code
+                                  - name
+                                properties:
+                                  code:
+                                    type: string
+                                    description: 'customer group code'
+                                    examples:
+                                      - retail
+                                  name:
+                                    type: string
+                                    description: 'customer group name'
+                                    examples:
+                                      - 'Retail customer'
+                            includeUnregisteredCustomers:
+                              type: boolean
+                              description: 'defines if discount is valid for unregistered customers, default value is `false`'
+                              examples:
+                                - true
+                            priority:
+                              type:
+                                - integer
+                                - 'null'
+                              description: 'priority of the discount'
+                              examples:
+                                - 1
+                            status:
+                              type: string
+                              description: 'status of the discount'
+                              enum:
+                                - available
+                                - unavailable
+                                - expired
+                                - planned
+                              examples:
+                                - active
+                            isActive:
+                              type: boolean
+                              description: 'defines if discount is in active or inactive stage'
+                              examples:
+                                - true
+                      paginator:
+                        $ref: '#/components/schemas/paginator'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'List of quantity discounts'
+      operationId: getListOfQuantityDiscounts
+      description: ''
+      tags:
+        - 'Quantity discounts'
+      parameters:
+        -
+          name: customerGroupCode
+          in: query
+          description: 'customer group code, possible values can be get by customer group list endpoint'
+          example: retail
+          schema:
+            type: string
+        -
+          name: validFrom
+          in: query
+          description: 'date of discount validity - lower limit'
+          example: '2028-05-28'
+          schema:
+            type: string
+        -
+          name: validTo
+          in: query
+          description: 'date of discount validity - upper limit'
+          example: '2028-05-28'
+          schema:
+            type: string
+        -
+          name: status
+          in: query
+          description: 'status of discount, possible values are `available`, `unavailable`, `expired`, `planned`'
+          example: available
+          schema:
+            type: string
+        -
+          name: isActive
+          in: query
+          description: 'whether or not discount is active'
+          example: 'true'
+          schema:
+            type: boolean
+        -
+          name: includeUnregisteredCustomers
+          in: query
+          description: 'whether or not discount is valid for unregistered customers'
+          example: 'true'
+          schema:
+            type: boolean
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - discount
+                    properties:
+                      discount:
+                        $ref: '#/components/schemas/xyDiscount'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'Quantity discount insertion'
+      operationId: createQuantityDiscount
+      description: ''
+      tags:
+        - 'Quantity discounts'
+      requestBody:
+        content:
+          application/vnd.shoptet.v1.0:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - title
+                    - xAmount
+                    - yAmount
+                    - xTargeting
+                    - yTargeting
+                  properties:
+                    title:
+                      type: string
+                      minLength: 1
+                      description: 'discount title'
+                      examples:
+                        - '18 + 4 free'
+                    validFrom:
+                      $ref: '#/components/schemas/typeDate'
+                      description: 'date of discount validity from'
+                      examples:
+                        - '2014-11-19'
+                    validTo:
+                      $ref: '#/components/schemas/typeDate'
+                      description: 'date of discount validity to'
+                      examples:
+                        - '2014-12-19'
+                    customerGroupCodes:
+                      type:
+                        - array
+                        - 'null'
+                      minItems: 1
+                      description: 'customer groups connected to discount'
+                      items:
+                        type: string
+                        examples:
+                          - retail
+                    includeUnregisteredCustomers:
+                      type: boolean
+                      description: 'defines if discount is valid for unregistered customers, default value is `false`.'
+                      examples:
+                        - true
+                    xAmount:
+                      type: string
+                      $ref: '#/components/schemas/typePositiveAmount'
+                      description: 'discount amount in X axis'
+                      examples:
+                        - '3.000'
+                    yAmount:
+                      type: string
+                      $ref: '#/components/schemas/typePositiveAmount'
+                      description: 'amount of products get by discount'
+                      examples:
+                        - '1.000'
+                    description:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'discount description'
+                      examples:
+                        - 'Get 1 product for free when you buy 3 products!'
+                    termsAndConditionsUrl:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'URL to terms and conditions'
+                      examples:
+                        - 'http://www.example.com/terms-and-conditions'
+                    displayFlag:
+                      type: boolean
+                      description: 'whether or not to display flag. If not set, default value is `true`.'
+                      examples:
+                        - true
+                    flagColor:
+                      type:
+                        - string
+                        - 'null'
+                      $ref: '#/components/schemas/typeColor'
+                      description: 'color of flag'
+                    displayBanner:
+                      type: boolean
+                      description: 'whether or not to display banner. If not set, default value is `true`.'
+                      examples:
+                        - true
+                    bannerColor:
+                      type:
+                        - string
+                        - 'null'
+                      $ref: '#/components/schemas/typeColor'
+                      description: 'color of banner'
+                    usageCount:
+                      type:
+                        - integer
+                        - 'null'
+                      minimum: 1
+                      description: 'number of how many times can be discount used.'
+                      examples:
+                        - 1000
+                    sortBefore:
+                      type: integer
+                      description: 'id of xy discount before which you want to move the xy discount from the request. Not possible to use with `sortAfter`.'
+                      examples:
+                        - 1
+                    sortAfter:
+                      type: integer
+                      description: 'id of xy discount after which you want to move the  xy discount from the request. Not possible to use with `sortBefore`.'
+                      examples:
+                        - 1
+                    xTargeting:
+                      $ref: '#/components/schemas/xyDiscountTargetingPostRequest'
+                      description: 'definition of products needed to get discount'
+                    yTargeting:
+                      $ref: '#/components/schemas/xyDiscountTargetingPostRequest'
+                      description: 'definition of products get by discount'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/quantity-discounts/{id}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - discount
+                    properties:
+                      discount:
+                        $ref: '#/components/schemas/quantityDiscount'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'Detail of quantity discounts'
+      operationId: getDetailOfQuantityDiscounts
+      description: ''
+      tags:
+        - 'Quantity discounts'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'discount ID'
+          required: true
+          example: '1'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - discount
+                    properties:
+                      discount:
+                        $ref: '#/components/schemas/quantityDiscount'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+        404:
+          description: 'Not Found'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: quantity-discount-not-found
+                    message: 'Quantity discount with ID "1" not found.'
+                    instance: '1'
+      summary: 'Quantity discount update'
+      operationId: updateQuantityDiscount
+      description: ''
+      tags:
+        - 'Quantity discounts'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'discount ID'
+          required: true
+          example: '1'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      requestBody:
+        content:
+          application/vnd.shoptet.v1.0:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - data
+                  properties:
+                    data:
+                      type: object
+                      additionalProperties: false
+                      minProperties: 1
+                      properties:
+                        title:
+                          type: string
+                          minLength: 1
+                          description: 'discount title'
+                          examples:
+                            - '18 + 4 free'
+                        validFrom:
+                          $ref: '#/components/schemas/typeDate'
+                          description: 'date of discount validity from'
+                          examples:
+                            - '2014-11-19'
+                        validTo:
+                          $ref: '#/components/schemas/typeDate'
+                          description: 'date of discount validity to'
+                          examples:
+                            - '2014-12-19'
+                        customerGroupCodes:
+                          type:
+                            - array
+                            - 'null'
+                          description: 'customer groups connected to discount'
+                          minItems: 1
+                          items:
+                            type: string
+                            examples:
+                              - retail
+                        includeUnregisteredCustomers:
+                          type: boolean
+                          description: 'defines if discount is valid for unregistered customers, default value is `false`.'
+                          examples:
+                            - true
+                        xAmount:
+                          type: string
+                          $ref: '#/components/schemas/typePositiveAmount'
+                          description: 'discount amount in X axis'
+                          examples:
+                            - '3.000'
+                        yAmount:
+                          type: string
+                          $ref: '#/components/schemas/typePositiveAmount'
+                          description: 'amount of products get by discount'
+                          examples:
+                            - '1.000'
+                        description:
+                          type:
+                            - string
+                            - 'null'
+                          description: 'discount description'
+                          examples:
+                            - 'Get 1 product for free when you buy 3 products!'
+                        termsAndConditionsUrl:
+                          type:
+                            - string
+                            - 'null'
+                          description: 'URL to terms and conditions'
+                          examples:
+                            - 'http://www.example.com/terms-and-conditions'
+                        displayFlag:
+                          type: boolean
+                          description: 'whether or not to display flag. If not set, default value is `true`.'
+                          examples:
+                            - true
+                        flagColor:
+                          type:
+                            - string
+                            - 'null'
+                          $ref: '#/components/schemas/typeColor'
+                          description: 'color of flag'
+                        displayBanner:
+                          type: boolean
+                          description: 'whether or not to display banner. If not set, default value is `true`.'
+                          examples:
+                            - true
+                        bannerColor:
+                          type:
+                            - string
+                            - 'null'
+                          $ref: '#/components/schemas/typeColor'
+                          description: 'color of banner'
+                        usageCount:
+                          type:
+                            - integer
+                            - 'null'
+                          minimum: 1
+                          description: 'number of how many times can be discount used.'
+                          examples:
+                            - 1000
+                        sortBefore:
+                          type: integer
+                          description: 'id of xy discount before which you want to move the xy discount from the request. Not possible to use with `sortAfter`.'
+                          examples:
+                            - 1
+                        sortAfter:
+                          type: integer
+                          description: 'id of xy discount after which you want to move the  xy discount from the request. Not possible to use with `sortBefore`.'
+                          examples:
+                            - 1
+                        xTargeting:
+                          $ref: '#/components/schemas/xyDiscountTargetingPostRequest'
+                          description: 'definition of products needed to get discount'
+                        yTargeting:
+                          $ref: '#/components/schemas/xyDiscountTargetingPostRequest'
+                          description: 'definition of products get by discount'
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors: null
+        404:
+          description: 'Not Found'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: quantity-discount-not-found
+                    message: 'Quantity discount with ID "1" not found.'
+                    instance: '1'
+      summary: 'Delete of quantity discount'
+      operationId: deleteQuantityDiscount
+      description: ''
+      tags:
+        - 'Quantity discounts'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'discount ID'
+          required: true
+          example: '1'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/articles:
     get:
       responses:
@@ -34904,6 +35583,11 @@ components:
           description: 'article URL'
           examples:
             - 'https://www.some-eshop-url.com/blog/new-article'
+        urls:
+          type: array
+          description: 'array of section IDs and their URLs'
+          items:
+            $ref: '#/components/schemas/articleUrls'
         redirectUrl:
           type:
             - string
@@ -36141,6 +36825,175 @@ components:
           vatBreakdown:
             $ref: '#/components/schemas/proofPaymentVatBreakdown'
             description: 'breakdown of VAT (can be `null`)'
+    quantityDiscount:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - validFrom
+        - validTo
+        - timeUnlimited
+        - customerGroups
+        - displayFlag
+        - flagColor
+        - priority
+        - isActive
+        - includeUnregisteredCustomers
+        - targeting
+        - settings
+      properties:
+        id:
+          type: integer
+          description: 'discount ID'
+          examples:
+            - 1
+        title:
+          type: string
+          description: 'discount title'
+          examples:
+            - '18 + 4 free'
+        validFrom:
+          $ref: '#/components/schemas/typeDate'
+          description: 'date of discount validity from'
+          examples:
+            - '2014-11-19'
+        validTo:
+          $ref: '#/components/schemas/typeDate'
+          description: 'date of discount validity to'
+          examples:
+            - '2014-12-19'
+        timeUnlimited:
+          type: boolean
+          description: 'flag whether the discount is time unlimited'
+          examples:
+            - true
+        customerGroups:
+          type:
+            - array
+            - 'null'
+          description: 'customer groups connected to discount'
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - code
+              - name
+            properties:
+              code:
+                type: string
+                description: 'customer group code'
+                examples:
+                  - retail
+              name:
+                type: string
+                description: 'customer group name'
+                examples:
+                  - 'Retail customer'
+        displayFlag:
+          type: boolean
+          description: 'whether the flag is displayed'
+          examples:
+            - true
+        flagColor:
+          type:
+            - string
+            - 'null'
+          $ref: '#/components/schemas/typeColor'
+          description: 'color of the flag'
+        priority:
+          type:
+            - integer
+            - 'null'
+          description: 'priority of the discount'
+          examples:
+            - 1
+        isActive:
+          type: boolean
+          description: 'flag whether the discount is active'
+          examples:
+            - true
+        targeting:
+          $ref: '#/components/schemas/quantityDiscountTargetingResponse'
+          description: 'definition of products needed to get discount'
+        includeUnregisteredCustomers:
+          type: boolean
+          description: 'defines if discount is valid for unregistered customers, default value is `false`'
+          examples:
+            - true
+        settings:
+          $ref: '#/components/schemas/quantityDiscountSettingsResponse'
+          description: 'settings of the discount'
+    quantityDiscountTargetingResponse:
+      type:
+        - object
+        - 'null'
+      required:
+        - productGuids
+        - categoryGuids
+        - brandCodes
+      description: 'definition of products needed to get discount'
+      additionalProperties: false
+      properties:
+        productGuids:
+          type:
+            - array
+            - 'null'
+          description: 'array of product guids'
+          items:
+            type: string
+            examples:
+              - 356eb81e-d966-11e0-b04f-57a43310b768
+        categoryGuids:
+          type:
+            - array
+            - 'null'
+          description: 'array of page guids (categories)'
+          items:
+            type: string
+            examples:
+              - 07f7a4c1-d7b1-11e0-9a5c-feab5ed617ed
+        brandCodes:
+          type:
+            - array
+            - 'null'
+          description: 'array of brand codes'
+          items:
+            type: string
+            examples:
+              - brand-1
+    quantityDiscountSettingsResponse:
+      type:
+        - array
+        - 'null'
+      required:
+        - amountFrom
+        - discountType
+        - discountValue
+      description: 'settings of the discount'
+      additionalProperties: false
+      properties:
+        amountFrom:
+          type: integer
+          description: 'amount from of products needed to get discount'
+          examples:
+            - 2
+        discountType:
+          type: string
+          description: 'type of discount'
+          examples:
+            - percentual
+        discountValue:
+          type: object
+          additionalProperties: false
+          required:
+            - priceRatio
+          properties:
+            priceRatio:
+              type: number
+              description: 'price ratio of the discount. Calculate as `(100 - percentage) / 100`'
+              examples:
+                - 0.85
     shipmentAddress:
       type: object
       additionalProperties: false
@@ -36376,6 +37229,23 @@ components:
             - 'null'
         maxWeight:
           type: integer
+    articleUrls:
+      type: object
+      additionalProperties: false
+      required:
+        - sectionId
+        - url
+      properties:
+        sectionId:
+          type: number
+          description: 'article section ID'
+          examples:
+            - '682'
+        url:
+          type: string
+          description: 'article URL'
+          examples:
+            - 'https://www.some-eshop-url.com/blog/new-article'
 security:
   -
     shoptetAccessToken: []
