@@ -1,6 +1,7 @@
 reunite:
   ignoreLinkChecker: true
-lint:
+
+styleguide:
   extends:
     - recommended
 
