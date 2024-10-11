@@ -1749,7 +1749,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -2309,7 +2309,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -2606,7 +2606,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -3180,7 +3180,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -3274,7 +3274,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -4054,7 +4054,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -4147,7 +4147,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -4242,7 +4242,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -4470,7 +4470,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -4683,7 +4683,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -4951,7 +4951,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -5089,7 +5089,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -5530,7 +5530,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -5644,7 +5644,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -6129,7 +6129,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -6472,7 +6472,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -6664,7 +6664,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -6914,7 +6914,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -7120,7 +7120,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -7362,7 +7362,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -7510,7 +7510,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -7698,7 +7698,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -7890,7 +7890,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -8074,7 +8074,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -8178,7 +8178,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -8350,7 +8350,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -8580,7 +8580,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -8644,7 +8644,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -8754,7 +8754,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -8818,7 +8818,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -8980,7 +8980,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -9038,7 +9038,7 @@ paths:
         - Products
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -9315,7 +9315,7 @@ paths:
         - 'Price lists'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -9489,7 +9489,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -10798,7 +10798,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -12612,7 +12612,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -13390,7 +13390,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -13635,7 +13635,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -14343,7 +14343,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -14935,7 +14935,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -15028,7 +15028,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -15567,7 +15567,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -15660,7 +15660,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -15934,7 +15934,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -16073,7 +16073,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             example:
               data:
                 customerRemark: 'Deliver to mailing addres'
@@ -16638,7 +16638,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -16973,7 +16973,7 @@ paths:
         - Orders
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -17140,7 +17140,7 @@ paths:
         - Orders
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -17926,7 +17926,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -18253,7 +18253,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -19078,7 +19078,7 @@ paths:
         - 'Proof payments'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -19316,7 +19316,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -19814,7 +19814,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -20709,7 +20709,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -21096,7 +21096,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -21374,7 +21374,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -21511,7 +21511,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -22450,7 +22450,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -22771,7 +22771,7 @@ paths:
         - Brands
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -22949,7 +22949,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -23126,7 +23126,7 @@ paths:
         - Brands
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -23432,7 +23432,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -24009,7 +24009,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -24273,7 +24273,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -24517,7 +24517,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -24697,7 +24697,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -24896,7 +24896,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -25166,7 +25166,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               properties:
@@ -25335,7 +25335,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -25775,7 +25775,7 @@ paths:
         - Templates
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -25981,7 +25981,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -26080,7 +26080,7 @@ paths:
         - Webhooks
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -26233,7 +26233,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -26629,7 +26629,7 @@ paths:
         - 'Shipping methods'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -26981,7 +26981,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -27490,7 +27490,7 @@ paths:
         - 'Payment methods'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -27694,7 +27694,7 @@ paths:
         - 'Unsubscribed emails'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -27815,7 +27815,7 @@ paths:
         - 'E-mail distribution lists'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -27964,7 +27964,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -28354,7 +28354,7 @@ paths:
         - 'Discount coupons'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -28759,7 +28759,7 @@ paths:
         - 'Discount coupons'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -28952,7 +28952,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -29204,7 +29204,7 @@ paths:
         - 'Discount coupons'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -29508,7 +29508,7 @@ paths:
         - 'X + Y discounts'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -29726,7 +29726,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               properties:
@@ -30045,7 +30045,7 @@ paths:
         - 'X + Y discounts'
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
@@ -30195,7 +30195,7 @@ paths:
         - Articles
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -30511,7 +30511,7 @@ paths:
         - Articles
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -31200,7 +31200,7 @@ paths:
         - Files
       requestBody:
         content:
-          application/vnd.shoptet.v1.0:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               additionalProperties: false
