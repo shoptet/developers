@@ -2,7 +2,7 @@ reunite:
   ignoreLinkChecker: true
 
 extends:
-    - recommended
+  - recommended
 
 rules:
   no-ambiguous-paths: off # Disable this rule because it needs rework our full API routing
