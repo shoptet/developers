@@ -10176,7 +10176,7 @@ paths:
         -
           name: shippingCompanyCode
           in: query
-          description: 'Purchase order filtering, according to forwarder [company code](#reference/shipping-methods/shipping-methods/list-of-shipping-methods).'
+          description: 'Purchase order filtering, according to forwarder [company code](#tag/shipping-methods/getlistofshippingmethods).'
           schema:
             type: string
         -
@@ -16651,7 +16651,7 @@ paths:
                   properties:
                     statusId:
                       type: number
-                      description: 'new order status. The order statuses are specific for each e-shopand it is possible to gain these from the endpoint [E-shop info](/#reference/eshop/eshop-info/eshop-info) with the `include=orderStatuses` parameter'
+                      description: 'new order status. The order statuses are specific for each e-shopand it is possible to gain these from the endpoint [E-shop info](#tag/eshop/geteshopinfo) with the `include=orderStatuses` parameter'
                       examples:
                         - -1
                     paid:
