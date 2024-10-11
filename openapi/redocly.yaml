@@ -1,8 +1,7 @@
 reunite:
   ignoreLinkChecker: true
 
-styleguide:
-  extends:
+extends:
     - recommended
 
   rules:
