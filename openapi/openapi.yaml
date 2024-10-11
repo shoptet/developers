@@ -358,6 +358,7 @@ paths:
                             - priority
                             - display
                             - priceDecimalPlaces
+                            - documentPriceDecimalPlaces
                             - rounding
                             - minimalOrderValue
                             - bankAccount
@@ -435,6 +436,11 @@ paths:
                                   examples:
                                     - ' '
                             priceDecimalPlaces:
+                              type: integer
+                              description: 'number of decimal places'
+                              examples:
+                                - 2
+                            documentPriceDecimalPlaces:
                               type: integer
                               description: 'number of decimal places'
                               examples:
@@ -1022,7 +1028,7 @@ paths:
                 additionalProperties: false
       summary: 'Eshop info'
       operationId: getEshopInfo
-      description: "Information about queried e-shop (defined by token). Returns the contact data and e-shop settings.\n\nThis endpoint has several sections, which are only sent when requested in the `include` parameter (see [Requested sections](/#section-on-demand).\n\nIf you state the `include=imageCuts` parameter within the URL, information about the image cut will also be part of the response. For more information about the chapter [Product images](/#section/Product-images).\n\n**Please note that languages section has meaning only if module foreign languages (Cizí jazyky) is enabled on current eshop. Otherwise you have to follow \"eshopLanguage\" attribute.**\nValue | Section\n--------|------\norderAdditionalFields | The order can contain up to six additional fields, which can be freely used by the e-shop for its individual needs. The field names can be defined in administration and this section returns their names.\norderStatuses | The order statuses, as defined for this e-shop.\npaymentMethods | Payment methods, as defined for this e-shop.\nshippingMethods | Transportation options, as defined for this e-shop.\nimageCuts | The information on image cuts (various sizes of the same image)\ncountries | Informations about eshop supported countries (name, validation patterns, ...)\ncashDesk | Informations about eshop cash desk configuration\nlanguages | Information about eshop languages settings - has meaning only if module foreign languages (Cizí jazyky) is enabled on current eshop"
+      description: "Information about queried e-shop (defined by token). Returns the contact data and e-shop settings.\n\nThis endpoint has several sections, which are only sent when requested in the `include` parameter (see [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand).\n\nIf you state the `include=imageCuts` parameter within the URL, information about the image cut will also be part of the response. For more information about the chapter [Product images](#section/Product-images).\n\n**Please note that languages section has meaning only if module foreign languages (Cizí jazyky) is enabled on current eshop. Otherwise you have to follow \"eshopLanguage\" attribute.**\nValue | Section\n--------|------\norderAdditionalFields | The order can contain up to six additional fields, which can be freely used by the e-shop for its individual needs. The field names can be defined in administration and this section returns their names.\norderStatuses | The order statuses, as defined for this e-shop.\npaymentMethods | Payment methods, as defined for this e-shop.\nshippingMethods | Transportation options, as defined for this e-shop.\nimageCuts | The information on image cuts (various sizes of the same image)\ncountries | Informations about eshop supported countries (name, validation patterns, ...)\ncashDesk | Informations about eshop cash desk configuration\nlanguages | Information about eshop languages settings - has meaning only if module foreign languages (Cizí jazyky) is enabled on current eshop"
       tags:
         - Eshop
       parameters:
@@ -1475,7 +1481,7 @@ paths:
                                 - 'Pelle 1978'
                             type:
                               type: string
-                              description: 'product type (`product`, `bazar`...) - see also [Product type code list](#product-item-types)'
+                              description: 'product type (`product`, `bazar`...) - see also [Product type code list](#section/code-lists/Product-types)'
                               examples:
                                 - product
                             url:
@@ -1484,7 +1490,7 @@ paths:
                                 - 'null'
                             visibility:
                               type: string
-                              description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility code list](#product-visibility)'
+                              description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility code list](#section/code-lists/Product-visibility)'
                               examples:
                                 - normal
                             creationTime:
@@ -1767,7 +1773,7 @@ paths:
                         - bazar
                         - service
                         - product-set
-                      description: "Product type. Optional, default value 'product'. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product type code list](#product-item-types)"
+                      description: "Product type. Optional, default value 'product'. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product type code list](#section/code-lists/Product-types)"
                       examples:
                         - product
                         - bazar
@@ -1783,7 +1789,7 @@ paths:
                         - block-unregistered
                         - cash-desk-only
                         - detail-only
-                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility code list](#product-visibility)'
+                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility code list](#section/code-lists/Product-visibility)'
                       examples:
                         - hidden
                     name:
@@ -2621,7 +2627,7 @@ paths:
                         - bazar
                         - service
                         - product-set
-                      description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product type code list](#product-item-types)"
+                      description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product type code list](#section/code-lists/Product-types)"
                       examples:
                         - product
                         - bazar
@@ -2637,7 +2643,7 @@ paths:
                         - block-unregistered
                         - cash-desk-only
                         - detail-only
-                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility code list](#product-visibility)'
+                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility code list](#section/code-lists/Product-visibility)'
                       examples:
                         - hidden
                     name:
@@ -3205,7 +3211,7 @@ paths:
                     $ref: '#/components/schemas/Errors'
       summary: 'Product detail by code'
       operationId: getProductDetailByCode
-      description: 'Retrieve details about one product. Optional sections can be requested using `?include=` parameter The response format is the same as for [Product detail](/tag/Products#operation/Product%20detail) endpoint.'
+      description: 'Retrieve details about one product. Optional sections can be requested using `?include=` parameter The response format is the same as for [Product detail](#tag/products/getlistofproducts) endpoint.'
       tags:
         - Products
       parameters:
@@ -3289,7 +3295,7 @@ paths:
                         - bazar
                         - service
                         - product-set
-                      description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product type code list](#product-item-types)"
+                      description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product type code list](#section/code-lists/Product-types)"
                       examples:
                         - product
                         - bazar
@@ -3305,7 +3311,7 @@ paths:
                         - block-unregistered
                         - cash-desk-only
                         - detail-only
-                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility code list](#product-visibility)'
+                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility code list](#section/code-lists/Product-visibility)'
                       examples:
                         - hidden
                     name:
@@ -4519,7 +4525,7 @@ paths:
                         - string
                         - 'null'
                       $ref: '#/components/schemas/typeFilename'
-                      description: 'Name of file in [API upload storage](#files) to be set as category image.'
+                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as category image.'
                       examples:
                         - image.png
                     sortBefore:
@@ -4590,7 +4596,7 @@ paths:
                         - product-code-desc
                         - category-priority
                         - category-priority-desc
-                      description: 'defines how products are sorted in a category. See also code list [Classification of products in category](#category-sorting)'
+                      description: 'defines how products are sorted in a category. See also code list [Classification of products in category](#section/code-lists/Sorting-of-products-in-category)'
                       examples:
                         - alphabetically
                     similarProductsCategory:
@@ -4731,7 +4737,7 @@ paths:
                         - string
                         - 'null'
                       $ref: '#/components/schemas/typeFilename'
-                      description: 'Name of file in [API upload storage](#files) to be set as category image.'
+                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as category image.'
                       examples:
                         - image.png
                     sortBefore:
@@ -4802,7 +4808,7 @@ paths:
                         - product-code-desc
                         - category-priority
                         - category-priority-desc
-                      description: 'defines how products are sorted in a category. See also code list [Classification of products in category](#category-sorting)'
+                      description: 'defines how products are sorted in a category. See also code list [Classification of products in category](#section/code-lists/Sorting-of-products-in-category)'
                       examples:
                         - alphabetically
                     similarProductsCategory:
@@ -9505,7 +9511,7 @@ paths:
                           - 106/BIL
                       currencyCode:
                         type: string
-                        description: 'Currency code. List of available currencies within the e-shop can be found in [/api/eshop](#eshop-info) endpoint.'
+                        description: 'Currency code. List of available currencies within the e-shop can be found in [/api/eshop](#tag/eshop/geteshopinfo) endpoint.'
                         examples:
                           - CZK
                       vatRate:
@@ -10374,7 +10380,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'VAT mode, for possible values see [VAT modes](#vat-modes)'
+                            description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
                             examples:
                               - Normal
                           billingMethod:
@@ -10928,7 +10934,7 @@ paths:
                       type: number
                       minimum: 1
                       maximum: 4
-                      description: 'billing method - see also [Billing method](#billing-methods-invoice). Optional.'
+                      description: 'billing method - see also [Billing method](#section/code-lists/Invoice-Billing-Methods). Optional.'
                       examples:
                         - 2
                     clientIPAddress:
@@ -11277,7 +11283,7 @@ paths:
                           itemType:
                             type: string
                             minLength: 1
-                            description: 'item type. Mandatory field. See also code list [order item types](#order-item-type). `product` item type is min required. If `billing` type is present paymentMethodGuid must be provided. If `shipping` type is present shippingGuid must be provided.'
+                            description: 'item type. Mandatory field. See also code list [order item types](#section/code-lists/Types-of-order-items). `product` item type is min required. If `billing` type is present paymentMethodGuid must be provided. If `shipping` type is present shippingGuid must be provided.'
                             examples:
                               - product
                           name:
@@ -11476,7 +11482,7 @@ paths:
         -
           name: shippingCompanyCode
           in: query
-          description: 'Purchase order filtering, according to forwarder [company code](/tag/Shipping-methods#operation/List%20of%20shipping%20methods).'
+          description: 'Purchase order filtering, according to forwarder [company code](#tag/shipping-methods/getlistofshippingmethods).'
           schema:
             type: string
         -
@@ -11681,7 +11687,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'VAT mode, for possible values see [VAT modes](#vat-modes)'
+                            description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
                             examples:
                               - Normal
                           billingMethod:
@@ -12236,7 +12242,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'VAT mode, for possible values see [VAT modes](#vat-modes)'
+                            description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
                             examples:
                               - Normal
                           billingMethod:
@@ -12998,7 +13004,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'VAT mode, for possible values see [VAT modes](#vat-modes)'
+                            description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
                             examples:
                               - Normal
                           billingMethod:
@@ -13401,7 +13407,7 @@ paths:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'item type. Mandatory field. See also code list [order item types](#order-item-type). Only `product`, `product-set`, or `service` item type is allowed.'
+                      description: 'item type. Mandatory field. See also code list [order item types](#section/code-lists/Types-of-order-items). Only `product`, `product-set`, or `service` item type is allowed.'
                       examples:
                         - product
                     code:
@@ -13645,7 +13651,7 @@ paths:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'item type. Mandatory field. See also code list [order item types](#order-item-type). Only `product`, `product-set`, or `service` item type is allowed.'
+                      description: 'item type. Mandatory field. See also code list [order item types](#section/code-lists/Types-of-order-items). Only `product`, `product-set`, or `service` item type is allowed.'
                       examples:
                         - product
                     code:
@@ -13959,7 +13965,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'VAT mode, for possible values see [VAT modes](#vat-modes)'
+                            description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
                             examples:
                               - Normal
                           billingMethod:
@@ -14313,7 +14319,7 @@ paths:
                 additionalProperties: false
       summary: 'Order item surcharge parameters insertion'
       operationId: createOrderItemSurchargeParameters
-      description: "There is possibility to edit surcharge parameters related to order item. For that purpose, there is in get order item detail endpoint attribute `specificSurchargeParameters` which returned adjusted surcharge  parameters data (see order item detail [endpoint](/tag/Orders#operation/Order%20detail))\n\nThis mean that `surchargeParameters` attribute in order detail is persistent and any adjustment in  surcharge parameters appears in `specificSurchargeParameters`\n\nThis endpoint purpose is to add surcharge parameter in relation within order item.\nYou have to send one of attributes `parameterCode` with `valueIndex` or `name`. Cant send this attributes together.\nIf you post `parameterCode` and `valueIndex`, there will be validation, if surcharge parameter exits and if can be related\nto order item's product and price (if not send) will be added from surcharge parameter itself.\n\nOtherwise you can send attribute `name` instead, which could have any form, but has to be unique. If price is not send,\nthan it will be set to `0.00`."
+      description: "There is possibility to edit surcharge parameters related to order item. For that purpose, there is in get order item detail endpoint attribute `specificSurchargeParameters` which returned adjusted surcharge  parameters data (see order item detail [endpoint](#tag/orders/getorderdetail))\n\nThis mean that `surchargeParameters` attribute in order detail is persistent and any adjustment in  surcharge parameters appears in `specificSurchargeParameters`\n\nThis endpoint purpose is to add surcharge parameter in relation within order item.\nYou have to send one of attributes `parameterCode` with `valueIndex` or `name`. Cant send this attributes together.\nIf you post `parameterCode` and `valueIndex`, there will be validation, if surcharge parameter exits and if can be related\nto order item's product and price (if not send) will be added from surcharge parameter itself.\n\nOtherwise you can send attribute `name` instead, which could have any form, but has to be unique. If price is not send,\nthan it will be set to `0.00`."
       tags:
         - Orders
       parameters:
@@ -14559,7 +14565,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'VAT mode, for possible values see [VAT modes](#vat-modes)'
+                            description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
                             examples:
                               - Normal
                           billingMethod:
@@ -15191,7 +15197,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'VAT mode, for possible values see [VAT modes](#vat-modes)'
+                            description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
                             examples:
                               - Normal
                           billingMethod:
@@ -16220,7 +16226,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'VAT mode, for possible values see [VAT modes](#vat-modes)'
+                            description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
                             examples:
                               - Normal
                           billingMethod:
@@ -16645,7 +16651,7 @@ paths:
                   properties:
                     statusId:
                       type: number
-                      description: 'new order status. The order statuses are specific for each e-shopand it is possible to gain these from the endpoint [E-shop info](#reference/eshop/eshop-info/eshop-info) with the `include=orderStatuses` parameter'
+                      description: 'new order status. The order statuses are specific for each e-shopand it is possible to gain these from the endpoint [E-shop info](/#reference/eshop/eshop-info/eshop-info) with the `include=orderStatuses` parameter'
                       examples:
                         - -1
                     paid:
@@ -16657,7 +16663,7 @@ paths:
                         - true
                     billingMethodId:
                       type: number
-                      description: 'billing method - see also [code list for billing methods](#billing-methods-invoice).'
+                      description: 'billing method - see also [code list for billing methods](#section/code-lists/Invoice-Billing-Methods).'
                       examples:
                         - 1
   /api/orders/statuses:
@@ -17962,7 +17968,7 @@ paths:
                       type:
                         - number
                         - 'null'
-                      description: "Id of [billing method](#billing-methods-invoice). Defaults to order's."
+                      description: "Id of [billing method](#section/code-lists/Invoice-Billing-Methods). Defaults to order's."
                       examples:
                         - 1
                     proformaInvoiceCode:
@@ -18733,7 +18739,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'VAT mode, can be null, for possible values see [VAT modes](#vat-modes)'
+                            description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
                             examples:
                               - Normal
                           amountPaid:
@@ -19104,7 +19110,7 @@ paths:
                         - '1000.00'
                     currencyCode:
                       $ref: '#/components/schemas/typeCurrencyCode'
-                      description: 'currency code. List of available currencies within the e-shop can be found in [/api/eshop](#eshop-info) endpoint.'
+                      description: 'currency code. List of available currencies within the e-shop can be found in [/api/eshop](#tag/eshop/geteshopinfo) endpoint.'
                       examples:
                         - CZK
                     varSymbol:
@@ -19134,7 +19140,7 @@ paths:
                         - 36534576
                     invoiceBillingMethodId:
                       type: integer
-                      description: 'billing method (can be `null`) - see also [Billing method](#billing-methods-invoice)'
+                      description: 'billing method (can be `null`) - see also [Billing method](#section/code-lists/Invoice-Billing-Methods)'
                       examples:
                         - 4
                     billBankAccount:
@@ -19353,7 +19359,7 @@ paths:
                         - 36534576
                     invoiceBillingMethodId:
                       type: integer
-                      description: 'billing method (can be `null`) - see also [Billing method](#billing-methods-invoice)'
+                      description: 'billing method (can be `null`) - see also [Billing method](#section/code-lists/Invoice-Billing-Methods)'
                       examples:
                         - 4
                     billBankAccount:
@@ -20743,7 +20749,7 @@ paths:
                         - 201323134
                     billingMethodId:
                       type: number
-                      description: "Id of [billing method](#billing-methods-invoice). Defaults to order's."
+                      description: "Id of [billing method](#section/code-lists/Invoice-Billing-Methods). Defaults to order's."
                       examples:
                         - 1
                     orderCode:
@@ -21129,7 +21135,7 @@ paths:
                         - 201323134
                     billingMethodId:
                       type: number
-                      description: 'Id of [billing method](#billing-methods-invoice). Defaults to order.'
+                      description: 'Id of [billing method](#section/code-lists/Invoice-Billing-Methods). Defaults to order.'
                       examples:
                         - 1
                     orderCode:
@@ -26092,7 +26098,7 @@ paths:
                     properties:
                       event:
                         type: string
-                        description: 'event, see [webhook event types](#webhook-event-type)'
+                        description: 'event, see [webhook event types](#section/code-lists/Webhook-event-types)'
                         examples:
                           - order.created
                           - order.updated
@@ -26788,7 +26794,7 @@ paths:
                                 - '40'
                             itemType:
                               type: string
-                              description: 'see also [Product type code list](#product-item-types)'
+                              description: 'see also [Product type code list](#section/code-lists/Product-types)'
                               examples:
                                 - product
                             name:
@@ -32056,7 +32062,7 @@ components:
             - 3
         name:
           type: string
-          description: 'designation of the billing method. See also [code list of billing methods](#billing-methods-invoice).'
+          description: 'designation of the billing method. See also [code list of billing methods](#section/code-lists/Invoice-Billing-Methods).'
           examples:
             - Cash
     itemPrice:
@@ -32315,7 +32321,7 @@ components:
             - 992801
         event:
           type: string
-          description: 'event, see [webhook event types](#webhook-event-type)'
+          description: 'event, see [webhook event types](#section/code-lists/Webhook-event-types)'
           examples:
             - 'order:create'
         url:
@@ -32362,7 +32368,7 @@ components:
             - 'https://myapplication.tld/orders.php'
         event:
           type: string
-          description: 'event, see [webhook event types](#webhook-event-type)'
+          description: 'event, see [webhook event types](#section/code-lists/Webhook-event-types)'
           examples:
             - 'order:create'
         eventCreated:
@@ -33542,7 +33548,7 @@ components:
           description: 'unique product indicator'
         type:
           type: string
-          description: 'product type (`product`, `bazar`...) - see also [Product type code list](#product-item-types)'
+          description: 'product type (`product`, `bazar`...) - see also [Product type code list](#section/code-lists/Product-types)'
           examples:
             - product
         name:
@@ -33566,7 +33572,7 @@ components:
           description: 'product supplier'
         visibility:
           type: string
-          description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility code list](#product-visibility)'
+          description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility code list](#section/code-lists/Product-visibility)'
           examples:
             - normal
         creationTime:
@@ -34622,7 +34628,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'defines, how products are sorted in a category. See also code list [Classification of products in category](#category-sorting)'
+          description: 'defines, how products are sorted in a category. See also code list [Classification of products in category](#section/code-lists/Sorting-of-products-in-category)'
           examples:
             - alphabetically
         catalogueMapping:
@@ -34687,14 +34693,14 @@ components:
             - '12345678901234'
         itemType:
           type: string
-          description: 'order item type (product, service...). See also [Code list of order item types](#order-item-type)'
+          description: 'order item type (product, service...). See also [Code list of order item types](#section/code-lists/Types-of-order-items)'
           examples:
             - product
         productType:
           type:
             - string
             - 'null'
-          description: 'product type at the time of the order (product, product-set..). See also [Product type code list](#product-item-types) (can be `null`).'
+          description: 'product type at the time of the order (product, product-set..). See also [Product type code list](#section/code-lists/Product-types) (can be `null`).'
           examples:
             - product
         name:
@@ -35863,7 +35869,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'VAT mode, can be null, for possible values see [VAT modes](#vat-modes)'
+          description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
           examples:
             - Normal
         invoiceCode:
@@ -36229,7 +36235,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'VAT mode, can be null, for possible values see [VAT modes](#vat-modes)'
+          description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
           examples:
             - normal
     proofPaymentsForInvoice:
