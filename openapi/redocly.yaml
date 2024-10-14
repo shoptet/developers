@@ -17,7 +17,7 @@ rules:
     message: Tag description is missing or not start with a capital letter and end with a full stop.
 
 plugins:
-  - plugins/add-fallback-json-content.js
+  - plugins/content-type-modifier-plugin.js
 
 decorators:
   content-type-modifier/add-fallback-json: on
