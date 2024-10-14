@@ -1443,7 +1443,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            application/json:
               schema:
                 type: object
                 properties:
@@ -1748,8 +1748,9 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
+        required: true
         content:
-          application/vnd.shoptet.v1.0+json:
+           application/json:
             schema:
               type: object
               required:
