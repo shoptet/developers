@@ -13,7 +13,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -1047,7 +1047,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -1302,7 +1302,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -1443,7 +1443,7 @@ paths:
         200:
           description: OK
           content:
-            application/json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -1714,7 +1714,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -1748,9 +1748,8 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
-        required: true
         content:
-           application/json:
+          application/vnd.shoptet.v1.0+json:
             schema:
               type: object
               required:
@@ -2222,7 +2221,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -2237,7 +2236,7 @@ paths:
         403:
           description: Forbidden
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -2257,7 +2256,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -2277,7 +2276,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -2412,7 +2411,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -2534,7 +2533,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -2570,7 +2569,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3083,7 +3082,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3098,7 +3097,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3116,7 +3115,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3153,7 +3152,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3202,7 +3201,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3238,7 +3237,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3751,7 +3750,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3766,7 +3765,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3784,7 +3783,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3821,7 +3820,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3910,7 +3909,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -3965,7 +3964,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4101,7 +4100,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4196,7 +4195,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4297,7 +4296,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4354,7 +4353,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4416,7 +4415,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4452,7 +4451,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4621,7 +4620,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4654,7 +4653,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4829,7 +4828,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4845,7 +4844,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4863,7 +4862,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4924,7 +4923,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -4973,7 +4972,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5032,7 +5031,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5057,7 +5056,7 @@ paths:
         400:
           description: 'Bad Request'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5122,7 +5121,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5257,7 +5256,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5389,7 +5388,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5463,7 +5462,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5566,7 +5565,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5675,7 +5674,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5710,7 +5709,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5785,7 +5784,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -5923,7 +5922,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -6032,7 +6031,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -6258,7 +6257,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -6370,7 +6369,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -6556,7 +6555,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -6721,7 +6720,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -6756,7 +6755,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -6798,7 +6797,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -6961,7 +6960,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -7050,7 +7049,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -7196,7 +7195,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -7281,7 +7280,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -7429,7 +7428,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -7532,7 +7531,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -7567,7 +7566,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -7609,7 +7608,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -7757,7 +7756,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -7836,7 +7835,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -7940,7 +7939,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8009,7 +8008,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8113,7 +8112,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8200,7 +8199,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8235,7 +8234,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8277,7 +8276,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8405,7 +8404,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8439,7 +8438,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8502,7 +8501,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8543,7 +8542,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8607,7 +8606,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8676,7 +8675,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8717,7 +8716,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8781,7 +8780,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8851,7 +8850,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8906,7 +8905,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -8945,7 +8944,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9003,7 +9002,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9073,7 +9072,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9261,7 +9260,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9294,7 +9293,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9344,7 +9343,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9433,7 +9432,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9457,7 +9456,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9789,7 +9788,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9804,7 +9803,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9822,7 +9821,7 @@ paths:
         423:
           description: Locked
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9859,7 +9858,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -9982,7 +9981,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -10259,7 +10258,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -11439,7 +11438,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -11566,7 +11565,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -12068,7 +12067,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -12084,7 +12083,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -12121,7 +12120,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -12883,7 +12882,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -13584,7 +13583,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -13802,7 +13801,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -13844,7 +13843,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -14393,7 +14392,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -14444,7 +14443,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -14985,7 +14984,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -15076,7 +15075,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -15617,7 +15616,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -15710,7 +15709,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -15728,7 +15727,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -15765,7 +15764,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -15863,7 +15862,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -15884,7 +15883,7 @@ paths:
         403:
           description: Forbidden
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -15902,7 +15901,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -15962,7 +15961,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -15977,7 +15976,7 @@ paths:
         404:
           description: 'Order history item deletion failed'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -16022,7 +16021,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -16041,7 +16040,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -16105,7 +16104,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -16582,7 +16581,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -16673,7 +16672,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -16801,7 +16800,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -16850,7 +16849,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -16914,7 +16913,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -16947,7 +16946,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -17013,7 +17012,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -17055,7 +17054,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -17101,7 +17100,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -17179,7 +17178,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -17341,7 +17340,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -17517,7 +17516,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -17692,7 +17691,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -17729,7 +17728,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -17990,7 +17989,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18165,7 +18164,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -18183,7 +18182,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -18205,7 +18204,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -18285,7 +18284,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18303,7 +18302,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18340,7 +18339,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18358,7 +18357,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18395,7 +18394,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18459,7 +18458,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18584,7 +18583,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18754,7 +18753,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18801,7 +18800,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18819,7 +18818,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18856,7 +18855,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -18937,7 +18936,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -19029,7 +19028,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -19050,7 +19049,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19181,7 +19180,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -19202,7 +19201,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19245,7 +19244,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -19266,7 +19265,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19284,7 +19283,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19422,7 +19421,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -19438,7 +19437,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19456,7 +19455,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19493,7 +19492,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -19516,7 +19515,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19552,7 +19551,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -19573,7 +19572,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19610,7 +19609,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -19633,7 +19632,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19669,7 +19668,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -19690,7 +19689,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19727,7 +19726,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -19748,7 +19747,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19766,7 +19765,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19844,7 +19843,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -19888,7 +19887,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data:
                   changes:
@@ -19989,7 +19988,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -20120,7 +20119,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -20285,7 +20284,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -20468,7 +20467,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -20512,7 +20511,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -20767,7 +20766,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -20783,7 +20782,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -20820,7 +20819,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -20844,7 +20843,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -20862,7 +20861,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -20899,7 +20898,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -21177,7 +21176,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -21468,7 +21467,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -21594,7 +21593,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -21613,7 +21612,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -21660,7 +21659,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -21678,7 +21677,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -21715,7 +21714,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -21779,7 +21778,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -21871,7 +21870,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -21980,7 +21979,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22067,7 +22066,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22113,7 +22112,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22131,7 +22130,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22168,7 +22167,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22205,7 +22204,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22245,7 +22244,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22379,7 +22378,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22408,7 +22407,7 @@ paths:
         400:
           description: 'Bad Request'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22510,7 +22509,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22558,7 +22557,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22622,7 +22621,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22683,7 +22682,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22717,7 +22716,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22753,7 +22752,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22851,7 +22850,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22866,7 +22865,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -22902,7 +22901,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -22917,7 +22916,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -23019,7 +23018,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -23035,7 +23034,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -23053,7 +23052,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -23099,7 +23098,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -23148,7 +23147,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -23234,7 +23233,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -23532,7 +23531,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -23591,7 +23590,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -23811,7 +23810,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -24065,7 +24064,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -24100,7 +24099,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -24191,7 +24190,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -24333,7 +24332,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -24427,7 +24426,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -24575,7 +24574,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -24618,7 +24617,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -24662,7 +24661,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -24806,7 +24805,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -24853,7 +24852,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25002,7 +25001,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25045,7 +25044,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25110,7 +25109,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25203,7 +25202,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25271,7 +25270,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25366,7 +25365,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25409,7 +25408,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25471,7 +25470,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25534,7 +25533,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25660,7 +25659,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25712,7 +25711,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25754,7 +25753,7 @@ paths:
         400:
           description: 'Bad Request'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25818,7 +25817,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25853,7 +25852,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25901,7 +25900,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25931,7 +25930,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -25949,7 +25948,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26018,7 +26017,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26054,7 +26053,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26119,7 +26118,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26140,7 +26139,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26176,7 +26175,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26201,7 +26200,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26257,7 +26256,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26273,7 +26272,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26310,7 +26309,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26344,7 +26343,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26409,7 +26408,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26546,7 +26545,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26715,7 +26714,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26837,7 +26836,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26855,7 +26854,7 @@ paths:
         408:
           description: 'Request Timeout'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26899,7 +26898,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26923,7 +26922,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -26941,7 +26940,7 @@ paths:
         408:
           description: 'Request Timeout'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27182,7 +27181,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27219,7 +27218,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27264,7 +27263,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27398,7 +27397,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27566,7 +27565,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27601,7 +27600,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27657,7 +27656,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27728,7 +27727,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27776,7 +27775,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27851,7 +27850,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27908,7 +27907,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -27989,7 +27988,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -28060,7 +28059,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -28233,7 +28232,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -28476,7 +28475,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -28586,7 +28585,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -28601,7 +28600,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -28638,7 +28637,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -28869,7 +28868,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -28894,7 +28893,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -28912,7 +28911,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -28979,7 +28978,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29101,7 +29100,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29283,7 +29282,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29301,7 +29300,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29319,7 +29318,7 @@ paths:
         409:
           description: Conflict
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29356,7 +29355,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29484,7 +29483,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29638,7 +29637,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29677,7 +29676,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29694,7 +29693,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29850,7 +29849,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29864,7 +29863,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29901,7 +29900,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -29966,7 +29965,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30017,7 +30016,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               example:
                 data: null
                 errors:
@@ -30098,7 +30097,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30134,7 +30133,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30155,7 +30154,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30313,7 +30312,7 @@ paths:
         202:
           description: Accepted
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30400,7 +30399,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30439,7 +30438,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30460,7 +30459,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30615,7 +30614,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30650,7 +30649,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30681,7 +30680,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30702,7 +30701,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30738,7 +30737,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30775,7 +30774,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30815,7 +30814,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30880,7 +30879,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -30984,7 +30983,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -31075,7 +31074,7 @@ paths:
         403:
           description: Forbidden
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -31093,7 +31092,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -31130,7 +31129,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -31173,7 +31172,7 @@ paths:
         201:
           description: Created
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
@@ -31237,7 +31236,7 @@ paths:
         200:
           description: OK
           content:
-            application/vnd.shoptet.v1.0+json:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
                 type: object
                 properties:
