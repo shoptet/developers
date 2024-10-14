@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     rules: {
         // This rule will add a fallback content type (application/json) where necessary
         'add-fallback-json-content': () => {
