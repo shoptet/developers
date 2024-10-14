@@ -16,6 +16,8 @@ rules:
       pattern: /^[A-Z0-9*].*\.$/s
     message: Tag description is missing or not start with a capital letter and end with a full stop.
 
+plugins:
+  - add-fallback-json-content.js
+
 decorators:
-  json-content-fallback:
-    ./add-fallback-json-content.js
+  add-fallback-json-content: on
