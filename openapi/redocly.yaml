@@ -16,8 +16,5 @@ rules:
       pattern: /^[A-Z0-9*].*\.$/s
     message: Tag description is missing or not start with a capital letter and end with a full stop.
 
-plugins:
-  - plugins/content-type-modifier-plugin.js
-
-decorators:
-  content-type-modifier/add-fallback-json: on
+mockServer:
+  off: true
