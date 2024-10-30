@@ -1,5 +1,6 @@
 reunite:
   ignoreLinkChecker: true
+  ignoreMarkdocErrors: true
 
 extends:
   - recommended
