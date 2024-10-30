@@ -7,6 +7,7 @@ extends:
 rules:
   no-ambiguous-paths: off # Disable this rule because it needs rework our full API routing
   operation-4xx-response: off # Disable this rule we have a lot of missing 4xx responses
+  info-license: off
   rule/tag-description:
     subject:
       type: Tag
@@ -15,6 +16,17 @@ rules:
       defined: true
       pattern: /^[A-Z0-9*].*\.$/s
     message: Tag description is missing or not start with a capital letter and end with a full stop.
+  request-mime-type:
+    severity: error
+    allowedValues:
+      - application/vnd.shoptet.v1.0+json
+  response-mime-type:
+    severity: error
+    allowedValues:
+      - application/vnd.shoptet.v1.0+json; charset=utf-8
+      - application/vnd.shoptet.v1.0+json
+  no-invalid-media-type-examples:
+    severity: error
 
 mockServer:
-  off: true
+  off: true # Disable the mock server - currently not working with our vendor content-types
