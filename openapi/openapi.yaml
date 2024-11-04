@@ -897,11 +897,8 @@ info:
 
     <strong>For now, if some mass event is performed, we also sent "single"
     webhook event for every updated entity as usual, but it will be changed in
-    future,
-
-    so please watch [release
-    changes](https://developers.shoptet.com/category/api/) for more info
-    </strong>
+    future</strong>, 
+    so please watch [release changes](https://developers.shoptet.com/category/api/) for more info
 
 
     Value  | Description | Identifier meaning
@@ -11308,6 +11305,7 @@ paths:
                         type: array
                         items:
                           required:
+                            - guid
                             - date
                             - orderCode
                             - rating
@@ -11322,6 +11320,8 @@ paths:
                             - reaction
                             - updated
                           properties:
+                            guid:
+                              $ref: '#/components/schemas/typeGuid'
                             date:
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'review creation date.'
@@ -16221,12 +16221,11 @@ paths:
                   additionalProperties: false
                   required:
                     - itemType
-                    - vatRate
                   properties:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'item type. Mandatory field. See also code list [order item types](#section/code-lists/Types-of-order-items). Only `product`, `product-set`, or `service` item type is allowed.'
+                      description: 'item type. Mandatory field. See also code list [order item types](#section/code-lists/Types-of-order-items). Only `product`, `product-set`, `service` or `discount-coupon` item type is allowed.'
                       examples:
                         - product
                     code:
@@ -16270,7 +16269,7 @@ paths:
                       type: string
                       minLength: 1
                       maxLength: 250
-                      description: 'Product name (optional, but usually filled in). Mandatory only for transport and payment, for other items, it is loaded according to `code`.'
+                      description: 'Product name (optional, but usually filled in). Mandatory only for discount-coupon, transport and payment, for other items, it is loaded according to `code`.'
                       examples:
                         - 'Large chocolate'
                     variantName:
@@ -16472,7 +16471,7 @@ paths:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'item type. Mandatory field. See also code list [order item types](#section/code-lists/Types-of-order-items). Only `product`, `product-set`, or `service` item type is allowed.'
+                      description: 'item type. Mandatory field. See also code list [order item types](#section/code-lists/Types-of-order-items). Only `product`, `product-set`, `service` or `discount-coupon` item type is allowed.'
                       examples:
                         - product
                     code:
@@ -26501,13 +26500,6 @@ paths:
                       description: 'Brand name'
                       examples:
                         - 'Willy Wonka'
-                    code:
-                      type:
-                        - string
-                        - 'null'
-                      description: '**DEPRECATED** Code of brand. Use `indexName` instead'
-                      examples:
-                        - willy-wonka
                     indexName:
                       type:
                         - string
@@ -26677,11 +26669,6 @@ paths:
                       description: 'Brand name'
                       examples:
                         - 'Willy Wonka'
-                    code:
-                      type: string
-                      description: '**DEPRECATED** Code of brand. Use `indexName` instead'
-                      examples:
-                        - willy-wonka
                     indexName:
                       type: string
                       description: 'unique index name of brand'
@@ -36809,7 +36796,6 @@ components:
       additionalProperties: false
       required:
         - guid
-        - code
         - name
         - indexName
         - description
@@ -36824,11 +36810,6 @@ components:
           description: 'brand GUID'
           examples:
             - 1b02cb8e-d7b5-11e0-9a5c-feab5ed617ed
-        code:
-          type: string
-          description: 'Unique code for brand identification'
-          examples:
-            - willy-wonka
         name:
           type: string
         indexName:
