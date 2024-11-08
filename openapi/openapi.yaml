@@ -650,15 +650,21 @@ info:
 
     Value | Description
 
+
     -------- | ---------
+
 
     orig | original image (in the original resolution)
 
+
     big | big image (typically 1024x768 px)
+
 
     detail |image detail (typically 360x270 px)
 
+
     category | size for listing in category (typically 216x105 px)
+
 
 
     ## Product visibility
