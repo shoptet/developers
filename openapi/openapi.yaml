@@ -657,75 +657,43 @@ info:
 
     ## Product visibility
 
-
     Value  | Description
-
     -------- | ---------
-
     hidden | Hide product
-
     visible | Show product
-
     blocked | Cannot be ordered
-
     show-registered | Show only to logged-in users
-
     block-unregistered | Do not allow order to logged-out users
-
     cash-desk-only | Show only in cash desk
-
     detail-only | Do not show e-shop navigation
-
 
     ## Product types
 
-
     Value  | Description
-
     -------- | ---------
-
     product | Product
-
     bazar | Second-hand product
-
     service | Service
-
     gift-certificate | Gift (deprecated)
-
     product-set | Product set
-
 
     ## Types of order items
 
 
     Value  | Description
-
     -------- | ---------
-
     product | Product
-
     bazar | Second-hand product
-
     service | Service
-
     shipping | Transportation
-
     billing | Payment method
-
     discount-coupon | Discount coupon
-
     volume-discount | Volume discount
-
     gift | Gift
-
     gift-certificate | Gift certificate
-
     generic-item | Non-specific item
-
     product-set | Product set
-
     product-set-item | Product set item
-
     deposit | Deposit
 
 
@@ -733,151 +701,73 @@ info:
 
 
     Value  | Description
-
     -------- | ---------
-
     default | Default
-
     most-selling | Most selling first
-
     cheapest | Cheapest first
-
     most-expensive | Most expensive first
-
     oldest | Oldest first
-
     newest | Newest first
-
     alphabetically | Alphabetically
-
     alphabetically-desc | Alphabetically, descending
-
     product-code | Per product code
-
     product-code-desc  | Per product code, descending
-
     category-priority | Category priority
-
     category-priority-desc | Category priority, descending
-
 
     ## Webhook event types
 
-
     Value  | Description | Identifier meaning
-
     -------- | --------- | ---------
-
     brand:create | Brand creation event | String (`code`) - brand unique code
-
     brand:update | Brand change event     | String (`code`) - brand unique code
-
     brand:delete | Brand deleting event   | String (`code`) - brand unique code
-
-    creditNote:create | Credit note creation event | Number (`code`) of credit
-    note
-
-    creditNote:delete | Credit note deleting event   | Number (`code`) of credit
-    note
-
-    creditNote:update | Credit note change event     | Number (`code`) of credit
-    note
-
+    creditNote:create | Credit note creation event | Number (`code`) of credit note
+    creditNote:delete | Credit note deleting event   | Number (`code`) of credit note
+    creditNote:update | Credit note change event     | Number (`code`) of credit note
     customer:create | New customer was created | Customer GUID
-
     customer:update | Customer was updated. Throws `409 Conflict` when try to register simultaneously with `customer:disableOrders` or `customer:enableOrders` | Customer GUID
-
-    customer:disableOrders | An event disabled the customer, and his future orders will be automatically cancelled. Throws `409 Conflict` when try to register simultaneously with `customer:update` | Customer GUID
-
+    customer:disableOrders | An event disabled the customer, and his future orders will be automatically cancelled. Throws `409 Conflict` when try to register simultaneously with `customer:update` | Customer GUID 
     customer:enableOrders | An event enabled the customer's future orders. Throws `409 Conflict` when try to register simultaneously with `customer:update` | Customer GUID
-
-    customer:import | Import of 1 and more customers was executed | Fixed string
-    "customers"
-
+    customer:import | Import of 1 and more customers was executed | Fixed string "customers"
     customer:delete | Customer was deleted | Customer GUID
-
-    deliveryNote:create | Delivery note creation event  | Number (`code`) of
-    delivery note
-
-    deliveryNote:delete | Delivery note deleting event    | Number (`code`) of
-    delivery note
-
-    deliveryNote:update | Delivery note change event      | Number (`code`) of
-    delivery note
-
+    deliveryNote:create | Delivery note creation event  | Number (`code`) of delivery note
+    deliveryNote:delete | Delivery note deleting event    | Number (`code`) of delivery note
+    deliveryNote:update | Delivery note change event      | Number (`code`) of delivery note
     eshop:currencies | Currencies settings change event | ID of eshop
-
     eshop:billingInformation | Billing information (i.e. eshop billing address) change event | ID of eshop
-
-    eshop:design | Design settings (template, colors, fonts, layout) | ID of
-    eshop
-
-    eshop:mandatoryFields | Mandatory fields of customer were updated | ID of
-    eshop
-
+    eshop:design | Design settings (template, colors, fonts, layout) | ID of eshop
+    eshop:mandatoryFields | Mandatory fields of customer were updated | ID of eshop
     eshop:projectDomain | Domain of eshop was changed | ID of eshop
-
     invoice:create | Invoice creation event  | Number (`code`) of invoice
-
     invoice:delete | Invoice deleting event    | Number (`code`) of invoice
-
     invoice:update | Invoice change event      | Number (`code`) of invoice
-
     job:finished | The asynchronous request was finished | Job `id`
-
-    mailingListEmail:create | E-mail addition event into the e-mail distribution
-    list | Name (`code`) of e-mail distribution list
-
-    mailingListEmail:delete | E-mail deleting event from the e-mail distribution
-    list | Name (`code`) of e-mail distribution
-
+    mailingListEmail:create | E-mail addition event into the e-mail distribution list | Name (`code`) of e-mail distribution list
+    mailingListEmail:delete | E-mail deleting event from the e-mail distribution list | Name (`code`) of e-mail distribution
     order:cancel | Order cancel event. Webhook is emitted when order status is set to `canceled`. Throws `409 Conflict` when try to register simultaneously with `order:update` | Number (`code`) of order
-
     order:create | Order creation event | Number (`code`) of order
-
     order:delete | Order deleting event   | Number (`code`) of order
-
     order:update | Order change event. Throws `409 Conflict` when try to register simultaneously with `order:cancel` | Number (`code`) of order
-
     orderStatusesList:change | Order status list change event. Emitted when order status is created, updated or deleted | Order status `ID`
-
     paymentMethod:change | Payment method change event | Payment method GUID
-
-    proformaInvoice:create | Proforma invoice creation event | Number (`code`)
-    of proforma invoice
-
-    proformaInvoice:delete | Proforma invoice deleting event   | Number (`code`)
-    of proforma invoice
-
-    proformaInvoice:update | Proforma invoice change event     | Number (`code`)
-    of proforma invoice
-
+    proformaInvoice:create | Proforma invoice creation event | Number (`code`) of proforma invoice
+    proformaInvoice:delete | Proforma invoice deleting event   | Number (`code`) of proforma invoice
+    proformaInvoice:update | Proforma invoice change event     | Number (`code`) of proforma invoice
     proofPayment:create | Proof of payment creation event | Number (`code`) of proof payment
-
     proofPayment:delete | Proof of payment deleting event | Number (`code`) of proof payment
-
     proofPayment:update | Proof of payment change event   | Number (`code`) of proof payment
-
     shippingMethod:change | Shipping method change event | Shipping method GUID
-
-    shippingRequest:cancelled | Shipping request was not chosen for order
-    delivery | `shippingRequestCode` associated with the cart
-
-    shippingRequest:confirmed | Shipping request was chosen for order delivery |
-    `shippingRequestCode` associated with the cart
-
+    shippingRequest:cancelled | Shipping request was not chosen for order delivery | `shippingRequestCode` associated with the cart
+    shippingRequest:confirmed | Shipping request was chosen for order delivery | `shippingRequestCode` associated with the cart
     stock:movement | Stock change event | Stock ID
-
     stock:inStock (*) | Stock change event - sum across all of the stocks raised above 0 (beta, see below) | Number (`code`) of product
-
     stock:soldOut (*) | Stock change event - sum across all of the stocks reached 0 (beta, see below) | Number (`code`) of product
-
     stock:minStockSupplyReached (*) | Stock change event - sum across all of the stocks reached minimum stock supply value, if this limit is set for product (beta, see below) | Number (`code`) of product
 
     (*) These webhooks are considered beta/experimental, for more information, please visit the X-url
 
     ### Mass Webhooks
-
 
     These webhooks are sent when a mass change of entities is performed. The
     payload contains a json serialized list of IDs of changed entities.
@@ -896,103 +786,61 @@ info:
 
 
     Value  | Description | Identifier meaning
-
     -------- | --------- | ---------
-
-    invoice:massUpdate | Mass change of invoices event      | Json serialized
-    list of number (`code`) of invoices
-
-    order:massUpdate | Mass change of orders event      | Json serialized list
-    of number (`code`) of orders
-
+    invoice:massUpdate | Mass change of invoices event      | Json serialized list of number (`code`) of invoices
+    order:massUpdate | Mass change of orders event      | Json serialized list of number (`code`) of orders
 
     ### System Webhooks
-
 
     These webhooks cannot be registered via API, they are setup in Partners'
     Addon administration section instead.
 
 
     Value | Description
-
     ----- | -----------
-
-    addon:suspend | The addon was suspended by the eshop or by Shoptet
-    operations staff
-
+    addon:suspend | The addon was suspended by the eshop or by Shoptet operations staff
     addon:approve | The addon was approved (resumed) after it was suspended
-
-    addon:terminate | The addon was terminated by the eshop or by Shoptet
-    operations staff
-
-    addon:uninstall | The addon was uninstalled by the eshop admin or the eshop
-    was terminated
-
+    addon:terminate | The addon was terminated by the eshop or by Shoptet operations staff
+    addon:uninstall | The addon was uninstalled by the eshop admin or the eshop was terminated
 
     ## URL address from endpoint Eshop info
 
     See endpoint [Eshop info](#tag/Eshop)
 
     Ident | Description
-
     ------| -----
-
     admin-orders-list | Listing of orders in administration
-
     admin-customers-list | List of customers in administration
-
-    oauth | OAuth server address, used for [e-shop user
-    verification](https://developers.shoptet.com/api/documentation/eshop-verification-using-oauth/)
-
+    oauth | OAuth server address, used for [e-shop user verification](https://developers.shoptet.com/api/documentation/eshop-verification-using-oauth/)
 
     ## List of product catalogues
 
-
     Provider (identification) | Description
-
     ------| -----
-
     glami | Glami
-
     google | Google
-
     heureka | Heuréka
-
     zbozi | Zboží.cz
-
 
     ## Invoice Billing Methods
 
-
     id | Description
-
     ------| -----
-
     1 | COD (cz: Dobírka)
-
     2 | Wire transfer (cz: Převodem)
-
     3 | Cash (cz: Hotově)
-
     4 | Card (cz: Kartou)
 
     ## VAT modes
                  
                  
     Value |
-
     ------|
-
     Normal |
-
     One Stop Shop |
-
     Mini One Stop Shop |
-                 
     Reverse charge |
-                 
     Outside the EU |
-
 
     # Postman collection
 
@@ -2382,23 +2230,14 @@ paths:
         **Please note that languages section has meaning only if module foreign languages (Cizí jazyky) is enabled on current eshop. Otherwise you have to follow "eshopLanguage" attribute.**
 
         Value | Section
-
         --------|------
-
         orderAdditionalFields | The order can contain up to six additional fields, which can be freely used by the e-shop for its individual needs. The field names can be defined in administration and this section returns their names.
-
         orderStatuses | The order statuses, as defined for this e-shop.
-
         paymentMethods | Payment methods, as defined for this e-shop.
-
         shippingMethods | Transportation options, as defined for this e-shop.
-
         imageCuts | The information on image cuts (various sizes of the same image)
-
-        countries | Informations about eshop supported countries (name, validation patterns, ...)
-
+        countries | Informations about eshop supported countries (name, validation atterns, ...)
         cashDesk | Informations about eshop cash desk configuration
-
         languages | Information about eshop languages settings - has meaning only if module foreign languages (Cizí jazyky) is enabled on current eshop
       tags:
         - Eshop
@@ -3879,48 +3718,26 @@ paths:
 
 
         Include parameter     | Meaning
-
         ---                   | ---
-
         images                | Export will also contain the list of all product images. For more information about the chapter [Product images](#product-images).
-
         variantParameters     | Export will also contain a field of variant parameters and a variant description, as they are visible to customers.
-
         allCategories         | Export will also contain information on all the categories that the product was assigned into
-
         flags                 | Details on product designation
-
         descriptiveParameters | Export will also contain descriptive parameters of the product
-
         measureUnit           | Export will also contain measure unit info of every variant.
-
         surchargeParameters   | Export will also contain surcharge parameters of the product.
-
         setItems              | Export will also contain items, products, in set.
-
         filteringParameters   | Export will also contain filtering parameters of the product.
-
         recyclingFee          | Export will also contain recycling fee.
-
         warranty              | Export will also contain product warranty.
-
         sortVariants          | Product variants will be sorted as in administration.
-
         gifts                 | List of gifts (variants) related to product
-
         alternativeProducts   | The response will also contain alternative products.
-
         relatedProducts       | The response will also contain related products.
-
         relatedVideos         | The response will also contain related videos.
-
         relatedFiles          | The response will also contain related files.
-
         perStockAmounts       | The response will also contain amounts/claims per individual stocks.
-
         perPricelistPrices    | The response will also contain prices per individual price lists.
-
-
         Result file is compressed using GZIP.
       tags:
         - Products
@@ -4055,43 +3872,24 @@ paths:
         [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
 
         Include parameter     | Meaning
-
         ---                   | ---
-
         images                | The response will also contain the list of all product images. For more information about the chapter [Product images](#section/Product-images).
-
         variantParameters     | The response will also contain a field of variant parameters and a variant description, as they are visible to customers.
-
         allCategories         | The response will also contain information on all the categories that the product was assigned into
-
         flags                 | Details on product designation
-
         descriptiveParameters | The response will also contain descriptive parameters of the product
-
         measureUnit           | The response will also contain measure unit info of every variant.
-
         surchargeParameters   | The response will also contain surcharge parameters of the product.
-
         setItems              | The response will also contain items, products, in set.
-
         filteringParameters   | The response will also contain filtering parameters of the product.
-
         warranty              | The response will also contain product warranty.
-
         sortVariants          | Product variants will be sorted as in administration.
-
         gifts                 | Product gifts, will be sorted as in administration
-
         alternativeProducts   | The response will also contain alternative products.
-
         relatedProducts       | The response will also contain related products.
-
         relatedVideos         | The response will also contain related videos.
-
         relatedFiles          | The response will also contain related files.
-
         perStockAmounts       | The response will also contain amounts/claims per individual stocks.
-
         perPricelistPrices    | The response will also contain prices per individual price lists.
       tags:
         - Products
@@ -6127,231 +5925,119 @@ paths:
 
         Description of object attributes with information about changes:
 
-        |Field                                 |Causes product change|Notes.                                 |
-
+        |Field                                 | Causes product change | Notes.                                 |
         |--------------------------------------|---------------------|---------------------------------------|
-
-        |guid                                  |Yes                  |                                       |
-
-        |type                                  |Yes                  |                                       |
-
-        |visibility                            |Yes                  |                                       |
-
-        |creationTime                          |Yes                  |                                       |
-
-        |changeTime                            |Yes                  |                                       |
-
-        |shortDescription                      |Yes                  |                                       |
-
-        |description                           |Yes                  |                                       |
-
-        |metaDescription                       |Yes                  |                                       |
-
-        |name                                  |Yes                  |                                       |
-
-        |internalNote                          |Yes                  |                                       |
-
+        |guid                                  |Yes   |                                       |
+        |type                                  |Yes     |                                       |
+        |visibility                            |Yes    |                                       |
+        |creationTime                          |Yes   |                                       |
+        |changeTime                            |Yes          |                                       |
+        |shortDescription                      |Yes       |                                       |
+        |description                           |Yes  |                                       |
+        |metaDescription                       |Yes |                                       |
+        |name                                  |Yes     |                                       |
+        |internalNote                          |Yes     |                                       |
         |defaultCategory                       |Yes                  |Only category - product relation change|
-
-        |defaultCategory.guid                  |No                   |                                       |
-
-        |defaultCategory.name                  |No                   |                                       |
-
-        |supplier                              |Yes                  |Only supplier - product relation change|
-
-        |supplier.guid                         |No                   |                                       |
-
-        |supplier.name                         |No                   |                                       |
-
-        |brand                                 |Yes                  |Only brand - product relation change   |
-
-        |brand.code                            |No                   |                                       |
-
-        |brand.name                            |No                   |                                       |
-
-        |categories                            |Yes                  |Only product - category relation       |
-
-        |categories.guid                       |No                   |                                       |
-
-        |categories.parentGuid                 |No                   |                                       |
-
-        |categories.name                       |No                   |                                       |
-
-        |url                                   |Yes                  |Only for relative url. Domain change no|
-
-        |flags                                 |Yes                  |                                       |
-
-        |flags.code                            |No                   |                                       |
-
-        |flags.title                           |No                   |                                       |
-
-        |flags.dateFrom                        |Yes                  |                                       |
-
-        |flags.dateTo                          |Yes                  |                                       |
-
-        |variants                              |Yes                  |                                       |
-
-        |variants.code                         |Yes                  |                                       |
-
-        |variants.ean                          |Yes                  |                                       |
-
-        |variants.stock                        |no                   |                                       |
-
-        |variants.unit                         |yes                  |                                       |
-
-        |variants.weight                       |yes                  |                                       |
-
-        |variants.visible                      |yes                  |                                       |
-
-        |variants.minStockSupply               |yes                  |                                       |
-
-        |variants.negativeStockAllowed         |yes                  |                                       |
-
-        |variants.amountDecimalPlaces          |yes                  |                                       |
-
-        |variants.price                        |yes                  |                                       |
-
-        |variants.includingVat                 |yes                  |                                       |
-
-        |variants.vatRate                      |yes                  |                                       |
-
-        |variants.currencyCode                 |yes                  |                                       |
-
-        |variants.actionPrice                  |yes                  |                                       |
-
-        |variants.commonPrice                  |yes                  |                                       |
-
-        |variants.manufacturerCode             |yes                  |                                       |
-
-        |variants.pluCode                      |yes                  |                                       |
-
-        |variants.isbn                         |yes                  |                                       |
-
-        |variants.serialNo                     |yes                  |                                       |
-
-        |variants.mpn                          |yes                  |                                       |
-
-        |variants.availability                 |yes                  |                                       |
-
-        |variants.availabilityWhenSoldOut      |yes                  |                                       |
-
-        |variants.image                        |yes                  |                                       |
-
-        |variants.parameters                   |yes                  |                                       |
-
-        |variants.name                         |yes                  |                                       |
-
-        |variants.measureUnit                  |yes                  |                                       |
-
-        |variants.measureUnit.measureAmount    |yes                  |                                       |
-
-        |variants.measureUnit.measureUnitId    |yes                  |                                       |
-
-        |variants.measureUnit.packagingAmount  |yes                  |                                       |
-
-        |variants.measureUnit.packagingUnitId  |yes                  |                                       |
-
-        |variants.measureUnit.measureUnitName  |yes                  |                                       |
-
-        |variants.measureUnit.packagingUnitName|yes                  |                                       |
-
-        |variants.measureUnit.measurePrice     |yes                  |                                       |
-
-        |variants.recyclingFee                 |yes                  |                                       |
-
-        |images                                |yes                  |                                       |
-
-        |images.name                           |yes                  |                                       |
-
-        |images.priority                       |yes                  |                                       |
-
-        |images.description                    |yes                  |                                       |
-
-        |images.changeTime                     |yes                  |                                       |
-
-        |images.seoName                        |yes                  |                                       |
-
-        |images.cdnName                        |yes                  |                                       |
-
-        |descriptiveParameters                 |yes                  |                                       |
-
-        |descriptiveParameters.name            |yes                  |                                       |
-
-        |descriptiveParameters.value           |yes                  |                                       |
-
-        |descriptiveParameters.description     |yes                  |                                       |
-
-        |descriptiveParameters.priority        |yes                  |                                       |
-
-        |surchargeParameters                   |no                   |                                       |
-
-        |surchargeParameters.code              |no                   |                                       |
-
-        |surchargeParameters.name              |no                   |                                       |
-
-        |surchargeParameters.displayName       |no                   |                                       |
-
-        |surchargeParameters.description       |no                   |                                       |
-
-        |surchargeParameters.priority          |no                   |                                       |
-
-        |surchargeParameters.required          |no                   |                                       |
-
-        |surchargeParameters.currency          |no                   |                                       |
-
-        |surchargeParameters.includingVat      |no                   |                                       |
-
-        |surchargeParameters.values            |no                   |                                       |
-
-        |surchargeParameters.values.valueIndex |no                   |                                       |
-
-        |surchargeParameters.values.description|no                   |                                       |
-
-        |surchargeParameters.values.price      |no                   |                                       |
-
-        |surchargeParameters.values.priority   |no                   |                                       |
-
-        |surchargeParameters.values.visible    |no                   |                                       |
-
-        |setItems                              |yes                  |                                       |
-
-        |setItems.guid                         |no                   |                                       |
-
-        |setItems.code                         |no                   |                                       |
-
-        |setItems.amount                       |no                   |                                       |
-
-        |filteringParameters                   |yes                  |Only relation                          |
-
-        |filteringParameters.code              |no                   |                                       |
-
-        |filteringParameters.name              |no                   |                                       |
-
-        |filteringParameters.displayName       |no                   |                                       |
-
-        |filteringParameters.description       |no                   |                                       |
-
-        |filteringParameters.priority          |yes                  |                                       |
-
-        |filteringParameters.googleMapping     |no                   |                                       |
-
-        |filteringParameters.values            |yes                  |Only relation                          |
-
-        |filteringParameters.values.valueIndex |no                   |                                       |
-
-        |filteringParameters.values.name       |no                   |                                       |
-
-        |filteringParameters.values.priority   |no                   |                                       |
-
-        |filteringParameters.values.color      |no                   |                                       |
-
-        |filteringParameters.values.image      |no                   |                                       |
-
-        |warranty                              |yes                  |only relation                          |
-
-        |warranty.inMonths                     |no                   |                                       |
-
-        |warranty.description                  |no                   |                                       |
+        |defaultCategory.guid                  |No      |                                       |
+        |defaultCategory.name                  |No                      |                                       |
+        |supplier                              |Yes                  |Only supplier    - product relation change|
+        |supplier.guid                         |No                      |                                       |
+        |supplier.name                         |No                      |                                       |
+        |brand                                 |Yes                  |Only brand -    product relation change   |
+        |brand.code                            |No                      |                                       |
+        |brand.name                            |No                      |                                       |
+        |categories                            |Yes                  |Only product -    category relation       |
+        |categories.guid                       |No                      |                                       |
+        |categories.parentGuid                 |No                      |                                       |
+        |categories.name                       |No                      |                                       |
+        |url                                   |Yes                  |Only for    relative url. Domain change no|
+        |flags                                 |Yes                     |                                       |
+        |flags.code                            |No                      |                                       |
+        |flags.title                           |No                      |                                       |
+        |flags.dateFrom                        |Yes                     |                                       |
+        |flags.dateTo                          |Yes                     |                                       |
+        |variants                              |Yes                     |                                       |
+        |variants.code                         |Yes                     |                                       |
+        |variants.ean                          |Yes                     |                                       |
+        |variants.stock                        |no                      |                                       |
+        |variants.unit                         |yes                     |                                       |
+        |variants.weight                       |yes                     |                                       |
+        |variants.visible                      |yes                     |                                       |
+        |variants.minStockSupply               |yes                     |                                       |
+        |variants.negativeStockAllowed         |yes                     |                                       |
+        |variants.amountDecimalPlaces          |yes                     |                                       |
+        |variants.price                        |yes                     |                                       |
+        |variants.includingVat                 |yes                     |                                       |
+        |variants.vatRate                      |yes                     |                                       |
+        |variants.currencyCode                 |yes                     |                                       |
+        |variants.actionPrice                  |yes                     |                                       |
+        |variants.commonPrice                  |yes                     |                                       |
+        |variants.manufacturerCode             |yes                     |                                       |
+        |variants.pluCode                      |yes                     |                                       |
+        |variants.isbn                         |yes                 |                                       |
+        |variants.serialNo                     |yes                     |                                       |
+        |variants.mpn                          |yes                     |                                       |
+        |variants.availability                 |yes                     |                                       |
+        |variants.availabilityWhenSoldOut      |yes                     |                                       |
+        |variants.image                        |yes                     |                                       |
+        |variants.parameters                   |yes                     |                                       |
+        |variants.name                         |yes                     |                                       |
+        |variants.measureUnit                  |yes                     |                                       |
+        |variants.measureUnit.measureAmount    |yes                     |                                       |
+        |variants.measureUnit.measureUnitId    |yes                     |                                       |
+        |variants.measureUnit.packagingAmount  |yes                     |                                       |
+        |variants.measureUnit.packagingUnitId  |yes                     |                                       |
+        |variants.measureUnit.measureUnitName  |yes                     |                                       |
+        |variants.measureUnit.packagingUnitName|yes                     |                                       |
+        |variants.measureUnit.measurePrice     |yes                     |                                       |
+        |variants.recyclingFee                 |yes                     |                                       |
+        |images                                |yes                     |                                       |
+        |images.name                           |yes                     |                                       |
+        |images.priority                       |yes                     |                                       |
+        |images.description                    |yes                     |                                       |
+        |images.changeTime                     |yes                     |                                       |
+        |images.seoName                        |yes                     |                                       |
+        |images.cdnName                        |yes                     |                                       |
+        |descriptiveParameters                 |yes                     |                                       |
+        |descriptiveParameters.name            |yes                     |                                       |
+        |descriptiveParameters.value           |yes                     |                                       |
+        |descriptiveParameters.description     |yes                     |                                       |
+        |descriptiveParameters.priority        |yes                     |                                       |
+        |surchargeParameters                   |no                      |                                       |
+        |surchargeParameters.code              |no                      |                                       |
+        |surchargeParameters.name              |no                      |                                       |
+        |surchargeParameters.displayName       |no                      |                                       |
+        |surchargeParameters.description       |no                      |                                       |
+        |surchargeParameters.priority          |no                      |                                       |
+        |surchargeParameters.required          |no                      |                                       |
+        |surchargeParameters.currency          |no                      |                                       |
+        |surchargeParameters.includingVat      |no                      |                                       |
+        |surchargeParameters.values            |no                      |                                       |
+        |surchargeParameters.values.valueIndex |no                      |                                       |
+        |surchargeParameters.values.description|no                      |                                       |
+        |surchargeParameters.values.price      |no                      |                                       |
+        |surchargeParameters.values.priority   |no                      |                                       |
+        |surchargeParameters.values.visible    |no                      |                                       |
+        |setItems                              |yes                     |                                       |
+        |setItems.guid                         |no                      |                                       |
+        |setItems.code                         |no                      |                                       |
+        |setItems.amount                       |no                  |                                       |
+        |filteringParameters                   |yes                  |Only    relation                          |
+        |filteringParameters.code              |no                      |                                       |
+        |filteringParameters.name              |no                      |                                       |
+        |filteringParameters.displayName       |no                      |                                       |
+        |filteringParameters.description       |no                      |                                       |
+        |filteringParameters.priority          |yes                     |                                       |
+        |filteringParameters.googleMapping     |no                      |                                       |
+        |filteringParameters.values            |yes                  |Only    relation                          |
+        |filteringParameters.values.valueIndex |no                      |                                       |
+        |filteringParameters.values.name       |no                      |                                       |
+        |filteringParameters.values.priority   |no                      |                                       |
+        |filteringParameters.values.color      |no                      |                                       |
+        |filteringParameters.values.image      |no                      |                                       |
+        |warranty                              |yes                  |only    relation                          |
+        |warranty.inMonths                     |no                      |                                       |
+        |warranty.description                  |no                      |                                       |
       tags:
         - Products
       parameters:
@@ -9848,9 +9534,7 @@ paths:
         List of variant parameters endpoint has section, which is only sent when requested in the `include` parameter.
 
         Value | Section
-
         --------|------
-
         `values` | Variant parameter values
       tags:
         - Products
@@ -14092,19 +13776,12 @@ paths:
 
 
         Include parameter     | Meaning
-
         ---                   | ---
-
         `notes`               | Order remarks, including up to six additional fields, which can be freely used by e-shop for its individual needs. The field names can be defined in administration and this section returns their names.
-
         `images`              | Order images
-
         `shippingDetails`     | Transport details
-
         `stockLocation`       | Position in the stock
-
         `surchargeParameters` | Item surcharge parameters
-
         `productFlags`        | Item product flags
 
         Result file is compressed using GZIP.
@@ -14715,23 +14392,13 @@ paths:
 
 
         Value | Section
-
         --------|------
-
-        `notes` | Order remarks, including up to six additional fields, which
-        can be freely used by e-shop for its individual needs. The field names
-        can be defined in administration and this section returns their names.
-
+        `notes` | Order remarks, including up to six additional fields, which can be freely used by e-shop for its individual needs. The field names can be defined in administration and this section returns their names.
         `images`| Order images
-
         `shippingDetails`| Transport details
-
         `stockLocation`| Position in the stock
-
         `surchargeParameters`| Item surcharge parameters
-
         `productFlags`| Item product flags
-
 
         Returns the detail for one order. In the `items` field, the individual
         items of the order, including transport and payment methods.
@@ -20371,9 +20038,7 @@ paths:
 
 
         Value | Section
-
         --------|------
-
         `surchargeParameters`| Item surcharge parameters
       tags:
         - Invoices
@@ -20746,9 +20411,7 @@ paths:
         [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
 
         Value | Section
-
         --------|------
-
         `surchargeParameters`| Item surcharge parameters
       tags:
         - Invoices
@@ -21289,9 +20952,7 @@ paths:
         [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
 
         Value | Section
-
         --------|------
-
         `surchargeParameters`| Item surcharge parameters
       tags:
         - Invoices
@@ -21869,9 +21530,7 @@ paths:
         [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
 
         Value | Section
-
         --------|------
-
         `surchargeParameters`| Item surcharge parameters
       tags:
         - 'Proforma invoices'
@@ -23351,9 +23010,7 @@ paths:
         [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
 
         Value | Section
-
         --------|------
-
         `surchargeParameters`| Item surcharge parameters
       tags:
         - 'Credit notes'
@@ -23722,9 +23379,7 @@ paths:
         [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
 
         Value | Section
-
         --------|------
-
         `surchargeParameters`| Item surcharge parameters
       tags:
         - 'Credit notes'
@@ -25693,9 +25348,7 @@ paths:
         [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
 
         Value | Section
-
         --------|------
-
         `surchargeParameters`| Item surcharge parameters
       tags:
         - 'Delivery notes'
