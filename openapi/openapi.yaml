@@ -23995,6 +23995,15 @@ paths:
       description: |-
         Creating credit note from existing invoice.
 
+        This endpoint has several sections, which are only sent when requested in the `include` parameter (see
+        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+
+
+        Value | Section
+
+        --------|------
+
+        `surchargeParameters`| Item surcharge parameters
 
         It will create a credit note from the given invoice. It will
         automatically take all invoice items and add them to the credit note. If
@@ -24010,6 +24019,14 @@ paths:
           description: 'Code of invoice'
           required: true
           example: '2018000004'
+          schema:
+            type: string
+        -
+          name: include
+          in: query
+          description: 'Sections to include'
+          required: false
+          example: surchargeParameters
           schema:
             type: string
         -
@@ -24315,7 +24332,8 @@ paths:
         Creating credit note from existing proof of payment.
 
         It will create a credit note from the given proof of payment. It will
-        automatically take all proof of payment items and add them to the credit note.
+        automatically take all proof of payment items and add them to the credit
+        note.
       tags:
         - 'Credit notes'
         - 'Proof payments'
@@ -24929,6 +24947,69 @@ paths:
         You can request the credit note as PDF file, response will be as
         application/octet-stream. You can download pdf documents
 
+        only one-by-one for every e-shop. Parallel requests end with `423
+        Locked` error.
+      tags:
+        - 'Credit notes'
+      parameters:
+        -
+          name: code
+          in: path
+          description: ''
+          required: true
+          example: '0000000002'
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/credit-notes/{code}/isdoc':
+    get:
+      responses:
+        200:
+          description: OK
+        404:
+          description: 'Not Found'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: credit-note-not-found
+                    message: 'Credit note with code "0000000002" not found.'
+                    instance: '0000000002'
+        500:
+          description: 'Internal Server Error'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: document-not-generated
+                    message: |-
+                      Error while getting document type "creditNote" with code
+                      "0000000002".
+                    instance: '0000000002'
+      summary: 'Download credit note as ISDOC'
+      operationId: downloadCreditNoteAsIsdoc
+      description: |-
+        You can request the credit note as ISDOC file, response will be as
+        application/octet-stream. You can download the documents
         only one-by-one for every e-shop. Parallel requests end with `423
         Locked` error.
       tags:
@@ -35670,6 +35751,7 @@ components:
         - string
         - 'null'
       pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'
+      format: date
       examples:
         - '2017-04-04'
     typeDateTime:
@@ -40529,7 +40611,9 @@ components:
         - flagColor
         - priority
         - isActive
+        - status
         - includeUnregisteredCustomers
+        - targetingLevel
         - targeting
         - settings
       properties:
@@ -40603,6 +40687,26 @@ components:
           description: 'flag whether the discount is active'
           examples:
             - true
+        status:
+          type: string
+          description: 'status of the discount'
+          enum:
+            - available
+            - unavailable
+            - expired
+            - planned
+          examples:
+            - active
+        targetingLevel:
+          type: string
+          description: 'targeting level of the discount'
+          enum:
+            - eshop
+            - product
+            - category
+            - brand
+          examples:
+            - eshop
         targeting:
           $ref: '#/components/schemas/quantityDiscountTargetingResponse'
           description: 'definition of products needed to get discount'
