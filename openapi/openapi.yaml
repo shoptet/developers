@@ -734,6 +734,9 @@ info:
     deliveryNote:create | Delivery note creation event  | Number (`code`) of delivery note
     deliveryNote:delete | Delivery note deleting event    | Number (`code`) of delivery note
     deliveryNote:update | Delivery note change event      | Number (`code`) of delivery note
+    discountCoupon:create | Discount coupon creating event | String (`code`) - discount coupon unique code
+    discountCoupon:delete | Discount coupon deleting event      | String (`code`) of discount coupon
+    discountCoupon:update | Discount coupon updating event | String (`code`) - discount coupon unique code
     eshop:currencies | Currencies settings change event | ID of eshop
     eshop:billingInformation | Billing information (i.e. eshop billing address) change event | ID of eshop
     eshop:design | Design settings (template, colors, fonts, layout) | ID of eshop
@@ -787,6 +790,8 @@ info:
 
     Value  | Description | Identifier meaning
     -------- | --------- | ---------
+    discountCoupon:massCreate | Mass create of discount coupons event | Json serialized list of string (`code`) of discount coupons
+    discountCoupon:massDelete | Mass delete of discount coupons event      | Json serialized list of string (`code`) of discount coupons
     invoice:massUpdate | Mass change of invoices event      | Json serialized list of number (`code`) of invoices
     order:massUpdate | Mass change of orders event      | Json serialized list of number (`code`) of orders
 
@@ -1251,7 +1256,7 @@ paths:
                               - Technology
                           url:
                             type: string
-                            description: 'e-shop domain'
+                            description: 'e-shop domain. Please note that domain can change, so it is recommended to register `eshop:projectDomain` webhook and update the domain in your system if needed.'
                             examples:
                               - 'http://www.domena-eshopu.cz'
                           eshopTitle:
@@ -1737,6 +1742,7 @@ paths:
                                 - abandonedCart
                       urls:
                         type: array
+                        description: 'e-shop significant URLs. Please note that domain can change, so it is recommended to register `eshop:projectDomain` webhook and update the domain in your system if needed.'
                         items:
                           type: object
                           additionalProperties: false
@@ -19297,6 +19303,577 @@ paths:
                       description: 'billing method - see also [code list for billing methods](#section/code-lists/Invoice-Billing-Methods).'
                       examples:
                         - 1
+  '/api/orders/{code}/copy':
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - order
+                    properties:
+                      order:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - code
+                          - guid
+                          - externalCode
+                          - creationTime
+                          - changeTime
+                          - email
+                          - phone
+                          - clientIPAddress
+                          - customerGuid
+                          - vatPayer
+                          - cashDeskOrder
+                          - stockId
+                          - addressesEqual
+                          - billingMethod
+                          - paymentMethod
+                          - shipping
+                          - adminUrl
+                          - status
+                          - price
+                          - paid
+                          - billingAddress
+                          - deliveryAddress
+                          - items
+                        properties:
+                          code:
+                            type: string
+                            description: 'order number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
+                            examples:
+                              - '2017000092'
+                          guid:
+                            type: string
+                            description: 'global unique permanent order identifier (can be `null` for old orders)'
+                            examples:
+                              - c5012051-d7ca-11e0-9a5c-feab5ed617ed
+                          externalCode:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Identification of the order in external system (or `null`).'
+                            examples:
+                              - '1234'
+                          creationTime:
+                            $ref: '#/components/schemas/typeDateTime'
+                            description: 'date and time, when the order was created. ISO 8601 format.'
+                          changeTime:
+                            type:
+                              - string
+                              - 'null'
+                            $ref: '#/components/schemas/typeDateTime'
+                            description: "date and time of the order's last change. ISO 8601 format."
+                          email:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'purchaser e-mail (can be `null`)'
+                            examples:
+                              - customer@someemail.com
+                          phone:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'purchaser phone number (can be `null`)'
+                            examples:
+                              - '+420604600444'
+                          birthDate:
+                            type:
+                              - string
+                              - 'null'
+                            description: "customer's date of birth stated in the order"
+                            examples:
+                              - '1980-01-01'
+                          clientIPAddress:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'IP address of the client who made the order'
+                            examples:
+                              - 213.46.237.24
+                          customerGuid:
+                            type:
+                              - string
+                              - 'null'
+                            $ref: '#/components/schemas/typeGuidUnlimited'
+                            description: 'customer identifier, if the customer is registered in the e-shop (can be `null`)'
+                          cashDeskOrder:
+                            type: boolean
+                            description: 'flag, whether the order is from the cash desk (as opposed to the e-shop)'
+                            examples:
+                              - true
+                          stockId:
+                            type: number
+                            description: 'identifier of the stock, from which the order was taken'
+                            examples:
+                              - 1
+                          addressesEqual:
+                            type: boolean
+                            description: 'flag, whether the delivery address is the same as the invoicing address'
+                            examples:
+                              - true
+                          vatPayer:
+                            type: boolean
+                            description: 'Is the tradesman a VAT payer, when purchasing? (can be `null`, if this is unknown)'
+                            examples:
+                              - true
+                          vatMode:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
+                            examples:
+                              - Normal
+                          billingMethod:
+                            type:
+                              - object
+                              - 'null'
+                            $ref: '#/components/schemas/billingMethod'
+                          paymentMethod:
+                            type:
+                              - object
+                              - 'null'
+                            $ref: '#/components/schemas/paymentMethod'
+                          shipping:
+                            type:
+                              - object
+                              - 'null'
+                            $ref: '#/components/schemas/shipping'
+                          shippingDetails:
+                            type:
+                              - object
+                              - 'null'
+                            additionalProperties: false
+                            required:
+                              - branchId
+                              - shippingCompanyCode
+                              - name
+                              - note
+                              - place
+                              - street
+                              - city
+                              - zipCode
+                              - countryCode
+                              - link
+                              - latitude
+                              - longitude
+                              - carrierId
+                            properties:
+                              branchId:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'branch identifier'
+                                examples:
+                                  - '4'
+                              shippingCompanyCode:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'identification of the carrier'
+                                examples:
+                                  - zasilkovna
+                              shippingServiceCode:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: "identification of the carrier's service"
+                                examples:
+                                  - zasilkovna-pickup
+                              name:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'name of the branch'
+                                examples:
+                                  - 'Hradec Králové, Square of 5th May 888'
+                              note:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'branch location note, can contain HTML'
+                                examples:
+                                  - '<p>Open: Mon-Fri 8:00-18:00, Sat 8:00-12:00</p>'
+                              place:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'location (specify location within address).'
+                                examples:
+                                  - Creator
+                              street:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: street
+                                examples:
+                                  - 'Square of 5th May 888'
+                              city:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: city/town
+                                examples:
+                                  - 'Hradec Králové'
+                              zipCode:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'ZIP or postal code'
+                                examples:
+                                  - '50002'
+                              countryCode:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'country code'
+                                examples:
+                                  - CZ
+                              link:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: "link to the branch's website"
+                                examples:
+                                  - 'https://www.ulozenka.cz/pobocky/4/hradec-kralove-nam-5-kvetna-888'
+                              latitude:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'GPS coordinates - north latitude'
+                                examples:
+                                  - '50.213673'
+                              longitude:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'GPS coordinates - east longitude'
+                                examples:
+                                  - '15.832775'
+                              carrierId:
+                                type:
+                                  - integer
+                                  - 'null'
+                                description: "identification of the carrier - now it's used for Zasilkovna only. The value is `null` for Czech Zasilkovna or carrier ID for Zasilkovna in the other countries."
+                                examples:
+                                  - 3060
+                          adminUrl:
+                            type: string
+                            description: 'URL to administration leading to order detail. URL keeps the administration language settings.'
+                            examples:
+                              - 'https://www.domena-eshopu.cz/admin/objednavky-detail?id=2'
+                          status:
+                            type:
+                              - object
+                              - 'null'
+                            additionalProperties: false
+                            required:
+                              - name
+                              - id
+                            properties:
+                              name:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'status name'
+                                examples:
+                                  - Processing
+                              id:
+                                type: number
+                                description: 'status identifier'
+                                examples:
+                                  - -1
+                          source:
+                            type:
+                              - object
+                              - 'null'
+                            additionalProperties: false
+                            required:
+                              - name
+                              - id
+                            description: 'source of the order'
+                            properties:
+                              name:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'source name'
+                                examples:
+                                  - E-Shop
+                              id:
+                                type: number
+                                description: 'source identifier'
+                                examples:
+                                  - -1
+                          price:
+                            $ref: '#/components/schemas/price'
+                            description: 'price of the order'
+                          paid:
+                            type:
+                              - boolean
+                              - 'null'
+                            description: 'flag, whether the order was paid. In addition to `true` a `false`, can also be `null`, if the payment status is unknown.'
+                            examples:
+                              - true
+                          billingAddress:
+                            $ref: '#/components/schemas/billingAddress'
+                          deliveryAddress:
+                            oneOf:
+                              -
+                                $ref: '#/components/schemas/address'
+                              -
+                                type: 'null'
+                          onlinePaymentLink:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'URL to online payment'
+                            examples:
+                              - 'https://www.domena-eshopu.cz/api/pay/payu/redir?paymentCode=xyz123'
+                          language:
+                            type: string
+                            description: 'language code of the order'
+                            examples:
+                              - cs
+                          referer:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'which page (url) has the user come from'
+                            examples:
+                              - 'https://www.google.cz/'
+                          paymentMethods:
+                            type: array
+                            description: 'all order payment methods'
+                            items:
+                              type: object
+                              additionalProperties: false
+                              required:
+                                - paymentMethod
+                                - itemId
+                              properties:
+                                paymentMethod:
+                                  $ref: '#/components/schemas/paymentMethod'
+                                itemId:
+                                  type: number
+                                  description: 'payment method identifier within order'
+                                  examples:
+                                    - 564
+                          shippings:
+                            type: array
+                            description: 'all order shippings'
+                            items:
+                              type: object
+                              additionalProperties: false
+                              required:
+                                - shipping
+                                - itemId
+                              properties:
+                                shipping:
+                                  type: object
+                                  additionalProperties: false
+                                  required:
+                                    - guid
+                                    - name
+                                  description: 'transport method'
+                                  properties:
+                                    guid:
+                                      type:
+                                        - string
+                                        - 'null'
+                                      $ref: '#/components/schemas/typeGuid'
+                                      description: 'transport method identifier'
+                                    name:
+                                      type: string
+                                      description: 'description of transport method'
+                                      examples:
+                                        - PPL
+                                itemId:
+                                  type: number
+                                  description: 'transport method identifier within order'
+                                  examples:
+                                    - 897
+                          items:
+                            type: array
+                            description: 'all order items'
+                            items:
+                              $ref: '#/components/schemas/orderItem'
+                          notes:
+                            type: object
+                            additionalProperties: false
+                            description: 'order notes (only filled in on request if `include=notes` is listed)'
+                            required:
+                              - customerRemark
+                              - eshopRemark
+                              - trackingNumber
+                              - trackingUrl
+                              - additionalFields
+                            properties:
+                              customerRemark:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'customer note'
+                                examples:
+                                  - 'Better in green'
+                              eshopRemark:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'e-shop order remark.'
+                                examples:
+                                  - 'Gift wrapping'
+                              trackingNumber:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'shipment number'
+                                examples:
+                                  - DR123456
+                              trackingUrl:
+                                type:
+                                  - string
+                                  - 'null'
+                                description: 'package trace link (can be `null`)'
+                                examples:
+                                  - 'http://www.ppl.cz/main2.aspx?cls=Package&idSearch=DR123456'
+                              additionalFields:
+                                type: array
+                                description: 'can contain up to six additional fields, which can be freely used by e-shop for its individual needs.'
+                                items:
+                                  type: object
+                                  additionalProperties: false
+                                  required:
+                                    - index
+                                    - label
+                                    - text
+                                  properties:
+                                    index:
+                                      type: integer
+                                      description: 'sequence number'
+                                      examples:
+                                        - 1
+                                    label:
+                                      type: string
+                                      description: 'item name. The name of the field can be edited in the e-shop administration.'
+                                      examples:
+                                        - '1st field'
+                                    text:
+                                      type:
+                                        - string
+                                        - 'null'
+                                      description: 'item value (can be `null`)'
+                                      examples:
+                                        - 'forwarder ID'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: order-not-found
+                    message: 'Order "2018000012" not found.'
+                    instance: '2018000012'
+        500:
+          description: 'Internal server error'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: unknown-error
+                    message: 'Unknown error occurred during order duplication.'
+                    instance: payload
+      summary: 'Order copy'
+      operationId: orderCopy
+      parameters:
+        -
+          name: code
+          in: path
+          description: ''
+          required: true
+          example: '2018000012'
+          schema:
+            type: string
+        -
+          name: include
+          in: query
+          description: 'optional parts of response'
+          example: 'notes,images,shippingDetails,stockLocation,productFlags'
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      description: |-
+        This endpoint allows you to copy a order identified by its code.
+
+        You can choose scope in which will be the order copied. The scope can be
+        - `all` - copy the order with all its items
+        - `no-billing-shipping` - copy the order without billing and shipping items
+        - `contact-only` - copy the order without any items
+
+        Please note, that copy order creates stock demand  (if stock module is active and negative stock amount is not allowed) and if this demand  overflows the stock, the order will be fully created with error `order-duplication-stock-overflow`. 
+
+        You can use `include` parameter to include additional parts of response, same as in `GET` order detail, to retrieve more information about the copied order in copy response.
+      tags:
+        - Orders
+      requestBody:
+        content:
+          application/vnd.shoptet.v1.0+json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  required:
+                    - scope
+                  properties:
+                    scope:
+                      type: string
+                      enum:
+                        - all
+                        - no-billing-shipping
+                        - contact-only
+                      examples:
+                        - all
+                      description: 'Scope of the order copy. Check endpoint description for more information.'
   /api/orders/statuses:
     get:
       responses:
@@ -33938,6 +34515,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'The property defaultSectionId is required'
                     instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'File image123.jpg does not exist in temp upload storage.'
+                    instance: data.sourceImageName
       summary: 'Insert of article'
       operationId: createArticle
       description: 'Creates a new article.'
@@ -34053,6 +34634,22 @@ paths:
                       description: "Flag indicating, whether the article can be viewed by everyone (value of the flag is: 'all'), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
                       examples:
                         - logged-in
+                    sourceImageName:
+                      type:
+                        - string
+                        - 'null'
+                      $ref: '#/components/schemas/typeFilename'
+                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as article image. When set to null, image will be removed.'
+                      examples:
+                        - image.png
+                    sourceOgImageName:
+                      type:
+                        - string
+                        - 'null'
+                      $ref: '#/components/schemas/typeFilename'
+                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as article open-graph image. When set to null, image will be removed.'
+                      examples:
+                        - image.png
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -34254,6 +34851,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'The property defaultSectionId is required'
                     instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'File image123.jpg does not exist in temp upload storage.'
+                    instance: data.sourceImageName
       summary: 'Update of article'
       operationId: updateArticle
       description: 'Updates the article.'
@@ -34370,6 +34971,22 @@ paths:
                       description: "Flag indicating, whether the article can be viewed by everyone (value of the flag is: 'all'), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
                       examples:
                         - logged-in
+                    sourceImageName:
+                      type:
+                        - string
+                        - 'null'
+                      $ref: '#/components/schemas/typeFilename'
+                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as article image. When set to null, image will be removed.'
+                      examples:
+                        - image.png
+                    sourceOgImageName:
+                      type:
+                        - string
+                        - 'null'
+                      $ref: '#/components/schemas/typeFilename'
+                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as article open-graph image. When set to null, image will be removed.'
+                      examples:
+                        - image.png
     delete:
       responses:
         200:
@@ -35406,8 +36023,8 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
-        201:
-          description: Created
+        202:
+          description: Accepted
           content:
             'application/vnd.shoptet.v1.0+json; charset=utf-8':
               schema:
@@ -35430,10 +36047,13 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
-      summary: 'File upload'
-      operationId: uploadFile
+      summary: 'Batch files upload'
+      operationId: uploadFiles
       description: |-
-        Performes file upload asynchronously.
+        **This endpoint has been only renamed from "File upload" after we created
+        new synchronous endpoint one file upload. Url and structure is unchanged**
+
+        Performs file upload asynchronously.
 
         Please note that order of files matter (result of job respects the order
         of images in request).
@@ -35478,7 +36098,7 @@ paths:
         the request (0-based indexing).
 
 
-        In the result's `errors` section, there are errors which occured during
+        In the result's `errors` section, there are errors which occurred during
         some images upload and with number in brackets in `data[0]` in
         `instance`, which is order of the image in the request (0-based
         indexing).
@@ -35526,6 +36146,157 @@ paths:
                         description: 'desired filename for the file to be saved as. May be suffixed with number in case of duplication. Generated when not set.'
                         examples:
                           - amazing-file
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  /api/system/file:
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - image
+                    properties:
+                      image:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - name
+                        properties:
+                          name:
+                            type: string
+                            description: "filename of saved file, used for assign file in 'source*' parameters."
+                            examples:
+                              - file.png
+                          created:
+                            $ref: '#/components/schemas/typeDateTime'
+                            description: 'datetime when file was uploaded'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              examples:
+                invalid-name:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Does not match the regex pattern ^[0-9a-zA-Z\\-.]+$'
+                        instance: data.name
+        500:
+          description: 'Internal Server Error'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              examples:
+                file-upload-error:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: file-upload-error
+                        message: 'File upload failed.'
+                        instance: payload
+                file-upload-extension-mismatch:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: file-upload-extension-mismatch
+                        message: 'File extension jpg mismatch mime type image/png of uploaded file (correct should be png).'
+                        instance: payload
+                file-upload-size-limit:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: file-upload-size-limit
+                        message: 'Uploaded file size limit exceeded. Limit is 2 MB.'
+                        instance: payload
+                file-upload-invalid-type:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: file-upload-invalid-type
+                        message: 'Unsupported filetype.'
+                        instance: payload
+      summary: 'File upload'
+      operationId: uploadFile
+      description: |-
+        **This is new endpoint - older asynchronous endpoint has been only renamed
+        to "Batch files upload" in documentation, url and structure is unchanged**
+
+        **Please, do not use this endpoint for batch file upload!**
+
+        Performs one file upload synchronously in same way as asynchronous files 
+        upload.
+
+
+        In the result's `image` section, there are successfully uploaded image
+        with current unique name and upload datetime.
+
+
+        See more about file upload in the [files section of
+        documentation](#section/Basic-principles-of-working-with-API/Files)
+
+
+        Current filesize limit is 2MB.
+      tags:
+        - Files
+      requestBody:
+        content:
+          application/vnd.shoptet.v1.0+json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - sourceUrl
+                  properties:
+                    sourceUrl:
+                      type: string
+                      description: 'source URL of the image you want to upload.'
+                      examples:
+                        - 'https://example.com/file.png'
+                    name:
+                      $ref: '#/components/schemas/typeFilename'
+                      description: 'desired filename for the file to be saved as. May be suffixed with number in case of duplication. Generated when not set.'
+                      examples:
+                        - amazing-file
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -40254,6 +41025,7 @@ components:
         - billRegionName
         - billRegionShortcut
         - vatId
+        - taxId
         - companyId
         - language
         - email
@@ -40412,6 +41184,13 @@ components:
           description: 'VAT identification number. (can be `null`)'
           examples:
             - CZ123456789
+        taxId:
+          type:
+            - string
+            - 'null'
+          description: 'TAX identification number. For Czech address, taxId is same as vatId. (can be `null`)'
+          examples:
+            - CZ123456789
         companyId:
           type:
             - string
@@ -40479,7 +41258,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'identification number (can be `null`)'
+          description: 'DEPRECATED! identification number (can be `null`)'
           examples:
             - '12345678'
         remark:
