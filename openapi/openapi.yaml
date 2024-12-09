@@ -13126,9 +13126,9 @@ paths:
                       type: string
                       minLength: 1
                       maxLength: 10
-                      description: 'Item code. For transportation, payment and discounts the (`discount-coupon` and `volume-discount`) must remain `null`, for the other types of items, this is mandatory.'
+                      description: 'Unique identifier for an e-shop order. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
                       examples:
-                        - 179/B
+                        - 2024-123
                     language:
                       type: string
                       minLength: 1
@@ -41685,19 +41685,19 @@ components:
       properties:
         width:
           type:
-            - integer
+            - number
             - 'null'
         height:
           type:
-            - integer
+            - number
             - 'null'
         depth:
           type:
-            - integer
+            - number
             - 'null'
         weight:
           type:
-            - integer
+            - number
             - 'null'
         name:
           type:
@@ -41731,19 +41731,19 @@ components:
       properties:
         width:
           type:
-            - integer
+            - number
             - 'null'
         height:
           type:
-            - integer
+            - number
             - 'null'
         depth:
           type:
-            - integer
+            - number
             - 'null'
         weight:
           type:
-            - integer
+            - number
             - 'null'
         name:
           type:
