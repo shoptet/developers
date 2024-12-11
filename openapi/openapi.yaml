@@ -1128,8 +1128,8 @@ tags:
       * `eshopId` - number of the e-shop, where the event happened
 
 
-      * `event` - event which invoked the call (see code list <a
-      href="#webhook-event-type">Webhook event types</a>)
+      * `event` - event which invoked the call (see code list 
+      [Webhook event](#section/code-lists/webhook-event-types) types)
 
 
       * `eventCreated` - accurate time, when the event happened
@@ -2244,7 +2244,6 @@ paths:
         imageCuts | The information on image cuts (various sizes of the same image)
         countries | Informations about eshop supported countries (name, validation atterns, ...)
         cashDesk | Informations about eshop cash desk configuration
-        languages | Information about eshop languages settings - has meaning only if module foreign languages (Cizí jazyky) is enabled on current eshop
       tags:
         - Eshop
       parameters:
@@ -2252,7 +2251,7 @@ paths:
           name: include
           in: query
           description: 'Sections to include'
-          example: 'orderAdditionalFields,orderStatuses,paymentMethods,shippingMethods,imageCuts,countries,cashDesk,languages'
+          example: 'orderAdditionalFields,orderStatuses,paymentMethods,shippingMethods,imageCuts,countries,cashDesk'
           schema:
             type: string
         -
@@ -3742,7 +3741,7 @@ paths:
         relatedProducts       | The response will also contain related products.
         relatedVideos         | The response will also contain related videos.
         relatedFiles          | The response will also contain related files.
-        perStockAmounts       | The response will also contain amounts/claims per individual stocks.
+        perStockAmounts       | The response will also contain amounts/claims per individual stocks. Requires the "wholesale" module to be enabled on the current e-shop.
         perPricelistPrices    | The response will also contain prices per individual price lists.
         Result file is compressed using GZIP.
       tags:
@@ -3895,7 +3894,7 @@ paths:
         relatedProducts       | The response will also contain related products.
         relatedVideos         | The response will also contain related videos.
         relatedFiles          | The response will also contain related files.
-        perStockAmounts       | The response will also contain amounts/claims per individual stocks.
+        perStockAmounts       | The response will also contain amounts/claims per individual stocks. Requires the "wholesale" module to be enabled on the current e-shop.
         perPricelistPrices    | The response will also contain prices per individual price lists.
       tags:
         - Products
