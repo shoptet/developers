@@ -28,6 +28,14 @@ rules:
       - application/vnd.shoptet.v1.0+json
   no-invalid-media-type-examples:
     severity: error
-
+  rule/operationalId:
+    severity: error
+    subject:
+      type: Operation
+      property: operationId
+    assertions:
+      defined: true
+      casing: camelCase
+    message: OperationId must be defined and in camelCase.
 mockServer:
   off: true # Disable the mock server - currently not working with our vendor content-types
