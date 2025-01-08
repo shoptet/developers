@@ -2982,6 +2982,44 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
+                    instance: consumptionTax
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The property consumptionTaxId is not allowed. Module "consumptionTax" required.'
+                    instance: payload
       summary: 'Product insertion'
       operationId: createProduct
       description: |-
@@ -3018,7 +3056,7 @@ paths:
           name: include
           in: query
           description: 'Optional parts of response'
-          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,recyclingFee,warranty,sortVariants,relatedVideos,perPricelistPrices'
+          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,recyclingFee,consumptionTax,warranty,sortVariants,relatedVideos,perPricelistPrices'
           schema:
             type: string
         -
@@ -3436,6 +3474,13 @@ paths:
                             description: 'Product recycling fee id'
                             examples:
                               - 123
+                          consumptionTaxId:
+                            type:
+                              - integer
+                              - 'null'
+                            description: 'Product consumption tax identifier'
+                            examples:
+                              - 1
                           amountDecimalPlaces:
                             type: integer
                             enum:
@@ -3531,6 +3576,10 @@ paths:
                     errorCode: missing-module
                     message: 'Unable to process request with perStockAmounts as "wholesale" module is not active.'
                     instance: wholesale
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
+                    instance: consumptionTax
         404:
           description: 'Not Found'
           content:
@@ -3713,6 +3762,26 @@ paths:
                         type: string
                   errors:
                     $ref: '#/components/schemas/Errors'
+        403:
+          description: Forbidden
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
+                    instance: consumptionTax
       summary: 'List of all products'
       operationId: getListOfAllProducts
       description: |-
@@ -3741,6 +3810,7 @@ paths:
         setItems              | Export will also contain items, products, in set.
         filteringParameters   | Export will also contain filtering parameters of the product.
         recyclingFee          | Export will also contain recycling fee.
+        consumptionTax        | Export will also contain consumption tax. Requires the "Consumption tax" module to be enabled on the current e-shop.
         warranty              | Export will also contain product warranty.
         sortVariants          | Product variants will be sorted as in administration.
         gifts                 | List of gifts (variants) related to product
@@ -3758,7 +3828,7 @@ paths:
           name: include
           in: query
           description: 'Optional parts of response'
-          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,gifts,alternativeProducts,relatedProducts,relatedVideos,relatedFiles,perStockAmounts,perPricelistPrices'
+          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,recyclingFee,consumptionTax,warranty,sortVariants,gifts,alternativeProducts,relatedProducts,relatedVideos,relatedFiles,perStockAmounts,perPricelistPrices'
           schema:
             type: string
         -
@@ -3872,6 +3942,26 @@ paths:
                     $ref: '#/components/schemas/product'
                   errors:
                     $ref: '#/components/schemas/Errors'
+        403:
+          description: Forbidden
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
+                    instance: consumptionTax
       summary: 'Product detail'
       operationId: getProductDetail
       description: |-
@@ -3894,6 +3984,8 @@ paths:
         surchargeParameters   | The response will also contain surcharge parameters of the product.
         setItems              | The response will also contain items, products, in set.
         filteringParameters   | The response will also contain filtering parameters of the product.
+        recyclingFee          | The response will also contain recycling fee.
+        consumptionTax        | The response will also contain consumption tax. Requires the "Consumption tax" module to be enabled on the current e-shop.
         warranty              | The response will also contain product warranty.
         sortVariants          | Product variants will be sorted as in administration.
         gifts                 | Product gifts, will be sorted as in administration
@@ -3918,7 +4010,7 @@ paths:
           name: include
           in: query
           description: 'Optional parts of response'
-          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,recyclingFee,warranty,gifts,alternativeProducts,relatedProducts,relatedVideos,relatedFiles,perStockAmounts,perPricelistPrices'
+          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,recyclingFee,consumptionTax,warranty,sortVariants,gifts,alternativeProducts,relatedProducts,relatedVideos,relatedFiles,perStockAmounts,perPricelistPrices'
           schema:
             type: string
         -
@@ -3940,6 +4032,44 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
+                    instance: consumptionTax
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The property consumptionTaxId is not allowed. Module "consumptionTax" required.'
+                    instance: payload
       summary: 'Product update'
       operationId: updateProduct
       description: |-
@@ -3981,7 +4111,7 @@ paths:
           name: include
           in: query
           description: 'Optional parts of response'
-          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters'
+          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,consumptionTax'
           schema:
             type: string
         -
@@ -4404,6 +4534,13 @@ paths:
                             description: 'Product recycling fee id'
                             examples:
                               - 123
+                          consumptionTaxId:
+                            type:
+                              - integer
+                              - 'null'
+                            description: 'Product consumption tax identifier'
+                            examples:
+                              - 1
                           amountDecimalPlaces:
                             type: integer
                             enum:
@@ -4639,6 +4776,26 @@ paths:
                     $ref: '#/components/schemas/product'
                   errors:
                     $ref: '#/components/schemas/Errors'
+        403:
+          description: Forbidden
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
+                    instance: consumptionTax
       summary: 'Product detail by code'
       operationId: getProductDetailByCode
       description: |-
@@ -4660,7 +4817,7 @@ paths:
           name: include
           in: query
           description: 'Optional parts of response'
-          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,perStockAmounts,sortVariants,perPricelistPrices'
+          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,recyclingFee,consumptionTax,perStockAmounts,sortVariants,perPricelistPrices'
           schema:
             type: string
         -
@@ -4682,6 +4839,44 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
+                    instance: consumptionTax
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The property consumptionTaxId is not allowed. Module "consumptionTax" required.'
+                    instance: payload
       summary: 'Product update by code'
       operationId: updateProductByCode
       description: |-
@@ -4725,7 +4920,7 @@ paths:
           name: include
           in: query
           description: 'Optional parts of response'
-          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,perStockAmounts'
+          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,perStockAmounts,perPricelistPrices,recyclingFee,consumptionTax'
           schema:
             type: string
         -
@@ -5148,6 +5343,13 @@ paths:
                             description: 'Product recycling fee id'
                             examples:
                               - 123
+                          consumptionTaxId:
+                            type:
+                              - integer
+                              - 'null'
+                            description: 'Product consumption tax identifier'
+                            examples:
+                              - 1
                           amountDecimalPlaces:
                             type: integer
                             enum:
@@ -10122,6 +10324,62 @@ paths:
                       description: 'Parameter value priority.'
                       examples:
                         - 1
+  /api/products/consumption-taxes:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - consumptionTaxes
+                    properties:
+                      consumptionTaxes:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/consumptionTax'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active consumptionTax module in eshop.'
+                    instance: consumptionTax
+      summary: 'List of product consumption taxes'
+      operationId: getListOfConsumptionTaxes
+      description: |-
+        Returns the list of consumption taxes within the e-shop.
+        In order to list consuption taxes, you will need to have the Consumption tax module activated on the customer's e-shop.
+      tags:
+        - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products/recycling-fee-categories:
     get:
       responses:
@@ -12760,6 +13018,46 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        403:
+          description: 'Consumption tax module is not enabled'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'It requires active consumptionTax module in eshop when "consumptionTax" is present in order items data.'
+                    instance: consumptionTax
+        422:
+          description: 'Consumption tax id not exists / not visible'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Consumption tax with id "4" not found.'
+                    instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Consumption tax with id "2" is not visible.'
+                    instance: payload
       summary: 'Order insertion'
       operationId: createOrder
       description: |-
@@ -13749,6 +14047,8 @@ paths:
                                 price:
                                   type: string
                                   $ref: '#/components/schemas/typePrice'
+                          consumptionTaxId:
+                            $ref: '#/components/schemas/consumptionTaxId'
   /api/orders/snapshot:
     get:
       responses:
@@ -15853,6 +16153,46 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        403:
+          description: 'Consumption tax module is not enabled'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'It requires active consumptionTax module in eshop when "consumptionTax" is present in order items data.'
+                    instance: consumptionTax
+        422:
+          description: 'Consumption tax id not exists / not visible'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Consumption tax with id "4" not found.'
+                    instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Consumption tax with id "2" is not visible.'
+                    instance: payload
       summary: 'Order item add'
       operationId: createOrderItem
       description: ''
@@ -16073,6 +16413,8 @@ paths:
                             description: 'custom price for surcharge parameter, price is in currency of order. Optional. If attribute price is not present, then price from surcharge parameter itself is used.'
                             examples:
                               - '123.43'
+                    consumptionTaxId:
+                      $ref: '#/components/schemas/consumptionTaxId'
   '/api/orders/{code}/item/{id}':
     patch:
       responses:
@@ -16097,6 +16439,68 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        403:
+          description: 'Consumption tax module is not enabled'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'It requires active consumptionTax module in eshop when "consumptionTax" is present in order items data.'
+                    instance: consumptionTax
+        404:
+          description: 'Currency not found'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: currency-not-found
+                    message: 'Currency code "BHJ" not found.'
+                    instance: data.currency
+        422:
+          description: 'Consumption tax id not exists / not visible'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'You can send consumptionTaxId or consumptionTax, but not both!'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Consumption tax with id "4" not found.'
+                    instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Consumption tax with id "2" is not visible.'
+                    instance: payload
       summary: 'Order item change'
       operationId: updateOrderItem
       description: ''
@@ -16294,6 +16698,27 @@ paths:
                       description: 'Order item status. Optional, if not indicated, default value is guided by the order status. If the order status was indicated and this status has the `Change status of items in the order` flag set, then the item will have this status. Otherwise the default status of the e-shop is used.'
                       examples:
                         - -1
+                    consumptionTaxId:
+                      description: 'consumption tax, cannot be used together with `consumptionTax`. You can send this parameter, only if consumption tax module is enabled.'
+                      type:
+                        - integer
+                        - 'null'
+                      $ref: '#/components/schemas/consumptionTaxId'
+                    consumptionTax:
+                      type:
+                        - object
+                        - 'null'
+                      description: 'consumption tax with custom value, cannot be used together with `consumptionTaxId`. You can send this parameter, only if consumption tax module is enabled.'
+                      additionalProperties: false
+                      required:
+                        - currency
+                        - price
+                      properties:
+                        currency:
+                          $ref: '#/components/schemas/typeCurrencyCode'
+                        price:
+                          $ref: '#/components/schemas/typePrice'
+                          description: 'consumption tax value'
     delete:
       responses:
         200:
@@ -18641,6 +19066,52 @@ paths:
       requestBody:
         content:
           application/vnd.shoptet.v1.0+json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  minProperties: 1
+                  additionalProperties: false
+                  properties:
+                    customerRemark:
+                      type:
+                        - string
+                        - 'null'
+                    trackingNumber:
+                      type:
+                        - string
+                        - 'null'
+                      maxLength: 32
+                    additionalFields:
+                      type: array
+                      minItems: 1
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - index
+                          - text
+                        properties:
+                          index:
+                            type: number
+                            enum:
+                              - 1
+                              - 2
+                              - 3
+                              - 4
+                              - 5
+                              - 6
+                          text:
+                            type:
+                              - string
+                              - 'null'
+                    eshopRemark:
+                      type:
+                        - string
+                        - 'null'
             example:
               data:
                 customerRemark: 'Deliver to mailing addres'
@@ -37775,6 +38246,54 @@ components:
           description: 'Parameter value priority'
           examples:
             - 1
+    consumptionTax:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - name
+        - price
+        - currency
+        - isVisible
+        - created
+        - updated
+      properties:
+        id:
+          type: integer
+          description: 'Consumption tax id.'
+          examples:
+            - 1
+        name:
+          type: string
+          description: 'Consumption tax name.'
+          examples:
+            - ABC
+        price:
+          type: string
+          $ref: '#/components/schemas/typePrice'
+          description: 'Consumption tax amount.'
+          examples:
+            - '50.00'
+        currency:
+          type: string
+          description: 'Consumption tax currency.'
+          examples:
+            - EUR
+        isVisible:
+          type: boolean
+          description: 'flag, whether the consumption tax is visible in documents or not.'
+          examples:
+            - false
+        created:
+          $ref: '#/components/schemas/typeDateTime'
+          description: 'Consumption tax creation date.'
+          examples:
+            - '2018-08-02T17:22:02+0200'
+        updated:
+          $ref: '#/components/schemas/typeDateTime'
+          description: 'Consumption tax update date.'
+          examples:
+            - '2018-08-02T17:22:02+0200'
     measureUnit:
       type: object
       additionalProperties: false
@@ -37871,6 +38390,34 @@ components:
           description: 'Currency code of recycling fee.'
           examples:
             - EUR
+    productConsumptionTax:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - name
+        - price
+        - currency
+      properties:
+        id:
+          type: integer
+          description: 'Consumption tax identifier.'
+          examples:
+            - 1
+        name:
+          type: string
+          description: 'Consumption tax name.'
+          examples:
+            - Tobacco
+        price:
+          type: string
+          $ref: '#/components/schemas/typePrice'
+          description: 'Consumption tax price.'
+        currency:
+          type: string
+          description: 'Currency code of consumption tax.'
+          examples:
+            - CZK
     billingMethod:
       type: object
       additionalProperties: false
@@ -38857,6 +39404,7 @@ components:
         - additionalField
         - itemPrice
         - buyPrice
+        - consumptionTax
       properties:
         productGuid:
           type:
@@ -38959,6 +39507,30 @@ components:
         specificSurchargeParameters:
           $ref: '#/components/schemas/itemSpecificSurchargeParameters'
           description: 'List of specific surcharge parameters for item detail.'
+        consumptionTax:
+          $ref: '#/components/schemas/documentConsumptionTax'
+          description: 'consumption tax of invoice item'
+    documentConsumptionTax:
+      type:
+        - object
+        - 'null'
+      additionalProperties: false
+      required:
+        - currency
+        - price
+      properties:
+        currency:
+          $ref: '#/components/schemas/typeCurrencyCode'
+        price:
+          $ref: '#/components/schemas/typePrice'
+          description: 'consumption tax value'
+    consumptionTaxId:
+      type:
+        - integer
+        - 'null'
+      description: 'ID of the consumption tax. You can send this parameter, only if consumption tax module is enabled.'
+      examples:
+        - 1
     deliveryNoteItem:
       type: object
       additionalProperties: false
@@ -39942,6 +40514,12 @@ components:
                   - 'null'
                 $ref: '#/components/schemas/recyclingFeeCategory'
                 description: 'recycling fee including category and fee'
+              consumptionTax:
+                type:
+                  - object
+                  - 'null'
+                $ref: '#/components/schemas/productConsumptionTax'
+                description: 'consumption tax'
               heurekaCPC:
                 type:
                   - string
@@ -40702,6 +41280,9 @@ components:
         productFlags:
           $ref: '#/components/schemas/productFlags'
           description: 'list of product flags'
+        consumptionTax:
+          $ref: '#/components/schemas/documentConsumptionTax'
+          description: 'consumption tax of order item'
     relatedProduct:
       type: object
       additionalProperties: false
