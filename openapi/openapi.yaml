@@ -169,26 +169,32 @@ info:
     ## Rate limiting
 
 
-    Rate limiting is only at the level of server overload protection (DDoS),
-    whereas the quantity of queries or total volume of data are unlimited.
+    Rate limiting is at the level of server overload protection (DDoS), whereas the quantity of queries or total volume of data are unlimited.
 
-    These are therefore the limits of the maximum number of coincident active
-    connections. A maximum of 50 from a single IP address, and a maximum of
-
-    3 connections for a single token. If the limit is exceeded, the HTTP code
-    429 is returned. See also Nginx configuration:
+    These are therefore the limits of the maximum number of coincident active connections. A maximum of 50 from a single IP address, and a maximum of 3 connections for a single token. If the limit is exceeded, the HTTP code 429 is returned. See also Nginx configuration:
 
 
     ```
-        limit_conn per_ip 50;
-        limit_conn per_token 3;
-        limit_conn_status 429;
+    limit_conn per_ip 50;
+    limit_conn per_token 3;
+    limit_conn_status 429;
     ```
 
 
-    Some URLs, for example for bulk operations, can have their own specific
-    limits, which are mentioned in this documentation.
+    Some URLs, for example for bulk operations, can have their own specific limits, which are mentioned in this documentation.
 
+    ### Leaky bucket
+    We have also prepared more detailed rules for checking the efficiency of calling your integrations using a leaky bucket algorithm.
+
+    We inform you about reaching the limits via headers `X-RateLimit-Bucket-Filling` (in every response), and `Retry-After` (only if bucket is fulfilled), e.g.
+
+    ```
+    X-RateLimit-Bucket-Filling: 200/200
+    Retry-After: Mon, 01 Jul 2024 12:01:11 GMT
+    ```
+
+
+    For more information, visit [API Rate limiter](https://developers.shoptet.com/api-rate-limiter/).
 
     ## Locks
 
@@ -33177,10 +33183,10 @@ paths:
                     errorCode: discount-coupon-not-found
                     message: 'Unable to delete discount coupon.'
                     instance: some-coupon-code
-      summary: 'Discount coupon deletion'
-      operationId: deleteDiscountCoupons
+      summary: 'Bulk discount coupon deletion'
+      operationId: bulkDeleteDiscountCoupons
       description: |-
-        Deletes discount coupons as per list of `codes`. If successful, returns
+        Bulk deletion of discount coupons as per list of `codes`. If successful, returns
         the code 200.
 
         If some discount coupons does not exist within the e-shop, a 422 code is
