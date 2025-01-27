@@ -212,25 +212,6 @@ info:
     request processing, but no longer than 5 seconds.
 
 
-    ## API versioning
-
-
-    Current version of API: v1.0
-
-
-    The client must send a `Content-Type` header with value of
-    `application/vnd.shoptet.v1.0`,
-
-    where `v1.0` is the API version supported by the client. If there is any
-    change in the API, then we are trying to make it
-
-    reverse compatible, therefore it is not necessary to regularly update your
-    connection after each change in our interface.
-
-
-    The version is the same for all endpoints described here.
-
-
     ## Server response format
 
 
@@ -247,7 +228,7 @@ info:
 
     curl --include \
         -H 'Shoptet-Access-Token: 123456-a-123-XXXXXXXXXXXXXXXXXXXXXXXXX' \
-        -H 'Content-Type: application/vnd.shoptet.v1.0' \
+        -H 'Content-Type: application/json' \
        'https://api.myshoptet.com/api/eshop'
     ```
 
@@ -259,7 +240,7 @@ info:
 
     curl --include \
         -H 'Shoptet-Private-API-Token: 123456-a-123-XXXXXXXXXXXXXXXXXXXXXXXXX' \
-        -H 'Content-Type: application/vnd.shoptet.v1.0' \
+        -H 'Content-Type: application/json' \
        'https://api.myshoptet.com/api/eshop'
     ```
 
@@ -273,7 +254,7 @@ info:
 
     date: Fri, 13 Jul 2018 15:57:29 GMT
 
-    content-type: application/vnd.shoptet.v1.0+json; charset=utf-8
+    content-type: application/json+json; charset=utf-8
 
 
     {
@@ -766,6 +747,9 @@ info:
     proofPayment:create | Proof of payment creation event | Number (`code`) of proof payment
     proofPayment:delete | Proof of payment deleting event | Number (`code`) of proof payment
     proofPayment:update | Proof of payment change event   | Number (`code`) of proof payment
+    quantityDiscount:create | Quantity discount creation event | ID of quantity discount
+    quantityDiscount:update | Quantity discount change event | ID of quantity discount
+    quantityDiscount:delete | Quantity discount deleting event | ID of quantity discount
     shippingMethod:change | Shipping method change event | Shipping method GUID
     shippingRequest:cancelled | Shipping request was not chosen for order delivery | `shippingRequestCode` associated with the cart
     shippingRequest:confirmed | Shipping request was chosen for order delivery | `shippingRequestCode` associated with the cart
@@ -800,6 +784,8 @@ info:
     discountCoupon:massDelete | Mass delete of discount coupons event      | Json serialized list of string (`code`) of discount coupons
     invoice:massUpdate | Mass change of invoices event      | Json serialized list of number (`code`) of invoices
     order:massUpdate | Mass change of orders event      | Json serialized list of number (`code`) of orders
+    quantityDiscount:massDelete | Mass delete of quantity discount event | Json serialized list of quantity discounts IDs
+    quantityDiscount:massUpdate | Mass change of quantity discount event | Json serialized list of quantity discounts IDs 
 
     ### System Webhooks
 
@@ -6140,6 +6126,7 @@ paths:
         Each product in the log is mentioned only with its last change. For example, if the product was modified and then deleted,
         the log will show only information about its deletion.
 
+        Can be filtered by changeType = edit/delete parameter.
 
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like `edit` action.
 
@@ -6268,9 +6255,17 @@ paths:
         -
           name: from
           in: query
-          description: ''
+          description: 'DateTime from which up to the present we are interested in the changes. + in the time zone'
           required: true
           example: '2018-01-01T01:01:01+02:00'
+          schema:
+            type: string
+        -
+          name: changeType
+          in: query
+          description: 'Returning only edit or delete type changed records'
+          required: false
+          example: edit
           schema:
             type: string
         -
@@ -6383,9 +6378,10 @@ paths:
                       type:
                         - string
                         - 'null'
-                      description: 'DEPRECATED (use `sourceImageName`). Category image. File must exist on the server. Optional.'
+                      description: 'Category image. File must exist on the server. Optional. (Use `sourceImageName` instead)'
                       examples:
                         - watches-category-image.jpg
+                      deprecated: true
                     sourceImageName:
                       type:
                         - string
@@ -6595,9 +6591,10 @@ paths:
                       type:
                         - string
                         - 'null'
-                      description: 'DEPRECATED (use `sourceImageName`). Category image. File must exist on the server. Optional.'
+                      description: 'Category image. File must exist on the server. Optional. (Use `sourceImageName` instead)'
                       examples:
                         - watches-category-image.jpg
+                      deprecated: true
                     sourceImageName:
                       type:
                         - string
@@ -10386,6 +10383,280 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/consumptionTax'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        409:
+          description: Conflict
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: consumption-tax-already-exists
+                    message: 'Consumption tax "ABC" with price "50.00" and currency "EUR" already exists.'
+                    instance: payload
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Currency "CZE" not found.'
+                    instance: currency
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Creation of consumption tax'
+      operationId: createConsumptionTax
+      description: ''
+      tags:
+        - Products
+      requestBody:
+        content:
+          application/vnd.shoptet.v1.0+json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - name
+                    - price
+                    - currency
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                      description: 'Consumption tax name.'
+                      examples:
+                        - ABC
+                    price:
+                      type: string
+                      $ref: '#/components/schemas/typePrice'
+                      description: 'Consumption tax amount.'
+                      examples:
+                        - '50.00'
+                    currency:
+                      type: string
+                      description: 'Consumption tax currency.'
+                      examples:
+                        - EUR
+                    isVisible:
+                      type: boolean
+                      description: 'Flag, whether the consumption tax is visible in documents or not. If not set, default value is `true`.'
+                      examples:
+                        - false
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/products/consumption-taxes/{id}':
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/consumptionTax'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: consumption-tax-not-found
+                    message: 'Consumption tax with ID "8" not found.'
+                    instance: '8'
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+        409:
+          description: Conflict
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: consumption-tax-already-exists
+                    message: 'Consumption tax "ABC" with price "50.00" and currency "EUR" already exists.'
+                    instance: payload
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Currency "CZE" not found.'
+                    instance: currency
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Update of consumption tax'
+      operationId: updateConsumptionTax
+      description: ''
+      tags:
+        - Products
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'consumption tax identifier'
+          required: true
+          example: 8
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      requestBody:
+        content:
+          application/vnd.shoptet.v1.0+json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  minProperties: 1
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                      description: 'Consumption tax name.'
+                      examples:
+                        - ABC
+                    price:
+                      type: string
+                      $ref: '#/components/schemas/typePrice'
+                      description: 'Consumption tax amount.'
+                      examples:
+                        - '50.00'
+                    currency:
+                      type: string
+                      description: 'Consumption tax currency.'
+                      examples:
+                        - EUR
+                    isVisible:
+                      type: boolean
+                      description: 'Flag, whether the consumption tax is visible in documents or not.'
+                      examples:
+                        - false
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                    additionalProperties: false
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: consumption-tax-not-found
+                    message: 'Consumption tax with ID "8" not found.'
+                    instance: '8'
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Deletion of consumption tax'
+      operationId: deleteConsumptionTax
+      description: ''
+      tags:
+        - Products
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'consumption tax identifier'
+          required: true
+          example: 8
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products/recycling-fee-categories:
     get:
       responses:
@@ -10520,6 +10791,13 @@ paths:
           example: 93bc0dbe-7481-11e8-8216-002590dad85e
           schema:
             type: string
+        -
+          name: visible
+          in: query
+          description: 'If set to `true`, only visible products are returned (those, which does not have `visibility: hidden`)'
+          example: true
+          schema:
+            type: boolean
         -
           $ref: '#/components/parameters/DefaultContentType'
       description: |-
@@ -10712,6 +10990,13 @@ paths:
           example: 93bc0dbe-7481-11e8-8216-002590dad85e
           schema:
             type: string
+        -
+          name: visible
+          in: query
+          description: 'If set to `true`, only visible products are returned (those, which does not have `visibility: hidden`)'
+          example: true
+          schema:
+            type: boolean
         -
           $ref: '#/components/parameters/DefaultContentType'
       description: |-
@@ -20584,6 +20869,9 @@ paths:
         the log will only show information about its deletion.
 
 
+        Can be filtered by changeType = edit/delete parameter.
+
+
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like `edit` action.
 
 
@@ -20594,9 +20882,17 @@ paths:
         -
           name: from
           in: query
-          description: ''
+          description: 'DateTime from which up to the present we are interested in the changes. + in the time zone'
           required: true
-          example: '2018-05-28T14:17:00+02:00'
+          example: '2018-01-01T01:01:01+02:00'
+          schema:
+            type: string
+        -
+          name: changeType
+          in: query
+          description: 'Returning only edit or delete type changed records'
+          required: false
+          example: edit
           schema:
             type: string
         -
@@ -22235,6 +22531,9 @@ paths:
         the log will only show information about its deletion.
 
 
+        Can be filtered by changeType = edit/delete parameter.
+
+
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like `edit` action.
 
 
@@ -22245,9 +22544,17 @@ paths:
         -
           name: from
           in: query
-          description: ''
+          description: 'DateTime from which up to the present we are interested in the changes. + in the time zone'
           required: true
-          example: '2018-05-28T14:17:00+02:00'
+          example: '2018-01-01T01:01:01+02:00'
+          schema:
+            type: string
+        -
+          name: changeType
+          in: query
+          description: 'Returning only edit or delete type changed records'
+          required: false
+          example: edit
           schema:
             type: string
         -
@@ -22735,16 +23042,39 @@ paths:
                     instance: instance
       summary: 'Last proforma invoice changes'
       operationId: getLastProformaInvoiceChanges
-      description: ''
+      description: |-
+        Returns the list of proforma invoices, which were changed. The Endpoint is intended to determine
+        the changes after you have loaded the list of proforma invoices and you need to know the changes. The guaranteed history of changes is 30 days.
+
+
+        Each proforma invoice is only given in the listing with its last change. For example, if the proforma invoices was modified and then deleted,
+        the listing will only show information about its deletion.
+
+
+        Can be filtered by changeType = edit/delete parameter.
+
+
+        Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like `edit` action.
+
+
+        Endpoint supports [paging](#section/basic-principles-of-working-with-api/Paging)
       tags:
         - 'Proforma invoices'
       parameters:
         -
           name: from
           in: query
-          description: ''
+          description: 'DateTime from which up to the present we are interested in the changes. + in the time zone'
           required: true
-          example: '2018-05-28T14:17:00+02:00'
+          example: '2018-01-01T01:01:01+02:00'
+          schema:
+            type: string
+        -
+          name: changeType
+          in: query
+          description: 'Returning only edit or delete type changed records'
+          required: false
+          example: edit
           schema:
             type: string
         -
@@ -23861,6 +24191,9 @@ paths:
         the listing will only show information about its deletion.
 
 
+        Can be filtered by changeType = edit/delete parameter.
+
+
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like `edit` action.
 
 
@@ -23871,9 +24204,17 @@ paths:
         -
           name: from
           in: query
-          description: ''
+          description: 'DateTime from which up to the present we are interested in the changes. + in the time zone'
           required: true
-          example: '2018-05-28T14:17:00+02:00'
+          example: '2018-01-01T01:01:01+02:00'
+          schema:
+            type: string
+        -
+          name: changeType
+          in: query
+          description: 'Returning only edit or delete type changed records'
+          required: false
+          example: edit
           schema:
             type: string
         -
@@ -25136,9 +25477,10 @@ paths:
                     useItemIds:
                       type: array
                       minItems: 1
-                      description: 'DEPRECATED - List of invoice item ids. Can be found in field `data.invoice.items.itemId` in Invoice detail.'
+                      description: 'List of invoice item ids. Can be found in field `data.invoice.items.itemId` in Invoice detail.'
                       items:
                         type: integer
+                      deprecated: true
                     items:
                       type: array
                       minItems: 1
@@ -26138,6 +26480,9 @@ paths:
         modified and then deleted, the listing will only show information about its deletion.
 
 
+        Can be filtered by changeType = edit/delete parameter.
+
+
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed 
         like `edit` action.
 
@@ -26149,9 +26494,17 @@ paths:
         -
           name: from
           in: query
-          description: ''
+          description: 'DateTime from which up to the present we are interested in the changes. + in the time zone'
           required: true
-          example: '2018-05-28T14:17:00+02:00'
+          example: '2018-01-01T01:01:01+02:00'
+          schema:
+            type: string
+        -
+          name: changeType
+          in: query
+          description: 'Returning only edit or delete type changed records'
+          required: false
+          example: edit
           schema:
             type: string
         -
@@ -29984,6 +30337,8 @@ paths:
         Each customer in the log is only mentioned with their last change. For example, if the customer was modified 
         and then deleted, the log will only show information about the deletion.
 
+        Can be filtered by changeType = edit/delete parameter.
+
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like 
         `edit` action.
 
@@ -29995,9 +30350,17 @@ paths:
         -
           name: from
           in: query
-          description: ''
+          description: 'DateTime from which up to the present we are interested in the changes. + in the time zone'
           required: true
-          example: '2018-05-28T14:17:00+02:00'
+          example: '2018-01-01T01:01:01+02:00'
+          schema:
+            type: string
+        -
+          name: changeType
+          in: query
+          description: 'Returning only edit or delete type changed records'
+          required: false
+          example: edit
           schema:
             type: string
         -
@@ -31315,9 +31678,10 @@ paths:
                     shippingCompanyCode:
                       type: string
                       minLength: 1
-                      description: 'DEPRECATED type of shipping company (operator) - identifier assigned by Shoptet'
+                      description: 'Type of shipping company (operator) - identifier assigned by Shoptet'
                       examples:
                         - intime
+                      deprecated: true
                     shippingMethodCode:
                       type: string
                       minLength: 1
@@ -32768,6 +33132,7 @@ paths:
         The e-mail lists are not dependant on each other (removing an e-mail from one list does not cause any 
         change in another list, unless the e-mail was originally included in both).
 
+        Can be filtered by changeType = edit/delete parameter.
 
         **For "created" action, we use `edit` change type.**
 
@@ -32787,9 +33152,17 @@ paths:
         -
           name: from
           in: query
-          description: ''
+          description: 'DateTime from which up to the present we are interested in the changes. + in the time zone'
           required: true
-          example: '2018-05-28T14:17:00+02:00'
+          example: '2018-01-01T01:01:01+02:00'
+          schema:
+            type: string
+        -
+          name: changeType
+          in: query
+          description: 'Returning only edit or delete type changed records'
+          required: false
+          example: edit
           schema:
             type: string
         -
@@ -35879,6 +36252,7 @@ paths:
                       description: 'Id of the section'
                       examples:
                         - 682
+                      deprecated: true
                     sectionIds:
                       type: array
                       description: 'Id of the section'
@@ -35920,6 +36294,7 @@ paths:
                       description: 'DEPRECATED - Keywords of the article'
                       examples:
                         - test
+                      deprecated: true
                     metaDescription:
                       type:
                         - string
@@ -36215,9 +36590,10 @@ paths:
                         - 682
                     sectionId:
                       type: number
-                      description: 'Id of the section. DEPRECATED - use defaultSectionId instead'
+                      description: 'Id of the section. Use defaultSectionId instead'
                       examples:
                         - 682
+                      deprecated: true
                     sectionIds:
                       type: array
                       description: 'Id of the section'
@@ -36259,6 +36635,7 @@ paths:
                       description: 'DEPRECATED - Keywords of the article'
                       examples:
                         - test
+                      deprecated: true
                     metaDescription:
                       type:
                         - string
@@ -38375,7 +38752,7 @@ components:
             - EUR
         isVisible:
           type: boolean
-          description: 'flag, whether the consumption tax is visible in documents or not.'
+          description: 'Flag, whether the consumption tax is visible in documents or not.'
           examples:
             - false
         created:
@@ -40245,12 +40622,14 @@ components:
             - true
         atypicalBilling:
           type: boolean
-          description: 'DEPRECATED (moved to variant) - Has atypical billing?'
+          description: '(Moved to variant) - Has atypical billing?'
+          deprecated: true
         atypicalShipping:
           type: boolean
-          description: 'DEPRECATED (moved to variant) - Has atypical shipping?'
+          description: '(Moved to variant) - Has atypical shipping?'
           examples:
             - true
+          deprecated: true
         allowIPlatba:
           type: boolean
           description: 'Is Cofidis payment allowed?'
@@ -41362,9 +41741,10 @@ components:
             - 1.0
         surchargeParametersTexts:
           type: array
-          description: 'DEPRECATED - list of custom surcharge parameters names'
+          description: 'List of custom surcharge parameters names'
           items:
             type: string
+          deprecated: true
         surchargeParameters:
           $ref: '#/components/schemas/itemSurchargeParameters'
           description: 'items surcharge parameters, filled in order creation. Cannot be edited.'
@@ -41392,6 +41772,11 @@ components:
           description: 'Priority of product in related products list'
           examples:
             - 1
+        visibility:
+          type: string
+          description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility code list](#section/code-lists/Product-visibility)'
+          examples:
+            - normal
     productSet:
       type:
         - object
@@ -41505,6 +41890,7 @@ components:
           description: 'article section ID'
           examples:
             - '682'
+          deprecated: true
         sectionIds:
           type:
             - array
@@ -41566,9 +41952,10 @@ components:
           type:
             - string
             - 'null'
-          description: 'DEPRECATED - article keywords'
+          description: 'article keywords'
           examples:
             - test
+          deprecated: true
         metaDescription:
           type:
             - string
@@ -42682,9 +43069,10 @@ components:
           type:
             - string
             - 'null'
-          description: 'DEPRECATED! identification number (can be `null`)'
+          description: 'Identification number (can be `null`)'
           examples:
             - '12345678'
+          deprecated: true
         remark:
           type:
             - string
