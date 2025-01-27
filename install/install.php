@@ -110,7 +110,7 @@ $apiAccessToken = $response['access_token']; // Access Token (valid for 30 minut
 $curl = curl_init("https://api.myshoptet.com/api/eshop");
 curl_setopt($curl, CURLOPT_HTTPHEADER, [
     "Shoptet-Access-Token: ". $apiAccessToken,
-    "Content-Type: application/vnd.shoptet.v1.0"
+    "Content-Type: application/json"
 ]);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 $jsonEndpointResponse = curl_exec($curl);

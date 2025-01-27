@@ -104,7 +104,7 @@ namespace WebApplication2.Controllers
                 try
                 {
                     client.Headers.Add("Shoptet-Access-Token", apiAccessToken);
-                    client.Headers.Add("Content-type", "application/vnd.shoptet.v1.0");
+                    client.Headers.Add("Content-type", "application/json");
                     msg = client.DownloadString("https://api.myshoptet.com/api/eshop");
 
                     JObject json = JObject.Parse(msg);
