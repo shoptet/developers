@@ -41046,6 +41046,44 @@ components:
                 description: 'Variant amounts/claims per individual stocks.'
                 items:
                   type: object
+                  additionalProperties: false
+                  required:
+                    - stockId
+                    - amount
+                    - claim
+                    - location
+                    - lastAmountUpdate
+                  properties:
+                    stockId:
+                      type: integer
+                      description: 'stock unique ID'
+                      examples:
+                        - 1
+                    amount:
+                      $ref: '#/components/schemas/typeAmount'
+                      description: 'amount of items, products'
+                      examples:
+                        - '50.000'
+                    claim:
+                      $ref: '#/components/schemas/typeAmount'
+                      description: 'requirements on stock quantity'
+                      examples:
+                        - '5.000'
+                    location:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'stock position, can be `null`'
+                      examples:
+                        - 'Location 4'
+                    lastAmountUpdate:
+                      type:
+                        - string
+                        - 'null'
+                      $ref: '#/components/schemas/typeDateTime'
+                      description: 'date and time of last change of stock quantity (ISO 8601 format), can be `null`'
+                      examples:
+                        - '2024-01-04T10:55:55+0100'
               perPricelistPrices:
                 type:
                   - array
@@ -41053,6 +41091,47 @@ components:
                 description: 'Variant prices per individual pricelists.'
                 items:
                   type: object
+                  additionalProperties: false
+                  required:
+                    - code
+                    - currencyCode
+                    - includingVat
+                    - vatRate
+                    - price
+                    - sales
+                    - orderableAmount
+                    - pricelistId
+                  properties:
+                    code:
+                      type: string
+                      description: 'identifier of product variant'
+                      examples:
+                        - '0008'
+                    currencyCode:
+                      $ref: '#/components/schemas/typeCurrencyCode'
+                      examples:
+                        - EUR
+                    includingVat:
+                      type: boolean
+                      description: 'flag, if price is including VAT'
+                      examples:
+                        - true
+                    vatRate:
+                      $ref: '#/components/schemas/typeVatRate'
+                      description: 'VAT rate'
+                      examples:
+                        - 21.0
+                    price:
+                      $ref: '#/components/schemas/variantPrice'
+                    sales:
+                      $ref: '#/components/schemas/priceSales'
+                    orderableAmount:
+                      $ref: '#/components/schemas/productOrderableAmount'
+                    pricelistId:
+                      type: integer
+                      description: 'price list identifier'
+                      examples:
+                        - 1
               url:
                 type:
                   - string
