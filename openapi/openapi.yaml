@@ -11183,6 +11183,24 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: product-is-set-type
+                    message: 'Type of aggregate product is set. It is not possible to add another set into it.'
+                    instance: payload
       summary: 'Add item to product-set'
       operationId: addItemToProductSet
       parameters:
@@ -11197,6 +11215,7 @@ paths:
       description: |-
         This method adding product defined by product variant `code` to the bundle (product set). Product defined in url by `guid`, must be set as `type` : `product-set`.
         When successfully saved, complete list of products in the set is returned in response.
+        It is not allowed to add a product of the `product-set` type to an existing product set.
       tags:
         - Products
       requestBody:
@@ -11270,6 +11289,7 @@ paths:
       description: |-
         This method set given products (minimum 0, maximum 50), defined by product variant `code` to the bundle of products (product-set).
         Product defined in url by `guid`, must be set as `type` : `product-set`. When successfully saved, complete list of products in the set is returned in response.
+        It is not allowed to add a product of the `product-set` type to an existing product set.  
       tags:
         - Products
       requestBody:
@@ -21368,8 +21388,8 @@ paths:
       summary: 'List of all invoices'
       operationId: getListOfAllInvoices
       description: |-
-        Using this endpoint, you can get list of all invoices with detailed info of each invoice (like in Invoice Detail endpoint)
-        asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our
+        Using this endpoint, you can get list of all invoices with detailed info of each invoice (like in Invoice Detail endpoint) asynchronously. 
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our
         developer's portal.
 
 
@@ -22690,6 +22710,156 @@ paths:
             type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/proforma-invoices/snapshot:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+        404:
+          description: 'Not Found'
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: currency-not-found
+                    message: 'Currency code \"EUR\" not found.'
+                    instance: currencyCode
+      summary: 'List of all proforma invoices'
+      operationId: getListOfAllProformaInvoices
+      description: |-
+        Using this endpoint, you can get list of all proforma invoices with detailed info of each invoice (like in Proforma Invoice Detail endpoint)
+        asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our
+        developer's portal.
+
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
+        One invoice in response has the same format as invoice detail response.
+
+
+        Result file is compressed using GZIP.
+
+
+        This endpoint has one section, which is only sent when requested in the `include` parameter (see
+        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+
+
+        Value | Section
+        --------|------
+        `surchargeParameters`| Item surcharge parameters
+      tags:
+        - 'Proforma invoices'
+      parameters:
+        -
+          name: include
+          in: query
+          description: 'Sections to include'
+          example: surchargeParameters
+          schema:
+            type: string
+        -
+          name: creationTimeFrom
+          in: query
+          description: 'Export proforma invoices created after date'
+          example: '2014-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: creationTimeTo
+          in: query
+          description: 'Export proforma invoices created before date'
+          example: '2019-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: changeTimeFrom
+          in: query
+          description: 'Export proforma invoices updated after date'
+          example: '2014-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: changeTimeTo
+          in: query
+          description: 'Export proforma invoices updated before date'
+          example: '2019-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: codeFrom
+          in: query
+          description: 'Export proforma invoices with code after given value (given code included)'
+          example: '0000000006'
+          schema:
+            type: string
+        -
+          name: codeTo
+          in: query
+          description: 'Export proforma invoices with code before given value (given code included)'
+          example: '0000000006'
+          schema:
+            type: string
+        -
+          name: proformaInvoiceCodeFrom
+          in: query
+          description: 'Export invoices with proforma invoice code after given value'
+          example: '2017000010'
+          schema:
+            type: string
+        -
+          name: proformaInvoiceCodeTo
+          in: query
+          description: 'Export invoices with proforma invoice code befor given value'
+          example: '2017000010'
+          schema:
+            type: string
+        -
+          name: isValid
+          in: query
+          description: 'Filtering according to document validity'
+          example: 'true'
+          schema:
+            type: boolean
+        -
+          name: paid
+          in: query
+          description: 'Filtering according to if proforma invoice is paid'
+          example: 'true'
+          schema:
+            type: boolean
+        -
+          name: currencyCode
+          in: query
+          description: 'Export proforma invoices with given currency code, if given currency code does not exists, or is not valid, it will throw an exception'
+          example: CZK
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/proforma-invoices/{code}':
     get:
       responses:
@@ -23655,6 +23825,105 @@ paths:
           example: P--2015000170-1
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  /api/proof-payments/snapshot:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'List of all credit notes'
+      operationId: getListOfAllProofPayments
+      description: |-
+        Using this endpoint, you can get list of all credit notes with detailed info of each proof payment (like in Proof payment Detail endpoint) asynchronously.
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each proof payment taking one line of output file. One proof payment in response has the same format as proof payment detail response.
+
+        Result file is compressed using GZIP.
+      tags:
+        - 'Proof payments'
+      parameters:
+        -
+          name: creationTimeFrom
+          in: query
+          description: 'Export proof payments created after date'
+          example: '2014-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: creationTimeTo
+          in: query
+          description: 'Export proof payments created before date'
+          example: '2019-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: changeTimeFrom
+          in: query
+          description: 'Export proof payments updated after date'
+          example: '2014-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: changeTimeTo
+          in: query
+          description: 'Export proof payments updated before date'
+          example: '2019-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: taxDateFrom
+          in: query
+          description: 'Export proof payments with tax date after date'
+          example: '2014-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: taxDateTo
+          in: query
+          description: 'Export proof payments with tax date before date'
+          example: '2019-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: isValid
+          in: query
+          description: 'Filtering according to document validity'
+          example: 'true'
+          schema:
+            type: boolean
+        -
+          name: currencyCode
+          in: query
+          description: 'Proof payment currency'
+          example: CZK
+          schema:
+            type: string
+        -
+          name: closed
+          in: query
+          description: 'Is the proof payment closed?'
+          example: 'true'
+          schema:
+            type: boolean
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/proof-payments/order/{code}':
