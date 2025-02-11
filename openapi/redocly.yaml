@@ -1,3 +1,6 @@
+apis:
+  main:
+    root: ./docs/openapi.yaml
 reunite:
   ignoreLinkChecker: true
   ignoreMarkdocErrors: true
