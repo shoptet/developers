@@ -23850,10 +23850,10 @@ paths:
                         type: string
                   errors:
                     $ref: '#/components/schemas/Errors'
-      summary: 'List of all credit notes'
+      summary: 'List of all proof payments'
       operationId: getListOfAllProofPayments
       description: |-
-        Using this endpoint, you can get list of all credit notes with detailed info of each proof payment (like in Proof payment Detail endpoint) asynchronously.
+        Using this endpoint, you can get list of all proof payments with detailed info of each proof payment (like in Proof payment Detail endpoint).
 
         Response will be in [jsonlines](https://jsonlines.org/) format with each proof payment taking one line of output file. One proof payment in response has the same format as proof payment detail response.
 
