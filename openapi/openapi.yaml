@@ -26,7 +26,7 @@ info:
 
     - direct private access to eshop data for eshop owner - available only for
     [Premium Members](https://www.shoptetpremium.cz/).
-      See https://developers.shoptet.com/premium for more information about API access
+      See https://developers.shoptet.com/premium for more information about API access.
 
     # Basic principles
 
@@ -23440,8 +23440,8 @@ paths:
                       examples:
                         - 666
                     issueDate:
-                      $ref: '#/components/schemas/typeDateTime'
-                      description: 'date on which was proof payment issued, in ISO 8601 format'
+                      $ref: '#/components/schemas/typeDateTimeRequest'
+                      description: 'date on which was proof payment issued, in ISO 8601 format. Deprecation of required timezone part of datetime, and will be removed in the future'
                     taxDate:
                       $ref: '#/components/schemas/typeDate'
                       description: 'date of tax'
@@ -23664,8 +23664,8 @@ paths:
                       $ref: '#/components/schemas/typeDate'
                       description: 'date of tax'
                     issueDate:
-                      $ref: '#/components/schemas/typeDateTime'
-                      description: 'date on which was proof payment issued, in ISO 8601 format'
+                      $ref: '#/components/schemas/typeDateTimeRequest'
+                      description: 'date on which was proof payment issued, in ISO 8601 format. Deprecation of required timezone part of datetime, and will be removed in the future'
                     varSymbol:
                       type: number
                       pattern: '^\d{1,10}$'
@@ -32343,8 +32343,8 @@ paths:
                       type:
                         - string
                         - 'null'
-                      $ref: '#/components/schemas/typeDateTime'
-                      description: 'Time indicates availability of chosen delivery.'
+                      $ref: '#/components/schemas/typeDateTimeRequest'
+                      description: 'Time indicates availability of chosen delivery. Deprecation of required timezone part of datetime, and will be removed in the future'
                     deliveryAddress:
                       type: object
                       additionalProperties: false
@@ -33050,8 +33050,8 @@ paths:
                       examples:
                         - larry@gmail.com
                     unsubscribedAt:
-                      $ref: '#/components/schemas/typeDateTime'
-                      description: 'time of unsubscription'
+                      $ref: '#/components/schemas/typeDateTimeRequest'
+                      description: 'time of unsubscription - Deprecation of required timezone part of datetime, and will be removed in the future'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -36575,10 +36575,8 @@ paths:
                       type:
                         - string
                         - 'null'
-                      $ref: '#/components/schemas/typeDateTime'
-                      description: 'Date of publishing - test'
-                      examples:
-                        - '2014-11-19T00:00:00+0100'
+                      $ref: '#/components/schemas/typeDateTimeRequest'
+                      description: 'Date of publishing - test. Deprecation of required timezone part of datetime, and will be removed in the future'
                     visible:
                       type: boolean
                       description: 'Flag whether the article is visible on web'
@@ -36916,8 +36914,8 @@ paths:
                       type:
                         - string
                         - 'null'
-                      $ref: '#/components/schemas/typeDateTime'
-                      description: 'Date of publishing'
+                      $ref: '#/components/schemas/typeDateTimeRequest'
+                      description: 'Date of publishing. Deprecation of required timezone part of datetime, and will be removed in the future'
                     visible:
                       type: boolean
                       description: 'Flag whether the article is visible on web'
@@ -38492,6 +38490,13 @@ components:
       pattern: '^[0-9]{4}-[01][0-9]-[0123][0-9]T[012][0-9]:[0-5][0-9]:[0-5][0-9]\+[0-9]{4}$'
       examples:
         - '2018-05-29T09:02:27+0200'
+    typeDateTimeRequest:
+      type:
+        - string
+        - 'null'
+      pattern: '^[0-9]{4}-[01][0-9]-[0123][0-9]T[012][0-9]:[0-5][0-9]:[0-5][0-9](\+[0-9]{4})?$'
+      examples:
+        - '2018-05-29T09:02:27'
     typeExchangeRate:
       type: string
       pattern: '^[0-9]+\.[0-9]{8}$'
