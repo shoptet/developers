@@ -27190,6 +27190,303 @@ paths:
             type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
+  '/api/export/{type}/{format}':
+    get:
+      responses:
+        202:
+          description: Accepted
+          content:
+            'application/vnd.shoptet.v1.0+json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'General document export'
+      operationId: generalDocumentDownload
+      description: |-
+        You can request documents of several types in several formats in combination with settings as includes.
+        See tables bellow for possibilities and settings. Export is processed asynchronously. 
+        See how [Asynchronous
+        requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+
+        Document type       | Document format          | Parameters         | Includes                        
+
+
+        ---------------------|--------------------------|--------------------|----------------------------------
+
+
+        invoice             | csvDetail                | codeFrom           | exportWithHistoricalVat          
+
+
+                            | xlsDetail                | codeTo             | exportAsForeignCurrency          
+
+
+                            | pdf                      | dateFrom           | linkProformaInvoices             
+
+
+                            | isdoc                    | dateTo             | descOrder                        
+
+
+                            | xmlPohodaCz              | taxDateFrom        |                                 
+
+
+                            | xmlPohodaSk              | taxDateTo          |                                 
+
+
+                            | xmlMoneyS3CZ             | currency           |                                 
+
+
+                            | xmlMoneyS3Sk             |                    |                                 
+
+
+                            | xlsxSummary              |                    |                                 
+
+         
+                            | csvSummary               |                    |                                 
+
+
+
+
+        Document type       |Document format          |Parameters         | Includes                        
+
+
+        --------------------|-------------------------|-------------------|---------------------------------
+
+
+        proformaInvoice     | csvDetail                | codeFrom           | exportWithHistoricalVat       
+
+
+                            | xlsDetail                | codeTo             | exportAsForeignCurrency          
+
+
+                            | pdf                      | dateFrom           |                                 
+
+
+                            | xmlPohodaCz              | dateTo             |                                 
+
+
+                            | xmlPohodaSk              | taxDateFrom        |                                 
+
+
+                            | xmlMoneyS3CZ             | taxDateTo          |                                 
+
+
+                            | xmlMoneyS3Sk             | currency           |                                 
+
+
+                            | xlsxSummary              |                   |                                 
+
+
+                            | csvSummary               |                   |                                 
+
+
+                            |                          |                   |                                 
+
+
+
+
+        Document type       | Document format          | Parameters         | Includes                        
+
+
+        --------------------|-------------------------|-------------------|---------------------------------
+
+
+        creditNote          | csvDetail                | codeFrom           | exportWithHistoricalVat          
+
+
+                            | xlsDetail                | codeTo             | exportAsForeignCurrency          
+
+
+                            | pdf                      | dateFrom           |                                 
+
+
+                            | isdoc                    | dateTo             |                                 
+
+
+                            | xmlPohodaCz              | taxDateFrom        |                                 
+
+
+                            | xmlPohodaSk              | taxDateTo          |                                 
+
+
+                            | xmlMoneyS3CZ             | currency           |                                 
+
+
+                            | xmlMoneyS3Sk             |                    |                                 
+
+
+                            | xlsxSummary              |                    |                                 
+
+
+                            | csvSummary               |                    |                                 
+
+
+
+
+        Document type       | Document format          | Parameters         | Includes                        
+
+
+        --------------------|-------------------------|-------------------|---------------------------------
+
+
+        proofPayment        | xmlPohodaCz              | codeFrom           | exportWithHistoricalVat          
+
+
+                            | xmlPohodaSk              | codeTo             | exportAsForeignCurrency          
+
+
+                            | csvDetail                | dateFrom           | onlyClosedProofPayments          
+
+
+                            | xlsDetail                | dateTo             |                                 
+
+
+                            | pdf                      | taxDateFrom        |                                 
+
+
+                            |                         | taxDateTo           |                                 
+
+
+                            |                         | currency            |                                 
+
+
+
+
+        Document type       | Document format          | Parameters         | Includes                        
+
+
+        --------------------|-------------------------|-------------------|---------------------------------
+
+
+        deliveryNote        | csvDetail                | codeFrom           |                                 
+
+
+                            | xlsDetail                | codeTo             |                                 
+
+
+                            | pdf                      | dateFrom           |                                 
+
+
+                            |                          | dateTo             |                                 
+
+
+                            |                          | taxDateFrom        |                                 
+
+
+                            |                          | taxDateTo          |                                 
+
+
+
+
+        Include | Does
+
+
+        --------|------
+
+
+        exportWithHistoricalVat | Will export historical rates.
+
+
+        exportAsForeignCurrency | Currency will be exported as foreign regardless of e-shop settings.
+
+
+        linkProformaInvoices | Corresponding proforma invoices will be added to export file.
+
+
+        onlyClosedProofPayments | Exports only finished documents.
+
+
+        descOrder | Sort as starting from oldest
+      tags:
+        - 'Document export'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'See tables for all document types'
+          required: true
+          example: proofPayment
+          schema:
+            type: string
+        -
+          name: format
+          in: path
+          description: 'See tables for all document formats'
+          required: true
+          example: xmlPohodaCz
+          schema:
+            type: string
+        -
+          name: currency
+          in: query
+          description: 'Mandatory except for Delivery notes'
+          example: czk
+          schema:
+            type: string
+        -
+          name: codeFrom
+          in: query
+          description: ''
+          example: '2018000004'
+          schema:
+            type: string
+        -
+          name: codeTo
+          in: query
+          description: ''
+          example: '2018000006'
+          schema:
+            type: string
+        -
+          name: dateFrom
+          in: query
+          description: ''
+          example: '2022-12-12T22:08:01+0100'
+          schema:
+            type: string
+        -
+          name: dateTo
+          in: query
+          description: ''
+          example: '2023-12-12T22:08:01+0100'
+          schema:
+            type: string
+        -
+          name: taxDateFrom
+          in: query
+          description: ''
+          example: '2022-12-12T22:08:01+0100'
+          schema:
+            type: string
+        -
+          name: taxDateTo
+          in: query
+          description: ''
+          example: '2023-12-12T22:08:01+0100'
+          schema:
+            type: string
+        -
+          name: include
+          in: query
+          description: 'Sections to include'
+          example: 'exportWithHistoricalVat, exportAsForeignCurrency, linkProformaInvoices, onlyClosedProofPayments, descOrder'
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/stocks:
     get:
       responses:
