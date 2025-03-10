@@ -9722,6 +9722,13 @@ paths:
                               description: 'index of the parameter (identifier)'
                               examples:
                                 - color
+                            displayName:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'Parameter display name'
+                              examples:
+                                - Barva
                             priority:
                               type:
                                 - integer
@@ -9800,6 +9807,13 @@ paths:
                         description: 'index of the parameter (identifier)'
                         examples:
                           - color
+                      displayName:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Parameter display name'
+                        examples:
+                          - Barva
                       priority:
                         type:
                           - integer
@@ -9855,6 +9869,15 @@ paths:
                       description: 'Url friendly name of parameter. Maximal length of 255 characters.'
                       examples:
                         - barevne-spektrum
+                    displayName:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 255
+                      description: 'Parameter display name'
+                      examples:
+                        - Barva
                     priority:
                       type:
                         - integer
@@ -9904,6 +9927,13 @@ paths:
                         description: 'index of the parameter (identifier)'
                         examples:
                           - color
+                      displayName:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Parameter display name'
+                        examples:
+                          - Barva
                       priority:
                         type:
                           - integer
@@ -9973,6 +10003,13 @@ paths:
                         description: 'index of the parameter (identifier)'
                         examples:
                           - color
+                      displayName:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Parameter display name'
+                        examples:
+                          - Barva
                       priority:
                         type:
                           - integer
@@ -10028,6 +10065,15 @@ paths:
                       description: 'Name of parameter value. Maximal length of 255 characters.'
                       examples:
                         - Color
+                    displayName:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 255
+                      description: 'Parameter display name'
+                      examples:
+                        - Barva
                     paramIndex:
                       type: string
                       minLength: 1
@@ -10077,6 +10123,13 @@ paths:
                         description: 'index of the parameter (identifier)'
                         examples:
                           - color
+                      displayName:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Parameter display name'
+                        examples:
+                          - Barva
                       priority:
                         type:
                           - integer
@@ -10241,6 +10294,13 @@ paths:
                         description: 'index of the parameter (identifier)'
                         examples:
                           - color
+                      displayName:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Parameter display name'
+                        examples:
+                          - Barva
                       priority:
                         type:
                           - integer
@@ -21665,36 +21725,35 @@ paths:
 
 
         Document type       | Document format          | Parameters         | Includes                        
-            
-        ---------------------|--------------------------|--------------------|----------------------------------
-            
+
+        -------------------- | ------------------------ | ------------------ | ---------------------------------
+
         invoice             | csvDetail                | codeFrom           | exportWithHistoricalVat          
-            
+
                             | xlsDetail                | codeTo             | exportAsForeignCurrency          
-            
+
                             | pdf                      | dateFrom           | linkProformaInvoices             
-            
+
                             | isdoc                    | dateTo             | descOrder                        
-            
+
                             | xmlPohodaCz              | taxDateFrom        |                                 
-            
+
                             | xmlPohodaSk              | taxDateTo          |                                 
-            
+
                             | xmlMoneyS3CZ             | currency           |                                 
-            
+
                             | xmlMoneyS3Sk             |                    |                                 
-            
+
                             | xlsxSummary              |                    |                                 
-             
+
                             | csvSummary               |                    |                                 
 
 
 
+        Document type       | Document format          | Parameters         | Includes                        
 
-        Document type       |Document format          |Parameters         | Includes                        
-            
         --------------------|-------------------------|-------------------|---------------------------------
-            
+
         proformaInvoice     | csvDetail                | codeFrom           | exportWithHistoricalVat       
 
                             | xlsDetail                | codeTo             | exportAsForeignCurrency          
@@ -21711,9 +21770,7 @@ paths:
 
                             | xlsxSummary              |                   |                                 
 
-                            | csvSummary               |                   |                                 
-
-                            |                          |                   |                                 
+                            | csvSummary               |                   |                                   
 
 
 
@@ -21721,80 +21778,80 @@ paths:
         Document type       | Document format          | Parameters         | Includes                        
 
         --------------------|-------------------------|-------------------|---------------------------------
-            
+
         creditNote          | csvDetail                | codeFrom           | exportWithHistoricalVat          
-            
+
                             | xlsDetail                | codeTo             | exportAsForeignCurrency          
-            
+
                             | pdf                      | dateFrom           |                                 
-            
+
                             | isdoc                    | dateTo             |                                 
-            
+
                             | xmlPohodaCz              | taxDateFrom        |                                 
-            
+
                             | xmlPohodaSk              | taxDateTo          |                                 
-            
+
                             | xmlMoneyS3CZ             | currency           |                                 
-            
+
                             | xmlMoneyS3Sk             |                    |                                 
-            
+
                             | xlsxSummary              |                    |                                 
-            
+
                             | csvSummary               |                    |                                 
-           
+
 
 
         Document type       | Document format          | Parameters         | Includes                        
-            
+
         --------------------|-------------------------|-------------------|---------------------------------
-            
+
         proofPayment        | xmlPohodaCz              | codeFrom           | exportWithHistoricalVat          
-            
+
                             | xmlPohodaSk              | codeTo             | exportAsForeignCurrency          
-            
+
                             | csvDetail                | dateFrom           | onlyClosedProofPayments          
-            
+
                             | xlsDetail                | dateTo             |                                 
-            
+
                             | pdf                      | taxDateFrom        |                                 
-            
+
                             |                         | taxDateTo           |                                 
-            
+
                             |                         | currency            |                                 
-            
+
 
 
         Document type       | Document format          | Parameters         | Includes                        
-            
+
         --------------------|-------------------------|-------------------|---------------------------------
-            
+
         deliveryNote        | csvDetail                | codeFrom           |                                 
-            
+
                             | xlsDetail                | codeTo             |                                 
-            
+
                             | pdf                      | dateFrom           |                                 
-            
+
                             |                          | dateTo             |                                 
-            
+
                             |                          | taxDateFrom        |                                 
-            
+
                             |                          | taxDateTo          |                                 
 
 
 
 
         Include | Does
-            
-        --------|------
-            
+
+        ------- | -----
+
         exportWithHistoricalVat | Will export historical rates.
-            
+
         exportAsForeignCurrency | Currency will be exported as foreign regardless of e-shop settings.
-            
+
         linkProformaInvoices | Corresponding proforma invoices will be added to export file.
-            
+
         onlyClosedProofPayments | Exports only finished documents.
-            
+
         descOrder | Sort as starting from oldest
       tags:
         - 'Document export'
@@ -35351,6 +35408,13 @@ components:
                       description: 'human readable value of the variant parameter'
                       examples:
                         - Red
+                    displayName:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Parameter display name'
+                      examples:
+                        - Barva
                     rawValue:
                       type:
                         - string
