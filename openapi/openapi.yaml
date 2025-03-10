@@ -21748,12 +21748,6 @@ paths:
 
                             | csvSummary               |                    |                                 
 
-
-
-        Document type       | Document format          | Parameters         | Includes                        
-
-        --------------------|-------------------------|-------------------|---------------------------------
-
         proformaInvoice     | csvDetail                | codeFrom           | exportWithHistoricalVat       
 
                             | xlsDetail                | codeTo             | exportAsForeignCurrency          
@@ -21771,13 +21765,6 @@ paths:
                             | xlsxSummary              |                   |                                 
 
                             | csvSummary               |                   |                                   
-
-
-
-
-        Document type       | Document format          | Parameters         | Includes                        
-
-        --------------------|-------------------------|-------------------|---------------------------------
 
         creditNote          | csvDetail                | codeFrom           | exportWithHistoricalVat          
 
@@ -21799,12 +21786,6 @@ paths:
 
                             | csvSummary               |                    |                                 
 
-
-
-        Document type       | Document format          | Parameters         | Includes                        
-
-        --------------------|-------------------------|-------------------|---------------------------------
-
         proofPayment        | xmlPohodaCz              | codeFrom           | exportWithHistoricalVat          
 
                             | xmlPohodaSk              | codeTo             | exportAsForeignCurrency          
@@ -21818,12 +21799,6 @@ paths:
                             |                         | taxDateTo           |                                 
 
                             |                         | currency            |                                 
-
-
-
-        Document type       | Document format          | Parameters         | Includes                        
-
-        --------------------|-------------------------|-------------------|---------------------------------
 
         deliveryNote        | csvDetail                | codeFrom           |                                 
 
