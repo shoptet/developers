@@ -21724,110 +21724,59 @@ paths:
         requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
 
 
-        Document type       | Document format          | Parameters         | Includes                        
-
+        |Document type       | Document format          | Parameters         | Includes
         -------------------- | ------------------------ | ------------------ | ---------------------------------
-
-        invoice             | csvDetail                | codeFrom           | exportWithHistoricalVat          
-
-                            | xlsDetail                | codeTo             | exportAsForeignCurrency          
-
-                            | pdf                      | dateFrom           | linkProformaInvoices             
-
-                            | isdoc                    | dateTo             | descOrder                        
-
-                            | xmlPohodaCz              | taxDateFrom        |                                 
-
-                            | xmlPohodaSk              | taxDateTo          |                                 
-
-                            | xmlMoneyS3CZ             | currency           |                                 
-
-                            | xmlMoneyS3Sk             |                    |                                 
-
-                            | xlsxSummary              |                    |                                 
-
-                            | csvSummary               |                    |                                 
-
-        proformaInvoice     | csvDetail                | codeFrom           | exportWithHistoricalVat       
-
-                            | xlsDetail                | codeTo             | exportAsForeignCurrency          
-
-                            | pdf                      | dateFrom           |                                 
-
-                            | xmlPohodaCz              | dateTo             |                                 
-
-                            | xmlPohodaSk              | taxDateFrom        |                                 
-
-                            | xmlMoneyS3CZ             | taxDateTo          |                                 
-
-                            | xmlMoneyS3Sk             | currency           |                                 
-
-                            | xlsxSummary              |                   |                                 
-
-                            | csvSummary               |                   |                                   
-
-        creditNote          | csvDetail                | codeFrom           | exportWithHistoricalVat          
-
-                            | xlsDetail                | codeTo             | exportAsForeignCurrency          
-
-                            | pdf                      | dateFrom           |                                 
-
-                            | isdoc                    | dateTo             |                                 
-
-                            | xmlPohodaCz              | taxDateFrom        |                                 
-
-                            | xmlPohodaSk              | taxDateTo          |                                 
-
-                            | xmlMoneyS3CZ             | currency           |                                 
-
-                            | xmlMoneyS3Sk             |                    |                                 
-
-                            | xlsxSummary              |                    |                                 
-
-                            | csvSummary               |                    |                                 
-
-        proofPayment        | xmlPohodaCz              | codeFrom           | exportWithHistoricalVat          
-
-                            | xmlPohodaSk              | codeTo             | exportAsForeignCurrency          
-
-                            | csvDetail                | dateFrom           | onlyClosedProofPayments          
-
-                            | xlsDetail                | dateTo             |                                 
-
-                            | pdf                      | taxDateFrom        |                                 
-
-                            |                         | taxDateTo           |                                 
-
-                            |                         | currency            |                                 
-
-        deliveryNote        | csvDetail                | codeFrom           |                                 
-
-                            | xlsDetail                | codeTo             |                                 
-
-                            | pdf                      | dateFrom           |                                 
-
-                            |                          | dateTo             |                                 
-
-                            |                          | taxDateFrom        |                                 
-
-                            |                          | taxDateTo          |                                 
+        |invoice             | csvDetail                | codeFrom           | exportWithHistoricalVat          
+        |                    | xlsDetail                | codeTo             | exportAsForeignCurrency      
+        |                    | pdf                      | dateFrom           | linkProformaInvoices        
+        |                    | isdoc                    | dateTo             | descOrder                   
+        |                    | xmlPohodaCz              | taxDateFrom        |                             
+        |                    | xmlPohodaSk              | taxDateTo          |                             
+        |                    | xmlMoneyS3CZ             | currency           |                             
+        |                    | xmlMoneyS3Sk             |                    |                             
+        |                    | xlsxSummary              |                    |                             
+        |                    | csvSummary               |                    |         
+        |proformaInvoice     | csvDetail                | codeFrom           | exportWithHistoricalVat     
+        |                    | xlsDetail                | codeTo             | exportAsForeignCurrency     
+        |                    | pdf                      | dateFrom           |                             
+        |                    | xmlPohodaCz              | dateTo             |                             
+        |                    | xmlPohodaSk              | taxDateFrom        |                            
+        |                    | xmlMoneyS3CZ             | taxDateTo          |                            
+        |                    | xmlMoneyS3Sk             | currency           |                            
+        |                    | xlsxSummary              |                   |                             
+        |                    | csvSummary               |                   |         
+        |creditNote          | csvDetail                | codeFrom           | exportWithHistoricalVat    
+        |                    | xlsDetail                | codeTo             | exportAsForeignCurrency    
+        |                    | pdf                      | dateFrom           |                            
+        |                    | isdoc                    | dateTo             |                            
+        |                    | xmlPohodaCz              | taxDateFrom        |                            
+        |                    | xmlPohodaSk              | taxDateTo          |                            
+        |                    | xmlMoneyS3CZ             | currency           |                            
+        |                    | xmlMoneyS3Sk             |                    |                            
+        |                    | xlsxSummary              |                    |                            
+        |                    | csvSummary               |                    |        
+        |proofPayment        | xmlPohodaCz              | codeFrom           | exportWithHistoricalVat    
+        |                    | xmlPohodaSk              | codeTo             | exportAsForeignCurrency    
+        |                    | csvDetail                | dateFrom           | onlyClosedProofPayments    
+        |                    | xlsDetail                | dateTo             |                            
+        |                    | pdf                      | taxDateFrom        |                            
+        |                    |                         | taxDateTo           |                            
+        |                    |                         | currency            |      
+        |deliveryNote        | csvDetail                | codeFrom           |                            
+        |                    | xlsDetail                | codeTo             |                            
+        |                    | pdf                      | dateFrom           |                            
+        |                    |                          | dateTo             |                            
+        |                    |                          | taxDateFrom        |                            
+        |                    |                          | taxDateTo          |                                 
 
 
-
-
-        Include | Does
-
-        ------- | -----
-
-        exportWithHistoricalVat | Will export historical rates.
-
-        exportAsForeignCurrency | Currency will be exported as foreign regardless of e-shop settings.
-
-        linkProformaInvoices | Corresponding proforma invoices will be added to export file.
-
-        onlyClosedProofPayments | Exports only finished documents.
-
-        descOrder | Sort as starting from oldest
+        |Include | Does
+        |------- | -----
+        |exportWithHistoricalVat | Will export historical rates.
+        |exportAsForeignCurrency | Currency will be exported as foreign regardless of e-shop settings.
+        |linkProformaInvoices | Corresponding proforma invoices will be added to export file.
+        |onlyClosedProofPayments | Exports only finished documents.
+        |descOrder | Sort as starting from oldest
       tags:
         - 'Document export'
       parameters:
