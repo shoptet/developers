@@ -30641,10 +30641,6 @@ paths:
                 errors:
                   -
                     errorCode: invalid-request-data
-                    message: 'The property sectionId is deprecated. Use defaultSectionId instead.'
-                    instance: integration-call
-                  -
-                    errorCode: invalid-request-data
                     message: 'Invalid "defaultSectionId" value "123456789". Use articles/sections endpoint to get a list of possible values.'
                     instance: integration-call
                   -
@@ -30671,15 +30667,9 @@ paths:
                 data:
                   type: object
                   additionalProperties: false
-                  oneOf:
-                    -
-                      required:
-                        - title
-                        - sectionId
-                    -
-                      required:
-                        - title
-                        - defaultSectionId
+                  required:
+                    - title
+                    - defaultSectionId
                   properties:
                     title:
                       type: string
@@ -30696,12 +30686,6 @@ paths:
                       description: 'Id of the section'
                       examples:
                         - 682
-                    sectionId:
-                      type: number
-                      description: 'Id of the section'
-                      examples:
-                        - 682
-                      deprecated: true
                     sectionIds:
                       type: array
                       description: 'Id of the section'
@@ -30978,10 +30962,6 @@ paths:
                 errors:
                   -
                     errorCode: invalid-request-data
-                    message: 'The property sectionId is deprecated. Use defaultSectionId instead.'
-                    instance: integration-call
-                  -
-                    errorCode: invalid-request-data
                     message: 'Invalid "defaultSectionId" value "123456789". Use articles/sections endpoint to get a list of possible values.'
                     instance: integration-call
                   -
@@ -31036,12 +31016,6 @@ paths:
                       description: 'Id of the section'
                       examples:
                         - 682
-                    sectionId:
-                      type: number
-                      description: 'Id of the section. Use defaultSectionId instead'
-                      examples:
-                        - 682
-                      deprecated: true
                     sectionIds:
                       type: array
                       description: 'Id of the section'
@@ -36427,12 +36401,6 @@ components:
           description: 'article section ID'
           examples:
             - '682'
-        sectionId:
-          type: number
-          description: 'article section ID'
-          examples:
-            - '682'
-          deprecated: true
         sectionIds:
           type:
             - array
