@@ -22574,6 +22574,48 @@ paths:
                       description: 'Brand website'
                       examples:
                         - 'https://willywonka.com'
+                    postalAddress:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 65535
+                      description: 'GPSR, postal address'
+                    contactEmail:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 100
+                      description: 'GPSR, contect email'
+                    europeanResellerPostalAddress:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 65535
+                      description: 'GPSR, european reseller postal address'
+                    europeanResellerContactEmail:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 100
+                      description: 'GPSR, reseller contact email'
+                    manufacturingCompanyName:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 255
+                      description: 'GPSR, manufacturing company name'
+                    europeanResellerManufacturingCompanyName:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 255
+                      description: 'GPSR, Reseller manufacturing company name'
                     showInCategoriesMenu:
                       type: boolean
                       description: 'Is this brand shown in categories menu? Default is false'
@@ -22741,6 +22783,48 @@ paths:
                       description: 'Brand website'
                       examples:
                         - 'https://willywonka.com'
+                    postalAddress:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 65535
+                      description: 'GPSR, postal address'
+                    contactEmail:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 100
+                      description: 'GPSR, contect email'
+                    europeanResellerPostalAddress:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 65535
+                      description: 'GPSR, european reseller postal address'
+                    europeanResellerContactEmail:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 100
+                      description: 'GPSR, reseller contact email'
+                    manufacturingCompanyName:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 255
+                      description: 'GPSR, manufacturing company name'
+                    europeanResellerManufacturingCompanyName:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 255
+                      description: 'GPSR, Reseller manufacturing company name'
                     showInCategoriesMenu:
                       type: boolean
                       description: 'Is this brand shown in categories menu?'
@@ -33528,6 +33612,36 @@ components:
           description: 'URL of brand website'
           examples:
             - 'https://www.willywonka.com'
+        postalAddress:
+          type:
+            - string
+            - 'null'
+          description: 'GPSR, postal address'
+        contactEmail:
+          type:
+            - string
+            - 'null'
+          description: 'GPSR, contect email'
+        europeanResellerPostalAddress:
+          type:
+            - string
+            - 'null'
+          description: 'GPSR, european reseller postal address'
+        europeanResellerContactEmail:
+          type:
+            - string
+            - 'null'
+          description: 'GPSR, reseller contact email'
+        manufacturingCompanyName:
+          type:
+            - string
+            - 'null'
+          description: 'GPSR, manufacturing company name'
+        europeanResellerManufacturingCompanyName:
+          type:
+            - string
+            - 'null'
+          description: 'GPSR, reseller manufacturing company name'
         showInCategoriesMenu:
           type: boolean
           description: 'Is this brand shown in categories menu?'
