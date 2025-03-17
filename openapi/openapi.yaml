@@ -18733,16 +18733,9 @@ paths:
                       message: 'Order "2015000001" not found.'
                       instance: '2015000001'
         422:
-          description: 'Unprocessable entity'
+          description: 'Unprocessable Entity'
           content:
             'application/json; charset=utf-8':
-              example:
-                data: null
-                errors:
-                  -
-                    errorCode: invalid-request-data
-                    message: 'Unable to create proof payment with parent document \"order\" and code \"2018000081\". Parent document has 0 or negative price.'
-                    instance: '2018000081'
               schema:
                 type: object
                 properties:
@@ -18750,13 +18743,17 @@ paths:
                     type: 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
-                example:
-                  data: null
-                  errors:
-                    -
-                      errorCode: invalid-request-data
-                      message: 'Unable to create proof payment with parent document \"order\" and code \"2018000081\". Parent document has 0 or negative price.'
-                      instance: '2018000081'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Unable to create proof payment with parent document \"order\" and code \"2018000081\". Parent document has 0 or negative price.'
+                    instance: '2018000081'
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Unable to create proof payment. Document with code "2017000024" is in invalid state.'
+                    instance: integration-call
       summary: 'Proof payment insertion'
       operationId: createProofPayment
       description: ''
@@ -19538,16 +19535,9 @@ paths:
                   errors:
                     $ref: '#/components/schemas/Errors'
         422:
-          description: 'Unprocessable entity'
+          description: 'Unprocessable Entity'
           content:
             'application/json; charset=utf-8':
-              example:
-                data: null
-                errors:
-                  -
-                    errorCode: invalid-request-data
-                    message: 'Unable to create proof payment with parent document \"proformaInvoice\" and code \"2018000081\". Parent document has 0 or negative price.'
-                    instance: '2018000081'
               schema:
                 type: object
                 properties:
@@ -19555,13 +19545,17 @@ paths:
                     type: 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
-                example:
-                  data: null
-                  errors:
-                    -
-                      errorCode: invalid-request-data
-                      message: 'Unable to create proof payment with parent document \"proformaInvoice\" and code \"2018000081\". Parent document has 0 or negative price.'
-                      instance: '2018000081'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Unable to create proof payment with parent document \"proformaInvoice\" and code \"2018000081\". Parent document has 0 or negative price.'
+                    instance: '2018000081'
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Unable to create proof payment. Document with code "2017000024" is in invalid state.'
+                    instance: integration-call
       summary: 'Proof payment insertion by proforma invoice code'
       operationId: createProofPaymentByProformaInvoiceCode
       description: ''
@@ -20558,6 +20552,24 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Unable to create credit note. Invoice "2017100012" is in invalid state.'
+                    instance: integration-call
       summary: 'Credit note from invoice creation'
       operationId: createCreditNoteFromInvoice
       description: |-
@@ -20679,7 +20691,7 @@ paths:
                             examples:
                               - 1.0
   '/api/proof-payments/{code}/credit-note':
-    get:
+    post:
       responses:
         201:
           description: Created
@@ -20727,6 +20739,24 @@ paths:
                       errorCode: proof-of-payment-not-found
                       message: 'Proof payment with code "P-2014000004-01" does not exist.'
                       instance: P-2014000004-01
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Unable to create credit note. Proof payment "P-2017000024-01" is in invalid state.'
+                    instance: integration-call
       summary: 'Credit note from proof of payment'
       operationId: createCreditNoteFromProofOfPayment
       description: |-
