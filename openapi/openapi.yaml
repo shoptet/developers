@@ -3567,8 +3567,8 @@ paths:
                 errors:
                   -
                     errorCode: missing-module
-                    message: 'Unable to process request with perStockAmounts as "wholesale" module is not active.'
-                    instance: wholesale
+                    message: 'Unable to process request with perStockAmounts as "stock" module is not active.'
+                    instance: stock
                   -
                     errorCode: missing-module
                     message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
@@ -3811,7 +3811,7 @@ paths:
         relatedProducts       | The response will also contain related products.
         relatedVideos         | The response will also contain related videos.
         relatedFiles          | The response will also contain related files.
-        perStockAmounts       | The response will also contain amounts/claims per individual stocks. Requires the "wholesale" module to be enabled on the current e-shop.
+        perStockAmounts       | The response will also contain amounts/claims per individual stocks. Requires the "stock" module to be enabled on the current e-shop.
         perPricelistPrices    | The response will also contain prices per individual price lists.
         Result file is compressed using GZIP.
       tags:
@@ -3987,7 +3987,7 @@ paths:
         relatedProducts       | The response will also contain related products.
         relatedVideos         | The response will also contain related videos.
         relatedFiles          | The response will also contain related files.
-        perStockAmounts       | The response will also contain amounts/claims per individual stocks. Requires the "wholesale" module to be enabled on the current e-shop.
+        perStockAmounts       | The response will also contain amounts/claims per individual stocks. Requires the "stock" module to be enabled on the current e-shop.
         perPricelistPrices    | The response will also contain prices per individual price lists.
       tags:
         - Products
