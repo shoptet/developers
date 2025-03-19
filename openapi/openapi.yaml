@@ -16864,6 +16864,114 @@ paths:
             type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/orders/batch:
+    post:
+      responses:
+        202:
+          description: Accepted
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'Order BATCH insertion'
+      operationId: orderBatchInsertion
+      description: |-
+        **Beta/Experimental feature: This endpoint is currently in beta and may exhibit unexpected behavior.**    
+        This endpoint allows you to create multiple orders at once. Batch insertion is processed asynchronously in the same way as, for example, [List of all orders](#Orders/list-of-all-orders), but it does not have `resultUrl` in the response. Instead, you can check the attribute `log` which contains successfully created orders and errors.
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+        File with data for insert must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one order in JSON format. Maximum size of file is 100MB. The base structure of a JSON row contains 2 main parameters `settings` and `data`.
+
+        **The `settings` parameter:**
+
+        Default suppress params for each row can be defined in URL params same as in [Order insertion endpoint](#Orders/order-insertion) above. In the `settings` parameter, you can modify suppress parameters for specific row/record.
+
+        **All params in `settings` can be in 3 states:**
+
+        - `true` - _true_ value is applied.
+
+        - `false` - _false_ value is applied.
+
+        - _parameter is missing_ - The value from corresponding request parameter is used, if corresponding request parameter is not defined the value is set to `false`.
+
+        **List of settings parameters:**
+        - `suppressDocumentGeneration`: (`boolean`, _optional_) - Suppress the generation of linked documents.
+
+        - `suppressEmailSending`: (`boolean`, _optional_) - Suppress sending the linked information e-mails.
+
+        - `suppressProductChecking`: (`boolean`, _optional_) - Suppress the product existence check as per code and GUID.
+
+        - `suppressStockMovements`: (`boolean`, _optional_) - Suppress deduction of the products from stock.
+
+        - `suppressHistoricalMandatoryFields`: (`boolean`, _optional_) - Set the flag that disables mandatory fields checking.
+
+        - `suppressHistoricalPaymentChecking`: (`boolean`, _optional_) - Set the flag that `paymentMethodGuid` can be `null`.
+
+        - `suppressHistoricalShippingChecking`: (`boolean`, _optional_) - Set the flag that `shippingGuid` can be `null`.
+
+        **The `data` parameter:**
+
+        Structure of the `data` parameter is the same as the structure of JSON for single [order insertion](#Orders/order-insertion) above.
+        ***
+        For better understanding, see the example of one record bellow (**Warning:** _The example is formatted for better readability. For common use, it needs to be compressed on one line_):
+
+        ```json
+        {
+            'settings': {
+                'suppressDocumentGeneration': true,
+                `suppressEmailSending`: true
+            },
+            'data': {
+                'externalCode': 'X123',
+                'code': '2017000092',
+                ...
+                'items': [
+                    {
+                        'productGuid': '747fb32d-73bc-11e8-8216-002590dad85e',
+                        'name': 'Large chocolate',
+                        ...
+                    }
+                ]
+            }
+        }
+        ```
+          
+        The asynchronous job processes the JSONL file row by row and tries to validate and save the data. If there is any error, the row is skipped and the error is logged, but it does not stop the processing of other rows. In the log, every order is identified by its position in the file (starting from 1).
+      tags:
+        - Orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - batchFileUrlPath
+              properties:
+                batchFileUrlPath:
+                  type: string
+                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  examples:
+                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
   /api/orders/gifts:
     get:
       responses:
