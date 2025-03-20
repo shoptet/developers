@@ -2716,9 +2716,6 @@ paths:
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'date and time of product creation (date in ISO 8601 format)'
                             changeTime:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'date and time of last product change (date in ISO 8601 format)'
                             brand:
@@ -2804,9 +2801,6 @@ paths:
                                   examples:
                                     - 'Fresh purple apple for Snow White'
                                 changeTime:
-                                  type:
-                                    - string
-                                    - 'null'
                                   $ref: '#/components/schemas/typeDateTime'
                                   description: 'last image change time If you are saving images together, you can use this timestamp to indicate if you need to reload the image.'
                             voteAverageScore:
@@ -3315,15 +3309,12 @@ paths:
                             examples:
                               - '13.500'
                           width:
-                            type: string
                             $ref: '#/components/schemas/typeDimension'
                             description: 'width of the product in cm. 1 decimal place, maximum 9999.9.'
                           height:
-                            type: string
                             $ref: '#/components/schemas/typeDimension'
                             description: 'height of the product in cm. 1 decimal place, maximum 9999.9.'
                           depth:
-                            type: string
                             $ref: '#/components/schemas/typeDimension'
                             description: 'depth of the product in cm. 1 decimal place, maximum 9999.9.'
                           visible:
@@ -3338,7 +3329,6 @@ paths:
                             examples:
                               - '123.45'
                           currencyCode:
-                            type: string
                             $ref: '#/components/schemas/typeCurrencyCode'
                           manufacturerCode:
                             type:
@@ -3415,9 +3405,6 @@ paths:
                                   examples:
                                     - red
                           minStockSupply:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePositiveAmount'
                             description: 'Minimum stock supply.'
                             examples:
@@ -3437,9 +3424,6 @@ paths:
                                   examples:
                                     - 1
                                 amount:
-                                  type:
-                                    - string
-                                    - 'null'
                                   $ref: '#/components/schemas/typeAmount'
                                   description: 'Current quantity in stock.  0 if not set.'
                                   examples:
@@ -4383,15 +4367,12 @@ paths:
                             examples:
                               - '13.500'
                           width:
-                            type: string
                             $ref: '#/components/schemas/typeDimension'
                             description: 'width of the product in cm. 1 decimal place, maximum 9999.9.'
                           height:
-                            type: string
                             $ref: '#/components/schemas/typeDimension'
                             description: 'height of the product in cm. 1 decimal place, maximum 9999.9.'
                           depth:
-                            type: string
                             $ref: '#/components/schemas/typeDimension'
                             description: 'depth of the product in cm. 1 decimal place, maximum 9999.9.'
                           visible:
@@ -4481,9 +4462,6 @@ paths:
                                   examples:
                                     - red
                           minStockSupply:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePositiveAmount'
                             description: 'Minimum stock supply.'
                             examples:
@@ -5193,15 +5171,12 @@ paths:
                             examples:
                               - '13.500'
                           width:
-                            type: string
                             $ref: '#/components/schemas/typeDimension'
                             description: 'width of the product in cm. 1 decimal place, maximum 9999.9.'
                           height:
-                            type: string
                             $ref: '#/components/schemas/typeDimension'
                             description: 'height of the product in cm. 1 decimal place, maximum 9999.9.'
                           depth:
-                            type: string
                             $ref: '#/components/schemas/typeDimension'
                             description: 'depth of the product in cm. 1 decimal place, maximum 9999.9.'
                           visible:
@@ -5291,9 +5266,6 @@ paths:
                                   examples:
                                     - red
                           minStockSupply:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePositiveAmount'
                             description: 'Minimum stock supply.'
                             examples:
@@ -11722,9 +11694,6 @@ paths:
                                 - reactionText
                               properties:
                                 reactionCreated:
-                                  type:
-                                    - string
-                                    - 'null'
                                   $ref: '#/components/schemas/typeDateTime'
                                   description: 'Date of creation of reaction. Can be null.'
                                 reactionFullName:
@@ -12090,9 +12059,6 @@ paths:
                         examples:
                           - CZK
                       vatRate:
-                        type:
-                          - string
-                          - 'null'
                         $ref: '#/components/schemas/typePrice'
                         description: 'VatRate for prices'
                         examples:
@@ -12108,17 +12074,11 @@ paths:
                         description: 'Orderable quantity'
                         properties:
                           minimumAmount:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePositiveAmount'
                             description: 'Minimum orderable quantity'
                             examples:
                               - '1'
                           maximumAmount:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePositiveAmount'
                             description: 'Maximum orderable quantity'
                             examples:
@@ -12169,25 +12129,16 @@ paths:
                         description: Prices
                         properties:
                           price:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'Price, at which the customer can purchase the product. It can be loaded by the special discounted price and influenced by the price ratio. (can be `null`)'
                             examples:
                               - '650.00'
                           commonPrice:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'standard price, use for information and comparison to competitors (can be `null`)'
                             examples:
                               - '750.00'
                           buyPrice:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'purchase price.'
                             examples:
@@ -12205,25 +12156,16 @@ paths:
                             description: 'Special discounted price'
                             properties:
                               price:
-                                type:
-                                  - string
-                                  - 'null'
                                 $ref: '#/components/schemas/typePrice'
                                 description: 'special discounted price. It is only used if set and if the validity date is set too, form (`fromDate`) to (`toData`).'
                                 examples:
                                   - '600.00'
                               fromDate:
-                                type:
-                                  - string
-                                  - 'null'
                                 $ref: '#/components/schemas/typeDate'
                                 description: 'special discounted price effective date - from'
                                 examples:
                                   - '2018-02-19'
                               toDate:
-                                type:
-                                  - string
-                                  - 'null'
                                 $ref: '#/components/schemas/typeDate'
                                 description: 'special discounted price effective date - up to'
                                 examples:
@@ -12234,25 +12176,16 @@ paths:
                         description: 'Prices with VAT'
                         properties:
                           price:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'Price, at which the customer can purchase the product. It can be loaded by the special discounted price and influenced by the price ratio. (can be `null`)'
                             examples:
                               - '650.00'
                           commonPrice:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'standard price, use for information and comparison to competitors (can be `null`)'
                             examples:
                               - '750.00'
                           buyPrice:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'purchase price.'
                             examples:
@@ -12270,25 +12203,16 @@ paths:
                             description: 'Special discounted price'
                             properties:
                               price:
-                                type:
-                                  - string
-                                  - 'null'
                                 $ref: '#/components/schemas/typePrice'
                                 description: 'special discounted price. It is only used if set and if the validity date is set too, form (`fromDate`) to (`toData`).'
                                 examples:
                                   - '600.00'
                               fromDate:
-                                type:
-                                  - string
-                                  - 'null'
                                 $ref: '#/components/schemas/typeDate'
                                 description: 'special discounted price effective date - from'
                                 examples:
                                   - '2018-02-19'
                               toDate:
-                                type:
-                                  - string
-                                  - 'null'
                                 $ref: '#/components/schemas/typeDate'
                                 description: 'special discounted price effective date - up to'
                                 examples:
@@ -12299,25 +12223,16 @@ paths:
                         description: 'Prices without VAT'
                         properties:
                           price:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'Price, at which the customer can purchase the product. It can be loaded by the special discounted price and influenced by the price ratio. (can be `null`)'
                             examples:
                               - '650.00'
                           commonPrice:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'standard price, use for information and comparison to competitors (can be `null`)'
                             examples:
                               - '750.00'
                           buyPrice:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'purchase price.'
                             examples:
@@ -12335,25 +12250,16 @@ paths:
                             description: 'Special discounted price'
                             properties:
                               price:
-                                type:
-                                  - string
-                                  - 'null'
                                 $ref: '#/components/schemas/typePrice'
                                 description: 'special discounted price. It is only used if set and if the validity date is set too, form (`fromDate`) to (`toData`).'
                                 examples:
                                   - '600.00'
                               fromDate:
-                                type:
-                                  - string
-                                  - 'null'
                                 $ref: '#/components/schemas/typeDate'
                                 description: 'special discounted price effective date - from'
                                 examples:
                                   - '2018-02-19'
                               toDate:
-                                type:
-                                  - string
-                                  - 'null'
                                 $ref: '#/components/schemas/typeDate'
                                 description: 'special discounted price effective date - up to'
                                 examples:
@@ -12627,9 +12533,6 @@ paths:
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'date and time, when the order was created. ISO 8601 format.'
                             changeTime:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typeDateTime'
                               description: "date and time of the order's last change. ISO 8601 format."
                             fullName:
@@ -15232,9 +15135,6 @@ paths:
                         - -1
                     consumptionTaxId:
                       description: 'consumption tax, cannot be used together with `consumptionTax`. You can send this parameter, only if consumption tax module is enabled.'
-                      type:
-                        - integer
-                        - 'null'
                       $ref: '#/components/schemas/consumptionTaxId'
                     consumptionTax:
                       type:
@@ -21005,9 +20905,6 @@ paths:
                     code:
                       type: string
                     amount:
-                      type:
-                        - string
-                        - 'null'
                       $ref: '#/components/schemas/typeAmount'
                       description: 'name of item, required'
                     name:
@@ -21137,9 +21034,6 @@ paths:
                     code:
                       type: string
                     amount:
-                      type:
-                        - string
-                        - 'null'
                       $ref: '#/components/schemas/typeAmount'
                       description: 'amount of item, 3 decimal places accuracy, required. For credit note you will probably use negative amount. (can be `null`)'
                     name:
@@ -22135,9 +22029,6 @@ paths:
                               examples:
                                 - novak@shoptet.cz
                             changeTime:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'DateTime of product stock movement.'
                             orderCode:
@@ -22153,9 +22044,6 @@ paths:
                                 - 'null'
                               $ref: '#/components/schemas/typeGuidUnlimited'
                             sumAmount:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typeAmount'
                               description: 'Sum of all stocks for the product in time after amount change was executed.'
                               examples:
@@ -22495,9 +22383,6 @@ paths:
                               examples:
                                 - A1
                             changeTime:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'date and time of last change of stock quantity (ISO 8601 format).'
                       paginator:
@@ -26740,9 +26625,6 @@ paths:
                         - 'null'
                       $ref: '#/components/schemas/typeCurrencyCode'
                     expires:
-                      type:
-                        - string
-                        - 'null'
                       $ref: '#/components/schemas/typeDateTimeRequest'
                       description: 'Time indicates availability of chosen delivery. Deprecation of required timezone part of datetime, and will be removed in the future'
                     deliveryAddress:
@@ -27982,9 +27864,6 @@ paths:
                               examples:
                                 - percentual
                             amount:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typePrice'
                               description: 'amount of absolute discount (default eshop VAT rate is used)'
                             ratio:
@@ -27994,9 +27873,6 @@ paths:
                               $ref: '#/components/schemas/typePriceRatio'
                               description: 'amount of percentual discount'
                             minPrice:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typePrice'
                               description: 'minimum price of order (default eshop VAT rate is used)'
                             currency:
@@ -28108,9 +27984,6 @@ paths:
                             examples:
                               - percentual
                           amount:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'Amount of fixed discount (default eshop VAT rate is used). This items needs to be omitted when `discountType` is set to `percentual`'
                             examples:
@@ -28125,9 +27998,6 @@ paths:
                             examples:
                               - '0.1000'
                           minPrice:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typePrice'
                             description: 'Minimum price of order (default eshop VAT rate is used)'
                             examples:
@@ -28555,9 +28425,6 @@ paths:
                               examples:
                                 - percentual
                             amount:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typePrice'
                               description: 'amount of absolute discount (default eshop VAT rate is used)'
                             ratio:
@@ -28567,9 +28434,6 @@ paths:
                               $ref: '#/components/schemas/typePriceRatio'
                               description: 'amount of percentual discount'
                             minPrice:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typePrice'
                               description: 'minimum price of order (default eshop VAT rate is used)'
                             currency:
@@ -28664,9 +28528,6 @@ paths:
                       examples:
                         - percentual
                     amount:
-                      type:
-                        - string
-                        - 'null'
                       $ref: '#/components/schemas/typePrice'
                       description: 'Amount of fixed discount (default eshop VAT rate is used). This items needs to be omitted when `discountType` is set to `percentual`'
                       examples:
@@ -28681,9 +28542,6 @@ paths:
                       examples:
                         - '0.1000'
                     minPrice:
-                      type:
-                        - string
-                        - 'null'
                       $ref: '#/components/schemas/typePrice'
                       description: 'Minimum price of order (default eshop VAT rate is used)'
                       examples:
@@ -30958,9 +30816,6 @@ paths:
                       examples:
                         - 'Test article'
                     publishDate:
-                      type:
-                        - string
-                        - 'null'
                       $ref: '#/components/schemas/typeDateTimeRequest'
                       description: 'Date of publishing - test. Deprecation of required timezone part of datetime, and will be removed in the future'
                     visible:
@@ -32090,9 +31945,6 @@ paths:
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'time of job creation'
                             completionTime:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'time of job completion'
                             status:
@@ -32101,9 +31953,6 @@ paths:
                               examples:
                                 - completed
                             validUntil:
-                              type:
-                                - string
-                                - 'null'
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'validity of job result'
                             language:
@@ -32198,9 +32047,6 @@ paths:
                             $ref: '#/components/schemas/typeDateTime'
                             description: 'time of job creation'
                           completionTime:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typeDateTime'
                             description: 'time of job completion'
                           duration:
@@ -32223,9 +32069,6 @@ paths:
                             examples:
                               - 'https://eshop.domain.com/api-results/3ax1844-lrmsrf0.json'
                           validUntil:
-                            type:
-                              - string
-                              - 'null'
                             $ref: '#/components/schemas/typeDateTime'
                             description: 'validity of job result'
                           log:
@@ -35121,9 +34964,6 @@ components:
           $ref: '#/components/schemas/typeDateTime'
           description: 'date and time of product creation (date in ISO 8601 format)'
         changeTime:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDateTime'
           description: 'date and time of last product change (date in ISO 8601 format)'
         shortDescription:
@@ -35390,9 +35230,6 @@ components:
                 examples:
                   - '4010355051486'
               stock:
-                type:
-                  - string
-                  - 'null'
                 $ref: '#/components/schemas/typeAmount'
                 description: 'quantity of goods in stock'
                 examples:
@@ -35413,15 +35250,12 @@ components:
                 examples:
                   - '0.500'
               width:
-                type: string
                 $ref: '#/components/schemas/typeDimension'
                 description: 'width of the product in cm'
               height:
-                type: string
                 $ref: '#/components/schemas/typeDimension'
                 description: 'height of the product in cm'
               depth:
-                type: string
                 $ref: '#/components/schemas/typeDimension'
                 description: 'depth of the product in cm'
               visible:
@@ -35490,9 +35324,6 @@ components:
                 examples:
                   - CZK
               minStockSupply:
-                type:
-                  - string
-                  - 'null'
                 $ref: '#/components/schemas/typeAmount'
                 description: 'minimum stock supply'
                 examples:
@@ -35766,9 +35597,6 @@ components:
                       examples:
                         - 'Location 4'
                     lastAmountUpdate:
-                      type:
-                        - string
-                        - 'null'
                       $ref: '#/components/schemas/typeDateTime'
                       description: 'date and time of last change of stock quantity (ISO 8601 format), can be `null`'
                       examples:
@@ -35872,9 +35700,6 @@ components:
                 examples:
                   - 'Fresh purple apple for Snow White'
               changeTime:
-                type:
-                  - string
-                  - 'null'
                 $ref: '#/components/schemas/typeDateTime'
                 description: 'last image change time If you are saving images together, you can use this timestamp to indicate if you need to reload the image.'
               isMainImage:
@@ -36471,9 +36296,6 @@ components:
               examples:
                 - 'Fresh purple apple for Snow White'
             changeTime:
-              type:
-                - string
-                - 'null'
               $ref: '#/components/schemas/typeDateTime'
               description: 'last image change time If you are saving images together, you can use this timestamp to indicate if you need to reload the image. (can be `null`).'
         stockLocation:
@@ -36726,17 +36548,11 @@ components:
           examples:
             - 'Test article'
         publishDate:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDateTime'
           description: 'article date of publishing'
           examples:
             - '2014-11-19T00:00:00+0100'
         changeDate:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDateTime'
           description: 'article date of the last modification'
           examples:
@@ -36803,9 +36619,6 @@ components:
           examples:
             - 'https://www.some-eshop-url.com/blog/new-article'
         publishDate:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDateTime'
           description: 'article date of publishing'
         visible:
@@ -37087,9 +36900,6 @@ components:
           examples:
             - 'Some content'
         creationDate:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDateTime'
           description: 'date and time of the post creation'
         authorized:
@@ -38381,9 +38191,6 @@ components:
         countryCode:
           type: string
         maxCod:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typePrice'
         codCurrencyCode:
           type:
@@ -38444,9 +38251,6 @@ components:
           examples:
             - percentual
         amount:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typePrice'
           description: 'amount of absolute discount (default eshop VAT rate is used)'
         ratio:
@@ -38456,9 +38260,6 @@ components:
           $ref: '#/components/schemas/typePriceRatio'
           description: 'amount of percentual discount'
         minPrice:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typePrice'
           description: 'minimum price of order (default eshop VAT rate is used)'
         currency:
@@ -38554,9 +38355,6 @@ components:
           $ref: '#/components/schemas/typeDateTime'
           description: 'date and time, when the order was created. ISO 8601 format.'
         changeTime:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDateTime'
           description: "date and time of the order's last change. ISO 8601 format."
         email:
@@ -39033,9 +38831,6 @@ components:
           $ref: '#/components/schemas/typePriceRatio'
           description: 'additional discount - 0.7800 = discount 22%; 1.0000 = no discount'
         birthDate:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDate'
           description: 'date of birth. In YYYY-MM-DD format.  (can be `null`)'
         accounts:
@@ -39166,7 +38961,6 @@ components:
           $ref: '#/components/schemas/typeDateTime'
           description: 'date of last change, in ISO 8601 format'
         billingAddress:
-          type: object
           $ref: '#/components/schemas/billingAddress'
           description: 'invoicing address'
         deliveryAddress:
@@ -39180,7 +38974,6 @@ components:
           examples:
             - true
         customer:
-          type: object
           $ref: '#/components/schemas/documentCustomer'
         items:
           type: array
@@ -39262,15 +39055,9 @@ components:
           $ref: '#/components/schemas/typeDateTime'
           description: 'date of change, in ISO 8601 format'
         dueDate:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDate'
           description: 'due date in ISO 8601 format (can be `null`)'
         taxDate:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDate'
           description: 'taxation date in ISO 8601 format (can be `null`)'
         varSymbol:
@@ -39320,7 +39107,6 @@ components:
             -
               type: 'null'
         billingAddress:
-          type: object
           $ref: '#/components/schemas/billingAddress'
           description: 'invoicing address'
         deliveryAddress:
@@ -39335,13 +39121,10 @@ components:
           examples:
             - true
         price:
-          type: object
           $ref: '#/components/schemas/price'
         customer:
-          type: object
           $ref: '#/components/schemas/documentCustomer'
         eshop:
-          type: object
           $ref: '#/components/schemas/eshop'
         items:
           type: array
@@ -39424,9 +39207,6 @@ components:
           $ref: '#/components/schemas/typeDateTime'
           description: 'date of last change, in ISO 8601 format'
         dueDate:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDate'
           description: 'due date, in ISO 8601 format'
         varSymbol:
@@ -39468,7 +39248,6 @@ components:
             -
               type: 'null'
         billingAddress:
-          type: object
           $ref: '#/components/schemas/billingAddress'
           description: 'invoicing address'
         deliveryAddress:
@@ -39482,14 +39261,11 @@ components:
           examples:
             - true
         price:
-          type: object
           $ref: '#/components/schemas/price'
           description: 'price information'
         customer:
-          type: object
           $ref: '#/components/schemas/documentCustomer'
         eshop:
-          type: object
           $ref: '#/components/schemas/eshop'
         items:
           type: array
@@ -39574,15 +39350,9 @@ components:
           $ref: '#/components/schemas/typeDateTime'
           description: 'date of change, in ISO 8601 format'
         dueDate:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDate'
           description: 'due date in ISO 8601 format'
         taxDate:
-          type:
-            - string
-            - 'null'
           $ref: '#/components/schemas/typeDate'
           description: 'taxation date in ISO 8601 format'
         varSymbol:
@@ -39624,7 +39394,6 @@ components:
             -
               type: 'null'
         billingAddress:
-          type: object
           $ref: '#/components/schemas/billingAddress'
           description: 'invoicing address'
         deliveryAddress:
@@ -39638,13 +39407,10 @@ components:
           examples:
             - true
         price:
-          type: object
           $ref: '#/components/schemas/price'
         customer:
-          type: object
           $ref: '#/components/schemas/documentCustomer'
         eshop:
-          type: object
           $ref: '#/components/schemas/eshop'
         items:
           type: array
