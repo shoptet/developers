@@ -25614,9 +25614,9 @@ paths:
                         type: string
                         description: 'event, see [webhook event types](#section/code-lists/Webhook-event-types)'
                         examples:
-                          - order.created
-                          - order.updated
-                          - order.deleted
+                          - 'order:create'
+                          - 'order:update'
+                          - 'order:delete'
                       url:
                         type: string
                         maxLength: 2000
