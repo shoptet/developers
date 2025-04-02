@@ -11648,7 +11648,7 @@ paths:
                               type:
                                 - 'null'
                                 - string
-                              $ref: '#/components/schemas/typeGuid'
+                              $ref: '#/components/schemas/typeGuidUnlimited'
                               description: 'Product guid related to review.'
                             description:
                               type:
