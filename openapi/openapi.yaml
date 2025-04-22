@@ -727,7 +727,6 @@ info:
     discountCoupon:update | Discount coupon updating event | String (`code`) - discount coupon unique code
     eshop:currencies | Currencies settings change event | ID of eshop
     eshop:billingInformation | Billing information (i.e. eshop billing address) change event | ID of eshop
-    eshop:settingsInformation | Eshop settings change event. Whenever some attribute from `data.settings` response section of GET eshop detail change | ID of eshop
     eshop:design | Design settings (template, colors, fonts, layout) | ID of eshop
     eshop:mandatoryFields | Mandatory fields of customer were updated | ID of eshop
     eshop:projectDomain | Domain of eshop was changed | ID of eshop
@@ -37951,7 +37950,7 @@ components:
               - priceRatio
             properties:
               priceRatio:
-                type: number
+                $ref: '#/components/schemas/typePriceRatio'
                 description: 'price ratio of the discount. Calculate as `(100 - percentage) / 100`'
                 examples:
                   - 0.85
