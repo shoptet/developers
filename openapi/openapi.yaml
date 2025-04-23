@@ -2823,6 +2823,11 @@ paths:
                               description: 'Count of product reviews'
                               examples:
                                 - 16
+                            preauthorizationRequired:
+                              type: boolean
+                              description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
+                              examples:
+                                - true
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -2997,6 +3002,10 @@ paths:
                     errorCode: missing-module
                     message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
                     instance: consumptionTax
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active shoptetPay module in eshop when preauthorizationRequired field is present in product data.'
+                    instance: shoptetPay
         422:
           description: 'Unprocessable Entity'
           content:
@@ -3174,6 +3183,11 @@ paths:
                       description: 'Product internal note.'
                       examples:
                         - 'Internal note for product manager.'
+                    preauthorizationRequired:
+                      type: boolean
+                      description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
+                      examples:
+                        - true
                     supplierGuid:
                       type: string
                       $ref: '#/components/schemas/typeGuid'
@@ -4038,6 +4052,10 @@ paths:
                     errorCode: missing-module
                     message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
                     instance: consumptionTax
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active shoptetPay module in eshop when preauthorizationRequired field is present in product data.'
+                    instance: shoptetPay
         422:
           description: 'Unprocessable Entity'
           content:
@@ -4223,6 +4241,11 @@ paths:
                       description: 'Product internal note.'
                       examples:
                         - 'Internal note for product manager.'
+                    preauthorizationRequired:
+                      type: boolean
+                      description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
+                      examples:
+                        - true
                     supplierGuid:
                       type:
                         - string
@@ -4840,6 +4863,10 @@ paths:
                     errorCode: missing-module
                     message: 'Unable to process request with consumptionTax include as "consumptionTax" module is not active.'
                     instance: consumptionTax
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active shoptetPay module in eshop when preauthorizationRequired field is present in product data.'
+                    instance: shoptetPay
         422:
           description: 'Unprocessable Entity'
           content:
@@ -5027,6 +5054,11 @@ paths:
                       description: 'Product internal note.'
                       examples:
                         - 'Internal note for product manager.'
+                    preauthorizationRequired:
+                      type: boolean
+                      description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
+                      examples:
+                        - true
                     supplierGuid:
                       type:
                         - string
@@ -35029,6 +35061,11 @@ components:
           description: 'product internal note'
           examples:
             - 'This product is not in stock, but it is possible to order it.'
+        preauthorizationRequired:
+          type: boolean
+          description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
+          examples:
+            - true
         defaultCategory:
           type: object
           additionalProperties: false
