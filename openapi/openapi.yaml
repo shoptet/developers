@@ -710,6 +710,9 @@ info:
     brand:create | Brand creation event | String (`code`) - brand unique code
     brand:update | Brand change event     | String (`code`) - brand unique code
     brand:delete | Brand deleting event   | String (`code`) - brand unique code
+    category:create | Category creation event | String (`guid`) of product category
+    category:update | Category change event     | String (`guid`) of product category
+    category:delete | Category deleting event   | String (`guid`) of product category
     creditNote:create | Credit note creation event | Number (`code`) of credit note
     creditNote:delete | Credit note deleting event   | Number (`code`) of credit note
     creditNote:update | Credit note change event     | Number (`code`) of credit note
@@ -727,6 +730,7 @@ info:
     discountCoupon:update | Discount coupon updating event | String (`code`) - discount coupon unique code
     eshop:currencies | Currencies settings change event | ID of eshop
     eshop:billingInformation | Billing information (i.e. eshop billing address) change event | ID of eshop
+    eshop:settingsInformation | Eshop settings change event. Whenever some attribute from `data.settings` response section of GET eshop detail change | ID of eshop
     eshop:design | Design settings (template, colors, fonts, layout) | ID of eshop
     eshop:mandatoryFields | Mandatory fields of customer were updated | ID of eshop
     eshop:projectDomain | Domain of eshop was changed | ID of eshop
@@ -782,6 +786,9 @@ info:
 
     Value  | Description | Identifier meaning
     -------- | --------- | ---------
+    category:massCreate | Mass create of product categories event | Json serialized list of string (`guid`) of product categories
+    category:massUpdate | Mass change of product categories event      | Json serialized list of string (`guid`) of product categories
+    category:massDelete | Mass delete of product categories event      | Json serialized list of string (`guid`) of product categories
     discountCoupon:massCreate | Mass create of discount coupons event | Json serialized list of string (`code`) of discount coupons
     discountCoupon:massDelete | Mass delete of discount coupons event      | Json serialized list of string (`code`) of discount coupons
     invoice:massUpdate | Mass change of invoices event      | Json serialized list of number (`code`) of invoices
