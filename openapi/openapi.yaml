@@ -20039,6 +20039,13 @@ paths:
                             changeTime:
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'date of last change, in ISO 8601 format'
+                            reasonRemark:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'Reason for credit note; default reason can be applied if not send.'
+                              examples:
+                                - 'Order cancellation'
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -20375,6 +20382,24 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Field cannot be empty string.'
+                    instance: data.reasonRemark
       summary: 'Credit note update'
       operationId: updateCreditNote
       description: ''
@@ -20445,6 +20470,14 @@ paths:
                       description: 'Order code. Optional.'
                       examples:
                         - '201323134'
+                    reasonRemark:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      description: 'Reason for credit note; default reason can be applied if not send.'
+                      examples:
+                        - 'Order cancellation'
     delete:
       responses:
         200:
@@ -20618,6 +20651,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'Unable to create credit note. Invoice "2017100012" is in invalid state.'
                     instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Field cannot be empty string.'
+                    instance: data.reasonRemark
       summary: 'Credit note from invoice creation'
       operationId: createCreditNoteFromInvoice
       description: |-
@@ -20738,6 +20775,14 @@ paths:
                             description: 'Amount of given item. Optional. If the property is not provided, the amount is automatically taken from the invoice.'
                             examples:
                               - 1.0
+                    reasonRemark:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      description: 'Reason for credit note; default reason can be applied if not send.'
+                      examples:
+                        - 'Order cancellation'
   '/api/proof-payments/{code}/credit-note':
     post:
       responses:
@@ -20805,6 +20850,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'Unable to create credit note. Proof payment "P-2017000024-01" is in invalid state.'
                     instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Field cannot be empty string.'
+                    instance: data.reasonRemark
       summary: 'Credit note from proof of payment'
       operationId: createCreditNoteFromProofOfPayment
       description: |-
@@ -20879,6 +20928,14 @@ paths:
                       description: "Order Code. Optional, defaults to proof payment's order code if not set."
                       examples:
                         - '201323134'
+                    reasonRemark:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      description: 'Reason for credit note; default reason can be applied if not send.'
+                      examples:
+                        - 'Order cancellation'
   '/api/credit-notes/{code}/item':
     post:
       responses:
@@ -39194,6 +39251,13 @@ components:
           description: 'VAT mode, can be null, possible values: `Normal`, `One Stop Shop`, `Mini One Stop Shop`, `Reverse charge`, `Outside the EU`'
           examples:
             - Normal
+        reasonRemark:
+          type:
+            - string
+            - 'null'
+          description: 'Reason for credit note; default reason can be applied if not send.'
+          examples:
+            - 'Order cancellation'
     proformaInvoice:
       type: object
       additionalProperties: false
