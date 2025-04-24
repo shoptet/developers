@@ -6086,6 +6086,102 @@ paths:
             type: boolean
         -
           $ref: '#/components/parameters/DefaultContentType'
+  '/api/products/{guid}/related-files':
+    post:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - relatedFiles
+                    properties:
+                      relatedFiles:
+                        type: array
+                        description: 'files related to product'
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - name
+                            - url
+                            - size
+                          properties:
+                            name:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'related file title'
+                              examples:
+                                - 'Example file'
+                            url:
+                              type: string
+                              description: 'related file URL'
+                              examples:
+                                - 'https://www.domena-eshopu.cz/user/related_files/example-file.txt'
+                            size:
+                              type:
+                                - integer
+                                - 'null'
+                              description: 'related file size'
+                              examples:
+                                - 1024
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'Product related file link'
+      operationId: createRelatedFileLink
+      parameters:
+        -
+          name: guid
+          in: path
+          description: 'Product guid'
+          required: true
+          example: 93bc0dbe-7481-11e8-8216-002590dad85e
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      description: 'Linking related file from temporary storage to product.'
+      tags:
+        - Products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - sourceFileName
+                  properties:
+                    sourceFileName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                      description: 'Source file name uploaded to temporary storage or url path to external file'
+                      examples:
+                        - productsheet.pdf
+                        - 'https://cdn.myshoptet.com/productsheet.pdf'
+                    description:
+                      type: string
+                      description: 'File description.'
+                      examples:
+                        - 'Product technical sheet'
   /api/products/changes:
     get:
       responses:
@@ -32280,6 +32376,20 @@ paths:
                             created:
                               $ref: '#/components/schemas/typeDateTime'
                               description: 'datetime when file was uploaded'
+                      files:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            name:
+                              type: string
+                              description: 'filename of uploaded file'
+                              examples:
+                                - image.jpg
+                            created:
+                              $ref: '#/components/schemas/typeDateTime'
+                              description: 'datetime when file was uploaded'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -32438,8 +32548,6 @@ paths:
                   data:
                     type: object
                     additionalProperties: false
-                    required:
-                      - image
                     properties:
                       image:
                         type: object
@@ -32452,6 +32560,20 @@ paths:
                             description: "filename of saved file, used for assign file in 'source*' parameters."
                             examples:
                               - file.png
+                          created:
+                            $ref: '#/components/schemas/typeDateTime'
+                            description: 'datetime when file was uploaded'
+                      file:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - name
+                        properties:
+                          name:
+                            type: string
+                            description: "filename of saved file, used for assign file in 'source*' parameters."
+                            examples:
+                              - file.pdf
                           created:
                             $ref: '#/components/schemas/typeDateTime'
                             description: 'datetime when file was uploaded'
@@ -32543,6 +32665,45 @@ paths:
 
         See more about file upload in the [files section of
         documentation](#section/Basic-principles-of-working-with-API/Files)
+
+
+        In case of image upload, response tag is "image", any other file types has response key "file" as here:
+
+
+        IMAGE: JPG, PNG, GIF
+
+
+        ```
+
+        {
+            "data": {
+                "image": {
+                    "name": "image.jpg",
+                    "created": "2025-03-31T20:28:55+0200"
+                }
+            },
+            "errors": null
+        }
+
+        ```
+
+
+        ANY OTHER FILE TYPE
+
+
+        ```
+
+        {
+            "data": {
+                "file": {
+                    "name": "file.pdf",
+                    "created": "2025-03-31T20:28:55+0200"
+                }
+            },
+            "errors": null
+        }
+
+        ```
 
 
         Current filesize limit is 2MB.
