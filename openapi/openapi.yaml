@@ -22773,6 +22773,8 @@ paths:
                   properties:
                     name:
                       type: string
+                      minLength: 1
+                      maxLength: 200
                       description: 'Brand name'
                       examples:
                         - 'Willy Wonka'
@@ -22787,6 +22789,8 @@ paths:
                       type:
                         - string
                         - 'null'
+                      minLength: 1
+                      maxLength: 200
                       description: 'Brand website'
                       examples:
                         - 'https://willywonka.com'
@@ -22984,6 +22988,8 @@ paths:
                   properties:
                     name:
                       type: string
+                      minLength: 1
+                      maxLength: 200
                       description: 'Brand name'
                       examples:
                         - 'Willy Wonka'
@@ -22996,6 +23002,8 @@ paths:
                       type:
                         - string
                         - 'null'
+                      minLength: 1
+                      maxLength: 200
                       description: 'Brand website'
                       examples:
                         - 'https://willywonka.com'
@@ -38225,6 +38233,8 @@ components:
         - street
         - isDefault
         - type
+        - senderName
+        - contactPerson
       properties:
         id:
           type:
@@ -38252,6 +38262,10 @@ components:
           type:
             - string
             - 'null'
+        senderName:
+          type: string
+        contactPerson:
+          type: string
         contactEmail:
           type:
             - string
