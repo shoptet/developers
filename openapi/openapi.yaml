@@ -1187,6 +1187,11 @@ tags:
       Quantity discounts endpoints are used for managing quantity discounts in the
       e-shop.
   -
+    name: 'Volume discounts'
+    description: |-
+      Volume discounts endpoints are used for managing volume discounts in the
+      e-shop.
+  -
     name: Articles
     description: 'Article endpoints are used for managing articles in the e-shop.'
   -
@@ -30831,6 +30836,102 @@ paths:
           example: '1'
           schema:
             type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  /api/volume-discounts:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - discounts
+                      - paginator
+                    properties:
+                      discounts:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - id
+                            - amount
+                            - currency
+                            - priceRatio
+                            - customerGroups
+                          properties:
+                            id:
+                              type: integer
+                              description: 'discount ID'
+                              examples:
+                                - 1
+                            amount:
+                              $ref: '#/components/schemas/typeAmount'
+                              description: 'amount of volume discount'
+                            priceRatio:
+                              type:
+                                - string
+                                - 'null'
+                              $ref: '#/components/schemas/typePriceRatio'
+                              description: 'discount in the form of coefficient (0.7 = 70 % of the original price, i.e. 30 % discount)'
+                            currency:
+                              type:
+                                - string
+                                - 'null'
+                              $ref: '#/components/schemas/typeCurrencyCode'
+                              description: 'currency of volume discount'
+                            customerGroups:
+                              type:
+                                - array
+                                - 'null'
+                              description: 'customer groups connected to discount'
+                              items:
+                                type: object
+                                additionalProperties: false
+                                required:
+                                  - code
+                                  - name
+                                properties:
+                                  code:
+                                    type: string
+                                    description: 'customer group code'
+                                    examples:
+                                      - retail
+                                  name:
+                                    type: string
+                                    description: 'customer group name'
+                                    examples:
+                                      - 'Retail customer'
+                      paginator:
+                        $ref: '#/components/schemas/paginator'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'List of volume discounts'
+      operationId: getListOfVolumeDiscounts
+      description: ''
+      tags:
+        - 'Volume discounts'
+      parameters:
+        -
+          name: customerGroupCode
+          in: query
+          description: |-
+            customer group code, possible values can be get by customer group
+            list endpoint
+          example: retail
+          schema:
+            type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/articles:
