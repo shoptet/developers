@@ -32639,7 +32639,7 @@ paths:
                         $ref: '#/components/schemas/typeFilename'
                         description: 'desired filename for the file to be saved as. May be suffixed with number in case of duplication. Generated when not set.'
                         examples:
-                          - amazing-file
+                          - amazing-filename.png
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -32712,18 +32712,6 @@ paths:
                         errorCode: invalid-request-data
                         message: 'Does not match the regex pattern ^[0-9a-zA-Z\\-.]+$'
                         instance: data.name
-        500:
-          description: 'Internal Server Error'
-          content:
-            'application/json; charset=utf-8':
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: 'null'
-                  errors:
-                    $ref: '#/components/schemas/Errors'
-              examples:
                 file-upload-error:
                   value:
                     data: null
@@ -32756,6 +32744,14 @@ paths:
                         errorCode: file-upload-invalid-type
                         message: 'Unsupported filetype.'
                         instance: payload
+                file-upload-invalid-chars:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: file-upload-invalid-chars
+                        message: 'Filename contains invalid characters or extension is missing.'
+                        instance: payload
       summary: 'File upload'
       operationId: uploadFile
       description: |-
@@ -32783,7 +32779,6 @@ paths:
 
 
         ```
-
         {
             "data": {
                 "image": {
@@ -32793,15 +32788,12 @@ paths:
             },
             "errors": null
         }
-
         ```
-
 
         ANY OTHER FILE TYPE
 
 
         ```
-
         {
             "data": {
                 "file": {
@@ -32811,7 +32803,6 @@ paths:
             },
             "errors": null
         }
-
         ```
 
 
@@ -32842,7 +32833,7 @@ paths:
                       $ref: '#/components/schemas/typeFilename'
                       description: 'desired filename for the file to be saved as. May be suffixed with number in case of duplication. Generated when not set.'
                       examples:
-                        - amazing-file
+                        - amazing-filename.png
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
