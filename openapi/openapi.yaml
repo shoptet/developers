@@ -20933,6 +20933,28 @@ paths:
                       errorCode: proof-of-payment-not-found
                       message: 'Proof payment with code "P-2014000004-01" does not exist.'
                       instance: P-2014000004-01
+        409:
+          description: 'Conflict with already created invoice'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: proof-payments-already-linked-to-invoice
+                    message: 'Credit note cannot be created from proof payment with invoice code "2017000045".'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Field cannot be empty string.'
+                    instance: data.reasonRemark
         422:
           description: 'Unprocessable Entity'
           content:
@@ -20950,10 +20972,6 @@ paths:
                   -
                     errorCode: invalid-request-data
                     message: 'Unable to create credit note. Proof payment "P-2017000024-01" is in invalid state.'
-                    instance: integration-call
-                  -
-                    errorCode: invalid-request-data
-                    message: 'Field cannot be empty string.'
                     instance: data.reasonRemark
       summary: 'Credit note from proof of payment'
       operationId: createCreditNoteFromProofOfPayment
