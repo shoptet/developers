@@ -33865,6 +33865,7 @@ components:
         - id
         - title
         - isDeliveryPoint
+        - visibleOnEshop
         - deliveryPointTitle
         - deliveryPointAddress
       properties:
