@@ -12107,7 +12107,7 @@ paths:
         This endpoint allows updating price fields and other attributes from a
         pricelist of a product (variant).
 
-        You can request multiple updates at once; the maximum is 100 updates per
+        You can request multiple updates at once; the maximum is 300 updates per
         request.
 
         The request must contain a product variant code `code` and at least one
@@ -22386,7 +22386,7 @@ paths:
         Endpoint enables the quantity of product in stock (relative and
         absolute) to be changed. Within a call, the update
 
-        of multiple products at once can be requested (max. 100
+        of multiple products at once can be requested (max. 300
         products/variants).
 
 
