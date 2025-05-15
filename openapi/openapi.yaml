@@ -13812,6 +13812,8 @@ paths:
                             - 'null'
                           pattern: '^[0-9]+\.[0-9]{2,8}$'
                           description: 'exchange rate for main e-shop currency.'
+                          examples:
+                            - '1.0000'
                     vatMode:
                       type: string
                       description: 'VAT mode, `Normal` is used by default, possible values: `Normal`, `One Stop Shop`*, `Reverse charge`, `Outside the EU`. Please note, that `One Stop Shop` value requires eshop `OSS` setting to be `true`.'
@@ -13868,6 +13870,8 @@ paths:
                               - string
                               - 'null'
                             maxLength: 64
+                            examples:
+                              - 123-456
                           remark:
                             type: string
                             description: 'remark for the item. Optional.'
@@ -13919,6 +13923,8 @@ paths:
                           vatRate:
                             type: string
                             description: 'VAT rate (`0.00` for VAT non-payers). Mandatory.'
+                            examples:
+                              - '21.00'
                           itemPriceWithVat:
                             type:
                               - string
@@ -13938,16 +13944,22 @@ paths:
                               - string
                               - 'null'
                             description: 'Purchase price, including VAT. Price including tax and price excluding tax cannot be combined. This is used for profit margin calculation and statistics.'
+                            examples:
+                              - '121.00'
                           buyPriceWithoutVat:
                             type:
                               - string
                               - 'null'
                             description: 'Purchase price, excluding VAT. Optional. Price including tax and price excluding tax cannot be combined. This is used for profit margin calculation and statistics.'
+                            examples:
+                              - '100.00'
                           buyPriceVatRate:
                             type:
                               - string
                               - 'null'
                             description: 'VAT rate for purchase price.'
+                            examples:
+                              - '21.00'
                           statusId:
                             type:
                               - number
@@ -13974,9 +13986,13 @@ paths:
                                 parameterCode:
                                   type: string
                                   minLength: 1
+                                  examples:
+                                    - surchargeCode
                                 valueIndex:
                                   type: string
                                   minLength: 1
+                                  examples:
+                                    - high
                                 price:
                                   type: string
                                   $ref: '#/components/schemas/typePrice'
