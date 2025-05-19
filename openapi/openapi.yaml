@@ -31635,6 +31635,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'The property title is required'
                     instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The maximum nesting depth of article section exceeded'
+                    instance: integration-call
       summary: 'Insert of article section'
       operationId: createArticleSection
       description: 'Creates a new article section.'
@@ -31669,7 +31673,7 @@ paths:
                       type:
                         - number
                         - 'null'
-                      description: 'ID of the parent article section'
+                      description: 'ID of the parent article section. Maximum nesting depth of article section is 4 nodes.'
                       examples:
                         - '1'
                     indexName:
