@@ -792,6 +792,7 @@ info:
     discountCoupon:massCreate | Mass create of discount coupons event | Json serialized list of string (`code`) of discount coupons
     discountCoupon:massDelete | Mass delete of discount coupons event      | Json serialized list of string (`code`) of discount coupons
     invoice:massUpdate | Mass change of invoices event      | Json serialized list of number (`code`) of invoices
+    order:massCreate | Mass create of orders event      | Json serialized list of number (`code`) of orders
     order:massUpdate | Mass change of orders event      | Json serialized list of number (`code`) of orders
     quantityDiscount:massDelete | Mass delete of quantity discount event | Json serialized list of quantity discounts IDs
     quantityDiscount:massUpdate | Mass change of quantity discount event | Json serialized list of quantity discounts IDs 
