@@ -2526,6 +2526,477 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/eshop/document-settings:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - order
+                      - defaultSettings
+                      - logoUrl
+                      - companyStamp
+                    properties:
+                      order:
+                        additionalProperties: false
+                        type: object
+                        required:
+                          - codePrefix
+                          - codeLength
+                          - isCodeRandom
+                          - numberSeriesStartFrom
+                        properties:
+                          codePrefix:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of order `code`. Typically the current year is used as a prefix.'
+                            examples:
+                              - '2025'
+                          codeLength:
+                            type: integer
+                            description: 'Total length of order `code`, including prefix.'
+                            examples:
+                              - 10
+                          isCodeRandom:
+                            type: boolean
+                            description: 'If `true`, order code is generated randomly - can be used to keep your count of orders unknown.'
+                          numberSeriesStartFrom:
+                            type: integer
+                            description: 'Applicable if `isCodeRandom` is `false`, e.g., if `codePrefix` is set to `2025`, `codeLength` is `10`, and `numberSeriesStartFrom` is `1`, first order `code` will look like `2025000001`.'
+                            examples:
+                              - 1
+                          syncDocuments:
+                            type: boolean
+                            description: 'E.g., if the order will be canceled, all related documents will be canceled as well. Available only if module `nav` is not active.'
+                          printItemRemark:
+                            type: boolean
+                            description: 'If `true`, parameters from `order.itemRemarkParameters` will be displayed on the order. Available only if module `invoicing` is active.'
+                          displayProductStockLocation:
+                            type: boolean
+                            description: "If `true`, the product's warehouse position will be displayed in the order printout. Available only if module `stock` and `invoicing` is active."
+                          itemRemarkParameters:
+                            type: array
+                            description: 'Item remark parameters. Available only if module `invoicing` is active.'
+                            examples:
+                              -
+                                - parameter
+                              -
+                                - 'first parameter'
+                                - 'second parameter'
+                            items:
+                              type: string
+                      proformaInvoice:
+                        additionalProperties: false
+                        type:
+                          - object
+                        required:
+                          - codePrefix
+                          - codeLength
+                          - numberSeriesStartFrom
+                          - useVariableSymbolFromOrder
+                          - printItemRemark
+                          - addNotesFromOrder
+                          - percentageValueForPartialPayment
+                        description: 'Available only if module `invoicing` is active.'
+                        properties:
+                          codePrefix:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of proforma invoice `code`. Typically the current year is used as a prefix.'
+                            examples:
+                              - '2025'
+                          codeLength:
+                            type: integer
+                            description: 'Total length of proforma invoice `code`, including prefix.'
+                            examples:
+                              - 10
+                          numberSeriesStartFrom:
+                            type: integer
+                            description: 'E.g., if `codePrefix` is set to `2025`, `codeLength` is `10`, and `numberSeriesStartFrom` is `1`, first proforma invoice `code` will look like `2025000001`.'
+                            examples:
+                              - 1
+                          unifyCodeWithOrder:
+                            type: boolean
+                            description: 'Proforma invoice will have the identical number as the order. VS will be the same in the order and invoice. Available only if module `nav` is not active.'
+                          useVariableSymbolFromOrder:
+                            type: boolean
+                            description: 'The variable symbol from the order will be used in the proforma invoice.'
+                          printItemRemark:
+                            type: boolean
+                            description: 'If `true`, parameters from `order.itemRemarkParameters` will be displayed on the proforma invoice.'
+                          addNotesFromOrder:
+                            type: boolean
+                            description: 'If `true` and `order.syncDocuments` enabled, note from order will be added to proforma invoice.'
+                          percentageValueForPartialPayment:
+                            $ref: '#/components/schemas/typePrice'
+                            description: 'The specified percentage value for partial payment must not be less than the order value or 1 %, and must not exceed the order value or 100 %.'
+                      invoice:
+                        additionalProperties: false
+                        type:
+                          - object
+                        required:
+                          - codePrefix
+                          - codeLength
+                          - numberSeriesStartFrom
+                          - useVariableSymbolFromOrder
+                          - useSpecialNumberSerieForCashdesk
+                          - displayWarranty
+                          - printItemRemark
+                          - addEanToItemRemark
+                          - addNotesFromOrder
+                        description: 'Available only if module `invoicing` is active.'
+                        properties:
+                          codePrefix:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of invoice `code`. Typically the current year is used as a prefix.'
+                            examples:
+                              - '2025'
+                          codeLength:
+                            type: integer
+                            description: 'Total length of invoice `code`, including prefix.'
+                            examples:
+                              - 10
+                          numberSeriesStartFrom:
+                            type: integer
+                            description: 'E.g., if `codePrefix` is set to `2025`, `codeLength` is `10`, and `numberSeriesStartFrom` is `1`, first invoice `code` will look like `2025000001`.'
+                            examples:
+                              - 1
+                          unifyCodeWithOrder:
+                            type: boolean
+                            description: 'Invoice will have the identical number as the order. VS will be the same in the order and invoice. Available only if module `nav` is not active.'
+                          useVariableSymbolFromOrder:
+                            type: boolean
+                            description: 'The variable symbol from the order will be used in the invoice.'
+                          useSpecialNumberSerieForCashdesk:
+                            type: boolean
+                            description: 'If `true`, special number serie will be used for invoices created via cashdesk using fields `cashdeskCodePrefix`, `cashdeskCodeLength`, and `cashdeskNumberSeriesStartFrom`.'
+                          cashdeskCodePrefix:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of invoice `code` generated via cashdesk. Typically the current year is used as a prefix.'
+                            examples:
+                              - C-2025
+                          cashdeskCodeLength:
+                            type: integer
+                            description: 'Total length of invoice `code` generated via cashdesk, including prefix.'
+                            examples:
+                              - 10
+                          cashdeskNumberSeriesStartFrom:
+                            type: integer
+                            description: 'E.g., if `codePrefix` is set to `2025`, `codeLength` is `10`, and `numberSeriesStartFrom` is `1`, first invoice `code` generated via cashdesk will look like `C-20250001`.'
+                            examples:
+                              - 1
+                          displayWarranty:
+                            type: boolean
+                            description: 'If `true`, warranty will be displayed on invoice.'
+                          printItemRemark:
+                            type: boolean
+                            description: 'If `true`, parameters from `order.itemRemarkParameters` will be displayed on the proforma invoice.'
+                          addEanToItemRemark:
+                            type: boolean
+                            description: 'If `true` and `invoice.printItemRemark` enabled, the EAN of the product will be displayed in the note next to the item.'
+                          addNotesFromOrder:
+                            type: boolean
+                            description: 'If `true` and `order.syncDocuments` enabled, note from order will be added to invoice.'
+                          displayDoNotPay:
+                            type: boolean
+                            description: 'If `true`, display do not pay on paid invoice.'
+                      creditNote:
+                        additionalProperties: false
+                        type:
+                          - object
+                        required:
+                          - codePrefix
+                          - codeLength
+                          - numberSeriesStartFrom
+                          - displayCorrectedAndOriginalDocumentDiff
+                          - printItemRemark
+                          - defaultReasonRemark
+                          - restock
+                          - forbiddenItemTypes
+                        description: 'Available only if module `invoicing` is active.'
+                        properties:
+                          codePrefix:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of credit note `code`. Typically the current year is used as a prefix.'
+                            examples:
+                              - '2025'
+                          codeLength:
+                            type: integer
+                            description: 'Total length of credit note `code`, including prefix.'
+                            examples:
+                              - 10
+                          numberSeriesStartFrom:
+                            type: integer
+                            description: 'E.g., if `codePrefix` is set to `2025`, `codeLength` is `10`, and `numberSeriesStartFrom` is `1`, first credit note `code` will look like `2025000001`.'
+                            examples:
+                              - 1
+                          unifyCodeWithOrder:
+                            type: boolean
+                            description: 'Credit note will have the identical number as the order. VS will be the same in the order and invoice. Available only if module `nav` is not active.'
+                          displayCorrectedAndOriginalDocumentDiff:
+                            type: boolean
+                            description: 'If `true`, the difference between the corrected and original tax base, tax and original amount will be shown on the credit note.'
+                          printItemRemark:
+                            type: boolean
+                            description: 'If `true`, parameters from `order.itemRemarkParameters` will be displayed on the credit note.'
+                          defaultReasonRemark:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'This reason will be displayed on credit notes by default. For individual credit notes you can change it via the credit note detail.'
+                            examples:
+                              - 'Order cancellation'
+                          restock:
+                            type: boolean
+                            description: 'If `true`, the items from the order will be automatically restocked.'
+                          addNotesFromOrder:
+                            type: boolean
+                            description: 'If `true` and `order.syncDocuments` enabled, note from order will be added to invoice.'
+                          forbiddenItemTypes:
+                            type: array
+                            description: 'Items that will not be automatically added into the credit note. You can add them additionally. Available types: `shipping`, `billing`, and `gift`.'
+                            examples:
+                              -
+                                - shipping
+                              -
+                                - shipping
+                                - billing
+                                - gift
+                            items:
+                              type: string
+                      deliveryNote:
+                        additionalProperties: false
+                        type:
+                          - object
+                        required:
+                          - codePrefix
+                          - codeLength
+                          - numberSeriesStartFrom
+                          - printItemRemark
+                        description: 'Available only if module `invoicing` is active.'
+                        properties:
+                          codePrefix:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of delivery note `code`. Typically the current year is used as a prefix.'
+                            examples:
+                              - '2025'
+                          codeLength:
+                            type: integer
+                            description: 'Total length of delivery note `code`, including prefix.'
+                            examples:
+                              - 10
+                          numberSeriesStartFrom:
+                            type: integer
+                            description: 'E.g., if `codePrefix` is set to `2025`, `codeLength` is `10`, and `numberSeriesStartFrom` is `1`, first delivery note `code` will look like `2025000001`.'
+                            examples:
+                              - 1
+                          unifyCodeWithOrder:
+                            type: boolean
+                            description: 'Delivery note will have the identical number as the order. VS will be the same in the order and invoice. Available only if module `nav` is not active.'
+                          printItemRemark:
+                            type: boolean
+                            description: 'If `true`, parameters from `order.itemRemarkParameters` will be displayed on the delivery note.'
+                      proofPayment:
+                        additionalProperties: false
+                        type:
+                          - object
+                        required:
+                          - useSequentionalNumberSerie
+                          - createByIncomingPayment
+                        description: 'Available only if module `invoicing` is active.'
+                        properties:
+                          useSequentionalNumberSerie:
+                            type: boolean
+                            description: 'If `true`, sequentional number serie will be used, accepting fields `codePrefix`, `codeLength`, and `numberSeriesStartFrom`. Otherwise number serie is generated by linked document with prefix `codePrefixOrder`, or `codePrefixProformaInvoice`.'
+                          codePrefix:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of proof payment `code`. Typically the current year is used as a prefix. Available only if `useSequentionalNumberSerie` is `true`.'
+                            examples:
+                              - '2025'
+                          codeLength:
+                            type: integer
+                            description: 'Total length of proof payment `code`, including prefix. Available only if `useSequentionalNumberSerie` is `true`.'
+                            examples:
+                              - 10
+                          numberSeriesStartFrom:
+                            type: integer
+                            description: 'E.g., if `codePrefix` is set to `2025`, `codeLength` is `10`, and `numberSeriesStartFrom` is `1`, first proof payment `code` will look like `2025000001`. Available only if `useSequentionalNumberSerie` is `true`.'
+                            examples:
+                              - 1
+                          codePrefixOrder:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of proof payment `code` if created from order. Available only if `useSequentionalNumberSerie` is `false`, i.e. number serie is generated by linked document.'
+                            examples:
+                              - O-
+                          codePrefixProformaInvoice:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of proof payment `code` if created from proforma invoice. Available only if `useSequentionalNumberSerie` is `false`, i.e. number serie is generated by linked document.'
+                            examples:
+                              - P-
+                          createByIncomingPayment:
+                            type: boolean
+                            description: 'If `true`, a receipt will automatically be issued when payment is received. Note, if enabled, issuance of receipts upon order status change is deactivated, as it is not possible to use both methods simultaneously.'
+                      export:
+                        additionalProperties: false
+                        type:
+                          - object
+                        required:
+                          - useIsdocModule
+                          - erpMoneyS3PreAccounting
+                          - erpMoneyS3Account
+                        description: 'Available only if module `invoicing` is active.'
+                        properties:
+                          useIsdocModule:
+                            type: boolean
+                            description: 'If `true`, `isdoc` module is active.'
+                          erpMoneyS3PreAccounting:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of proof payment `code`. Typically the current year is used as a prefix. Available only if `useSequentionalNumberSerie` is `true`.'
+                            examples:
+                              - '2025'
+                          erpMoneyS3Account:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Prefix of proof payment `code` if created from order. Available only if `useSequentionalNumberSerie` is `false`, i.e. number serie is generated by linked document.'
+                            examples:
+                              - 123456789/1234
+                      defaultSettings:
+                        additionalProperties: false
+                        type:
+                          - object
+                        required:
+                          - billingMethodId
+                        description: "Will be applied to all documents if in document detail won't be set otherwise."
+                        properties:
+                          billingMethodId:
+                            type:
+                              - integer
+                              - 'null'
+                            description: 'Default billing method identifier.'
+                          constSymbol:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Default constant symbol. Available only if module `invoicing` is active.'
+                            examples:
+                              - '3558'
+                          specSymbol:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Default specific symbol. Available only if module `invoicing` is active.'
+                            examples:
+                              - '2025042200001'
+                          maturity:
+                            type:
+                              - integer
+                              - 'null'
+                            description: 'Default maturity. Available only if module `invoicing` is active.'
+                            examples:
+                              - '14'
+                          invoiceRemark:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Custom note displayed on each invoice. Available only if module `invoicing` is active.'
+                            examples:
+                              - 'Custom invoice note'
+                          proformaInvoiceRemark:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Custom note displayed on each proforma invoice. Available only if module `invoicing` is active.'
+                            examples:
+                              - 'Custom proforma invoice note'
+                          showQrCode:
+                            type: boolean
+                            description: 'If `true`, it will display QR code to pay by bank transfer. Available only if module `invoicing` is active.'
+                          sortItems:
+                            type: string
+                            description: 'Determines how items are sorted in documents, printout, and inventory. Available only if module `invoicing` is active.'
+                            examples:
+                              - byProductName
+                          showBarcode:
+                            type: boolean
+                            description: 'If `true`, it will display barcode on all documents. Available only if module `invoicing` is active.'
+                          showBillFullName:
+                            type: boolean
+                            description: 'If `true`, the name of the contact person will be shown on the issued documents. Available only if module `invoicing` is active.'
+                      logoUrl:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Logo URL.'
+                        example:
+                          - 'https://example.com/logo.png'
+                      companyStamp:
+                        additionalProperties: false
+                        type:
+                          - object
+                        required:
+                          - stampUrl
+                          - xAxisCorrection
+                          - yAxisCorrection
+                        description: 'Company stamp of documents.'
+                        properties:
+                          xAxisCorrection:
+                            type: integer
+                            description: 'How many pixel should be logo shifted to the right on X axis.'
+                            examples:
+                              - '0'
+                          yAxisCorrection:
+                            type: integer
+                            description: 'How many pixel should be logo shifted to the right on Y axis.'
+                            examples:
+                              - '0'
+                          stampUrl:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Company stamp URL.'
+                            example:
+                              - 'https://example.com/stamp.png'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'E-shop document settings'
+      operationId: getEshopDocumentSettings
+      description: 'Information about financial documents settings.'
+      tags:
+        - Eshop
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/eshop/customer-fields:
     get:
       responses:
