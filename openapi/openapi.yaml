@@ -977,75 +977,112 @@ security:
     shoptetPrivateApiToken: []
 tags:
   -
-    name: Eshop
-    description: 'This endpoint is used for general information about the e-shop settings.'
-  -
-    name: Products
-    description: 'Product endpoints are used for managing products in the e-shop and also for its related modules.'
-  -
-    name: 'Price lists'
-    description: 'Price lists are used for setting up different prices for products for different customer groups.'
-  -
     name: Orders
-    description: 'Order endpoints are used for managing orders in the e-shop.'
+    description: 'Basic endpoints for managing orders. See the sections below for other specific actions.'
+  -
+    name: 'Order items'
+    description: 'Managing order items.'
+  -
+    name: 'Order payment'
+    description: 'Managing order payment.'
+  -
+    name: 'Order shipping'
+    description: 'Managing order shipping.'
+  -
+    name: 'Order gifts'
+    description: 'Managing order gifts.'
+  -
+    name: 'Order history'
+    description: 'Managing order history.'
   -
     name: Invoices
-    description: 'Invoice endpoints are used for managing invoices in the e-shop.'
+    description: 'Managing invoices in the e-shop.'
   -
     name: 'Proforma invoices'
     description: |-
-      Proforma invoice endpoints are used for managing proforma invoices in the e-shop.
-
+      Managing proforma invoices in the e-shop.
 
       The code (`code`) is the proforma invoice identifier. Although this is
       usually a number, it is necessary to take into account that this might
-      also include
-
-      letters, a dash, etc.
+      also include letters, a dash, etc.
   -
     name: 'Credit notes'
     description: |-
-      Credit note endpoints are used for managing credit notes in the e-shop.
+      Managing credit notes in the e-shop.
 
       The code (`code`) is the credit note identifier. Although this is usually
       a number, it is necessary to take into account that this might also
-      include
-
-      letters, a dash, etc.
+      include letters, a dash, etc.
   -
     name: 'Delivery notes'
     description: |-
-      Delivery note endpoints are used for managing delivery notes in the e-shop.
-
+      Managing delivery notes in the e-shop.
 
       The code (`code`) is the credit notes identifier. Although this is usually
       a number, it is necessary to take into account that this might also
-      include
-
-      letters, a dash, etc.
+      include letters, a dash, etc.
   -
     name: 'Proof payments'
     description: |-
-      The code (`code`) is the proof payments identifier. Although this is usually a number, it is necessary to take 
-      into account that this might also include letters, a dash, etc.
+      The code (`code`) is the proof payments identifier. Although this is
+      usually a number, it is necessary to take into account that this 
+      might also include letters, a dash, etc.
   -
-    name: Stocks
-    description: 'Stock endpoints are used for managing stocks in the e-shop.'
+    name: Products
+    description: 'Managing products in the e-shop and also its related modules.'
   -
-    name: Suppliers
-    description: 'Supplier endpoints are used for managing suppliers in the e-shop.'
+    name: 'Price lists'
+    description: |-
+      Price lists are used for setting up different prices for products for
+      different customer groups.
   -
     name: Brands
     description: |-
-      Brand endpoints are used for managing brands in the e-shop.
+      Managing brands in the e-shop.
 
+      **Please note**, the **field `code` is deprecated** - use `indexName`
+      instead. Parameter `code` accepts both: 
 
-      **Please note**, the **field `code` is deprecated** - use `indexName` instead. Parameter `code` accepts both: 
-      guid string style, e.g. `d467bfbe-4334-11ef-ad70-0242ac1f0005`, and index name string style, e.g. `willy-wonka`.
+      guid string style, e.g. `d467bfbe-4334-11ef-ad70-0242ac1f0005`, and index
+      name string style, e.g. `willy-wonka`.
+
       **The index name string style is deprecated** - use guid style.
   -
+    name: 'Product images'
+    description: 'Managing product images.'
+  -
+    name: 'Product gifts'
+    description: 'Managing product gifts.'
+  -
+    name: 'Alternative products'
+    description: 'Managing alternative products.'
+  -
+    name: 'Related products'
+    description: 'Managing related products.'
+  -
+    name: 'Product sets'
+    description: 'Managing product sets.'
+  -
     name: Customers
-    description: 'Customer endpoints are used for managing customers in the e-shop.'
+    description: 'Managing customers in the e-shop.'
+  -
+    name: 'Customer accounts'
+    description: 'Managing customer accounts.'
+  -
+    name: 'Customer delivery addresses'
+    description: 'Managing customer delivery addresses.'
+  -
+    name: 'Customer remarks'
+    description: 'Managing customer remarks.'
+  -
+    name: Articles
+    description: 'Managing articles in the e-shop.'
+  -
+    name: Pages
+    description: 'Managing pages in the e-shop.'
+  -
+    name: Discussions
+    description: 'Managing discussions in the e-shop.'
   -
     name: Templates
     description: |-
@@ -1058,21 +1095,16 @@ tags:
       The same functionality is now included within the e-shop administration
       (`/admin/html-kody/`, `HTML code` tab).
 
-
       There are 3 possible locations, where HTML codes can be inserted:
-
 
       * `common-header` - the code will be inserted into each e-shop page header
       (`<HEAD>`)
 
-
       * `common-footer` - the code will be inserted into each e-shop page foot
       (before end `</BODY>`)
 
-
       * `order-confirmed` - the code will be inserted in the page confirming the
       order (the "thank you page")
-
 
       The inserted codes may come from 3 sources, and they are included in the
       following order:
@@ -1088,29 +1120,94 @@ tags:
       3. The code entered in the administration GUI (`/admin/html-kody/`, `HTML
       code` tab).
   -
-    name: 'Payment gateways'
+    name: Reviews
+    description: 'Managing reviews in the e-shop.'
+  -
+    name: 'Discount coupons'
+    description: 'Managing discount coupons in the e-shop.'
+  -
+    name: 'Quantity discounts'
+    description: 'Managing quantity discounts in the e-shop.'
+  -
+    name: 'XY discounts'
+    description: 'Managing X + Y discounts in the e-shop.'
+  -
+    name: 'Volume discounts'
+    description: 'Managing volume discounts in the e-shop.'
+  -
+    name: 'E-mail distribution lists'
     description: |-
-      API endpoints for integration of payment gateways.
-
-
-      **If you are a Premium client, contact your Account or Onboarding manager.
-      New payment gateway has to be approved by Shoptet and client needs to be
-      familiar with the terms of payment in advance**.
+      The functionality is subject to module activation [Mass
+      e-mailing](https://doplnky.shoptet.cz/hromadne-rozesilani-emailu) within
+      the e-shop. The addon using this endpoint must therefore have this module
+      defined as dependency.
+  -
+    name: 'Unsubscribed emails'
+    description: |-
+      This functionality allows you to manage a list of email addresses that
+      opted out of receiving marketing communications in compliance with legal
+      requirements, including the possibility of comparing any further mailings
+      with this list to exclude opt-out contacts.
+  -
+    name: Categories
+    description: 'Managing categories in the e-shop.'
+  -
+    name: 'Parametric categories'
+    description: 'Managing parametric categories in the e-shop.'
+  -
+    name: Stocks
+    description: 'Managing stocks in the e-shop.'
+  -
+    name: 'Consumption taxes'
+    description: 'Managing consumption taxes in the e-shop.'
+  -
+    name: 'Surcharge parameters'
+    description: 'Managing surcharge parameters in the e-shop.'
+  -
+    name: Flags
+    description: 'Managing flags in the e-shop.'
+  -
+    name: 'Variant parameters'
+    description: 'Managing variant parameters in the e-shop.'
+  -
+    name: 'Filtering parameters'
+    description: 'Managing filtering parameters in the e-shop.'
+  -
+    name: Suppliers
+    description: 'Managing suppliers in the e-shop.'
+  -
+    name: 'Shipping methods'
+    description: 'Managing shipping methods in the e-shop.'
+  -
+    name: 'Payment methods'
+    description: 'Managing payment methods in the e-shop.'
+  -
+    name: Gifts
+    description: 'Managing order gifts in the e-shop.'
+  -
+    name: Eshop
+    description: 'General information about the e-shop settings.'
+  -
+    name: Units
+    description: 'Managing units in the e-shop.'
+  -
+    name: Warranties
+    description: 'Managing warranties for the products.'
+  -
+    name: 'Recycling fees'
+    description: 'Managing recycling fees in the e-shop.'
   -
     name: Webhooks
     description: |-
       API endpoints for webhook servicing. It offers the possibility to read,
       add, change and delete the registered webhooks. Furthermore, it offers
-
       a list of notifications about invoked webhooks and their status.
-
 
       The webhooks are HTTP calls, which send HTTPs calls to registered
       subscribers if a specific event happens,
 
       for example creating an order. Then the information, in JSON format, is
       delivered to the defined URL.
-
 
       ```javascript
 
@@ -1123,93 +1220,51 @@ tags:
 
       ```
 
-
       The meaning of individual items:
-
 
       * `eshopId` - number of the e-shop, where the event happened
 
-
-      * `event` - event which invoked the call (see code list 
+      * `event` - event which invoked the call (see code list
       [Webhook event](#section/code-lists/webhook-event-types) types)
 
-
       * `eventCreated` - accurate time, when the event happened
-
 
       * `eventInstance` - reference to a specified entity - according to the
       context, order number, invoice number, product GUID, etc.
 
-
       For more information about the function of webhooks, see
       https://developers.shoptet.com/webhooks/.
   -
-    name: 'Shipping methods'
+    name: Endpoints
+    description: 'Obtaining information for endpoints in API.'
+  -
+    name: Jobs
+    description: 'Managing asynchronous jobs in the e-shop.'
+  -
+    name: Files
+    description: 'Managing files in the e-shop.'
+  -
+    name: Exports
+    description: 'Exports allow to work with documents of several types in several formats.'
+  -
+    name: 'Payment gateways'
     description: |-
-      Shipping methods endpoints are used for managing shipping methods in the
-      e-shop.
+      API endpoints for integration of payment gateways.
+
+      **If you are a Premium client, contact your Account or Onboarding manager.
+      New payment gateway has to be approved by Shoptet and client needs to be
+      familiar with the terms of payment in advance**.
   -
     name: 'Shipping requests'
     description: |-
       Shipping requests endpoints are used for managing shipping requests in the
       e-shop.
   -
-    name: 'Payment methods'
+    name: 'Measure units'
     description: |-
-      Payment methods endpoints are used for managing payment methods in the
-      e-shop.
-  -
-    name: 'Unsubscribed emails'
-    description: |-
-      This functionality allows you to manage a list of email addresses that
-      opted out of receiving marketing communications in compliance with legal
-      requirements, including the possibility of comparing any further mailings
-      with this list to exclude opt-out contacts.
-  -
-    name: 'E-mail distribution lists'
-    description: |-
-      The functionality is subject to module activation [Mass
-      e-mailing](https://doplnky.shoptet.cz/hromadne-rozesilani-emailu) within
-      the e-shop. The addon using this endpoint must therefore have this module
-      defined as dependency.
-  -
-    name: 'Discount coupons'
-    description: |-
-      Discount coupons endpoints are used for managing discount coupons in the
-      e-shop.
-  -
-    name: 'XY discounts'
-    description: |-
-      X + Y discounts endpoints are used for managing X + Y discounts in the
-      e-shop.
-  -
-    name: 'Quantity discounts'
-    description: |-
-      Quantity discounts endpoints are used for managing quantity discounts in the
-      e-shop.
-  -
-    name: 'Volume discounts'
-    description: |-
-      Volume discounts endpoints are used for managing volume discounts in the
-      e-shop.
-  -
-    name: Articles
-    description: 'Article endpoints are used for managing articles in the e-shop.'
-  -
-    name: Pages
-    description: 'Page endpoints are used for managing pages in the e-shop.'
-  -
-    name: Discussions
-    description: 'Discussion endpoints are used for managing discussions in the e-shop.'
-  -
-    name: 'Job endpoints'
-    description: 'Job endpoints are used for managing asynchronous jobs in the e-shop.'
-  -
-    name: Files
-    description: 'File endpoints are used for managing files in the e-shop.'
-  -
-    name: 'System endpoints'
-    description: 'This endpoints are used for obtaining information for endpoints in API.'
+      Allows you to access the system measure unit. These units are convertible to
+      each other and cannot be redefined or extended. For defining/extending your
+      own units use [Units](#units) in the **Settings** section.
 paths:
   /api/eshop:
     get:
@@ -6048,7 +6103,7 @@ paths:
 
         Use this endpoint when working only with product images to save time.
       tags:
-        - Products
+        - 'Product images'
       parameters:
         -
           name: guid
@@ -6110,7 +6165,7 @@ paths:
         Returns `200` status code. If any image deletion failed, it will be
         noted in `errors` section in response.
       tags:
-        - Products
+        - 'Product images'
       parameters:
         -
           name: guid
@@ -6215,7 +6270,7 @@ paths:
         description and priority (order). Maximum of 100 images can be sent at
         once.
       tags:
-        - Products
+        - 'Product images'
       parameters:
         -
           name: guid
@@ -6318,7 +6373,7 @@ paths:
 
         developer's portal. Maximum of 100 images can be sent at once.
       tags:
-        - Products
+        - 'Product images'
       parameters:
         -
           name: guid
@@ -6423,7 +6478,7 @@ paths:
 
         work on our developer's portal.
       tags:
-        - Products
+        - 'Product images'
       parameters:
         -
           name: guid
@@ -6526,7 +6581,7 @@ paths:
         If `removeReference` is set to true, then this reference will be removed
         with the image.
       tags:
-        - Products
+        - 'Product images'
       parameters:
         -
           name: guid
@@ -6893,7 +6948,7 @@ paths:
       operationId: getListOfProductCategories
       description: 'Returns the list of product categories.'
       tags:
-        - Products
+        - Categories
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -6918,7 +6973,7 @@ paths:
       operationId: createProductCategory
       description: 'Creates new category'
       tags:
-        - Products
+        - Categories
       requestBody:
         content:
           application/json:
@@ -7088,7 +7143,7 @@ paths:
       operationId: getProductCategoryDetail
       description: 'Returns category info'
       tags:
-        - Products
+        - Categories
       parameters:
         -
           name: categoryGuid
@@ -7121,7 +7176,7 @@ paths:
       operationId: updateProductCategory
       description: 'Updates existing category.'
       tags:
-        - Products
+        - Categories
       parameters:
         -
           name: categoryGuid
@@ -7364,7 +7419,7 @@ paths:
         Optional parameter `deleteChildren` allows deleting categories with
         child categories. The children are deleted too.
       tags:
-        - Products
+        - Categories
       parameters:
         -
           name: categoryGuid
@@ -7455,7 +7510,7 @@ paths:
         In Log, every product is identified by its position in file (starting
         from 1).
       tags:
-        - Products
+        - Categories
       requestBody:
         content:
           application/json:
@@ -7522,7 +7577,7 @@ paths:
       operationId: getListOfProductsOrderInCategory
       description: 'Retrieves products and their priorities within a category.'
       tags:
-        - Products
+        - Categories
       parameters:
         -
           name: categoryGuid
@@ -7587,7 +7642,7 @@ paths:
 
         Minimum priority is 0, maximum priority is 65535.
       tags:
-        - Products
+        - Categories
       parameters:
         -
           name: categoryGuid
@@ -7751,7 +7806,7 @@ paths:
       operationId: getListOfParametricCategories
       description: 'Returns the list of product categories.'
       tags:
-        - Products
+        - 'Parametric categories'
       parameters:
         -
           name: include
@@ -7882,7 +7937,7 @@ paths:
       operationId: getParametricCategoryDetail
       description: 'Returns parametric category info.'
       tags:
-        - Products
+        - 'Parametric categories'
       parameters:
         -
           name: categoryGuid
@@ -7965,7 +8020,7 @@ paths:
       operationId: getListOfProductsFlags
       description: 'Returns the list of product flags within the e-shop.'
       tags:
-        - Products
+        - Flags
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -8039,7 +8094,7 @@ paths:
       operationId: createProductFlag
       description: ''
       tags:
-        - Products
+        - Flags
       requestBody:
         content:
           application/json:
@@ -8153,7 +8208,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       description: 'Updates the flag.'
       tags:
-        - Products
+        - Flags
       requestBody:
         content:
           application/json:
@@ -8214,7 +8269,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       description: 'Deletes the flag. System flags cannot be deleted.'
       tags:
-        - Products
+        - Flags
   /api/products/measure-units:
     get:
       responses:
@@ -8286,7 +8341,7 @@ paths:
       operationId: getListOfProductsMeasureUnits
       description: 'Returns the list of product measure units within the e-shop.'
       tags:
-        - Products
+        - 'Measure units'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -8534,7 +8589,7 @@ paths:
       operationId: getListOfSurchargeParameters
       description: 'Returns the list of available surcharge parameters with their available values within the e-shop.'
       tags:
-        - Products
+        - 'Surcharge parameters'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -8638,7 +8693,7 @@ paths:
       operationId: createSurchargeParameter
       description: ''
       tags:
-        - Products
+        - 'Surcharge parameters'
       requestBody:
         content:
           application/json:
@@ -8864,7 +8919,7 @@ paths:
       operationId: getDetailOfSurchargeParameter
       description: ''
       tags:
-        - Products
+        - 'Surcharge parameters'
       parameters:
         -
           name: code
@@ -8970,7 +9025,7 @@ paths:
       operationId: updateSurchargeParameter
       description: ''
       tags:
-        - Products
+        - 'Surcharge parameters'
       parameters:
         -
           name: code
@@ -9162,7 +9217,7 @@ paths:
       operationId: createSurchargeParameterValue
       description: ''
       tags:
-        - Products
+        - 'Surcharge parameters'
       parameters:
         -
           name: code
@@ -9249,7 +9304,7 @@ paths:
       operationId: deleteSurchargeParameterByIndex
       description: ''
       tags:
-        - Products
+        - 'Surcharge parameters'
       parameters:
         -
           name: code
@@ -9284,7 +9339,7 @@ paths:
       operationId: deleteSurchargeParameterValue
       description: ''
       tags:
-        - Products
+        - 'Surcharge parameters'
       parameters:
         -
           name: paramIndex
@@ -9404,7 +9459,7 @@ paths:
       operationId: updateSurchargeParameterValue
       description: ''
       tags:
-        - Products
+        - 'Surcharge parameters'
       parameters:
         -
           name: paramIndex
@@ -9552,7 +9607,7 @@ paths:
       operationId: getListOfFilteringParameters
       description: 'Returns the list of available filtering parameters with their available values within the e-shop.'
       tags:
-        - Products
+        - 'Filtering parameters'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -9629,7 +9684,7 @@ paths:
       operationId: createFilteringParameter
       description: ''
       tags:
-        - Products
+        - 'Filtering parameters'
       requestBody:
         content:
           application/json:
@@ -9775,7 +9830,7 @@ paths:
       operationId: getDetailOfFilteringParameter
       description: ''
       tags:
-        - Products
+        - 'Filtering parameters'
       parameters:
         -
           name: code
@@ -9860,7 +9915,7 @@ paths:
       operationId: updateFilteringParameter
       description: ''
       tags:
-        - Products
+        - 'Filtering parameters'
       parameters:
         -
           name: code
@@ -10008,7 +10063,7 @@ paths:
       operationId: createFilteringParameterValue
       description: ''
       tags:
-        - Products
+        - 'Filtering parameters'
       parameters:
         -
           name: code
@@ -10060,7 +10115,7 @@ paths:
       operationId: deleteFilteringParameter
       description: ''
       tags:
-        - Products
+        - 'Filtering parameters'
       parameters:
         -
           name: code
@@ -10095,7 +10150,7 @@ paths:
       operationId: deleteFilteringParameterValue
       description: ''
       tags:
-        - Products
+        - 'Filtering parameters'
       parameters:
         -
           name: code
@@ -10188,7 +10243,7 @@ paths:
       operationId: updateFilteringParameterValue
       description: ''
       tags:
-        - Products
+        - 'Filtering parameters'
       parameters:
         -
           name: code
@@ -10346,7 +10401,7 @@ paths:
         --------|------
         `values` | Variant parameter values
       tags:
-        - Products
+        - 'Variant parameters'
       parameters:
         -
           name: include
@@ -10421,7 +10476,7 @@ paths:
       operationId: createVariantParameter
       description: ''
       tags:
-        - Products
+        - 'Variant parameters'
       requestBody:
         content:
           application/json:
@@ -10541,7 +10596,7 @@ paths:
       operationId: getDetailOfVariantParameter
       description: ''
       tags:
-        - Products
+        - 'Variant parameters'
       parameters:
         -
           name: paramIndex
@@ -10617,7 +10672,7 @@ paths:
       operationId: updateVariantParameter
       description: ''
       tags:
-        - Products
+        - 'Variant parameters'
       parameters:
         -
           name: paramIndex
@@ -10737,7 +10792,7 @@ paths:
       operationId: createVariantParameterValue
       description: ''
       tags:
-        - Products
+        - 'Variant parameters'
       parameters:
         -
           name: paramIndex
@@ -10789,7 +10844,7 @@ paths:
       operationId: deleteVariantParameter
       description: ''
       tags:
-        - Products
+        - 'Variant parameters'
       parameters:
         -
           name: paramIndex
@@ -10824,7 +10879,7 @@ paths:
       operationId: deleteVariantParameterValue
       description: ''
       tags:
-        - Products
+        - 'Variant parameters'
       parameters:
         -
           name: paramIndex
@@ -10908,7 +10963,7 @@ paths:
       operationId: updateVariantParameterValue
       description: ''
       tags:
-        - Products
+        - 'Variant parameters'
       parameters:
         -
           name: paramIndex
@@ -11030,7 +11085,7 @@ paths:
         Returns the list of consumption taxes within the e-shop.
         In order to list consuption taxes, you will need to have the Consumption tax module activated on the customer's e-shop.
       tags:
-        - Products
+        - 'Consumption taxes'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -11091,7 +11146,7 @@ paths:
       operationId: createConsumptionTax
       description: ''
       tags:
-        - Products
+        - 'Consumption taxes'
       requestBody:
         content:
           application/json:
@@ -11209,7 +11264,7 @@ paths:
       operationId: updateConsumptionTax
       description: ''
       tags:
-        - Products
+        - 'Consumption taxes'
       parameters:
         -
           name: id
@@ -11296,7 +11351,7 @@ paths:
       operationId: deleteConsumptionTax
       description: ''
       tags:
-        - Products
+        - 'Consumption taxes'
       parameters:
         -
           name: id
@@ -11338,7 +11393,7 @@ paths:
       operationId: getListOfRecyclingFeeCategories
       description: 'Returns the list of recycling fee categories within the e-shop.'
       tags:
-        - Products
+        - 'Recycling fees'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -11401,7 +11456,7 @@ paths:
       operationId: getListOfProductWarranties
       description: 'Returns list of product warranties.'
       tags:
-        - Products
+        - Warranties
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -11461,7 +11516,7 @@ paths:
         items will be enriched by items that has called product in own
         alternative table.
       tags:
-        - Products
+        - 'Alternative products'
     post:
       responses:
         200:
@@ -11507,7 +11562,7 @@ paths:
         is successfully saved, complete list of alternative product is returned
         in response.
       tags:
-        - Products
+        - 'Alternative products'
       requestBody:
         content:
           application/json:
@@ -11576,7 +11631,7 @@ paths:
         is successfully saved, complete list of alternative product is returned
         in response.
       tags:
-        - Products
+        - 'Alternative products'
       requestBody:
         content:
           application/json:
@@ -11660,7 +11715,7 @@ paths:
         items will be enriched by items that has called product in own related
         table.
       tags:
-        - Products
+        - 'Related products'
     post:
       responses:
         200:
@@ -11706,7 +11761,7 @@ paths:
         is successfully saved, complete list of related product is returned in
         response.
       tags:
-        - Products
+        - 'Related products'
       requestBody:
         content:
           application/json:
@@ -11775,7 +11830,7 @@ paths:
         is successfully saved, complete list of related product is returned in
         response.
       tags:
-        - Products
+        - 'Related products'
       requestBody:
         content:
           application/json:
@@ -11867,7 +11922,7 @@ paths:
         When successfully saved, complete list of products in the set is returned in response.
         It is not allowed to add a product of the `product-set` type to an existing product set.
       tags:
-        - Products
+        - 'Product sets'
       requestBody:
         content:
           application/json:
@@ -11941,7 +11996,7 @@ paths:
         Product defined in url by `guid`, must be set as `type` : `product-set`. When successfully saved, complete list of products in the set is returned in response.
         It is not allowed to add a product of the `product-set` type to an existing product set.  
       tags:
-        - Products
+        - 'Product sets'
       requestBody:
         content:
           application/json:
@@ -12027,7 +12082,7 @@ paths:
       operationId: getListOfProductUnits
       description: ''
       tags:
-        - Products
+        - Units
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -12070,7 +12125,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       description: 'Returns list of gifts related (product variants) to product.'
       tags:
-        - Products
+        - 'Product gifts'
     post:
       responses:
         201:
@@ -12109,7 +12164,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       description: ''
       tags:
-        - Products
+        - 'Product gifts'
       requestBody:
         content:
           application/json:
@@ -12167,7 +12222,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       description: ''
       tags:
-        - Products
+        - 'Product gifts'
       requestBody:
         content:
           application/json:
@@ -12342,7 +12397,7 @@ paths:
       operationId: getListOfProductsReviews
       description: "Returns list of product's reviews."
       tags:
-        - Products
+        - Reviews
       parameters:
         -
           name: dateFrom
@@ -15257,7 +15312,7 @@ paths:
       operationId: createOrderItem
       description: ''
       tags:
-        - Orders
+        - 'Order items'
       parameters:
         -
           name: code
@@ -15569,7 +15624,7 @@ paths:
       operationId: updateOrderItem
       description: ''
       tags:
-        - Orders
+        - 'Order items'
       parameters:
         -
           name: code
@@ -15801,7 +15856,7 @@ paths:
       operationId: deleteOrderItem
       description: ''
       tags:
-        - Orders
+        - 'Order items'
       parameters:
         -
           name: code
@@ -15877,7 +15932,7 @@ paths:
 
         than it will be set to `0.00`.
       tags:
-        - Orders
+        - 'Order items'
       parameters:
         -
           name: code
@@ -15967,7 +16022,7 @@ paths:
         You have to provide dynamically generated `relationId` which identify
         which surcharge parameter related to order item you want to delete.
       tags:
-        - Orders
+        - 'Order items'
       parameters:
         -
           name: code
@@ -16025,7 +16080,7 @@ paths:
       operationId: createOrderPayment
       description: ''
       tags:
-        - Orders
+        - 'Order payment'
       parameters:
         -
           name: code
@@ -16110,7 +16165,7 @@ paths:
       operationId: updateOrderPayment
       description: ''
       tags:
-        - Orders
+        - 'Order payment'
       parameters:
         -
           name: code
@@ -16201,7 +16256,7 @@ paths:
       operationId: addOrderShipping
       description: ''
       tags:
-        - Orders
+        - 'Order shipping'
       parameters:
         -
           name: code
@@ -16286,7 +16341,7 @@ paths:
       operationId: updateOrderShipping
       description: ''
       tags:
-        - Orders
+        - 'Order shipping'
       parameters:
         -
           name: code
@@ -16504,7 +16559,7 @@ paths:
         which may be needed to coordinate the order processing (these can be
         entered and deleted by the user).
       tags:
-        - Orders
+        - 'Order history'
       parameters:
         -
           name: code
@@ -16588,7 +16643,7 @@ paths:
 
         together with main system changes of the order.
       tags:
-        - Orders
+        - 'Order history'
       parameters:
         -
           name: code
@@ -16663,7 +16718,7 @@ paths:
       operationId: deleteOrderHistoryItem
       description: 'Delete order history item by primary key.'
       tags:
-        - Orders
+        - 'Order history'
       parameters:
         -
           name: code
@@ -17533,7 +17588,7 @@ paths:
         This endpoint allow get, add or delete order related gifts. Gifts is relation to product variant by its
         `code` identifier and is ordered by `priority` field
       tags:
-        - Orders
+        - 'Order gifts'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -17570,7 +17625,7 @@ paths:
 
         `code`, `orderPrice` and `currencyCode` is required.
       tags:
-        - Orders
+        - 'Order gifts'
       requestBody:
         content:
           application/json:
@@ -17636,7 +17691,7 @@ paths:
       operationId: deleteOrderGift
       description: 'Delete order gift item by primary key.'
       tags:
-        - Orders
+        - 'Order gifts'
       parameters:
         -
           name: id
@@ -17696,7 +17751,7 @@ paths:
         - Offer to wholesale customers - define if customer with wholesale module have gifts offer available
         - Gift to whole order or each product
       tags:
-        - Orders
+        - Gifts
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -17744,7 +17799,7 @@ paths:
         Method updates order gift settings. Every item in request body is
         optional, but at least one setting is required.
       tags:
-        - Orders
+        - Gifts
       requestBody:
         content:
           application/json:
@@ -22514,7 +22569,7 @@ paths:
         |onlyClosedProofPayments | Exports only finished documents.
         |descOrder | Sort as starting from oldest
       tags:
-        - 'Document export'
+        - Exports
       parameters:
         -
           name: type
@@ -24316,7 +24371,7 @@ paths:
       operationId: getListOfCustomerAccounts
       description: 'List of customer accounts supports the [paging](#section/basic-principles-of-working-with-api/Paging).'
       tags:
-        - Customers
+        - 'Customer accounts'
       parameters:
         -
           name: guid
@@ -24402,7 +24457,7 @@ paths:
       operationId: createCustomerAccount
       description: ''
       tags:
-        - Customers
+        - 'Customer accounts'
       parameters:
         -
           name: guid
@@ -24544,7 +24599,7 @@ paths:
       operationId: getDetailOfCustomerAccount
       description: ''
       tags:
-        - Customers
+        - 'Customer accounts'
       parameters:
         -
           name: guid
@@ -24638,7 +24693,7 @@ paths:
       operationId: updateCustomerAccount
       description: ''
       tags:
-        - Customers
+        - 'Customer accounts'
       parameters:
         -
           name: guid
@@ -24734,7 +24789,7 @@ paths:
       operationId: deleteCustomerAccount
       description: ''
       tags:
-        - Customers
+        - 'Customer accounts'
       parameters:
         -
           name: guid
@@ -24787,7 +24842,7 @@ paths:
       operationId: geListOfCustomerDeliveryAddresses
       description: 'List of customer delivery addresses, supports the [paging](#section/basic-principles-of-working-with-api/Paging).'
       tags:
-        - Customers
+        - 'Customer delivery addresses'
       parameters:
         -
           name: guid
@@ -24826,7 +24881,7 @@ paths:
       operationId: createDeliveryAddress
       description: ''
       tags:
-        - Customers
+        - 'Customer delivery addresses'
       parameters:
         -
           name: guid
@@ -24970,7 +25025,7 @@ paths:
       operationId: getDetailOfCustomerDeliveryAddress
       description: ''
       tags:
-        - Customers
+        - 'Customer delivery addresses'
       parameters:
         -
           name: guid
@@ -25017,7 +25072,7 @@ paths:
       operationId: updateCustomerDeliveryAddress
       description: ''
       tags:
-        - Customers
+        - 'Customer delivery addresses'
       parameters:
         -
           name: guid
@@ -25161,7 +25216,7 @@ paths:
       operationId: deleteCustomerDeliveryAddress
       description: ''
       tags:
-        - Customers
+        - 'Customer delivery addresses'
       parameters:
         -
           name: guid
@@ -25235,7 +25290,7 @@ paths:
       operationId: getListOfCustomerRemarks
       description: 'List of customer remarks, supports the [paging](#section/basic-principles-of-working-with-api/Paging).'
       tags:
-        - Customers
+        - 'Customer remarks'
       parameters:
         -
           name: guid
@@ -25295,7 +25350,7 @@ paths:
       operationId: createCustomerRemark
       description: ''
       tags:
-        - Customers
+        - 'Customer remarks'
       parameters:
         -
           name: guid
@@ -25388,7 +25443,7 @@ paths:
       operationId: getDetailOfCustomerRemark
       description: ''
       tags:
-        - Customers
+        - 'Customer remarks'
       parameters:
         -
           name: guid
@@ -25456,7 +25511,7 @@ paths:
       operationId: updateCustomerRemark
       description: ''
       tags:
-        - Customers
+        - 'Customer remarks'
       parameters:
         -
           name: guid
@@ -25525,7 +25580,7 @@ paths:
       operationId: deleteCustomerRemark
       description: ''
       tags:
-        - Customers
+        - 'Customer remarks'
       parameters:
         -
           name: guid
@@ -32787,7 +32842,7 @@ paths:
         List of jobs in queue. Using the "status" parameter to filter by completed|pending|running|failed|expired|killed. 
         Without this filter it will show all statuses. Also you can filter results depends on time of creation and completion.
       tags:
-        - 'Job endpoints'
+        - Jobs
       parameters:
         -
           name: status
@@ -32953,7 +33008,7 @@ paths:
         Returns 403 response if job detail of unprocessed job is requested more
         than 10 times.
       tags:
-        - 'Job endpoints'
+        - Jobs
       parameters:
         -
           name: jobId
@@ -33436,7 +33491,7 @@ paths:
         endpoints, or endpoints pending approval. In default state, without the parameter, the endpoint returns 
         the approved endpoints.
       tags:
-        - 'System endpoints'
+        - Endpoints
       parameters:
         -
           name: status
@@ -40360,3 +40415,89 @@ components:
           sales:
             $ref: '#/components/schemas/priceSales'
             description: 'definition of discounts.'
+x-tagGroups:
+  -
+    name: Orders
+    tags:
+      - Orders
+      - 'Order gifts'
+      - 'Order history'
+      - 'Order items'
+      - 'Order payment'
+      - 'Order shipping'
+  -
+    name: Accounting
+    tags:
+      - 'Credit notes'
+      - 'Delivery notes'
+      - Invoices
+      - 'Proforma invoices'
+      - 'Proof payments'
+  -
+    name: Products
+    tags:
+      - 'Alternative products'
+      - Brands
+      - 'Price lists'
+      - Products
+      - 'Product gifts'
+      - 'Product images'
+      - 'Product sets'
+      - 'Related products'
+  -
+    name: Customers
+    tags:
+      - Customers
+      - 'Customer accounts'
+      - 'Customer delivery addresses'
+      - 'Customer remarks'
+  -
+    name: Content
+    tags:
+      - Articles
+      - Discussions
+      - Pages
+      - Reviews
+      - Templates
+  -
+    name: Marketing
+    tags:
+      - 'Discount coupons'
+      - 'E-mail distribution lists'
+      - 'Quantity discounts'
+      - 'Unsubscribed emails'
+      - 'Volume discounts'
+      - 'XY discounts'
+  -
+    name: Categories
+    tags:
+      - Categories
+      - 'Parametric categories'
+  -
+    name: Settings
+    tags:
+      - 'Consumption taxes'
+      - Eshop
+      - 'Filtering parameters'
+      - Flags
+      - Gifts
+      - 'Payment methods'
+      - 'Recycling fees'
+      - 'Shipping methods'
+      - Stocks
+      - Suppliers
+      - 'Surcharge parameters'
+      - Units
+      - 'Variant parameters'
+      - Warranties
+  -
+    name: System
+    tags:
+      - Endpoints
+      - Exports
+      - Files
+      - Jobs
+      - 'Measure units'
+      - 'Payment gateways'
+      - 'Shipping requests'
+      - Webhooks
