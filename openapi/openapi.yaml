@@ -3668,6 +3668,14 @@ paths:
                       description: "Product's full description."
                       examples:
                         - '<p>Velice kvalitní a dobrá čokoláda. Chutná vždy dobře. <b>Neobsahuje arašídy.</b></p>'
+                    additionalName:
+                      type:
+                        - string
+                        - 'null'
+                      maxLength: 150
+                      description: "Product's additional name. Optional. Maximal length of 150 characters."
+                      examples:
+                        - 'Velice kvalitní a dobrá čokoláda.'
                     metaTitle:
                       type:
                         - string
@@ -4722,6 +4730,14 @@ paths:
                       description: "Product's full description."
                       examples:
                         - '<p>Velice kvalitní a dobrá čokoláda. Chutná vždy dobře. <b>Neobsahuje arašídy.</b></p>'
+                    additionalName:
+                      type:
+                        - string
+                        - 'null'
+                      maxLength: 150
+                      description: "Product's additional name. Optional. Maximal length of 150 characters."
+                      examples:
+                        - 'Velice kvalitní a dobrá čokoláda.'
                     metaTitle:
                       type:
                         - string
@@ -5535,6 +5551,14 @@ paths:
                       description: "Product's full description."
                       examples:
                         - '<p>Velice kvalitní a dobrá čokoláda. Chutná vždy dobře. <b>Neobsahuje arašídy.</b></p>'
+                    additionalName:
+                      type:
+                        - string
+                        - 'null'
+                      maxLength: 150
+                      description: "Product's additional name. Optional. Maximal length of 150 characters."
+                      examples:
+                        - 'Velice kvalitní a dobrá čokoláda.'
                     metaTitle:
                       type:
                         - string
