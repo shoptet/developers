@@ -18327,6 +18327,24 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Unable to create invoice. Order 2017000045 is in the cancelled state.'
+                    instance: integration-call
       summary: 'Invoice from order creation'
       operationId: createInvoiceFromOrder
       description: 'Creating invoice from existing order.'
@@ -21315,10 +21333,6 @@ paths:
               example:
                 data: null
                 errors:
-                  -
-                    errorCode: invalid-request-data
-                    message: 'Unable to create credit note. Invoice "2017100012" is in invalid state.'
-                    instance: integration-call
                   -
                     errorCode: invalid-request-data
                     message: 'Field cannot be empty string.'
