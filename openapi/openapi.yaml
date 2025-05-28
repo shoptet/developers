@@ -37320,6 +37320,12 @@ components:
           description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility code list](#section/code-lists/Product-visibility)'
           examples:
             - normal
+        linkType:
+          type: string
+          description: 'Type of the link to the product. Defines if the product is paired physically or reciprocally.'
+          examples:
+            - physical
+            - reciprocal
     productSet:
       type:
         - object
