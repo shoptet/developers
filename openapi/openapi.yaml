@@ -825,7 +825,7 @@ info:
     heureka | Heuréka
     zbozi | Zboží.cz
 
-    ## Invoice Billing Methods
+    ## Invoice billing methods
 
     id | Description
     ------| -----
@@ -2289,7 +2289,7 @@ paths:
 
 
         This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand).
+        [Section on demand](#section/basic-principles/section-on-demand).
 
 
         If you state the `include=imageCuts` parameter within the URL, information about the image cut will also be part of the response. For more information
@@ -3368,11 +3368,10 @@ paths:
       operationId: getListOfProducts
       description: |-
         Returns the list of products - only basic info and GUID, using this you can determine the details 
-        with another API call. Endpoint supports [paging](#section/basic-principles-of-working-with-api/Paging).
+        with another API call. Endpoint supports [Paging](#section/basic-principles/paging).
 
 
-        This endpoint has several sections, which are sent only when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand).
+        This endpoint has several sections, which are sent only when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand).
 
 
         If you state the `include=images` parameter within the URL, then information about main product image will 
@@ -3400,19 +3399,14 @@ paths:
         -
           name: visibility
           in: query
-          description: |-
-            product visibility (visible, hidden, only for logged-in users...) -
-            see also [Product visibility code list](#section/Code-lists/Product-visibility)
-            Optional.
+          description: 'Product visibility (visible, hidden, only for logged-in users...) - see also [Product visibility](#section/code-lists/product-visibility) code list. Optional.'
           example: visible
           schema:
             type: string
         -
           name: type
           in: query
-          description: |-
-            product type (product, service, bazar...) - see also [Product type
-            code list](#section/Code-lists/Product-types). Optional.
+          description: 'Product type (product, service, bazar...) - see also [Product types](#section/code-lists/product-types) code list. Optional.'
           example: product
           schema:
             type: string
@@ -4330,7 +4324,7 @@ paths:
 
 
         This endpoint has several sections, which are exported only when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        [Section on demand](#section/basic-principles/section-on-demand)).
 
 
         Include parameter     | Meaning
@@ -4383,19 +4377,14 @@ paths:
         -
           name: visibility
           in: query
-          description: |-
-            product visibility (visible, hidden, only for logged-in users...) -
-            see also [Product visibility code list](#section/Code-lists/Product-visibility)
-            Optional.
+          description: 'Product visibility (visible, hidden, only for logged-in users...) - see also [Product visibility](#section/code-lists/product-visibility) code list. Optional.'
           example: visible
           schema:
             type: string
         -
           name: type
           in: query
-          description: |-
-            product type (product, service, bazar...) - see also [Product type
-            code list](#section/Code-lists/Product-types). Optional.
+          description: 'Product type (product, service, bazar...) - see also [Product types](#section/code-lists/product-types) code list. Optional.'
           example: product
           schema:
             type: string
@@ -4507,7 +4496,7 @@ paths:
 
 
         This endpoint has several sections, which are sent only when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        [Section on demand](#section/basic-principles/section-on-demand)).
 
         Include parameter     | Meaning
         ---                   | ---
@@ -6796,7 +6785,7 @@ paths:
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like `edit` action.
 
 
-        Endpoint supports [pagination](#section/basic-principles-of-working-with-api/Paging).
+        Endpoint supports [Paging](#section/basic-principles/paging).
 
 
         Description of object attributes with information about changes:
@@ -13347,8 +13336,7 @@ paths:
       summary: 'List of orders'
       operationId: getListOfOrders
       description: |-
-        List of orders in e-shop and cash desks. Endpoint supports
-        [pagination](#section/basic-principles-of-working-with-api/Paging). For default calls, it returns 20 orders,
+        List of orders in e-shop and cash desks. Endpoint supports  [Paging](#section/basic-principles/paging). For default calls, it returns 20 orders,
 
         using the parameter `?itemsPerPage=100`, you can request up to 100
         orders at a time. Temporarily disabled, only 20 orders per page is
@@ -14585,7 +14573,7 @@ paths:
 
 
         This endpoint has several sections, which are exported only when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        [Section on demand](#section/basic-principles/section-on-demand)).
 
 
         Include parameter     | Meaning
@@ -14746,9 +14734,7 @@ paths:
       operationId: getOrderDetail
       description: |-
         This endpoint has several sections, which are only sent when requested
-        in the `include` parameter (see
-
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
 
 
         Value | Section
@@ -17446,7 +17432,7 @@ paths:
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like `edit` action.
 
 
-        Endpoint supports [pagination](#section/basic-principles-of-working-with-api/Paging).
+        Endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - Orders
       parameters:
@@ -17958,7 +17944,7 @@ paths:
       operationId: getListOfInvoices
       description: |-
         Returns the list of invoices with basic information. 
-        The list of invoices supports [paging](#section/basic-principles-of-working-with-api/Paging)
+        The list of invoices supports [Paging](#section/basic-principles/paging)
 
 
         The code (`code`) is the invoice identifier. Although this is usually a number, 
@@ -18060,7 +18046,7 @@ paths:
 
 
         This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        [Section on demand](#section/basic-principles/section-on-demand)).
 
 
         Value | Section
@@ -18281,7 +18267,7 @@ paths:
 
 
         This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        [Section on demand](#section/basic-principles/section-on-demand)).
 
         Value | Section
         --------|------
@@ -18531,8 +18517,7 @@ paths:
         as the order, must be valid and cannot be linked to another invoice.
 
 
-        This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        This endpoint has several sections, which are only sent when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
 
         Value | Section
         --------|------
@@ -18773,7 +18758,7 @@ paths:
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like `edit` action.
 
 
-        Endpoint supports [pagination](#section/basic-principles-of-working-with-api/Paging).
+        Endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - Invoices
       parameters:
@@ -18886,7 +18871,7 @@ paths:
       operationId: getListOfProformaInvoices
       description: |-
         Returns the list of proforma invoices. Supports the 
-        [pagination](#section/basic-principles-of-working-with-api/Paging).
+        [Paging](#section/basic-principles/paging).
       tags:
         - 'Proforma invoices'
       parameters:
@@ -18981,7 +18966,7 @@ paths:
 
 
         This endpoint has one section, which is only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        [Section on demand](#section/basic-principles/section-on-demand)).
 
 
         Value | Section
@@ -19125,7 +19110,7 @@ paths:
         Additional information about one proforma invoice.
 
         This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        [Section on demand](#section/basic-principles/section-on-demand)).
 
         Value | Section
         --------|------
@@ -19297,7 +19282,7 @@ paths:
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like `edit` action.
 
 
-        Endpoint supports [paging](#section/basic-principles-of-working-with-api/Paging)
+        Endpoint supports [Paging](#section/basic-principles/paging)
       tags:
         - 'Proforma invoices'
       parameters:
@@ -19350,7 +19335,7 @@ paths:
                 additionalProperties: false
       summary: 'List of proof payments'
       operationId: getListOfProofPayments
-      description: 'The list of proof payments supports [paging](#section/basic-principles-of-working-with-api/Paging).'
+      description: 'The list of proof payments supports [Paging](#section/basic-principles/paging).'
       tags:
         - 'Proof payments'
       parameters:
@@ -20606,7 +20591,7 @@ paths:
         Creation is considered as `edit` action. So, when there is a new item created, it will be displayed like `edit` action.
 
 
-        Endpoint supports [paging](#section/basic-principles-of-working-with-api/Paging)
+        Endpoint supports [Paging](#section/basic-principles/paging)
       tags:
         - 'Proof payments'
       parameters:
@@ -20814,8 +20799,7 @@ paths:
       description: |-
         Additional information about one credit notes.
 
-        This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        This endpoint has several sections, which are only sent when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
 
         Value | Section
         --------|------
@@ -21014,8 +20998,7 @@ paths:
       description: |-
         Additional information about one credit note.
 
-        This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        This endpoint has several sections, which are only sent when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
 
         Value | Section
         --------|------
@@ -21339,7 +21322,7 @@ paths:
         Creating credit note from existing invoice.
 
         This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        [Section on demand](#section/basic-principles/section-on-demand)).
 
 
         Value | Section
@@ -22148,7 +22131,7 @@ paths:
         like `edit` action.
 
 
-        Endpoint supports [pagination](#section/basic-principles-of-working-with-api/Paging).
+        Endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - 'Credit notes'
       parameters:
@@ -22244,7 +22227,7 @@ paths:
                 additionalProperties: false
       summary: 'List of delivery notes'
       operationId: getListOfDeliveryNotes
-      description: 'The list of delivery notes supports the [paging](#section/basic-principles-of-working-with-api/Paging).'
+      description: 'The list of delivery notes supports the [Paging](#section/basic-principles/paging).'
       tags:
         - 'Delivery notes'
       parameters:
@@ -22428,7 +22411,7 @@ paths:
         Additional information about one delivery note.
 
         This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        [Section on demand](#section/basic-principles/section-on-demand)).
 
         Value | Section
         --------|------
@@ -22711,9 +22694,7 @@ paths:
                 additionalProperties: false
       summary: 'List of stocks'
       operationId: getListOfStocks
-      description: |-
-        Returns the list of stocks. There are usually not many stocks, therefore the endpoint returns all of 
-        them without [paging](#section/basic-principles-of-working-with-api/Paging).
+      description: 'Returns the list of stocks. There are usually not many stocks, therefore the endpoint returns all of them without [Paging](#section/basic-principles/paging).'
       tags:
         - Stocks
       parameters:
@@ -22853,10 +22834,10 @@ paths:
       operationId: getStockMovements
       description: |-
         It returns the list of changes in product quantity, which were done
-        within one stock. Supports the [paging](#section/basic-principles-of-working-with-api/Paging) `movements`.
+        within one stock. Supports the [Paging](#section/basic-principles/paging) `movements`.
 
         This endpoint supports optional parts using the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)). Please note that there is some
+        [Section on demand](#section/basic-principles/section-on-demand)). Please note that there is some
         performance penalty associated with the usage of "orderCode" `include`
         and/or query `parameter`.
       tags:
@@ -23206,13 +23187,8 @@ paths:
       operationId: getProductSuppliesInStock
       description: |-
         Returns the product supplies in stock for all products in a specific stock, contains GUID, code and quantity 
-        in stock for a specific product variant. It is possible to filter the specific GUID of a product, possibly 
-        a variant code. The endpoint supports [paging](#section/basic-principles-of-working-with-api/Paging), 
-        in case of filtering, the amount of items per page increases.
-
-
-        This endpoint supports optional parts using the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)). The `changeTime` item 
+        in stock for a specific product variant. It is possible to filter the specific GUID of a product, possibly a variant code. The endpoint supports [Paging](#section/basic-principles/paging), in case of filtering, the amount of items per page increases.
+        This endpoint supports optional parts using the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)). The `changeTime` item 
         is always temporarily returned, however as of 16. 3. 2019 only upon using the `include` parameter.
 
 
@@ -23294,7 +23270,7 @@ paths:
                 additionalProperties: false
       summary: 'List of suppliers'
       operationId: getListOfSuppliers
-      description: 'Returns the list of suppliers. Supports the [paging](#section/basic-principles-of-working-with-api/Paging)'
+      description: 'Returns the list of suppliers. Supports the [Paging](#section/basic-principles/paging)'
       tags:
         - Suppliers
   /api/brands:
@@ -23328,7 +23304,7 @@ paths:
                 additionalProperties: false
       summary: 'List of brands'
       operationId: getListofBrands
-      description: 'Returns the list of brands. Supports the [paging](#section/basic-principles-of-working-with-api/Paging)'
+      description: 'Returns the list of brands. Supports the [Paging](#section/basic-principles/paging)'
       tags:
         - Brands
       parameters:
@@ -23909,7 +23885,7 @@ paths:
                 additionalProperties: false
       summary: 'List of customers'
       operationId: getListOfCustomers
-      description: 'Listing of customers. Supports the [paging](#section/basic-principles-of-working-with-api/Paging).'
+      description: 'Listing of customers. Supports the [Paging](#section/basic-principles/paging).'
       tags:
         - Customers
       parameters:
@@ -24403,7 +24379,7 @@ paths:
                 additionalProperties: false
       summary: 'List of customer accounts'
       operationId: getListOfCustomerAccounts
-      description: 'List of customer accounts supports the [paging](#section/basic-principles-of-working-with-api/Paging).'
+      description: 'List of customer accounts supports the [Paging](#section/basic-principles/paging).'
       tags:
         - 'Customer accounts'
       parameters:
@@ -24874,7 +24850,7 @@ paths:
                 additionalProperties: false
       summary: 'List of customer delivery addresses'
       operationId: geListOfCustomerDeliveryAddresses
-      description: 'List of customer delivery addresses, supports the [paging](#section/basic-principles-of-working-with-api/Paging).'
+      description: 'List of customer delivery addresses, supports the [Paging](#section/basic-principles/paging).'
       tags:
         - 'Customer delivery addresses'
       parameters:
@@ -25322,7 +25298,7 @@ paths:
                 additionalProperties: false
       summary: 'List of customer remarks'
       operationId: getListOfCustomerRemarks
-      description: 'List of customer remarks, supports the [paging](#section/basic-principles-of-working-with-api/Paging).'
+      description: 'List of customer remarks, supports the [Paging](#section/basic-principles/paging).'
       tags:
         - 'Customer remarks'
       parameters:
@@ -25698,7 +25674,7 @@ paths:
         `edit` action.
 
 
-        Endpoint supports [paging](#section/basic-principles-of-working-with-api/Paging).
+        Endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - Customers
       parameters:
@@ -28316,7 +28292,7 @@ paths:
         requests any number of records per page, up to 500 items limit.
 
 
-        Endpoint supports [paging](#section/basic-principles-of-working-with-api/Paging).
+        Endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - 'E-mail distribution lists'
       parameters:
@@ -28489,7 +28465,7 @@ paths:
         **For "created" action, we use `edit` change type.**
 
 
-        Endpoint supports [paging](#section/basic-principles-of-working-with-api/Paging).
+        Endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - 'E-mail distribution lists'
       parameters:
@@ -30772,7 +30748,7 @@ paths:
       operationId: getListOfQuantityDiscounts
       description: |-
         Returns a list of quantity discounts with basic info.
-        Supports [paging](#section/basic-principles-of-working-with-api/Paging).
+        Supports [Paging](#section/basic-principles/paging).
       tags:
         - 'Quantity discounts'
       parameters:
@@ -31560,9 +31536,7 @@ paths:
                 additionalProperties: false
       summary: 'List of articles'
       operationId: getListOfArticles
-      description: |-
-        Returns a list of articles with basic info. 
-        Supports [paging](#section/basic-principles-of-working-with-api/Paging)
+      description: 'Returns a list of articles with basic info. Supports [Paging](#section/basic-principles/paging)'
       tags:
         - Articles
       parameters:
@@ -33197,8 +33171,7 @@ paths:
         indexing).
 
 
-        See more about file upload in the [files section of
-        documentation](#section/Basic-principles-of-working-with-API/Files)
+        See more about [Files upload](#section/basic-principles/files-upload)
 
 
         See how [Asynchronous
@@ -33367,8 +33340,7 @@ paths:
         with current unique name and upload datetime.
 
 
-        See more about file upload in the [files section of
-        documentation](#section/Basic-principles-of-working-with-API/Files)
+        See more about [Files upload](#section/basic-principles/files-upload)
 
 
         In case of image upload, response tag is "image", any other file types has response key "file" as here:
