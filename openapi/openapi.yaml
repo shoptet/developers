@@ -314,7 +314,7 @@ info:
     If webhook is not registered, you will receive an error response with HTTP
     status code 403 and job won't be queued.
 
-    Webhook `job:finished` is also emitted when the job is failed so there is need to check the [Detail of job](#tag/job-endpoints/getjobdetail)
+    Webhook `job:finished` is also emitted when the job is failed so there is need to check the [Job detail](#tag/jobs/getjobdetail)
     to get the result of the job. If an error occurs during an asynchronous request, the job is automatically marked as
     failed 3 hours after its creation, and in this case, the `job:finished` webhook is not emitted.
 
@@ -324,11 +324,7 @@ info:
 
     Your software, therefore, shall not rely on either of these.
 
-    If some attributes are renamed or removed, you will be informed in an
-    additional
-
-    header - see also [API versioning](#section/Basic-principles-of-working-with-API/API-versioning) and [Deprecated header +
-    Sunset](#section/Basic-principles-of-working-with-API/Deprecated-header-+-Sunset).
+    If some attributes are renamed or removed, you will be informed in an additional header - see also  [Deprecated header + Sunset](#section/basic-principles/deprecated-header-+-sunset).
 
 
     ## Deprecated header + Sunset
@@ -407,7 +403,7 @@ info:
 
     * 423 - Locked - for update and some read request we apply locks, usually on
     an URL level, which should avoid
-      consistency problems possibly occuring from parallel updates. See [chapter about locks](#section/Basic-principles-of-working-with-API/Locks). Retry later,
+      consistency problems possibly occuring from parallel updates. See [Locks](#section/basic-principles/locks) section. Retry later,
       try to avoid parallel update requests.
 
     * 500 - General server error. Yes, this might happen to our software, too.
@@ -491,10 +487,10 @@ info:
     variant (which is filtered in list).
 
 
-    ## Files
+    ## Files upload
 
 
-    For files upload, there are [Files endpoints](#tag/Files).
+    For files upload, there are [Files](#tag/files) endpoints.
 
 
     The file is uploaded to a temporary storage which is not accessible
@@ -524,7 +520,7 @@ info:
     by the template and most templates use the same sizes. The list of provided
     cuts is given by
 
-    the [Image cuts](#section/Code-lists/Image-cuts) code list.
+    the [Image cuts](#section/code-lists/image-cuts) code list.
 
 
     The `/api/eshop?include=imageCuts` endpoint returns the `imageCuts` field in
@@ -812,7 +808,7 @@ info:
 
     ## URL address from endpoint Eshop info
 
-    See endpoint [Eshop info](#tag/Eshop)
+    See endpoint [Eshop info](#tag/eshop/geteshopinfo)
 
     Ident | Description
     ------| -----
@@ -1225,7 +1221,7 @@ tags:
       * `eshopId` - number of the e-shop, where the event happened
 
       * `event` - event which invoked the call (see code list
-      [Webhook event](#section/code-lists/webhook-event-types) types)
+      [Webhook event types](#section/code-lists/webhook-event-types))
 
       * `eventCreated` - accurate time, when the event happened
 
@@ -1264,7 +1260,7 @@ tags:
     description: |-
       Allows you to access the system measure unit. These units are convertible to
       each other and cannot be redefined or extended. For defining/extending your
-      own units use [Units](#units) in the **Settings** section.
+      own units use [Units](#tag/units) in the **Settings** section.
 paths:
   /api/eshop:
     get:
@@ -3240,7 +3236,7 @@ paths:
                                 - 'Pelle 1978'
                             type:
                               type: string
-                              description: 'product type (`product`, `bazar`...) - see also [Product type code list](#section/code-lists/Product-types)'
+                              description: 'product type (`product`, `bazar`...) - see also [Product types](#section/code-lists/product-types) code list'
                               examples:
                                 - product
                             url:
@@ -3249,7 +3245,7 @@ paths:
                                 - 'null'
                             visibility:
                               type: string
-                              description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility code list](#section/code-lists/Product-visibility)'
+                              description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility](#section/code-lists/product-visibility) code list'
                               examples:
                                 - normal
                             creationTime:
@@ -3623,7 +3619,7 @@ paths:
                         - bazar
                         - service
                         - product-set
-                      description: "Product type. Optional, default value 'product'. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product type code list](#section/code-lists/Product-types)"
+                      description: "Product type. Optional, default value 'product'. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product types](#section/code-lists/product-types) code list."
                       examples:
                         - product
                         - bazar
@@ -3639,7 +3635,7 @@ paths:
                         - block-unregistered
                         - cash-desk-only
                         - detail-only
-                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility code list](#section/code-lists/Product-visibility)'
+                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility](#section/code-lists/product-visibility) code list.'
                       examples:
                         - hidden
                     name:
@@ -4683,7 +4679,7 @@ paths:
                         - bazar
                         - service
                         - product-set
-                      description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product type code list](#section/code-lists/Product-types)"
+                      description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product types](#section/code-lists/product-types) code list."
                       examples:
                         - product
                         - bazar
@@ -4699,7 +4695,7 @@ paths:
                         - block-unregistered
                         - cash-desk-only
                         - detail-only
-                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility code list](#section/code-lists/Product-visibility)'
+                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility](#section/code-lists/product-visibility) code list.'
                       examples:
                         - hidden
                     name:
@@ -5504,7 +5500,7 @@ paths:
                         - bazar
                         - service
                         - product-set
-                      description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product type code list](#section/code-lists/Product-types)"
+                      description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product types](#section/code-lists/product-types) code list."
                       examples:
                         - product
                         - bazar
@@ -5520,7 +5516,7 @@ paths:
                         - block-unregistered
                         - cash-desk-only
                         - detail-only
-                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility code list](#section/code-lists/Product-visibility)'
+                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility](#section/code-lists/product-visibility) code list.'
                       examples:
                         - hidden
                     name:
@@ -7056,7 +7052,7 @@ paths:
                         - string
                         - 'null'
                       $ref: '#/components/schemas/typeFilename'
-                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as category image.'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as category image.'
                       examples:
                         - image.png
                     sortBefore:
@@ -7127,7 +7123,7 @@ paths:
                         - product-code-desc
                         - category-priority
                         - category-priority-desc
-                      description: 'defines how products are sorted in a category. See also code list [Classification of products in category](#section/code-lists/Sorting-of-products-in-category)'
+                      description: 'Defines how products are sorted in a category. See also [Sorting of products in category](#section/code-lists/sorting-of-products-in-category) code list.'
                       examples:
                         - alphabetically
                     similarProductsCategory:
@@ -7269,7 +7265,7 @@ paths:
                         - string
                         - 'null'
                       $ref: '#/components/schemas/typeFilename'
-                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as category image.'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as category image.'
                       examples:
                         - image.png
                     sortBefore:
@@ -7340,7 +7336,7 @@ paths:
                         - product-code-desc
                         - category-priority
                         - category-priority-desc
-                      description: 'defines how products are sorted in a category. See also code list [Classification of products in category](#section/code-lists/Sorting-of-products-in-category)'
+                      description: 'defines how products are sorted in a category; see also [Sorting of products in category](#section/code-lists/sorting-of-products-in-category) code list'
                       examples:
                         - alphabetically
                     similarProductsCategory:
@@ -12747,7 +12743,7 @@ paths:
                           - 106/BIL
                       currencyCode:
                         type: string
-                        description: 'Currency code. List of available currencies within the e-shop can be found in [/api/eshop](#tag/eshop/geteshopinfo) endpoint.'
+                        description: 'Currency code. List of available currencies within the e-shop can be found in [Eshop info](#tag/eshop/geteshopinfo) endpoint.'
                         examples:
                           - CZK
                       vatRate:
@@ -14033,7 +14029,7 @@ paths:
                       type: number
                       minimum: 1
                       maximum: 4
-                      description: 'billing method - see also [Billing method](#section/code-lists/Invoice-Billing-Methods). Optional.'
+                      description: 'Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Optional.'
                       examples:
                         - 2
                     clientIPAddress:
@@ -14384,7 +14380,7 @@ paths:
                           itemType:
                             type: string
                             minLength: 1
-                            description: 'item type. Mandatory field. See also code list [order item types](#section/code-lists/Types-of-order-items). `product` item type is min required. If `billing` type is present paymentMethodGuid must be provided. If `shipping` type is present shippingGuid must be provided.'
+                            description: 'Item type. Mandatory field. See also [Type of order items](#section/code-lists/types-of-order-items) code list. `product` item type is min required. If `billing` type is present paymentMethodGuid must be provided. If `shipping` type is present shippingGuid must be provided.'
                             examples:
                               - product
                           name:
@@ -15382,7 +15378,7 @@ paths:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'item type. Mandatory field. See also code list [order item types](#section/code-lists/Types-of-order-items). Only `product`, `product-set`, `service` or `discount-coupon` item type is allowed.'
+                      description: 'Item type. Mandatory field. See also [Types of order items](#section/code-lists/types-of-order-items) code list. Only `product`, `product-set`, `service` or `discount-coupon` item type is allowed.'
                       examples:
                         - product
                     code:
@@ -15696,7 +15692,7 @@ paths:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'item type. Mandatory field. See also code list [order item types](#section/code-lists/Types-of-order-items). Only `product`, `product-set`, `service` or `discount-coupon` item type is allowed.'
+                      description: 'Item type. Mandatory field; see also [Types of order items](#section/code-lists/types-of-order-items) code list. Only `product`, `product-set`, `service` or `discount-coupon` item type is allowed.'
                       examples:
                         - product
                     code:
@@ -17076,7 +17072,7 @@ paths:
                   properties:
                     statusId:
                       type: number
-                      description: 'new order status. The order statuses are specific for each e-shopand it is possible to gain these from the endpoint [E-shop info](#tag/eshop/geteshopinfo) with the `include=orderStatuses` parameter'
+                      description: 'New order status. The order statuses are specific for each e-shopand it is possible to gain these from the endpoint [Eshop info](#tag/eshop/geteshopinfo) with the `include=orderStatuses` parameter'
                       examples:
                         - -1
                     paid:
@@ -17088,7 +17084,7 @@ paths:
                         - true
                     billingMethodId:
                       type: number
-                      description: 'billing method - see also [code list for billing methods](#section/code-lists/Invoice-Billing-Methods).'
+                      description: 'billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list'
                       examples:
                         - 1
   '/api/orders/{code}/copy':
@@ -18415,7 +18411,7 @@ paths:
                       type:
                         - number
                         - 'null'
-                      description: "Id of [billing method](#section/code-lists/Invoice-Billing-Methods). Defaults to order's."
+                      description: "Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Defaults to order's."
                       examples:
                         - 1
                     proformaInvoiceCode:
@@ -19527,7 +19523,7 @@ paths:
                         - '1000.00'
                     currencyCode:
                       $ref: '#/components/schemas/typeCurrencyCode'
-                      description: 'currency code. List of available currencies within the e-shop can be found in [/api/eshop](#tag/eshop/geteshopinfo) endpoint.'
+                      description: 'Currency code. List of available currencies within the e-shop can be found in [Eshop info](#tag/eshop/geteshopinfo) endpoint.'
                       examples:
                         - CZK
                     varSymbol:
@@ -19557,7 +19553,7 @@ paths:
                         - 36534576
                     invoiceBillingMethodId:
                       type: integer
-                      description: 'billing method (can be `null`) - see also [Billing method](#section/code-lists/Invoice-Billing-Methods)'
+                      description: 'billing method identifier (can be `null`) - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list'
                       examples:
                         - 4
                     billBankAccount:
@@ -19786,7 +19782,7 @@ paths:
                         - 36534576
                     invoiceBillingMethodId:
                       type: integer
-                      description: 'billing method (can be `null`) - see also [Billing method](#section/code-lists/Invoice-Billing-Methods)'
+                      description: 'billing method identifier (can be `null`) - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list'
                       examples:
                         - 4
                     billBankAccount:
@@ -21144,7 +21140,7 @@ paths:
                         - 201323134
                     billingMethodId:
                       type: number
-                      description: "Id of [billing method](#section/code-lists/Invoice-Billing-Methods). Defaults to order's."
+                      description: "Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Defaults to order's."
                       examples:
                         - 1
                     orderCode:
@@ -21419,7 +21415,7 @@ paths:
                         - 201323134
                     billingMethodId:
                       type: number
-                      description: 'Id of [billing method](#section/code-lists/Invoice-Billing-Methods). Defaults to order.'
+                      description: 'Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Defaults to order.'
                       examples:
                         - 1
                     orderCode:
@@ -21618,7 +21614,7 @@ paths:
                         - 201323134
                     billingMethodId:
                       type: number
-                      description: 'Id of [billing method](#billing-methods-invoice). Optional.'
+                      description: 'Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Optional.'
                       examples:
                         - 1
                     orderCode:
@@ -26416,7 +26412,7 @@ paths:
                     properties:
                       event:
                         type: string
-                        description: 'event, see [webhook event types](#section/code-lists/Webhook-event-types)'
+                        description: 'event, see [Webhook event types](#section/code-lists/webhook-event-types) code list'
                         examples:
                           - 'order:create'
                           - 'order:update'
@@ -27167,7 +27163,7 @@ paths:
                                 - '40'
                             itemType:
                               type: string
-                              description: 'see also [Product type code list](#section/code-lists/Product-types)'
+                              description: 'see also [Product types](#section/code-lists/product-types) code list'
                               examples:
                                 - product
                             name:
@@ -31737,7 +31733,7 @@ paths:
                         - string
                         - 'null'
                       $ref: '#/components/schemas/typeFilename'
-                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as article image. When set to null, image will be removed.'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article image. When set to null, image will be removed.'
                       examples:
                         - image.png
                     sourceOgImageName:
@@ -31745,7 +31741,7 @@ paths:
                         - string
                         - 'null'
                       $ref: '#/components/schemas/typeFilename'
-                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as article open-graph image. When set to null, image will be removed.'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article open-graph image. When set to null, image will be removed.'
                       examples:
                         - image.png
       parameters:
@@ -32067,7 +32063,7 @@ paths:
                         - string
                         - 'null'
                       $ref: '#/components/schemas/typeFilename'
-                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as article image. When set to null, image will be removed.'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article image. When set to null, image will be removed.'
                       examples:
                         - image.png
                     sourceOgImageName:
@@ -32075,7 +32071,7 @@ paths:
                         - string
                         - 'null'
                       $ref: '#/components/schemas/typeFilename'
-                      description: 'Name of file in [API upload storage](#section/basic-principles-of-working-with-api/files) to be set as article open-graph image. When set to null, image will be removed.'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article open-graph image. When set to null, image will be removed.'
                       examples:
                         - image.png
     delete:
@@ -34359,7 +34355,7 @@ components:
             - 3
         name:
           type: string
-          description: 'designation of the billing method. See also [code list of billing methods](#section/code-lists/Invoice-Billing-Methods).'
+          description: 'designation of the billing method; see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list.'
           examples:
             - Cash
     itemPrice:
@@ -34643,7 +34639,7 @@ components:
             - 992801
         event:
           type: string
-          description: 'event, see [webhook event types](#section/code-lists/Webhook-event-types)'
+          description: 'event, see [Webhook event types](#section/code-lists/webhook-event-types) code list'
           examples:
             - 'order:create'
         url:
@@ -34690,7 +34686,7 @@ components:
             - 'https://myapplication.tld/orders.php'
         event:
           type: string
-          description: 'event, see [webhook event types](#section/code-lists/Webhook-event-types)'
+          description: 'event, see [Webhook event types](#section/code-lists/webhook-event-types) code list'
           examples:
             - 'order:create'
         eventCreated:
@@ -35895,7 +35891,7 @@ components:
           description: 'unique product indicator'
         type:
           type: string
-          description: 'product type (`product`, `bazar`...) - see also [Product type code list](#section/code-lists/Product-types)'
+          description: 'product type (`product`, `bazar`...) - see also [Product types](#section/code-lists/product-types) code list'
           examples:
             - product
         name:
@@ -35919,7 +35915,7 @@ components:
           description: 'product supplier'
         visibility:
           type: string
-          description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility code list](#section/code-lists/Product-visibility)'
+          description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility](#section/code-lists/product-visibility) code list'
           examples:
             - normal
         creationTime:
@@ -37062,7 +37058,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'defines, how products are sorted in a category. See also code list [Classification of products in category](#section/code-lists/Sorting-of-products-in-category)'
+          description: 'Defines, how products are sorted in a category. See also [Sorting of products in category](#section/code-lists/sorting-of-products-in-category) code list.'
           examples:
             - alphabetically
         catalogueMapping:
@@ -37127,14 +37123,14 @@ components:
             - '12345678901234'
         itemType:
           type: string
-          description: 'order item type (product, service...). See also [Code list of order item types](#section/code-lists/Types-of-order-items)'
+          description: 'Order item type (product, service...). See also [Types of order items](#section/code-lists/types-of-order-items) code list.'
           examples:
             - product
         productType:
           type:
             - string
             - 'null'
-          description: 'product type at the time of the order (product, product-set..). See also [Product type code list](#section/code-lists/Product-types) (can be `null`).'
+          description: 'Product type at the time of the order (product, product-set..). See also [Product types](#section/code-lists/product-types) code list (can be `null`).'
           examples:
             - product
         name:
@@ -37331,7 +37327,7 @@ components:
             - 1
         visibility:
           type: string
-          description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility code list](#section/code-lists/Product-visibility)'
+          description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility](#section/code-lists/product-visibility) code list'
           examples:
             - normal
         linkType:
@@ -38338,7 +38334,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
+          description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/vat-modes) code list'
           examples:
             - Normal
         invoiceCode:
@@ -38713,7 +38709,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
+          description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/vat-modes) code list'
           examples:
             - normal
     proofPaymentsForInvoice:
@@ -39394,7 +39390,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
+          description: 'VAT mode, for possible values see [VAT modes](#section/code-lists/vat-modes) code list'
           examples:
             - Normal
         billingMethod:
@@ -40274,7 +40270,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/VAT-modes)'
+          description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/vat-modes) code list'
           examples:
             - Normal
     invoice:
