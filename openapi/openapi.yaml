@@ -20723,7 +20723,7 @@ paths:
                 additionalProperties: false
       summary: 'List of credit notes'
       operationId: getListOfCreditNotes
-      description: 'The list of credit notes supports [paging](#paginator)'
+      description: 'The list of credit notes supports [Paging](#section/basic-principles/paging)'
       tags:
         - 'Credit notes'
       parameters:
