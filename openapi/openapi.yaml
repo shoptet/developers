@@ -34264,11 +34264,7 @@ components:
         - name
       properties:
         guid:
-          oneOf:
-            -
-              $ref: '#/components/schemas/typeGuidNullable'
-            -
-              type: 'null'
+          $ref: '#/components/schemas/typeGuidNullable'
           description: 'payment method identifier (can be `null`)'
           examples:
             - 1b02cb8e-d7b5-11e0-9a5c-feab5ed617ed
