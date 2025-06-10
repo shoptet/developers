@@ -23839,6 +23839,36 @@ paths:
             default: 'false'
         -
           $ref: '#/components/parameters/DefaultContentType'
+        -
+          name: sendRegistrationEmail
+          in: query
+          description: |-
+            If set to true, registration emails are sent to the customer. The
+            type of email depends on the `customerGroup` settings. If the group
+            requires verification, the customer receives an email indicating
+            that the registration is pending administrator approval (typically
+            for the `wholesale` group). Otherwise, the customer receives a
+            standard registration confirmation email.
+
+            If the customer group has email notifications enabled for the 
+            administrator, a copy of the email is also sent to them (again,
+            typically for the `wholesale` group).
+          required: false
+          example: 'false'
+          schema:
+            type: string
+            default: 'false'
+        -
+          name: language
+          in: query
+          description: |-
+            Specifies the language in which the email should be sent to the
+            customer, provided that `sendRegistrationEmail = true` and the
+            "Foreign Languages" module is enabled on the current e-shop.
+          required: false
+          example: cs
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -25737,7 +25767,7 @@ paths:
                                 - true
                             authRequired:
                               type: boolean
-                              description: 'whether authorization of new customer by eshop administrator is be required"'
+                              description: 'whether authorization of new customer by eshop administrator is be required'
                               examples:
                                 - true
                             registrationAllowed:
