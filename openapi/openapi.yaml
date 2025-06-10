@@ -17794,9 +17794,12 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              description: 'proforma invoice number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
+                              description: 'DEPRECATED - proforma invoice number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc. If this property is null, please check also proformaInvoiceCodes if there are more than one proforma invoice linked to this invoice.'
                               examples:
                                 - '2017000017'
+                            proformaInvoiceCodes:
+                              $ref: '#/components/schemas/proformaInvoiceCodes'
+                              description: 'List of linked proforma invoices'
                             orderCode:
                               type:
                                 - string
@@ -18312,10 +18315,157 @@ paths:
                         type: string
                         examples:
                           - O-2018000053-01
-  '/api/invoices/{code}/link-proof-payment':
+  '/api/invoices/{code}/link-proforma-invoice':
     patch:
       responses:
         200:
+          description: OK
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - invoice
+                    properties:
+                      invoice:
+                        $ref: '#/components/schemas/invoice'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            'application/json; charset=utf-8':
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invoice-not-found
+                    message: 'Invoice with code "201500006" does not exists.'
+                    instance: invoiceCode
+                  -
+                    errorCode: proforma-invoice-not-found
+                    message: 'Proforma invoice with code "2017100035" does not exists.'
+                    instance: '2017100035'
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+        409:
+          description: Conflict
+          content:
+            'application/json; charset=utf-8':
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: proforma-invoice-already-linked-to-invoice
+                    message: 'Proforma invoice with code "2024269999" is already linked to the invoice "2015000138".'
+                    instance: '2024269999'
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/json; charset=utf-8':
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: proforma-invoice-not-related-to-order
+                    message: 'Proforma invoice with code "2024269999" is not related to the order with code "2015000138".'
+                    instance: '2024269999'
+                  -
+                    errorCode: proforma-invoice-and-invoice-has-different-currency
+                    message: 'Proforma invoice with code "O-2017000017-01" is not in the same currency as the invoice "2017100013".'
+                    instance: O-2017000017-01
+                  -
+                    errorCode: proforma-invoice-only-one-linked-to-invoice
+                    message: 'Only one proforma invoice can be linked to the invoice.'
+                    instance: data.proformaInvoiceCodes
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Invoice link proforma invoices'
+      operationId: invoiceLinkProformaInvoices
+      description: |-
+        Linking proforma invoices to invoice. Proforma invoices must be related to the order, must be in same currency as the order, must be valid and cannot be linked to another invoice.
+        Important note: this endpoint allowed only one proforma linked to the invoice at this time. Once `proformaInvoiceCode` is sunset, more proforma invoices will be allowed to link to the invoice.
+        This endpoint has several sections, which are only sent when requested in the `include` parameter (see
+        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+
+        Value | Section
+        --------|------
+        `surchargeParameters`| Item surcharge parameters
+      tags:
+        - Invoices
+      parameters:
+        -
+          name: code
+          in: path
+          description: 'Code of the invoice'
+          required: true
+          example: '2018000053'
+          schema:
+            type: string
+        -
+          name: include
+          in: query
+          description: 'Sections to include'
+          required: false
+          example: surchargeParameters
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - proformaInvoiceCodes
+                  properties:
+                    proformaInvoiceCodes:
+                      type: array
+                      minItems: 1
+                      description: 'List of linked proforma invoices.'
+                      items:
+                        type: string
+                        description: 'Proforma invoice code. The proforma payment invoice be related to the order, must be in same currency as the order, must be valid and cannot be linked to another invoice.'
+                        examples:
+                          - '2024249998'
+                          - '2024249999'
+  '/api/invoices/{code}/link-proof-payment':
+    patch:
+      responses:
+        201:
           description: OK
           content:
             'application/json; charset=utf-8':
@@ -18428,7 +18578,7 @@ paths:
         -
           name: code
           in: path
-          description: 'Code of order'
+          description: 'Code of the invoice'
           required: true
           example: '2018000053'
           schema:
@@ -38587,6 +38737,13 @@ components:
           vatBreakdown:
             $ref: '#/components/schemas/proofPaymentVatBreakdown'
             description: 'breakdown of VAT (can be `null`)'
+    proformaInvoiceCodes:
+      type: array
+      items:
+        type: string
+        description: 'proforma invoice code'
+        examples:
+          - '2015000170'
     quantityDiscount:
       type: object
       additionalProperties: false
@@ -40141,9 +40298,13 @@ components:
           type:
             - string
             - 'null'
-          description: 'proforma invoice number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
+          description: 'DEPRECATED - proforma invoice number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
           examples:
             - '2017000017'
+          deprecated: true
+        proformaInvoiceCodes:
+          $ref: '#/components/schemas/proformaInvoiceCodes'
+          description: 'List of linked proforma invoices'
         orderCode:
           type:
             - string
