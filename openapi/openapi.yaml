@@ -33246,8 +33246,8 @@ paths:
             },
             "errors": [
                 {
-                    "errorCode": "file-upload-extension-mismatch",
-                    "message": "File extension png mismatch mime type image\/jpeg of uploaded file (correct should be jpg).",
+                    "errorCode": "file-upload-size-limit",
+                    "message": "Uploaded file size limit exceeded. Limit is 2 MB.",
                     "instance": "data[1]"
                 }
             ]
@@ -33387,14 +33387,6 @@ paths:
                       -
                         errorCode: file-upload-error
                         message: 'File upload failed.'
-                        instance: payload
-                file-upload-extension-mismatch:
-                  value:
-                    data: null
-                    errors:
-                      -
-                        errorCode: file-upload-extension-mismatch
-                        message: 'File extension jpg mismatch mime type image/png of uploaded file (correct should be png).'
                         instance: payload
                 file-upload-size-limit:
                   value:
