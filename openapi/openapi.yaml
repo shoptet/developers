@@ -13254,6 +13254,28 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "orderCodes" parameter. Expected max. 50 elements, but 55 given.'
+                    instance: orderCodes
+                  -
+                    errorCode: missing-parameter
+                    message: 'Missing value for parameter "orderCodes".'
+                    instance: orderCodes
       summary: 'List of orders'
       operationId: getListOfOrders
       description: |-
@@ -13270,9 +13292,9 @@ paths:
 
         The code (`code`) is the order identifier. Although this is usually a
         number, it is necessary to take into account that this might also
-        include
+        include letters, dash, etc.
 
-        letters, dash, etc.
+        Use `orderCodes` request parameter to get the list of specific orders. Order codes are separated by a comma. If you use this query parameter, other filters are not applied, and the set of particular orders is returned. Please note that this parameter **accepts max. 50 order codes in request parameter**.
       tags:
         - Orders
       parameters:
@@ -13380,6 +13402,15 @@ paths:
           description: |-
             Order source filtering according to source id. For more information,
             see List of order sources endpoint.
+          schema:
+            type: string
+        -
+          name: orderCodes
+          in: query
+          description: |-
+            Define the output set of orders. Use max. 50 order codes separated by a comma. No additional filters take
+            effect.
+          example: '2025000004,2025000002,2017000038,2017000025,2015000248'
           schema:
             type: string
         -
@@ -14466,6 +14497,28 @@ paths:
                         type: string
                   errors:
                     $ref: '#/components/schemas/Errors'
+        400:
+          description: 'Bad Request'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "orderCodes" parameter. Expected max. 50 elements, but 55 given.'
+                    instance: orderCodes
+                  -
+                    errorCode: missing-parameter
+                    message: 'Missing value for parameter "orderCodes".'
+                    instance: orderCodes
       summary: 'List of all orders'
       operationId: getListOfAllOrders
       description: |-
@@ -14495,6 +14548,8 @@ paths:
         `surchargeParameters` | Item surcharge parameters
         `productFlags`        | Item product flags
 
+        Use `orderCodes` request parameter to get the list of specific orders. Order codes are separated by a comma. If you use this query parameter, other filters are not applied, and the set of particular orders is returned. Please note that this parameter **accepts max. 50 order codes in request parameter**.
+
         Result file is compressed using GZIP.
       tags:
         - Orders
@@ -14505,6 +14560,15 @@ paths:
           description: |-
             Optional parts of response. Available values are
             `notes,images,shippingDetails,stockLocation,surchargeParameters`.
+          schema:
+            type: string
+        -
+          name: orderCodes
+          in: query
+          description: |-
+            Define the output set of orders. Use max. 50 order codes separated by a comma. No additional filters take
+            effect.
+          example: '2025000004,2025000002,2017000038,2017000025,2015000248'
           schema:
             type: string
         -
