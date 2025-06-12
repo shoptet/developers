@@ -3338,7 +3338,7 @@ paths:
         Returns a list of the e-shop's reviews. This endpoint is available only when the 'Rating' module is active. Also, the e-shop must have store ratings enabled in the administration settings.
         The endpoint supports [Paging](#section/basic-principles/paging).
       tags:
-        - Eshop
+        - Reviews
   /api/products:
     get:
       responses:
@@ -6318,7 +6318,7 @@ paths:
           description: |-
             If product's variant image reference should be removed. Default
             `false`.
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -6742,7 +6742,7 @@ paths:
           description: |-
             If product's variant image reference should be removed. Default
             `false`.
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -7532,14 +7532,14 @@ paths:
           name: deleteUsed
           in: query
           description: 'Allows deleting categories used by products if set to `true`'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
           name: deleteChildren
           in: query
           description: 'Allows deleting categories with children if set to `true`'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -13450,7 +13450,7 @@ paths:
           in: query
           description: 'Purchase order filtering, according to order status id.'
           schema:
-            type: string
+            type: number
         -
           name: shippingGuid
           in: query
@@ -13550,7 +13550,7 @@ paths:
             Order source filtering according to source id. For more information,
             see List of order sources endpoint.
           schema:
-            type: string
+            type: number
         -
           name: orderCodes
           in: query
@@ -13924,58 +13924,58 @@ paths:
           name: suppressDocumentGeneration
           in: query
           description: 'suppress the generation of linked documents.'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           name: suppressEmailSending
           in: query
           description: 'suppress sending the linked information e-mails.'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           name: suppressProductChecking
           in: query
           description: 'suppress the product existence check as per `code` and GUID'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           name: suppressStockMovements
           in: query
           description: 'suppress deduction of the products from stock'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           name: suppressHistoricalMandatoryFields
           in: query
           description: 'set the flag that disables mandatory fields checking'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           name: suppressHistoricalPaymentChecking
           in: query
           description: 'set the flag that `paymentMethodGuid` can be `null`'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           name: suppressHistoricalShippingChecking
           in: query
           description: 'set the flag that `shippingGuid` can be `null`'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -14723,7 +14723,7 @@ paths:
           in: query
           description: 'Purchase order filtering, according to order status id.'
           schema:
-            type: string
+            type: number
         -
           name: shippingGuid
           in: query
@@ -14823,7 +14823,7 @@ paths:
             Order source filtering according to source id. For more information,
             see List of order sources endpoint.
           schema:
-            type: string
+            type: number
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
@@ -15452,18 +15452,18 @@ paths:
           name: suppressProductChecking
           in: query
           description: 'suppress the product existence check as per `code` and GUID'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           name: suppressStockMovements
           in: query
           description: 'suppress deduction of the products from stock'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -15772,7 +15772,7 @@ paths:
           description: 'suppress the product existence check per GUID'
           example: true
           schema:
-            type: string
+            type: boolean
             default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -16690,7 +16690,7 @@ paths:
           name: system
           in: query
           description: 'allows filtering only system/non-system remarks'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -17132,26 +17132,26 @@ paths:
           name: suppressDocumentGeneration
           in: query
           description: 'suppress the generation of linked documents.'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           name: suppressEmailSending
           in: query
           description: 'suppress sending the linked information e-mails.'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           name: suppressSmsSending
           in: query
           description: 'suppress sending the linked information SMS messages.'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -18292,28 +18292,28 @@ paths:
           name: isValid
           in: query
           description: 'Filtering according to document validity'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
           name: hasTaxId
           in: query
           description: 'Filtering according to the presence of a TAX identification number'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
           name: hasVatId
           in: query
           description: 'Filtering according to the presence of a VAT identification number'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
           name: hasCompanyId
           in: query
           description: 'Filtering according to the presence of a company registration number'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -18461,10 +18461,10 @@ paths:
           description: |-
             suppress checking of existing invoices per order (allows multiple
             invoices per order)
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -18570,9 +18570,9 @@ paths:
           description: |-
             suppress checking of existing invoices per order (allows multiple
             invoices per order)
-          example: 'true'
+          example: true
           schema:
-            type: string
+            type: boolean
             default: 'false'
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -19400,14 +19400,14 @@ paths:
           name: isValid
           in: query
           description: 'Filtering according to document validity'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
           name: paid
           in: query
           description: 'Filtering according to if proforma invoice is paid'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -19744,7 +19744,7 @@ paths:
           in: query
           description: 'filtering according to proof payments validity. Optional.'
           required: false
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -19752,7 +19752,7 @@ paths:
           in: query
           description: 'filtering by proof payment closed/open'
           required: false
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -20341,7 +20341,7 @@ paths:
           name: isValid
           in: query
           description: 'Filtering according to document validity'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -20355,7 +20355,7 @@ paths:
           name: closed
           in: query
           description: 'Is the proof payment closed?'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -21238,7 +21238,7 @@ paths:
           name: hasProofPaymentCode
           in: query
           description: 'Export credit notes with or without proof payment codes only'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -21287,14 +21287,14 @@ paths:
           name: restocked
           in: query
           description: 'Export restocked or not restocked credit notes'
-          example: 'false'
+          example: false
           schema:
             type: boolean
         -
           name: isValid
           in: query
           description: 'Filtering according to document validity'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -22703,7 +22703,7 @@ paths:
           name: isValid
           in: query
           description: 'Filtering according to document validity'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -24082,10 +24082,10 @@ paths:
           in: query
           description: 'allows deletion of brand used by products if set to `true`'
           required: false
-          example: 'true'
+          example: true
           schema:
             type: boolean
-            default: 'false'
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/brands/batch:
@@ -24291,10 +24291,10 @@ paths:
             process for customers without all mandatory fields! However this can
             be useful for migration customers from older system without all
             necessary fields.
-          example: 'false'
+          example: false
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
         -
@@ -24312,10 +24312,10 @@ paths:
             administrator, a copy of the email is also sent to them (again,
             typically for the `wholesale` group).
           required: false
-          example: 'false'
+          example: false
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           name: language
           in: query
@@ -27070,7 +27070,7 @@ paths:
             flag that the notification was not delivered yet, and the number of
             attempts did not reach the maximum amount. The notification will be
             resent to the target URL
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -28942,7 +28942,7 @@ paths:
           name: reusable
           in: query
           description: 'is the discount coupon reusable?'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -29363,7 +29363,7 @@ paths:
           name: reusable
           in: query
           description: 'Is the discount coupon reusable?'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -29791,10 +29791,10 @@ paths:
           name: suppressOrderChecking
           in: query
           description: 'suppress checking if order exists.'
-          example: 'true'
+          example: true
           schema:
-            type: string
-            default: 'false'
+            type: boolean
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -31114,14 +31114,14 @@ paths:
           name: isActive
           in: query
           description: 'whether or not discount is active'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
           name: includeUnregisteredCustomers
           in: query
           description: 'whether or not discount is valid for unregistered customers'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -31400,14 +31400,14 @@ paths:
           name: isActive
           in: query
           description: 'whether or not discount is active'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
           name: includeUnregisteredCustomers
           in: query
           description: 'whether or not discount is valid for unregistered customers'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -32130,7 +32130,7 @@ paths:
           name: visible
           in: query
           description: 'Filtering according to document visibility'
-          example: 'true'
+          example: true
           schema:
             type: boolean
         -
@@ -32934,10 +32934,10 @@ paths:
           in: query
           description: 'allows deletion of article section that contains article(s) if set to `true`'
           required: false
-          example: 'true'
+          example: true
           schema:
             type: boolean
-            default: 'false'
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/pages:
