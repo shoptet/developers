@@ -18573,7 +18573,7 @@ paths:
           example: true
           schema:
             type: boolean
-            default: 'false'
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -21404,6 +21404,24 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        409:
+          description: Conflict
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: credit-note-cannot-be-edited
+                    message: 'Credit note with code \"0000000002\" cannot be edited.'
+                    instance: '0000000002'
         422:
           description: 'Unprocessable Entity'
           content:
@@ -21424,7 +21442,7 @@ paths:
                     instance: data.reasonRemark
       summary: 'Credit note update'
       operationId: updateCreditNote
-      description: ''
+      description: 'Please note that only unrestocked credit notes can be edited.'
       tags:
         - 'Credit notes'
       parameters:
@@ -21993,9 +22011,27 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        409:
+          description: Conflict
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: credit-note-cannot-be-edited
+                    message: 'Credit note with code \"2018000012\" cannot be edited.'
+                    instance: '2018000012'
       summary: 'Creation of credit note item'
       operationId: createCreditNoteItem
-      description: 'Creates a new credit note item to an existing credit note.'
+      description: 'Creates a new credit note item to an existing credit note. Please note that only unrestocked credit notes can be edited.'
       tags:
         - 'Credit notes'
       parameters:
@@ -22115,12 +22151,30 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        409:
+          description: Conflict
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: credit-note-cannot-be-edited
+                    message: 'Credit note with code \"2018000012\" cannot be edited.'
+                    instance: '2018000012'
       summary: 'Update of credit note item'
       operationId: updateCreditNoteItem
       description: |-
         Updates credit note item. It's not possible to change `productType`
         property and it's not possible to update credit note item of another
-        type then `product` or `product-set`.
+        type then `product` or `product-set`. Please note that only unrestocked credit notes can be edited.
       tags:
         - 'Credit notes'
       parameters:
