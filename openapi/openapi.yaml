@@ -13393,8 +13393,6 @@ paths:
                               description: 'flag, whether the order was paid. In addition to `true` a `false`, can also be `null`, if the payment status is unknown.'
                               examples:
                                 - true
-                            preAuthorization:
-                              $ref: '#/components/schemas/orderPreAuthorization'
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -40093,21 +40091,6 @@ components:
                     description: 'item value (can be `null`)'
                     examples:
                       - 'forwarder ID'
-        preAuthorization:
-          $ref: '#/components/schemas/orderPreAuthorization'
-    orderPreAuthorization:
-      type:
-        - object
-      required:
-        - hasPendingPreAuthorization
-        - preAuthorizationAmount
-      additionalProperties: false
-      properties:
-        hasPendingPreAuthorization:
-          type: boolean
-        preAuthorizationAmount:
-          $ref: '#/components/schemas/typePrice'
-          description: 'pre-authorization amount of the order. If null, the order is not pre-authorized. If not present, pre-authorization is not supported.'
     customer:
       type: object
       required:
