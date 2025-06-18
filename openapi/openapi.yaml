@@ -740,7 +740,7 @@ info:
     order:create | Order creation event | Number (`code`) of order
     order:delete | Order deleting event   | Number (`code`) of order
     order:update | Order change event. Throws `409 Conflict` when try to register simultaneously with `order:cancel` | Number (`code`) of order
-    orderHistoryRemarks:change | Order history remarks have been changed. Emitted when order remark is created or deleted | Order `ID`
+    orderHistoryRemarks:change | Order history remarks have been changed. Emitted when order remark is created or deleted | Number (`code`) of order
     orderStatusesList:change | Order status list change event. Emitted when order status is created, updated or deleted | Order status `ID`
     paymentMethod:change | Payment method change event | Payment method GUID
     proformaInvoice:create | Proforma invoice creation event | Number (`code`) of proforma invoice
