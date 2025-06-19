@@ -6455,7 +6455,7 @@ paths:
                           priority:
                             type: integer
                             minimum: 1
-                            maximum: 99999
+                            maximum: 65535
                             description: 'Image priority.'
                             examples:
                               - 100
@@ -6559,7 +6559,7 @@ paths:
                           priority:
                             type: integer
                             minimum: 1
-                            maximum: 99999
+                            maximum: 65535
                             description: 'Image priority.'
                             examples:
                               - 100
