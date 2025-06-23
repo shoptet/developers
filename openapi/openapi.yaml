@@ -7730,7 +7730,7 @@ paths:
       description: |-
         Using this endpoint you can update product priority within a category.
 
-        You can request multiple updates at once; the maximum is 200 updates per
+        You can request multiple updates at once; the maximum is 300 updates per
         request.
 
         In case of a partial failure, the response code will be `200 OK` and the
