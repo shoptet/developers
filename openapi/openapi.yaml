@@ -13826,34 +13826,34 @@ paths:
         - `externalCode` .. maxLength 255 characters
 
 
-        - `billingAddress.company` .. maxLength 100 characters
+        - `billingAddress.company` .. maxLength 255 characters
 
 
-        - `billingAddress.fullName` .. maxLength 100 characters
+        - `billingAddress.fullName` .. maxLength 255 characters
 
 
-        - `billingAddress.street` .. maxLength 100 characters
+        - `billingAddress.street` .. maxLength 255 characters
 
 
-        - `billingAddress.houseNumber` .. maxLength 16 characters
+        - `billingAddress.houseNumber` .. maxLength 255 characters
 
 
-        - `billingAddress.city` .. maxLength 100 characters
+        - `billingAddress.city` .. maxLength 255 characters
 
 
-        - `billingAddress.district` .. maxLength 64 characters
+        - `billingAddress.district` .. maxLength 255 characters
 
 
-        - `billingAddress.additional` .. maxLength 64 characters
+        - `billingAddress.additional` .. maxLength 255 characters
 
 
-        - `billingAddress.zip` .. maxLength 100 characters
+        - `billingAddress.zip` .. maxLength 255 characters
 
 
-        - `billingAddress.regionName` .. maxLength 128 characters
+        - `billingAddress.regionName` .. maxLength 255 characters
 
 
-        - `billingAddress.regionShortcut` .. maxLength 16 characters
+        - `billingAddress.regionShortcut` .. maxLength 255 characters
 
 
         - `billingAddress.companyId` .. maxLength 18 characters
@@ -13868,31 +13868,31 @@ paths:
         - `deliveryAddress.company` .. maxLength 255 characters
 
 
-        - `deliveryAddress.fullName` .. maxLength 64 characters
+        - `deliveryAddress.fullName` .. maxLength 255 characters
 
 
-        - `deliveryAddress.street` .. maxLength 100 characters
+        - `deliveryAddress.street` .. maxLength 255 characters
 
 
-        - `deliveryAddress.houseNumber` .. maxLength 16 characters
+        - `deliveryAddress.houseNumber` .. maxLength 255 characters
 
 
-        - `deliveryAddress.city` .. maxLength 100 characters
+        - `deliveryAddress.city` .. maxLength 255 characters
 
 
-        - `deliveryAddress.district` .. maxLength 64 characters
+        - `deliveryAddress.district` .. maxLength 255 characters
 
 
-        - `deliveryAddress.additional` .. maxLength 64 characters
+        - `deliveryAddress.additional` .. maxLength 255 characters
 
 
-        - `deliveryAddress.zip` .. maxLength 100 characters
+        - `deliveryAddress.zip` .. maxLength 255 characters
 
 
-        - `deliveryAddress.regionName` .. maxLength 128 characters
+        - `deliveryAddress.regionName` .. maxLength 255 characters
 
 
-        - `deliveryAddress.regionShortcut` .. maxLength 16 characters
+        - `deliveryAddress.regionShortcut` .. maxLength 255 characters
 
 
         - `notes.trackingNumber` .. maxLength 32 characters
@@ -14134,7 +14134,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'company name. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'Smith & Smith'
@@ -14142,7 +14142,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'customer name. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'John Doe'
@@ -14150,7 +14150,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: '(string, optional) - street of the customer. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'Main Street'
@@ -14158,7 +14158,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'Street, including street number. Optional, if necessary, to be divided to street and street number and saved in respective fields. Use if you only have the combined data. Usually, the `street` and `houseNumber` will not be needed (if they are used, however, they have priority).'
                           examples:
                             - 'Main Street 123'
@@ -14166,7 +14166,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 16
+                          maxLength: 255
                           description: 'street number. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - '123'
@@ -14174,7 +14174,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'City/Town. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'Flat Country'
@@ -14182,7 +14182,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 64
+                          maxLength: 255
                           description: 'County. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - Bohemia
@@ -14190,7 +14190,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 64
+                          maxLength: 255
                           description: 'Additional information for the address. Optional.'
                           examples:
                             - '3rd floor'
@@ -14198,7 +14198,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'ZIP or postal code. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - '123 00'
@@ -14213,7 +14213,7 @@ paths:
                             - string
                             - 'null'
                           minLength: 1
-                          maxLength: 128
+                          maxLength: 255
                           description: 'region. Optional.'
                           examples:
                             - 'Central Bohemia'
@@ -14222,7 +14222,7 @@ paths:
                             - string
                             - 'null'
                           minLength: 1
-                          maxLength: 16
+                          maxLength: 255
                           description: 'region abbreviation. Optional.'
                           examples:
                             - SC
@@ -14280,7 +14280,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              maxLength: 64
+                              maxLength: 255
                               description: 'customer name. Optional, if not set as mandatory item in shop settings.'
                               examples:
                                 - 'John Doe'
@@ -14288,13 +14288,13 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              maxLength: 100
+                              maxLength: 255
                               description: '(string, optional) - street for delivery. Optional, if not set as mandatory item in shop settings.'
                               examples:
                                 - 'Main Street'
                             streetWithNr:
                               type: string
-                              maxLength: 100
+                              maxLength: 255
                               description: 'Street, including street number. Optional, if necessary, to be divided to street and street number and saved in the respective fields. Use if you only have the combined data. Usually, `street` and `houseNumber` will not be needed (if they are used, however, they have priority).'
                               examples:
                                 - 'Main Street 123'
@@ -14302,7 +14302,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              maxLength: 16
+                              maxLength: 255
                               description: 'street number. Optional, if not set as mandatory item in shop settings.'
                               examples:
                                 - '123'
@@ -14310,7 +14310,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              maxLength: 100
+                              maxLength: 255
                               description: 'City/Town. Optional, if not set as mandatory item in shop settings.'
                               examples:
                                 - 'Flat Country'
@@ -14318,7 +14318,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              maxLength: 64
+                              maxLength: 255
                               description: 'County. Optional, if not set as mandatory item in shop settings.'
                               examples:
                                 - Bohemia
@@ -14326,7 +14326,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              maxLength: 64
+                              maxLength: 255
                               description: 'Additional information for the address. Optional.'
                               examples:
                                 - '3rd floor'
@@ -14334,7 +14334,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              maxLength: 100
+                              maxLength: 255
                               description: 'ZIP or postal code. Optional, if not set as mandatory item in shop settings.'
                               examples:
                                 - '123 00'
@@ -14349,7 +14349,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              maxLength: 128
+                              maxLength: 255
                               description: 'region. Optional.'
                               examples:
                                 - 'Central Bohemia'
@@ -14357,7 +14357,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              maxLength: 16
+                              maxLength: 255
                               description: 'region abbreviation. Optional.'
                               examples:
                                 - SC
@@ -15047,25 +15047,25 @@ paths:
 
         - `phone` .. maxLength 32 characters
 
-        - `billingAddress.company` .. maxLength 100 characters
+        - `billingAddress.company` .. maxLength 255 characters
 
-        - `billingAddress.fullName` .. maxLength 100 characters
+        - `billingAddress.fullName` .. maxLength 255 characters
 
-        - `billingAddress.street` .. maxLength 100 characters
+        - `billingAddress.street` .. maxLength 255 characters
 
-        - `billingAddress.houseNumber` .. maxLength 16 characters
+        - `billingAddress.houseNumber` .. maxLength 255 characters
 
-        - `billingAddress.city` .. maxLength 100 characters
+        - `billingAddress.city` .. maxLength 255 characters
 
-        - `billingAddress.district` .. maxLength 64 characters
+        - `billingAddress.district` .. maxLength 255 characters
 
-        - `billingAddress.additional` .. maxLength 64 characters
+        - `billingAddress.additional` .. maxLength 255 characters
 
-        - `billingAddress.zip` .. maxLength 100 characters
+        - `billingAddress.zip` .. maxLength 255 characters
 
-        - `billingAddress.regionName` .. maxLength 128 characters
+        - `billingAddress.regionName` .. maxLength 255 characters
 
-        - `billingAddress.regionShortcut` .. maxLength 16 characters
+        - `billingAddress.regionShortcut` .. maxLength 255 characters
 
         - `billingAddress.companyId` .. maxLength 18 characters
 
@@ -15075,23 +15075,23 @@ paths:
 
         - `deliveryAddress.company` .. maxLength 255 characters
 
-        - `deliveryAddress.fullName` .. maxLength 64 characters
+        - `deliveryAddress.fullName` .. maxLength 255 characters
 
-        - `deliveryAddress.street` .. maxLength 100 characters
+        - `deliveryAddress.street` .. maxLength 255 characters
 
-        - `deliveryAddress.houseNumber` .. maxLength 16 characters
+        - `deliveryAddress.houseNumber` .. maxLength 255 characters
 
-        - `deliveryAddress.city` .. maxLength 100 characters
+        - `deliveryAddress.city` .. maxLength 255 characters
 
-        - `deliveryAddress.district` .. maxLength 64 characters
+        - `deliveryAddress.district` .. maxLength 255 characters
 
-        - `deliveryAddress.additional` .. maxLength 64 characters
+        - `deliveryAddress.additional` .. maxLength 255 characters
 
-        - `deliveryAddress.zip` .. maxLength 100 characters
+        - `deliveryAddress.zip` .. maxLength 255 characters
 
-        - `deliveryAddress.regionName` .. maxLength 128 characters
+        - `deliveryAddress.regionName` .. maxLength 255 characters
 
-        - `deliveryAddress.regionShortcut` .. maxLength 16 characters
+        - `deliveryAddress.regionShortcut` .. maxLength 255 characters
       tags:
         - Orders
       parameters:
@@ -15167,7 +15167,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'company name. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'Smith & Smith'
@@ -15175,7 +15175,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'customer name. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'John Doe'
@@ -15183,7 +15183,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: '(string, optional) - street of the customer. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'Main Street'
@@ -15191,7 +15191,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 16
+                          maxLength: 255
                           description: 'street number. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - '123'
@@ -15199,7 +15199,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'City/Town. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'Flat Country'
@@ -15207,7 +15207,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 64
+                          maxLength: 255
                           description: 'County. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - Bohemia
@@ -15215,7 +15215,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 64
+                          maxLength: 255
                           description: 'Additional information for the address. Optional.'
                           examples:
                             - '3rd floor'
@@ -15223,7 +15223,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'ZIP or postal code. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - '123 00'
@@ -15238,7 +15238,7 @@ paths:
                             - string
                             - 'null'
                           minLength: 1
-                          maxLength: 128
+                          maxLength: 255
                           description: 'region. Optional.'
                           examples:
                             - 'Central Bohemia'
@@ -15247,7 +15247,7 @@ paths:
                             - string
                             - 'null'
                           minLength: 1
-                          maxLength: 16
+                          maxLength: 255
                           description: 'region abbreviation. Optional.'
                           examples:
                             - SC
@@ -15296,7 +15296,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 64
+                          maxLength: 255
                           description: 'customer name. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'John Doe'
@@ -15304,7 +15304,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: '(string, optional) - street for delivery. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'Main Street'
@@ -15312,7 +15312,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 16
+                          maxLength: 255
                           description: 'street number. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - '123'
@@ -15320,7 +15320,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'City/Town. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - 'Flat Country'
@@ -15328,7 +15328,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 64
+                          maxLength: 255
                           description: 'County. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - Bohemia
@@ -15336,7 +15336,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 64
+                          maxLength: 255
                           description: 'Additional information for the address. Optional.'
                           examples:
                             - '3rd floor'
@@ -15344,7 +15344,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 100
+                          maxLength: 255
                           description: 'ZIP or postal code. Optional, if not set as mandatory item in shop settings.'
                           examples:
                             - '123 00'
@@ -15358,7 +15358,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 128
+                          maxLength: 255
                           description: 'region. Optional.'
                           examples:
                             - 'Central Bohemia'
@@ -15366,7 +15366,7 @@ paths:
                           type:
                             - string
                             - 'null'
-                          maxLength: 16
+                          maxLength: 255
                           description: 'region abbreviation. Optional.'
                           examples:
                             - SC
@@ -23783,7 +23783,7 @@ paths:
                         - 'null'
                       minLength: 1
                       maxLength: 100
-                      description: 'GPSR, contect email'
+                      description: 'GPSR, contact email'
                     europeanResellerPostalAddress:
                       type:
                         - string
@@ -23996,7 +23996,7 @@ paths:
                         - 'null'
                       minLength: 1
                       maxLength: 100
-                      description: 'GPSR, contect email'
+                      description: 'GPSR, contact email'
                     europeanResellerPostalAddress:
                       type:
                         - string
@@ -25354,7 +25354,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 64
+                      maxLength: 255
                       description: 'full name (can be `null`)'
                       examples:
                         - 'John Lard'
@@ -25372,7 +25372,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 100
+                      maxLength: 255
                       description: 'street (can be `null`)'
                       examples:
                         - 'Lard street'
@@ -25381,7 +25381,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 16
+                      maxLength: 255
                       description: 'house number (can be `null`)'
                       examples:
                         - '5647'
@@ -25390,7 +25390,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 100
+                      maxLength: 255
                       description: 'city/town (can be `null`)'
                       examples:
                         - Čelákovice
@@ -25399,7 +25399,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 64
+                      maxLength: 255
                       description: 'region (can be `null`)'
                       examples:
                         - Prague-East
@@ -25408,8 +25408,8 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 64
-                      description: 'additonal info (can be `null`)'
+                      maxLength: 255
+                      description: 'additional info (can be `null`)'
                       examples:
                         - Arcade
                     zip:
@@ -25417,7 +25417,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 100
+                      maxLength: 255
                       description: 'ZIP/postal code (can be `null`)'
                       examples:
                         - '25088'
@@ -25430,6 +25430,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
+                      maxLength: 255
                       description: 'region name (can be `null`)'
                       examples:
                         - 'Central Bohemia'
@@ -25551,7 +25552,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 64
+                      maxLength: 255
                       description: 'full name (can be `null`)'
                       examples:
                         - 'John Lard'
@@ -25569,7 +25570,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 100
+                      maxLength: 255
                       description: 'street (can be `null`)'
                       examples:
                         - 'Lard street'
@@ -25578,7 +25579,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 16
+                      maxLength: 255
                       description: 'house number (can be `null`)'
                       examples:
                         - '5647'
@@ -25587,7 +25588,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 100
+                      maxLength: 255
                       description: 'city/town (can be `null`)'
                       examples:
                         - Čelákovice
@@ -25596,7 +25597,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 64
+                      maxLength: 255
                       description: 'region (can be `null`)'
                       examples:
                         - Prague-East
@@ -25605,8 +25606,8 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 64
-                      description: 'additonal info (can be `null`)'
+                      maxLength: 255
+                      description: 'additional info (can be `null`)'
                       examples:
                         - Arcade
                     zip:
@@ -25614,7 +25615,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
-                      maxLength: 100
+                      maxLength: 255
                       description: 'ZIP/postal code (can be `null`)'
                       examples:
                         - '25088'
@@ -25627,6 +25628,7 @@ paths:
                         - string
                         - 'null'
                       minLength: 1
+                      maxLength: 255
                       description: 'region name (can be `null`)'
                       examples:
                         - 'Central Bohemia'
@@ -34945,7 +34947,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'GPSR, contect email'
+          description: 'GPSR, contact email'
         europeanResellerPostalAddress:
           type:
             - string
@@ -35402,7 +35404,7 @@ components:
             - string
             - 'null'
           minLength: 1
-          maxLength: 100
+          maxLength: 255
           description: 'company (can be `null`)'
           examples:
             - 'Lard shop'
@@ -35411,7 +35413,7 @@ components:
             - string
             - 'null'
           minLength: 1
-          maxLength: 100
+          maxLength: 255
           description: 'full name (can be `null`)'
           examples:
             - 'John Lard'
@@ -35420,7 +35422,7 @@ components:
             - string
             - 'null'
           minLength: 1
-          maxLength: 100
+          maxLength: 255
           description: 'street (can be `null`)'
           examples:
             - 'Lard street'
@@ -35429,7 +35431,7 @@ components:
             - string
             - 'null'
           minLength: 1
-          maxLength: 16
+          maxLength: 255
           description: 'house number (can be `null`)'
           examples:
             - '123'
@@ -35438,7 +35440,7 @@ components:
             - string
             - 'null'
           minLength: 1
-          maxLength: 100
+          maxLength: 255
           description: 'city/town (can be `null`)'
           examples:
             - 'Lard city'
@@ -35447,7 +35449,7 @@ components:
             - string
             - 'null'
           minLength: 1
-          maxLength: 64
+          maxLength: 255
           description: 'region (can be `null`)'
           examples:
             - Prague-East
@@ -35456,7 +35458,7 @@ components:
             - string
             - 'null'
           minLength: 1
-          maxLength: 64
+          maxLength: 255
           description: 'additional address information (can be `null`)'
           examples:
             - '4. floor'
@@ -35465,7 +35467,7 @@ components:
             - string
             - 'null'
           minLength: 1
-          maxLength: 30
+          maxLength: 255
           description: 'ZIP or postal code (can be `null`)'
           examples:
             - '120 00'
@@ -35480,7 +35482,7 @@ components:
             - string
             - 'null'
           minLength: 1
-          maxLength: 128
+          maxLength: 255
           description: 'region name (can be `null`)'
           examples:
             - 'Capital city'
@@ -35579,7 +35581,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'additonal info (can be `null`)'
+          description: 'additional info (can be `null`)'
           examples:
             - Arcade
         zip:
