@@ -3510,6 +3510,40 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "productCodes" parameter. Expected max. 50 elements, but 55 given.'
+                    instance: productCodes
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "productGuids" parameter. Expected max. 50 elements, but 55 given.'
+                    instance: productGuids
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "productCodes" parameter. You can use "productCodes" or "productGuids", but not both.'
+                    instance: productCodes
+                  -
+                    errorCode: missing-parameter
+                    message: 'Missing value for parameter "productCodes".'
+                    instance: productCodes
+                  -
+                    errorCode: missing-parameter
+                    message: 'Missing value for parameter "productGuids".'
+                    instance: productGuids
       summary: 'List of products'
       operationId: getListOfProducts
       description: |-
@@ -3525,6 +3559,8 @@ paths:
 
 
         Please note it is better to use List of all products endpoint for getting all products from eshop.
+
+        Use `productCodes` or `productGuids` request parameter to get the list of specific products. Product codes/GUIDs are separated by a comma. If you use this query parameter, other filters are not applied, and the set of particular products is returned. Please note that these parameters **accepts max. 50 product codes/GUIDs in request parameter** and cannot be combined.
       tags:
         - Products
       parameters:
@@ -3600,6 +3636,24 @@ paths:
           in: query
           description: 'optional parts of response'
           example: images
+          schema:
+            type: string
+        -
+          name: productCodes
+          in: query
+          description: |-
+            Define the output set of products. Use max. 50 product codes separated by a comma. No additional filters take
+            effect. Cannot be combined with `productGuids` query parameter.
+          example: '15/ZLU,15/ZEL,27/XL,33/FIA,DS53437473,428'
+          schema:
+            type: string
+        -
+          name: productGuids
+          in: query
+          description: |-
+            Define the output set of products. Use max. 50 product GUIDs separated by a comma. No additional filters take
+            effect. Cannot be combined with `productCodes` query parameter.
+          example: '356eb81e-d966-11e0-b04f-57a43310b768,519d8f84-1609-11f0-bcf6-06999863e34a,519d8f84-1609-11f0-bcf6-06999863e34a'
           schema:
             type: string
         -
@@ -4429,6 +4483,40 @@ paths:
                         type: string
                   errors:
                     $ref: '#/components/schemas/Errors'
+        400:
+          description: 'Bad Request'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "productCodes" parameter. Expected max. 50 elements, but 55 given.'
+                    instance: productCodes
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "productGuids" parameter. Expected max. 50 elements, but 55 given.'
+                    instance: productGuids
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "productCodes" parameter. You can use "productCodes" or "productGuids", but not both.'
+                    instance: productCodes
+                  -
+                    errorCode: missing-parameter
+                    message: 'Missing value for parameter "productCodes".'
+                    instance: productCodes
+                  -
+                    errorCode: missing-parameter
+                    message: 'Missing value for parameter "productGuids".'
+                    instance: productGuids
         403:
           description: Forbidden
           content:
@@ -4487,6 +4575,9 @@ paths:
         relatedFiles          | The response will also contain related files.
         perStockAmounts       | The response will also contain amounts/claims per individual stocks. Requires the "stock" module to be enabled on the current e-shop.
         perPricelistPrices    | The response will also contain prices per individual price lists.
+
+        Use `productCodes` or `productGuids` request parameter to get the list of specific products. Product codes/GUIDs are separated by a comma. If you use this query parameter, other filters are not applied, and the set of particular products is returned. Please note that these parameters **accepts max. 50 product codes/GUIDs in request parameter** and cannot be combined.
+
         Result file is compressed using GZIP.
       tags:
         - Products
@@ -4496,6 +4587,24 @@ paths:
           in: query
           description: 'Optional parts of response'
           example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,recyclingFee,consumptionTax,warranty,sortVariants,gifts,alternativeProducts,relatedProducts,relatedVideos,relatedFiles,perStockAmounts,perPricelistPrices'
+          schema:
+            type: string
+        -
+          name: productCodes
+          in: query
+          description: |-
+            Define the output set of products. Use max. 50 product codes separated by a comma. No additional filters take
+            effect. Cannot be combined with `productGuids` query parameter.
+          example: '15/ZLU,15/ZEL,27/XL,33/FIA,DS53437473,428'
+          schema:
+            type: string
+        -
+          name: productGuids
+          in: query
+          description: |-
+            Define the output set of products. Use max. 50 product GUIDs separated by a comma. No additional filters take
+            effect. Cannot be combined with `productCodes` query parameter.
+          example: '356eb81e-d966-11e0-b04f-57a43310b768,519d8f84-1609-11f0-bcf6-06999863e34a,519d8f84-1609-11f0-bcf6-06999863e34a'
           schema:
             type: string
         -
