@@ -19145,7 +19145,7 @@ paths:
       operationId: downloadInvoiceAsIsdoc
       description: |-
         You can request the invoice as ISDOC file, response will be as
-        application/octet-stream. You can download pdf documents
+        application/octet-stream. You can download the documents
         only one-by-one for every e-shop. Parallel requests end with `423
         Locked` error.
       tags:
@@ -20946,6 +20946,69 @@ paths:
           description: ''
           required: true
           example: P-2014000004-01
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/proof-payments/{code}/isdoc':
+    get:
+      responses:
+        200:
+          description: OK
+        404:
+          description: 'Not Found'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: proof-payments-not-found
+                    message: 'Proof payment with code "P-2015000248-01" not found.'
+                    instance: P-2015000248-01
+        500:
+          description: 'Internal Server Error'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: document-not-generated
+                    message: |-
+                      Error while getting document type "proofPayment" with code
+                      "P-2015000248-01".
+                    instance: P-2015000248-01
+      summary: 'Download proof payment as ISDOC'
+      operationId: downloadProofPaymentAsIsdoc
+      description: |-
+        You can request the proof payment as ISDOC file, response will be as
+        application/octet-stream. You can download the documents
+        only one-by-one for every e-shop. Parallel requests end with `423
+        Locked` error.
+      tags:
+        - 'Proof payments'
+      parameters:
+        -
+          name: code
+          in: path
+          description: ''
+          required: true
+          example: P-2015000248-01
           schema:
             type: string
         -
