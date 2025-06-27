@@ -3390,6 +3390,8 @@ paths:
                               type:
                                 - string
                                 - 'null'
+                              examples:
+                                - 'https://www.your-eshop.cz/pelle-1978'
                             visibility:
                               type: string
                               description: 'visibility of product (`normal`, `hidden` ...) - see also [Product visibility](#section/code-lists/product-visibility) code list'
@@ -4017,6 +4019,8 @@ paths:
                             description: 'Product filtering parameter values.'
                             items:
                               type: string
+                            examples:
+                              - Action
                     surchargeParameters:
                       type: array
                       minItems: 1
@@ -5126,6 +5130,8 @@ paths:
                             description: 'Product filtering parameter values.'
                             items:
                               type: string
+                            examples:
+                              - Action
                     surchargeParameters:
                       type: array
                       description: 'Product surcharge parameters. Not allowed for products with multiple tax classes.'
@@ -5938,6 +5944,8 @@ paths:
                             description: 'Product filtering parameter values.'
                             items:
                               type: string
+                            examples:
+                              - Action
                     surchargeParameters:
                       type: array
                       description: 'Product surcharge parameters. Not allowed for products with multiple tax classes.'
@@ -6320,9 +6328,13 @@ paths:
                             seoName:
                               type: string
                               description: 'file name modified for SEO - a short label is attached.'
+                              examples:
+                                - 100_purple-apple.jpg
                             cdnName:
                               type: string
                               description: 'same as `seoName` with attached hashed last image change time. `name`, `seoName` and `cdnName` can be entered in the URL - redirect will deliver the same image.'
+                              examples:
+                                - '100_purple-apple.jpg?59393c3a'
                             isMainImage:
                               type: boolean
                   errors:
@@ -6662,9 +6674,9 @@ paths:
                             type: string
                             minLength: 1
                             maxLength: 255
-                            description: 'Image url.'
+                            description: 'URL of the image.'
                             examples:
-                              - 'https://cdn.myshoptet.com/cokolada.jpg'
+                              - 'https://www.your-eshop.com/cokolada.jpg'
                           priority:
                             type: integer
                             minimum: 1
@@ -6775,7 +6787,7 @@ paths:
                             maxLength: 255
                             description: 'URL of the image'
                             examples:
-                              - 'https://cdn.myshoptet.com/cokolada.jpg'
+                              - 'https://www.your-eshop.com/cokolada.jpg'
                           priority:
                             type: integer
                             minimum: 1
@@ -23951,6 +23963,8 @@ paths:
                       minLength: 1
                       maxLength: 65535
                       description: 'GPSR, postal address'
+                      examples:
+                        - 'Chocolate Factory, 1234 Candy Lane, Sweet City, SC 56789'
                     contactEmail:
                       type:
                         - string
@@ -23958,6 +23972,8 @@ paths:
                       minLength: 1
                       maxLength: 100
                       description: 'GPSR, contact email'
+                      examples:
+                        - willywonka@shoptet.cz
                     europeanResellerPostalAddress:
                       type:
                         - string
@@ -23965,6 +23981,8 @@ paths:
                       minLength: 1
                       maxLength: 65535
                       description: 'GPSR, european reseller postal address'
+                      examples:
+                        - 'Chocolate Factory, 1234 Candy Lane, Sweet City, SC 56789'
                     europeanResellerContactEmail:
                       type:
                         - string
@@ -23972,6 +23990,8 @@ paths:
                       minLength: 1
                       maxLength: 100
                       description: 'GPSR, reseller contact email'
+                      examples:
+                        - europeanreseller@shoptet.cz
                     manufacturingCompanyName:
                       type:
                         - string
@@ -23979,6 +23999,8 @@ paths:
                       minLength: 1
                       maxLength: 255
                       description: 'GPSR, manufacturing company name'
+                      examples:
+                        - 'Shoptet a.s.'
                     europeanResellerManufacturingCompanyName:
                       type:
                         - string
@@ -23986,6 +24008,8 @@ paths:
                       minLength: 1
                       maxLength: 255
                       description: 'GPSR, Reseller manufacturing company name'
+                      examples:
+                        - 'Shoptet a.s.'
                     showInCategoriesMenu:
                       type: boolean
                       description: 'Is this brand shown in categories menu? Default is false'
@@ -24164,6 +24188,8 @@ paths:
                       minLength: 1
                       maxLength: 65535
                       description: 'GPSR, postal address'
+                      examples:
+                        - 'Chocolate Factory, 1234 Candy Lane, Sweet City, SC 56789'
                     contactEmail:
                       type:
                         - string
@@ -24171,6 +24197,8 @@ paths:
                       minLength: 1
                       maxLength: 100
                       description: 'GPSR, contact email'
+                      examples:
+                        - willywonka@shoptet.cz
                     europeanResellerPostalAddress:
                       type:
                         - string
@@ -24178,6 +24206,8 @@ paths:
                       minLength: 1
                       maxLength: 65535
                       description: 'GPSR, european reseller postal address'
+                      examples:
+                        - 'Chocolate Factory, 1234 Candy Lane, Sweet City, SC 56789'
                     europeanResellerContactEmail:
                       type:
                         - string
@@ -24185,6 +24215,8 @@ paths:
                       minLength: 1
                       maxLength: 100
                       description: 'GPSR, reseller contact email'
+                      examples:
+                        - europeanreseller@shoptet.cz
                     manufacturingCompanyName:
                       type:
                         - string
@@ -24192,6 +24224,8 @@ paths:
                       minLength: 1
                       maxLength: 255
                       description: 'GPSR, manufacturing company name'
+                      examples:
+                        - 'Shoptet a.s.'
                     europeanResellerManufacturingCompanyName:
                       type:
                         - string
@@ -24199,6 +24233,8 @@ paths:
                       minLength: 1
                       maxLength: 255
                       description: 'GPSR, Reseller manufacturing company name'
+                      examples:
+                        - 'Shoptet a.s.'
                     showInCategoriesMenu:
                       type: boolean
                       description: 'Is this brand shown in categories menu?'
@@ -35093,11 +35129,14 @@ components:
             - 1b02cb8e-d7b5-11e0-9a5c-feab5ed617ed
         name:
           type: string
-        indexName:
-          type: string
           description: 'Name of brand'
           examples:
             - 'Willy Wonka'
+        indexName:
+          type: string
+          description: 'Unique index name of brand'
+          examples:
+            - willy-wonka
         description:
           type:
             - string
@@ -35117,31 +35156,43 @@ components:
             - string
             - 'null'
           description: 'GPSR, postal address'
+          examples:
+            - 'Chocolate Factory, 1234 Candy Lane, Sweet City, SC 56789'
         contactEmail:
           type:
             - string
             - 'null'
           description: 'GPSR, contact email'
+          examples:
+            - willywonka@shoptet.cz
         europeanResellerPostalAddress:
           type:
             - string
             - 'null'
           description: 'GPSR, european reseller postal address'
+          examples:
+            - 'Chocolate Factory, 1234 Candy Lane, Sweet City, SC 56789'
         europeanResellerContactEmail:
           type:
             - string
             - 'null'
           description: 'GPSR, reseller contact email'
+          examples:
+            - europeanreseller@shoptet.cz
         manufacturingCompanyName:
           type:
             - string
             - 'null'
           description: 'GPSR, manufacturing company name'
+          examples:
+            - 'Shoptet a.s.'
         europeanResellerManufacturingCompanyName:
           type:
             - string
             - 'null'
           description: 'GPSR, reseller manufacturing company name'
+          examples:
+            - 'Shoptet a.s.'
         showInCategoriesMenu:
           type: boolean
           description: 'Is this brand shown in categories menu?'
@@ -36857,6 +36908,8 @@ components:
                   - string
                   - 'null'
                 description: "main image of variant (if set, otherwise the product's main image is to be used)."
+                examples:
+                  - 1.png
               isProductDefaultImage:
                 type: boolean
                 description: 'Determines whether the default product image is given (true) or the product variant image (false).'
