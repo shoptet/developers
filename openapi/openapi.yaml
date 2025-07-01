@@ -4704,6 +4704,41 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+  /api/products/snapshot/pricelists:
+    get:
+      responses:
+        202:
+          description: Accepted
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'List of all products and pricelist prices'
+      operationId: getListOfAllProductsAndPricelistPrices
+      description: |-
+        Using this endpoint, you can get list of all products with basic data such as  product guid, id, code and its prices across all pricelists.
+        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
+        Result file is compressed using GZIP.
+      tags:
+        - Products
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      x-shoptet-snapshot-endpoint: true
   '/api/products/{guid}':
     get:
       responses:
