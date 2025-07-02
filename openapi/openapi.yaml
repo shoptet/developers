@@ -1268,7 +1268,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -2325,7 +2325,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -2583,7 +2583,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -3054,7 +3054,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -3198,7 +3198,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -3311,7 +3311,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -3515,7 +3515,7 @@ paths:
         400:
           description: 'Bad Request'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -3688,7 +3688,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -3709,7 +3709,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -3733,7 +3733,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4269,7 +4269,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4284,7 +4284,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4308,7 +4308,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4328,7 +4328,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4470,7 +4470,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4490,7 +4490,7 @@ paths:
         400:
           description: 'Bad Request'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4524,7 +4524,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4710,7 +4710,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4745,7 +4745,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4756,7 +4756,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4831,7 +4831,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4846,7 +4846,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -4870,7 +4870,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -5418,7 +5418,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -5433,7 +5433,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -5453,7 +5453,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -5500,7 +5500,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -5584,7 +5584,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -5595,7 +5595,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -5643,7 +5643,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -5658,7 +5658,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -5682,7 +5682,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -6232,7 +6232,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -6247,7 +6247,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -6265,7 +6265,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -6314,7 +6314,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -6415,7 +6415,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -6484,7 +6484,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -6625,7 +6625,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -6731,7 +6731,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -6840,7 +6840,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -6907,7 +6907,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7003,7 +7003,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7204,7 +7204,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7240,7 +7240,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7395,7 +7395,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7428,7 +7428,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7589,7 +7589,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7605,7 +7605,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7625,7 +7625,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7704,7 +7704,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7788,7 +7788,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7847,7 +7847,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7862,7 +7862,7 @@ paths:
         400:
           description: 'Bad Request'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -7941,7 +7941,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -8076,7 +8076,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -8208,7 +8208,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -8282,7 +8282,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -8382,7 +8382,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -8488,7 +8488,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -8523,7 +8523,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -8598,7 +8598,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -8736,7 +8736,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -8845,7 +8845,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -9068,7 +9068,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -9180,7 +9180,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -9363,7 +9363,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -9528,7 +9528,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -9563,7 +9563,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -9605,7 +9605,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -9768,7 +9768,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -9857,7 +9857,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10003,7 +10003,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10088,7 +10088,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10236,7 +10236,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10339,7 +10339,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10374,7 +10374,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10416,7 +10416,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10561,7 +10561,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10655,7 +10655,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10775,7 +10775,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10851,7 +10851,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -10971,7 +10971,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11065,7 +11065,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11100,7 +11100,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11142,7 +11142,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11274,7 +11274,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11297,7 +11297,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11329,7 +11329,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11344,7 +11344,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -11362,7 +11362,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -11428,7 +11428,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11443,7 +11443,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -11461,7 +11461,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -11479,7 +11479,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -11549,7 +11549,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11565,7 +11565,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -11602,7 +11602,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11636,7 +11636,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11699,7 +11699,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11755,7 +11755,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11824,7 +11824,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11898,7 +11898,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -11954,7 +11954,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12023,7 +12023,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12098,7 +12098,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12124,7 +12124,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12189,7 +12189,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12268,7 +12268,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12323,7 +12323,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12362,7 +12362,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12420,7 +12420,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12489,7 +12489,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12679,7 +12679,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12714,7 +12714,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12764,7 +12764,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12819,7 +12819,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -12845,7 +12845,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -13169,7 +13169,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -13184,7 +13184,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -13202,7 +13202,7 @@ paths:
         423:
           description: Locked
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -13243,7 +13243,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -13385,7 +13385,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -13560,7 +13560,7 @@ paths:
         400:
           description: 'Bad Request'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -13738,7 +13738,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -13759,7 +13759,7 @@ paths:
         403:
           description: 'Consumption tax module is not enabled'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -13777,7 +13777,7 @@ paths:
         422:
           description: 'Consumption tax id not exists / not visible'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -14798,7 +14798,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -14818,7 +14818,7 @@ paths:
         400:
           description: 'Bad Request'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15019,7 +15019,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15151,7 +15151,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15167,7 +15167,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15204,7 +15204,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15562,7 +15562,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15583,7 +15583,7 @@ paths:
         403:
           description: 'Consumption tax module is not enabled'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15601,7 +15601,7 @@ paths:
         422:
           description: 'Consumption tax id not exists / not visible'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15844,7 +15844,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15865,7 +15865,7 @@ paths:
         403:
           description: 'Consumption tax module is not enabled'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15883,7 +15883,7 @@ paths:
         404:
           description: 'Currency not found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -15901,7 +15901,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16145,7 +16145,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16189,7 +16189,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16306,7 +16306,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16361,7 +16361,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16448,7 +16448,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16541,7 +16541,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16628,7 +16628,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16723,7 +16723,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16741,7 +16741,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16785,7 +16785,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16896,7 +16896,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16907,7 +16907,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16925,7 +16925,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -16997,7 +16997,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17012,7 +17012,7 @@ paths:
         404:
           description: 'Order history item deletion failed'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17057,7 +17057,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17068,7 +17068,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17209,7 +17209,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17230,7 +17230,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17386,7 +17386,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17407,7 +17407,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17427,7 +17427,7 @@ paths:
         500:
           description: 'Internal server error'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17503,7 +17503,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17631,7 +17631,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17680,7 +17680,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17767,7 +17767,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17875,7 +17875,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17910,7 +17910,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -17980,7 +17980,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -18022,7 +18022,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18073,7 +18073,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18153,7 +18153,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18325,7 +18325,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18521,7 +18521,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18542,7 +18542,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18601,7 +18601,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18622,7 +18622,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18728,7 +18728,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18825,7 +18825,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18846,7 +18846,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -18868,7 +18868,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -18886,7 +18886,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -18972,7 +18972,7 @@ paths:
         201:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -18993,7 +18993,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -19011,7 +19011,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -19037,7 +19037,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -19130,7 +19130,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19148,7 +19148,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19191,7 +19191,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19209,7 +19209,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19252,7 +19252,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19340,7 +19340,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19471,7 +19471,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19489,7 +19489,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19622,7 +19622,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19643,7 +19643,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19698,7 +19698,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19716,7 +19716,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19760,7 +19760,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19864,7 +19864,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19958,7 +19958,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -19979,7 +19979,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20004,7 +20004,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20132,7 +20132,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20153,7 +20153,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20196,7 +20196,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20217,7 +20217,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20235,7 +20235,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20382,7 +20382,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20398,7 +20398,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20416,7 +20416,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20463,7 +20463,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20563,7 +20563,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20586,7 +20586,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20622,7 +20622,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20643,7 +20643,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20661,7 +20661,7 @@ paths:
         422:
           description: 'Unprocessable entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20705,7 +20705,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20728,7 +20728,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20766,7 +20766,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20787,7 +20787,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20805,7 +20805,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20846,7 +20846,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -20867,7 +20867,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20885,7 +20885,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -20992,7 +20992,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -21043,7 +21043,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21061,7 +21061,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21104,7 +21104,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data:
                   changes:
@@ -21235,7 +21235,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21393,7 +21393,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21573,7 +21573,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21594,7 +21594,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21645,7 +21645,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21666,7 +21666,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21684,7 +21684,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21779,7 +21779,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21795,7 +21795,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21832,7 +21832,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21856,7 +21856,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21874,7 +21874,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21911,7 +21911,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -21932,7 +21932,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22081,7 +22081,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22102,7 +22102,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -22127,7 +22127,7 @@ paths:
         409:
           description: 'Conflict with already created invoice'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22149,7 +22149,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22252,7 +22252,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22273,7 +22273,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22392,7 +22392,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22413,7 +22413,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22534,7 +22534,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22553,7 +22553,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22604,7 +22604,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22622,7 +22622,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22668,7 +22668,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22686,7 +22686,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22729,7 +22729,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22818,7 +22818,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -22910,7 +22910,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23028,7 +23028,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23049,7 +23049,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23103,7 +23103,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23121,7 +23121,7 @@ paths:
         500:
           description: 'Internal Server Error'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23165,7 +23165,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23328,7 +23328,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23365,7 +23365,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23405,7 +23405,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23550,7 +23550,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23571,7 +23571,7 @@ paths:
         400:
           description: 'Bad Request'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23721,7 +23721,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23768,7 +23768,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23829,7 +23829,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23904,7 +23904,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23938,7 +23938,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -23974,7 +23974,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24123,7 +24123,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24138,7 +24138,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -24174,7 +24174,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24189,7 +24189,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -24344,7 +24344,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24360,7 +24360,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -24378,7 +24378,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -24431,7 +24431,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24506,7 +24506,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24594,7 +24594,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24765,7 +24765,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24835,7 +24835,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24856,7 +24856,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24894,7 +24894,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -24985,7 +24985,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25020,7 +25020,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25111,7 +25111,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25253,7 +25253,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25347,7 +25347,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25495,7 +25495,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25538,7 +25538,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25582,7 +25582,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25727,7 +25727,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25774,7 +25774,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25924,7 +25924,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -25967,7 +25967,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26032,7 +26032,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26125,7 +26125,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26193,7 +26193,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26288,7 +26288,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26331,7 +26331,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26417,7 +26417,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26480,7 +26480,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26607,7 +26607,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26662,7 +26662,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26704,7 +26704,7 @@ paths:
         400:
           description: 'Bad Request'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26779,7 +26779,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26821,7 +26821,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26873,7 +26873,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26903,7 +26903,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26921,7 +26921,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -26999,7 +26999,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27040,7 +27040,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27124,7 +27124,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27145,7 +27145,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27181,7 +27181,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27196,7 +27196,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27257,7 +27257,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27273,7 +27273,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27310,7 +27310,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27352,7 +27352,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27429,7 +27429,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27570,7 +27570,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27775,7 +27775,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27898,7 +27898,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27919,7 +27919,7 @@ paths:
         408:
           description: 'Request Timeout'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27965,7 +27965,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -27989,7 +27989,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28010,7 +28010,7 @@ paths:
         408:
           description: 'Request Timeout'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28245,7 +28245,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28282,7 +28282,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28332,7 +28332,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28469,7 +28469,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28668,7 +28668,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28705,7 +28705,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28761,7 +28761,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28832,7 +28832,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28883,7 +28883,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -28958,7 +28958,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29023,7 +29023,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29118,7 +29118,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29213,7 +29213,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29305,7 +29305,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29531,7 +29531,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29546,7 +29546,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29616,7 +29616,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29740,7 +29740,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29761,7 +29761,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29797,7 +29797,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29812,7 +29812,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -29854,7 +29854,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30064,7 +30064,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30079,7 +30079,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30097,7 +30097,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30164,7 +30164,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30288,7 +30288,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30467,7 +30467,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30485,7 +30485,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30505,7 +30505,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30553,7 +30553,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30683,7 +30683,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30829,7 +30829,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30868,7 +30868,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -30885,7 +30885,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31030,7 +31030,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31044,7 +31044,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31081,7 +31081,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31148,7 +31148,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31199,7 +31199,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -31299,7 +31299,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31470,7 +31470,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31491,7 +31491,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31678,7 +31678,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31758,7 +31758,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31779,7 +31779,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31815,7 +31815,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -31832,7 +31832,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32023,7 +32023,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32037,7 +32037,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32078,7 +32078,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32172,7 +32172,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32208,7 +32208,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32229,7 +32229,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32382,7 +32382,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32481,7 +32481,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32520,7 +32520,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32541,7 +32541,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32699,7 +32699,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32734,7 +32734,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32764,7 +32764,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32785,7 +32785,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32964,7 +32964,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -32985,7 +32985,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33021,7 +33021,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33042,7 +33042,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33200,7 +33200,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33216,7 +33216,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -33234,7 +33234,7 @@ paths:
         409:
           description: Conflict
           content:
-            'application/json; charset=utf-8':
+            application/json:
               example:
                 data: null
                 errors:
@@ -33285,7 +33285,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33322,7 +33322,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33362,7 +33362,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33427,7 +33427,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33529,7 +33529,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33614,7 +33614,7 @@ paths:
         403:
           description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33635,7 +33635,7 @@ paths:
         404:
           description: 'Not Found'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33680,7 +33680,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33739,7 +33739,7 @@ paths:
         202:
           description: Accepted
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33868,7 +33868,7 @@ paths:
         201:
           description: Created
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -33913,7 +33913,7 @@ paths:
         422:
           description: 'Unprocessable Entity'
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -34052,7 +34052,7 @@ paths:
         200:
           description: OK
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
