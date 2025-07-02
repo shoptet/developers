@@ -35463,6 +35463,8 @@ components:
             - '242.00'
         exchangeRate:
           $ref: '#/components/schemas/typeExchangeRate'
+        invoicingExchangeRate:
+          $ref: '#/components/schemas/typeExchangeRate'
         partialPaymentAmount:
           $ref: '#/components/schemas/typePriceNullable'
           description: 'can be value expressed in percents or as exact money value expression (with up to two decimal places) - depends on partialPaymentType value'
@@ -38955,6 +38957,7 @@ components:
         - payment
         - isValid
         - closed
+        - invoicingExchangeRate
       properties:
         code:
           type: string
@@ -39002,6 +39005,8 @@ components:
           description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/vat-modes) code list'
           examples:
             - Normal
+        invoicingExchangeRate:
+          $ref: '#/components/schemas/typeExchangeRate'
         invoiceCode:
           type:
             - string
@@ -39065,6 +39070,7 @@ components:
         - bic
         - documentRemark
         - vatBreakdown
+        - invoicingExchangeRate
       properties:
         code:
           type: string
@@ -39378,6 +39384,8 @@ components:
           description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/vat-modes) code list'
           examples:
             - normal
+        invoicingExchangeRate:
+          $ref: '#/components/schemas/typeExchangeRate'
     proofPaymentsForInvoice:
       type: array
       items:
