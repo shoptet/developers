@@ -6759,9 +6759,7 @@ paths:
         upload a new image and replace the existing one.
 
         This is an asynchronous request,  see how [Asynchronous
-        requests](https://developers.shoptet.com/asynchronous-requests/
-
-        work on our developer's portal.
+        requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
       tags:
         - 'Product images'
       parameters:
