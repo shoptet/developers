@@ -13607,12 +13607,14 @@ paths:
           description: 'Purchase order filtering, according to order status id.'
           schema:
             type: number
+          example: -1
         -
           name: shippingGuid
           in: query
           description: 'Purchase order filtering, according to forwarder GUID.'
           schema:
             type: string
+          example: ecb3e399-2f57-11eb-8853-0800275177b9
         -
           name: shippingCompanyCode
           in: query
@@ -13621,12 +13623,14 @@ paths:
             code](#tag/shipping-methods/getlistofshippingmethods).
           schema:
             type: string
+          example: zasilkovna
         -
           name: paymentMethodGuid
           in: query
           description: 'Purchase order filtering, according to payment method.'
           schema:
             type: string
+          example: b57f91bb-e920-11e0-baa3-7dc668b75ca8
         -
           name: creationTimeFrom
           in: query
@@ -13635,6 +13639,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
+          example: '2014-09-05T00:00:00%2B0000'
         -
           name: creationTimeTo
           in: query
@@ -13643,24 +13648,28 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
+          example: '2014-09-05T00:00:00%2B0000'
         -
           name: codeFrom
           in: query
           description: 'Purchase order filtering, according to order code.'
           schema:
             type: string
+          example: 6
         -
           name: codeTo
           in: query
           description: 'Purchase order filtering, according to order code.'
           schema:
             type: string
+          example: 6
         -
           name: customerGuid
           in: query
           description: 'Purchase order filtering, according to customer number.'
           schema:
             type: string
+          example: 443cad54-73bc-11e8-8216-002590dad85e
         -
           name: email
           in: query
@@ -13669,6 +13678,7 @@ paths:
             match is searched for, regardless of capitalization.
           schema:
             type: string
+          example: john.doe@example.com
         -
           name: phone
           in: query
@@ -13677,12 +13687,14 @@ paths:
             format only (+420123456789)
           schema:
             type: string
+            example: 420123456789
         -
           name: productCode
           in: query
           description: "Order filter by product's code that is in order."
           schema:
             type: string
+            example: 15/ZLU
         -
           name: changeTimeFrom
           in: query
@@ -13691,6 +13703,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
+          example: '2014-09-05T00:00:00%2B0000'
         -
           name: changeTimeTo
           in: query
@@ -13699,6 +13712,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
+          example: '2014-09-05T00:00:00%2B0000'
         -
           name: sourceId
           in: query
@@ -13707,6 +13721,7 @@ paths:
             see List of order sources endpoint.
           schema:
             type: number
+          example: -1
         -
           name: orderCodes
           in: query
@@ -14880,12 +14895,14 @@ paths:
           description: 'Purchase order filtering, according to order status id.'
           schema:
             type: number
+          example: -1
         -
           name: shippingGuid
           in: query
           description: 'Purchase order filtering, according to forwarder GUID.'
           schema:
             type: string
+          example: ecb3e399-2f57-11eb-8853-0800275177b9
         -
           name: shippingCompanyCode
           in: query
@@ -14894,12 +14911,14 @@ paths:
             code](#tag/shipping-methods/getlistofshippingmethods).
           schema:
             type: string
+          example: zasilkovna
         -
           name: paymentMethodGuid
           in: query
           description: 'Purchase order filtering, according to payment method.'
           schema:
             type: string
+          example: b57f91bb-e920-11e0-baa3-7dc668b75ca8
         -
           name: creationTimeFrom
           in: query
@@ -14908,12 +14927,14 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
+          example: '2014-09-05T00:00:00%2B0000'
         -
           name: creationTimeTo
           in: query
           description: |-
             Purchase order filtering, according to date of creation. ISO 8601
             format ("2017-12-12T22:08:01+0100").
+          example: '2014-09-05T00:00:00%2B0000'
           schema:
             type: string
         -
@@ -14922,18 +14943,21 @@ paths:
           description: 'Purchase order filtering, according to order code.'
           schema:
             type: string
+          example: 6
         -
           name: codeTo
           in: query
           description: 'Purchase order filtering, according to order code.'
           schema:
             type: string
+          example: 6
         -
           name: customerGuid
           in: query
           description: 'Purchase order filtering, according to customer number.'
           schema:
             type: string
+          example: 443cad54-73bc-11e8-8216-002590dad85e
         -
           name: email
           in: query
@@ -14942,6 +14966,7 @@ paths:
             match is searched for, regardless of capitalization.
           schema:
             type: string
+          example: john.doe@example.com
         -
           name: phone
           in: query
@@ -14950,12 +14975,14 @@ paths:
             format only (+420123456789)
           schema:
             type: string
+          example: 420123456789
         -
           name: productCode
           in: query
           description: "Order filter by product's code that is in order."
           schema:
             type: string
+          example: 15/ZLU
         -
           name: changeTimeFrom
           in: query
@@ -14964,6 +14991,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
+          example: '2014-09-05T00:00:00%2B0000'
         -
           name: changeTimeTo
           in: query
@@ -14972,6 +15000,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
+          example: '2014-09-05T00:00:00%2B0000'
         -
           name: sourceId
           in: query
@@ -14980,6 +15009,7 @@ paths:
             see List of order sources endpoint.
           schema:
             type: number
+          example: -1
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
@@ -16386,6 +16416,8 @@ paths:
                     vatRate:
                       type: string
                       description: 'VAT rate (`0.00` for VAT non-payers).'
+                      examples:
+                        - '21.00'
                     itemPriceWithVat:
                       type: string
                       description: 'Item price, including VAT. Optional. Price including tax and price excluding tax cannot be combined.'
@@ -16477,6 +16509,8 @@ paths:
                     vatRate:
                       type: string
                       description: 'VAT rate (`0.00` for VAT non-payers).'
+                      examples:
+                        - '21.00'
                     itemPriceWithVat:
                       type: string
                       description: 'Item price, including VAT. Optional. Price including tax and price excluding tax cannot be combined.'
@@ -16562,6 +16596,8 @@ paths:
                     vatRate:
                       type: string
                       description: 'VAT rate (`0.00` for VAT non-payers).'
+                      examples:
+                        - '21.00'
                     itemPriceWithVat:
                       type: string
                       description: 'Item price, including VAT. Price including tax and price excluding tax cannot be combined.'
@@ -16653,6 +16689,8 @@ paths:
                     vatRate:
                       type: string
                       description: 'VAT rate (`0.00` for VAT non-payers).'
+                      examples:
+                        - '21.00'
                     itemPriceWithVat:
                       type: string
                       description: 'Item price, including VAT. Price including tax and price excluding tax cannot be combined.'
@@ -16781,6 +16819,8 @@ paths:
                             text:
                               type: string
                               description: 'Transaction Id at payment gateway side: GHJ36'
+                              examples:
+                                - 'Transaction Id at payment gateway side: GHJ36KHDHDUJDL'
                             user:
                               type:
                                 - object
@@ -35067,6 +35107,8 @@ components:
         name:
           type: string
           description: 'description of transport method (Czech post, PPL, in person..)'
+          examples:
+            - PPL
     stock:
       type: object
       additionalProperties: false
