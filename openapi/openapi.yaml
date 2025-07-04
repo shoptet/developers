@@ -13379,6 +13379,87 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+  /api/project/domain:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - domains
+                    properties:
+                      domains:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - id
+                            - name
+                            - status
+                            - domain
+                          properties:
+                            id:
+                              type: integer
+                              description: 'Domain id'
+                            name:
+                              type: string
+                              description: 'Domain name'
+                              examples:
+                                - MyStore1
+                            status:
+                              enum:
+                                - active
+                                - pending
+                              description: 'Active or pending status of domain'
+                              examples:
+                                - active
+                            domain:
+                              type: string
+                              description: "Project's domain"
+                              examples:
+                                - mystoreone.com
+                            isPrimary:
+                              type: boolean
+                              description: 'Is it primary market?'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: no-project-domain-found
+                    message: 'No project domain found'
+                    instance: data.project.domains
+      summary: 'Project domains'
+      operationId: getProjectDomainList
+      description: 'List of all domains project has.'
+      tags:
+        - Project
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/orders:
     get:
       responses:
@@ -41189,6 +41270,7 @@ x-tagGroups:
       - Units
       - 'Variant parameters'
       - Warranties
+      - Project
   -
     name: System
     tags:
