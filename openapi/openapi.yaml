@@ -5430,6 +5430,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -6244,6 +6247,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -6852,6 +6858,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Delete one product image'
       operationId: deleteOneProductImage
       description: |-
@@ -7602,6 +7611,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -7859,6 +7871,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         400:
           description: 'Bad Request'
           content:
@@ -8501,6 +8516,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Product flag delete'
       operationId: deleteProductFlag
       parameters:
@@ -9541,6 +9559,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Removal of surcharge parameter'
       operationId: deleteSurchargeParameterByIndex
       description: ''
@@ -9576,6 +9597,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Removal of surcharge parameter value'
       operationId: deleteSurchargeParameterValue
       description: ''
@@ -10352,6 +10376,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Removal of filtering parameter'
       operationId: deleteFilteringParameter
       description: ''
@@ -10387,6 +10414,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Removal of filtering parameter value'
       operationId: deleteFilteringParameterValue
       description: ''
@@ -11078,6 +11108,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Removal of variant parameter'
       operationId: deleteVariantParameter
       description: ''
@@ -11113,6 +11146,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Removal of variant parameter value'
       operationId: deleteVariantParameterValue
       description: ''
@@ -11562,6 +11598,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -13181,6 +13220,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         422:
           description: 'Unprocessable Entity'
           content:
@@ -15245,6 +15287,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -16238,6 +16283,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Order item delete'
       operationId: deleteOrderItem
       description: ''
@@ -16400,6 +16448,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Order item surcharge parameters deletion'
       operationId: deleteOrderItemSurchargeParameters
       description: |-
@@ -16985,6 +17036,9 @@ paths:
                     type: 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors: null
         403:
           description: Forbidden
           content:
@@ -17090,6 +17144,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Order history item deletion failed'
           content:
@@ -17146,6 +17203,9 @@ paths:
                     type: 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -20476,6 +20536,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -21873,6 +21936,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -24438,6 +24504,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -25079,6 +25148,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Deletion of customer'
       operationId: deleteCustomer
       description: ''
@@ -25589,6 +25661,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Deletion of customer account'
       operationId: deleteCustomerAccount
       description: ''
@@ -26018,6 +26093,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Deletion of customer delivery address'
       operationId: deleteCustomerDeliveryAddress
       description: ''
@@ -26382,6 +26460,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Deletion of customer remark'
       operationId: deleteCustomerRemark
       description: ''
@@ -26873,6 +26954,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Removal of code'
       operationId: deleteHtmlCode
       description: |-
@@ -27274,6 +27358,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -27351,6 +27438,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -28762,6 +28852,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Payment method deletion'
       operationId: deletePaymentMethod
       description: |-
@@ -29624,6 +29717,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         422:
           description: 'Unprocessable Entity'
           content:
@@ -29890,6 +29986,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -30157,6 +30256,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
@@ -32793,6 +32895,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
       summary: 'Delete of article'
       operationId: deleteArticle
       description: 'Deletes the article.'
@@ -33294,6 +33399,9 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+              example:
+                data: null
+                errors: null
         404:
           description: 'Not Found'
           content:
