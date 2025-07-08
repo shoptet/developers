@@ -12758,10 +12758,7 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    properties:
-                      data:
-                        $ref: '#/components/schemas/pricelist'
+                    $ref: '#/components/schemas/pricelist'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
