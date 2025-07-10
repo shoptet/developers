@@ -14956,6 +14956,81 @@ paths:
                                   $ref: '#/components/schemas/typePrice'
                           consumptionTaxId:
                             $ref: '#/components/schemas/consumptionTaxId'
+  /api/orders/history/snapshot:
+    get:
+      responses:
+        202:
+          description: Accepted
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'List of all remarks'
+      operationId: getListOfAllRemarks
+      description: |-
+        Using this endpoint, you can get list of all remarks with detailed info of each remark asynchronously.
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each remark taking one line of output file.
+
+        One remark in response has the same format as an item in [List of remarks for order](#tag/order-history/getlistofremarksfororder) and is extended with `orderCode` field, which identifies the relation to the order.
+
+        Use `orderCodes` request parameter to get the list of specific orders remarks. Order codes are separated by a comma. Please note that this parameter **accepts max. 50 order codes in request parameter**.
+
+        Result file is compressed using GZIP.
+      tags:
+        - 'Order history'
+      parameters:
+        -
+          name: orderCodes
+          in: query
+          description: 'Define the output set of orders remarks. Use max. 50 order codes separated by a comma.'
+          example: '2025000004,2025000002,2017000038,2017000025,2015000248'
+          schema:
+            type: string
+        -
+          name: creationTimeFrom
+          in: query
+          description: 'date and time of remark creation - lower limit'
+          example: '2025-06-23T14:17:00+02:00'
+          schema:
+            type: string
+        -
+          name: creationTimeTo
+          in: query
+          description: 'date and time of remark creation - upper limit'
+          example: '2025-07-01T14:17:00+02:00'
+          schema:
+            type: string
+        -
+          name: userId
+          in: query
+          description: 'identification of change originator, either user’s e-mail, or system process identifier'
+          examples:
+            'User email':
+              value: john.doe@example.com
+            'Process identifier':
+              value: api.service-21@fenix.myshoptet.com
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      x-shoptet-snapshot-endpoint: true
   /api/orders/snapshot:
     get:
       responses:
