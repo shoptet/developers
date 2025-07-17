@@ -4040,12 +4040,7 @@ paths:
                         additionalProperties: false
                         properties:
                           code:
-                            type: string
-                            minLength: 1
-                            maxLength: 64
-                            description: "Variant's code. Must be unique if set. Generated automatically if not set."
-                            examples:
-                              - '0035'
+                            $ref: '#/components/schemas/typeVariantCodeRequest'
                           ean:
                             type:
                               - string
@@ -5191,12 +5186,7 @@ paths:
                         minProperties: 1
                         properties:
                           code:
-                            type: string
-                            minLength: 1
-                            maxLength: 64
-                            description: "Variant's code. Must be unique if set. Generated automatically if not set."
-                            examples:
-                              - '0035'
+                            $ref: '#/components/schemas/typeVariantCodeRequest'
                           newCode:
                             type: string
                             minLength: 1
@@ -6013,12 +6003,7 @@ paths:
                         minProperties: 1
                         properties:
                           code:
-                            type: string
-                            minLength: 1
-                            maxLength: 64
-                            description: "Variant's code. Must be unique if set. Generated automatically if not set."
-                            examples:
-                              - '0035'
+                            $ref: '#/components/schemas/typeVariantCodeRequest'
                           newCode:
                             type: string
                             minLength: 1
@@ -34833,6 +34818,14 @@ components:
         - FF00FF
         - '#FF00FF'
         - '#ffffff'
+    typeVariantCodeRequest:
+      type: string
+      pattern: '^[a-zA-Z0-9_\/ \-\.]+$'
+      minLength: 1
+      maxLength: 64
+      description: "Variant's code. Must be unique if set. After processing it will be converted to uppercase. Generated automatically if not set."
+      examples:
+        - '0035'
     paginator:
       type: object
       additionalProperties: false
