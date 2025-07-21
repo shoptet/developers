@@ -18535,54 +18535,63 @@ paths:
           name: isValid
           in: query
           description: 'filtering according to document validity'
+          example: true
           schema:
             type: boolean
         -
           name: proformaInvoiceCode
           in: query
           description: 'filtering according to number of proforma invoice'
+          example: 2017000017
           schema:
             type: string
         -
           name: creationTimeFrom
           in: query
           description: 'filtering according to date of invoice issue'
+          example: '2017-02-28T17:04:47+0100'
           schema:
             type: string
         -
           name: creationTimeTo
           in: query
           description: 'filtering according to date of invoice issue'
+          example: '2028-02-28T17:04:47+0100'
           schema:
             type: string
         -
           name: taxDateFrom
           in: query
           description: 'filtering according to tax date of invoice'
+          example: '2017-02-28T17:04:47+0100'
           schema:
             type: string
         -
           name: orderCode
           in: query
           description: 'filtering according to order code of invoice'
+          example: 2018000012
           schema:
             type: string
         -
           name: codeFrom
           in: query
           description: 'filtering according to code of invoice'
+          example: 2018000001
           schema:
             type: string
         -
           name: codeTo
           in: query
           description: 'filtering according to code of invoice'
+          example: 2018000012
           schema:
             type: string
         -
           name: varSymbol
           in: query
           description: 'filtering according to variable symbol of invoice'
+          example: 666
           schema:
             type: string
         -
@@ -19725,12 +19734,14 @@ paths:
           name: isValid
           in: query
           description: 'filtering according to document validity'
+          example: true
           schema:
             type: boolean
         -
           name: orderCode
           in: query
           description: 'filtering according to number of order.'
+          example: 2018000012
           schema:
             type: string
         -
@@ -19739,6 +19750,7 @@ paths:
           description: |-
             filtering items created after or same as requested datetime. ISO
             8601 format ("2017-12-12T22:08:01+0100").
+          example: '2017-02-28T17:04:47+0100'
           schema:
             type: string
         -
@@ -19747,12 +19759,14 @@ paths:
           description: |-
             filtering items created before or same as requested datetime. ISO
             8601 format ("2017-12-12T22:08:01+0100")
+          example: '2017-02-28T17:04:47+0100'
           schema:
             type: string
         -
           name: varSymbol
           in: query
           description: 'filtering according to variable symbol of proforma invoice'
+          example: 666
           schema:
             type: string
         -
@@ -21685,12 +21699,14 @@ paths:
           name: isValid
           in: query
           description: 'filtering according to document validity. Optional.'
+          example: true
           schema:
             type: boolean
         -
           name: invoiceCode
           in: query
           description: 'filtering according to number of invoice. Optional.'
+          example: '0000000006'
           schema:
             type: string
         -
@@ -21715,12 +21731,14 @@ paths:
           name: varSymbol
           in: query
           description: 'filtering according to variable symbol of credit note'
+          example: '0000000006'
           schema:
             type: string
         -
           name: proofPaymentCode
           in: query
           description: 'filtering according to proof payment code. Optional.'
+          example: P--2017200011-1
           schema:
             type: string
         -
@@ -22175,6 +22193,8 @@ paths:
                         description: 'Notes about no longer existing products which cannot be restocked. Messages are in administration language.'
                         items:
                           type: string
+                          examples:
+                            - 'Product is no longer available.'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -22651,6 +22671,8 @@ paths:
                         - product
                     code:
                       type: string
+                      examples:
+                        - '2018000012'
                     amount:
                       $ref: '#/components/schemas/typeAmountNullable'
                       description: 'name of item, required'
@@ -22776,6 +22798,8 @@ paths:
                   properties:
                     code:
                       type: string
+                      examples:
+                        - '2018000012'
                     amount:
                       $ref: '#/components/schemas/typeAmountNullable'
                       description: 'amount of item, 3 decimal places accuracy, required. For credit note you will probably use negative amount. (can be `null`)'
@@ -23207,12 +23231,14 @@ paths:
           name: isValid
           in: query
           description: 'sorting according to document validity'
+          example: true
           schema:
             type: boolean
         -
           name: orderCode
           in: query
           description: 'sorting according to number of order'
+          example: 2018000012
           schema:
             type: string
         -
@@ -41203,6 +41229,10 @@ components:
             - string
             - 'null'
           description: 'type of change in stock quantity (can `be null`)'
+          examples:
+            - load
+            - unload
+            - null
         weight:
           $ref: '#/components/schemas/typeWeightUnlimited'
         completePackageWeight:
