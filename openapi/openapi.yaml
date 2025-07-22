@@ -24939,6 +24939,7 @@ paths:
           description: |-
             filtering as per customer’s e-mails. An accurate match is searched
             for, regardless of capitalization.
+          example: john@example.com
           schema:
             type: string
         -
@@ -26273,6 +26274,8 @@ paths:
                       type: string
                       minLength: 1
                       description: 'country (can be `null`)'
+                      examples:
+                        - CZ
                     regionName:
                       type:
                         - string
@@ -36354,6 +36357,8 @@ components:
             - string
             - 'null'
           description: 'country (can be `null`)'
+          examples:
+            - CZ
         regionName:
           type:
             - string
