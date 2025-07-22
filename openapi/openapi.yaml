@@ -40955,8 +40955,10 @@ components:
                 examples:
                   - ks
               itemId:
-                type: number
-                description: 'order item identifier'
+                type:
+                  - number
+                  - 'null'
+                description: 'Order item identifier. This field is null for product set items.'
                 examples:
                   - 342
               amountCompleted:
