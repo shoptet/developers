@@ -36482,7 +36482,7 @@ components:
               $ref: '#/components/schemas/itemPrice'
             -
               type: 'null'
-          description: 'purchase price of the part, can be `null`.'
+          description: 'buy price of the part, can be `null`.'
           deprecated: true
         purchasePrice:
           oneOf:
@@ -36616,7 +36616,7 @@ components:
               $ref: '#/components/schemas/itemPrice'
             -
               type: 'null'
-          description: 'purchase price of the part, can be `null`.'
+          description: 'buy price of the part, can be `null`.'
           deprecated: true
         purchasePrice:
           oneOf:
@@ -38455,9 +38455,10 @@ components:
             - '24 months'
         amountCompleted:
           $ref: '#/components/schemas/typePositiveAmountNullable'
-          description: 'quantity of completed product'
+          description: 'quantity of completed product. Deprecated - use `completion` section instead.'
           examples:
             - 1.0
+          deprecated: true
         surchargeParametersTexts:
           type: array
           description: 'List of custom surcharge parameters names'
@@ -40895,6 +40896,79 @@ components:
                       - 'forwarder ID'
         preAuthorization:
           $ref: '#/components/schemas/orderPreAuthorization'
+        completion:
+          type: array
+          description: 'All order items completion status. Contains completion info even for product set items.'
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - productGuid
+              - code
+              - itemType
+              - name
+              - amount
+              - amountUnit
+              - itemId
+              - amountCompleted
+            properties:
+              productGuid:
+                oneOf:
+                  -
+                    $ref: '#/components/schemas/typeGuidUnlimited'
+                  -
+                    type: 'null'
+              code:
+                type:
+                  - string
+                  - 'null'
+                description: 'identifier of the item code (product or variant). At the time the order is created, it will be entered in this field, but when the product is deleted, the link will be lost.'
+                examples:
+                  - 40/ZEL
+              itemType:
+                type: string
+                description: 'Order item type (product, service...). See also [Types of order items](#section/code-lists/types-of-order-items) code list.'
+                examples:
+                  - product
+              name:
+                type: string
+                description: 'Product name'
+                examples:
+                  - Complete
+              variantName:
+                type:
+                  - string
+                  - 'null'
+                description: 'variant name (can be `null`)'
+                examples:
+                  - Name
+              amount:
+                $ref: '#/components/schemas/typeAmountNullable'
+                description: 'product quantity'
+                examples:
+                  - 1.0
+              amountUnit:
+                type:
+                  - string
+                  - 'null'
+                description: 'product unit of quantity'
+                examples:
+                  - ks
+              itemId:
+                type: number
+                description: 'order item identifier'
+                examples:
+                  - 342
+              amountCompleted:
+                $ref: '#/components/schemas/typePositiveAmountNullable'
+                description: 'quantity of completed product'
+                examples:
+                  - 1.0
+              parentProductSetItemId:
+                type: number
+                description: 'identifier of the parent product set item, if the item is a product set item. If the item is not a product set item, this field is not present.'
+                examples:
+                  - 123
     orderPreAuthorization:
       type:
         - object
