@@ -23687,7 +23687,7 @@ paths:
                       stocks:
                         type: array
                         items:
-                          $ref: '#/components/schemas/stock'
+                          $ref: '#/components/schemas/stockList'
                       defaultStockId:
                         type: integer
                   errors:
@@ -35570,7 +35570,7 @@ components:
           description: 'description of transport method (Czech post, PPL, in person..)'
           examples:
             - PPL
-    stock:
+    stockList:
       type: object
       additionalProperties: false
       required:
@@ -35610,6 +35610,64 @@ components:
           description: 'address of the distribution point (can be `null`)'
           examples:
             - 'Main street 123, Prague'
+    stock:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - isDeliveryPoint
+        - visibleOnEshop
+        - deliveryPointTitle
+        - deliveryPointAddress
+        - type
+        - parentStockId
+      properties:
+        id:
+          type: integer
+          description: 'stock unique ID'
+          examples:
+            - 1
+        title:
+          type: string
+          description: 'stock name'
+          examples:
+            - 'Main stock'
+        isDeliveryPoint:
+          type: boolean
+          description: 'flag, whether the stock is also a distribution point'
+          examples:
+            - false
+        deliveryPointTitle:
+          type:
+            - string
+            - 'null'
+          description: 'name of the distribution point (can be `null`)'
+          examples:
+            - 'Main delivery point'
+        deliveryPointAddress:
+          type:
+            - string
+            - 'null'
+          description: 'address of the distribution point (can be `null`)'
+          examples:
+            - 'Main street 123, Prague'
+        type:
+          enum:
+            - internalPhysical
+            - internalVirtual
+            - external
+            - null
+          description: 'Stock type, enum, determines if stock is `internalPhysical` (default setting, same as current ordinary stock), `internalVirtual` (logical subdivision of an internal physical stock, child with a parent stock - see `parentStockid`) or `external` (external standalone warehouse)'
+          examples:
+            - internalVirtual
+        parentStockId:
+          type:
+            - integer
+            - 'null'
+          description: 'Parent stock ID'
+          examples:
+            - 1
     availabilityShort:
       type:
         - object
