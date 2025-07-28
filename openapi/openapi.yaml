@@ -8659,6 +8659,13 @@ paths:
                               description: 'Name of the availability'
                               examples:
                                 - 'On request'
+                            indexName:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'Code name of the availability'
+                              examples:
+                                - on-request
                             description:
                               type:
                                 - string
@@ -8670,7 +8677,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              description: 'Color of the availability'
+                              description: 'Color hex code of the availability'
                               examples:
                                 - '#cb0000'
                             system:
@@ -8751,8 +8758,521 @@ paths:
       operationId: getListOfProductsAvailabilities
       description: 'Returns the list of product availabilities within the e-shop and default availabilities ids.'
       tags:
-        - Products
+        - 'Product availabilities'
       parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - availability
+                    properties:
+                      availability:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - id
+                          - name
+                          - description
+                          - color
+                          - system
+                          - onStockInHours
+                          - deliveryInHours
+                          - googleAvailability
+                        properties:
+                          id:
+                            type: integer
+                            description: 'ID of the availability'
+                            examples:
+                              - -5
+                          name:
+                            type: string
+                            description: 'Name of the availability'
+                            examples:
+                              - 'On request'
+                          indexName:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Code name of the availability'
+                            examples:
+                              - on-request
+                          description:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Description of the availability'
+                            examples:
+                              - 'Ordered from an external partner, details on request.'
+                          color:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Color hex code of the availability'
+                            examples:
+                              - '#cb0000'
+                          system:
+                            type: boolean
+                            description: 'Is availability default (system) and not user made?'
+                            examples:
+                              - true
+                          onStockInHours:
+                            type:
+                              - integer
+                              - 'null'
+                            description: 'When will a product be on stock. (in hours)'
+                            examples:
+                              - 48
+                          deliveryInHours:
+                            type:
+                              - integer
+                              - 'null'
+                            description: 'When will a product be delivered. (in hours)'
+                            examples:
+                              - 48
+                          googleAvailability:
+                            type:
+                              - object
+                              - 'null'
+                            additionalProperties: false
+                            description: 'Google availability info'
+                            required:
+                              - id
+                              - name
+                            properties:
+                              id:
+                                type: integer
+                                description: 'ID of the google availability'
+                                examples:
+                                  - 1
+                              name:
+                                type: string
+                                description: 'Name of the google availability'
+                                examples:
+                                  - 'On stock'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Google availability id \"2\" is not supported.'
+                    instance: data.googleAvailabilityId
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Product availability name \"In stock\" already exists.'
+                    instance: data.name
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Product availability index name \"in-stock\" already exists.'
+                    instance: data.indexName
+      summary: 'Product availability creation'
+      operationId: createProductAvailability
+      description: 'Creates a new product availability.'
+      tags:
+        - 'Product availabilities'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                      description: 'Name of the availability'
+                      examples:
+                        - 'On request'
+                      minLength: 1
+                    indexName:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Code name of the availability'
+                      examples:
+                        - on-request
+                      maxLength: 16
+                    description:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Description of the availability'
+                      examples:
+                        - 'Ordered from an external partner, details on request.'
+                    color:
+                      $ref: '#/components/schemas/typeColor'
+                      description: 'Color hex code of the availability'
+                      examples:
+                        - '#cb0000'
+                    onStockInHours:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'When will a product be on stock. (in hours)'
+                      examples:
+                        - 48
+                      maximum: 2500
+                    deliveryInHours:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'When will a product be delivered. (in hours)'
+                      examples:
+                        - 48
+                      maximum: 2500
+                    googleAvailabilityId:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'ID of the google availability. Possible values: `1` (in stock), `3` (out of stock), `4` (preorder), `5` (backorder).'
+                      examples:
+                        - 1
+                        - 3
+                        - 4
+                        - 5
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/products/availabilities/{id}':
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - availability
+                    properties:
+                      availability:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - id
+                          - name
+                          - description
+                          - color
+                          - system
+                          - onStockInHours
+                          - deliveryInHours
+                          - googleAvailability
+                        properties:
+                          id:
+                            type: integer
+                            description: 'ID of the availability'
+                            examples:
+                              - -5
+                          name:
+                            type: string
+                            description: 'Name of the availability'
+                            examples:
+                              - 'On request'
+                          indexName:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Code name of the availability'
+                            examples:
+                              - on-request
+                          description:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Description of the availability'
+                            examples:
+                              - 'Ordered from an external partner, details on request.'
+                          color:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Color hex code of the availability'
+                            examples:
+                              - '#cb0000'
+                          system:
+                            type: boolean
+                            description: 'Is availability default (system) and not user made?'
+                            examples:
+                              - true
+                          onStockInHours:
+                            type:
+                              - integer
+                              - 'null'
+                            description: 'When will a product be on stock. (in hours)'
+                            examples:
+                              - 48
+                          deliveryInHours:
+                            type:
+                              - integer
+                              - 'null'
+                            description: 'When will a product be delivered. (in hours)'
+                            examples:
+                              - 48
+                          googleAvailability:
+                            type:
+                              - object
+                              - 'null'
+                            additionalProperties: false
+                            description: 'Google availability info'
+                            required:
+                              - id
+                              - name
+                            properties:
+                              id:
+                                type: integer
+                                description: 'ID of the google availability'
+                                examples:
+                                  - 1
+                              name:
+                                type: string
+                                description: 'Name of the google availability'
+                                examples:
+                                  - 'On stock'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: product-availability-not-found
+                    message: 'Product availability with id \"100\" not found.'
+                    instance: '100'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Google availability id \"2\" is not supported.'
+                    instance: data.googleAvailabilityId
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Product availability name \"In stock\" already exists.'
+                    instance: data.name
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Product availability index name \"in-stock\" already exists.'
+                    instance: data.indexName
+      summary: 'Update of product availability'
+      operationId: updateProductAvailability
+      description: 'Updates a product availability.'
+      tags:
+        - 'Product availabilities'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  minProperties: 1
+                  properties:
+                    name:
+                      type: string
+                      description: 'Name of the availability'
+                      examples:
+                        - 'On request'
+                      minLength: 1
+                    indexName:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Code name of the availability'
+                      examples:
+                        - on-request
+                      maxLength: 16
+                    description:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Description of the availability'
+                      examples:
+                        - 'Ordered from an external partner, details on request.'
+                    color:
+                      $ref: '#/components/schemas/typeColor'
+                      description: 'Color hex code of the availability'
+                      examples:
+                        - '#cb0000'
+                    onStockInHours:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'When will a product be on stock. (in hours)'
+                      examples:
+                        - 48
+                      maximum: 2500
+                    deliveryInHours:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'When will a product be delivered. (in hours)'
+                      examples:
+                        - 48
+                      maximum: 2500
+                    googleAvailabilityId:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'ID of the google availability. Possible values: `1` (in stock), `3` (out of stock), `4` (preorder), `5` (backorder).'
+                      examples:
+                        - 1
+                        - 3
+                        - 4
+                        - 5
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'product availability ID'
+          required: true
+          example: '123'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                    additionalProperties: false
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+              example:
+                data: null
+                errors: null
+        404:
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: product-availability-not-found
+                    message: 'Product availability with id \"100\" not found.'
+                    instance: '100'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Unable to delete product availability with id \"1\". Availability is in use.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Unable to delete product availability with id \"-1\". System availability is not deletable.'
+                    instance: integration-call
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Deletion of product availability'
+      operationId: deleteProductAvailability
+      description: 'Deletes a product availability.'
+      tags:
+        - 'Product availabilities'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'product availability ID'
+          required: true
+          example: '123'
+          schema:
+            type: number
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/products/surcharge-parameters:
@@ -41767,6 +42287,7 @@ x-tagGroups:
       - Brands
       - 'Price lists'
       - Products
+      - 'Product availabilities'
       - 'Product gifts'
       - 'Product images'
       - 'Product sets'
