@@ -34281,6 +34281,149 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - page
+                    additionalProperties: false
+                    properties:
+                      page:
+                        $ref: '#/components/schemas/page'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        errorCode:
+                          type: string
+                        message:
+                          type: string
+                        instance:
+                          type: string
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The property title is required'
+                    instance: integration-call
+      summary: 'Insert of page'
+      operationId: createPage
+      description: 'Creates a new page.'
+      tags:
+        - Pages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  minProperties: 1
+                  required:
+                    - title
+                  properties:
+                    title:
+                      minLength: 1
+                      maxLength: 255
+                      type: string
+                      description: 'page title'
+                      examples:
+                        - Test
+                    indexName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                      description: 'ending part of page URL'
+                      examples:
+                        - new-page
+                      pattern: '^[a-zA-Z0-9\-]*$'
+                    description:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'page content'
+                      examples:
+                        - '<p>Content of the page</p>'
+                    linkText:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'page title in the menu'
+                      examples:
+                        - 'Test menu title'
+                    metaTitle:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'page meta title'
+                      examples:
+                        - 'Test page'
+                    metaDescription:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'page meta description'
+                      examples:
+                        - 'Test page description'
+                    canonicalUrl:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'canonical URL of the page'
+                      examples:
+                        - 'https://example.com/canonical-url'
+                    visible:
+                      type: boolean
+                      description: 'flag whether the page is visible on web'
+                      examples:
+                        - true
+                    access:
+                      enum:
+                        - all
+                        - logged-in
+                        - logged-out
+                      description: "flag indicating, whether the page can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
+                      examples:
+                        - logged-in
+                    sourceOgImageName:
+                      $ref: '#/components/schemas/typeFilenameNullable'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article open-graph image. When set to null, image will be removed.'
+                      examples:
+                        - image.png
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/pages/{pageId}':
     get:
       responses:
@@ -34305,6 +34448,24 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: article-page-not-found
+                    message: 'Page with ID "1" not found.'
+                    instance: '1'
       summary: 'Detail of page'
       operationId: getDetailOfPage
       description: 'Returns a detail of the page.'
@@ -34321,6 +34482,183 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       tags:
         - Pages
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                    additionalProperties: false
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+              example:
+                data: null
+                errors: null
+      summary: 'Delete of page'
+      operationId: deletePage
+      description: 'Deletes the page.'
+      parameters:
+        -
+          name: pageId
+          in: path
+          description: 'page ID'
+          required: true
+          example: '1'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      tags:
+        - Pages
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - page
+                    additionalProperties: false
+                    properties:
+                      page:
+                        $ref: '#/components/schemas/page'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: article-page-not-found
+                    message: 'Page with ID "1" not found.'
+                    instance: '1'
+      summary: 'Update of page'
+      operationId: updatePage
+      description: 'Updates the page.'
+      parameters:
+        -
+          name: pageId
+          in: path
+          description: 'page ID'
+          required: true
+          example: '1'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      tags:
+        - Pages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  minProperties: 1
+                  properties:
+                    title:
+                      minLength: 1
+                      maxLength: 255
+                      type: string
+                      description: 'page title'
+                      examples:
+                        - Test
+                    indexName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                      description: 'ending part of page URL'
+                      examples:
+                        - new-page
+                      pattern: '^[a-zA-Z0-9\-]*$'
+                    description:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'page content'
+                      examples:
+                        - '<p>Content of the page</p>'
+                    linkText:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'page title in the menu'
+                      examples:
+                        - 'Test menu title'
+                    metaTitle:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'page meta title'
+                      examples:
+                        - 'Test page'
+                    metaDescription:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'page meta description'
+                      examples:
+                        - 'Test page description'
+                    canonicalUrl:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'canonical URL of the page'
+                      examples:
+                        - 'https://example.com/canonical-url'
+                    visible:
+                      type: boolean
+                      description: 'flag whether the page is visible on web'
+                      examples:
+                        - true
+                    access:
+                      enum:
+                        - all
+                        - logged-in
+                        - logged-out
+                      description: "flag indicating, whether the page can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
+                      examples:
+                        - logged-in
+                    sourceOgImageName:
+                      $ref: '#/components/schemas/typeFilenameNullable'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article open-graph image. When set to null, image will be removed.'
+                      examples:
+                        - image.png
   /api/discussions-posts:
     get:
       responses:
@@ -39647,6 +39985,13 @@ components:
           description: 'flag whether the page is visible on web'
           examples:
             - true
+        ogImage:
+          type:
+            - string
+            - 'null'
+          description: 'page og:image'
+          examples:
+            - 'https://www.some-eshop-url.com/image.jpg'
     page:
       type: object
       additionalProperties: false
@@ -39659,8 +40004,10 @@ components:
         - linkText
         - metaTitle
         - metaDescription
+        - canonicalUrl
         - visible
         - access
+        - ogImage
       properties:
         id:
           type: number
@@ -39710,6 +40057,13 @@ components:
           description: 'page meta description'
           examples:
             - 'About us page description'
+        canonicalUrl:
+          type:
+            - string
+            - 'null'
+          description: 'Canonical URL of the page'
+          examples:
+            - 'https://www.someurl.com'
         visible:
           type: boolean
           description: 'flag whether the page is visible on web'
@@ -39723,6 +40077,13 @@ components:
           description: "flag indicating, whether the page can be viewed by everyone (value of the flag is: 'all'), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
           examples:
             - logged-in
+        ogImage:
+          type:
+            - string
+            - 'null'
+          description: 'page og:image'
+          examples:
+            - 'https://www.some-eshop-url.com/image.jpg'
     parameterValueCombinations:
       type: object
       additionalProperties: false
