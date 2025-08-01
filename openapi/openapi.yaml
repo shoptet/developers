@@ -29965,21 +29965,34 @@ paths:
                         description: 'E-mails successfully added to the list'
                         items:
                           type: string
+                        examples:
+                          -
+                            - john.doe@example.com
                       emailsExisting:
                         type: array
                         description: 'E-mails skipped because they were already inserted before'
                         items:
                           type: string
+                        examples:
+                          -
+                            - john.doe@example.com
                       emailsInvalid:
                         type: array
                         description: 'E-mails skipped because of invalid format'
                         items:
                           type: string
+                        examples:
+                          -
+                            - invalid-email
                       errorMessages:
                         type: array
                         description: 'Error messages of invalid e-mails'
                         items:
                           type: string
+                        examples:
+                          -
+                            - 'Email "bad-email" is not valid. Please check your entries carefully.'
+                            - 'Email "test@invalid" has wrong domain or missing MX record.'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -30036,6 +30049,8 @@ paths:
                       description: 'E-mails to add to the list'
                       items:
                         type: string
+                      examples:
+                        - john.doe@example.com
   '/api/mailing-lists/{code}/changes':
     get:
       responses:
