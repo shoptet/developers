@@ -7652,27 +7652,21 @@ paths:
                       - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
-              examples:
-                example1:
-                  value:
-                    data: null
-                    errors:
-                      -
-                        errorCode: category-used-by-products
-                        message: |-
-                          Category "5c499200-70ac-11e9-9208-08002774f818" cannot
-                          be deleted, because some products are assigned to it.
-                        instance: 5c499200-70ac-11e9-9208-08002774f818
-                example2:
-                  value:
-                    data: null
-                    errors:
-                      -
-                        errorCode: category-has-children
-                        message: |-
-                          Category "5c499200-70ac-11e9-9208-08002774f818" cannot
-                          be deleted, because it is a parent category.
-                        instance: 5c499200-70ac-11e9-9208-08002774f818
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: category-used-by-products
+                    message: |-
+                      Category "5c499200-70ac-11e9-9208-08002774f818" cannot
+                      be deleted, because some products are assigned to it.
+                    instance: 5c499200-70ac-11e9-9208-08002774f818
+                  -
+                    errorCode: category-has-children
+                    message: |-
+                      Category "5c499200-70ac-11e9-9208-08002774f818" cannot
+                      be deleted, because it is a parent category.
+                    instance: 5c499200-70ac-11e9-9208-08002774f818
       summary: 'Product category deletion'
       operationId: deleteProductCategory
       description: |-
@@ -7830,6 +7824,8 @@ paths:
                             productGuid:
                               $ref: '#/components/schemas/typeGuid'
                               description: 'Global unique permanent product identifier.'
+                              examples:
+                                - 0198418d-acde-708e-9389-0c5113d9b5f3
                             priority:
                               type:
                                 - number
@@ -7949,6 +7945,8 @@ paths:
                       productGuid:
                         $ref: '#/components/schemas/typeGuidUnlimited'
                         description: 'GUID of the product'
+                        examples:
+                          - 0198418d-acde-708e-9389-0c5113d9b5f3
                       priority:
                         type:
                           - number
@@ -39047,6 +39045,8 @@ components:
         guid:
           $ref: '#/components/schemas/typeGuidNullable'
           description: 'unique category identificator'
+          examples:
+            - 0198418d-acde-708e-9389-0c5113d9b5f3
         name:
           type: string
           description: 'category name'
@@ -39086,6 +39086,8 @@ components:
         parentGuid:
           $ref: '#/components/schemas/typeGuidNullable'
           description: 'unique identifier of the parent category (`null`, if there is no parent category)'
+          examples:
+            - 0198566d-2eeb-73ed-8dc4-0c94b5a7e035
         priority:
           type:
             - number
@@ -39159,10 +39161,14 @@ components:
             properties:
               provider:
                 type: string
-                description: heureka
+                description: 'provider type'
+                examples:
+                  - heureka
               category:
                 type: string
-                description: "Clothing | Women's T-Shirts"
+                description: 'provider category'
+                examples:
+                  - "Clothing | Women's T-Shirts"
     orderItem:
       type: object
       additionalProperties: false
