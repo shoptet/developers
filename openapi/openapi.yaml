@@ -2999,7 +2999,10 @@ paths:
                             description: 'If `true`, it will display barcode on all documents. Available only if module `invoicing` is active.'
                           showBillFullName:
                             type: boolean
-                            description: 'If `true`, the name of the contact person will be shown on the issued documents. Available only if module `invoicing` is active.'
+                            description: "If `true`, the name of the supplier's contact person will be shown on the issued documents. Available only if module `invoicing` is active."
+                          showBillFullNameOfRecipient:
+                            type: boolean
+                            description: "If `true`, the name of the recipient's contact person will be shown on the issued documents. Available only if module `invoicing` is active."
                       logoUrl:
                         type:
                           - string
