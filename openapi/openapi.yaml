@@ -14015,10 +14015,10 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
-        422:
-          description: 'Unprocessable Entity'
+        403:
+          description: Forbidden
           content:
-            'application/json; charset=utf-8':
+            application/json:
               schema:
                 type: object
                 properties:
@@ -14032,9 +14032,9 @@ paths:
                 data: null
                 errors:
                   -
-                    errorCode: no-project-domain-found
-                    message: 'No project domain found'
-                    instance: data.project.domains
+                    errorCode: missing-module
+                    message: 'Method requires active multishop module in eshop.'
+                    instance: multishop
       summary: 'Project domains'
       operationId: getProjectDomainList
       description: 'List of all domains project has.'
@@ -42715,6 +42715,7 @@ x-tagGroups:
       - Flags
       - Gifts
       - 'Payment methods'
+      - Project
       - 'Recycling fees'
       - 'Shipping methods'
       - Stocks
@@ -42723,7 +42724,6 @@ x-tagGroups:
       - Units
       - 'Variant parameters'
       - Warranties
-      - Project
   -
     name: System
     tags:
