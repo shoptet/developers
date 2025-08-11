@@ -7013,6 +7013,81 @@ paths:
                       description: 'File description.'
                       examples:
                         - 'Product technical sheet'
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process this request as "relatedFiles" module is not active.'
+                    instance: relatedFiles
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: product-not-found
+                    message: 'Product \"fc8e4a2a-4c41-11e7-819d-002590dc5efc\" does not exist.'
+                    instance: fc8e4a2a-4c41-11e7-819d-002590dc5efc
+      summary: 'Unlink all product related files'
+      operationId: unlinkAllProductRelatedFiles
+      description: 'Unlink all related files linked to a specific product.'
+      tags:
+        - Products
+      parameters:
+        -
+          name: guid
+          in: path
+          description: 'Product guid'
+          required: true
+          example: 93bc0dbe-7481-11e8-8216-002590dad85e
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products/changes:
     get:
       responses:
