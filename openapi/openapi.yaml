@@ -2765,6 +2765,9 @@ paths:
                           displayDoNotPay:
                             type: boolean
                             description: 'If `true`, display do not pay on paid invoice.'
+                          displayPriceWithoutDiscount:
+                            type: boolean
+                            description: 'If `true`, price before applying discount will be displayed on invoice.'
                       creditNote:
                         additionalProperties: false
                         type:
