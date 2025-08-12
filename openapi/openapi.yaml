@@ -739,6 +739,7 @@ info:
     order:cancel | Order cancel event. Webhook is emitted when order status is set to `canceled`. Throws `409 Conflict` when try to register simultaneously with `order:update` | Number (`code`) of order
     order:create | Order creation event | Number (`code`) of order
     order:delete | Order deleting event   | Number (`code`) of order
+    order:paid | Order paid event. Not emitted if a new order with paid status is created (register `order:create`/`order:massCreate`). Emitted only if the unpaid state is changed to paid during order update.   | Number (`code`) of order
     order:update | Order change event. Throws `409 Conflict` when try to register simultaneously with `order:cancel` | Number (`code`) of order
     orderHistoryRemarks:change | Order history remarks have been changed. Emitted when order remark is created or deleted | Number (`code`) of order
     orderStatusesList:change | Order status list change event. Emitted when order status is created, updated or deleted | Order status `ID`
@@ -790,6 +791,7 @@ info:
     invoice:massUpdate | Mass change of invoices event      | Json serialized list of number (`code`) of invoices
     order:massCreate | Mass create of orders event      | Json serialized list of number (`code`) of orders
     order:massUpdate | Mass change of orders event      | Json serialized list of number (`code`) of orders
+    order:massPaid | Mass paid of orders event. Not emitted if a new mass orders with paid status are created (register `order:create`/`order:massCreate`). Emitted only if the unpaid state is changed to paid during mass orders update.      | Json serialized list of number (`code`) of orders
     quantityDiscount:massDelete | Mass delete of quantity discount event | Json serialized list of quantity discounts IDs
     quantityDiscount:massUpdate | Mass change of quantity discount event | Json serialized list of quantity discounts IDs 
 
