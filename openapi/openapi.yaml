@@ -6727,7 +6727,7 @@ paths:
                           sourceUrl:
                             type: string
                             minLength: 1
-                            maxLength: 255
+                            maxLength: 2000
                             description: 'URL of the image.'
                             examples:
                               - 'https://www.your-eshop.com/cokolada.jpg'
@@ -6836,7 +6836,7 @@ paths:
                           sourceUrl:
                             type: string
                             minLength: 1
-                            maxLength: 255
+                            maxLength: 2000
                             description: 'URL of the image'
                             examples:
                               - 'https://www.your-eshop.com/cokolada.jpg'
