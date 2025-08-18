@@ -13819,6 +13819,31 @@ paths:
                                 description: 'special discounted price effective date - up to'
                                 examples:
                                   - '2018-02-25'
+                      prices:
+                        type:
+                          - object
+                        additionalProperties: false
+                        properties:
+                          purchasePrice:
+                            type: object
+                            additionalProperties: false
+                            description: 'Purchase price. Currently for preview only! Will be used as replace for buy price. Please watch API news.'
+                            properties:
+                              price:
+                                $ref: '#/components/schemas/typePriceNullable'
+                                description: 'purchase price.'
+                                examples:
+                                  - '500.00'
+                              vatRate:
+                                $ref: '#/components/schemas/typePriceNullable'
+                                description: 'VatRate for prices'
+                                examples:
+                                  - '21.00'
+                              includingVat:
+                                type: boolean
+                                description: 'flag, whether the purchase price is including VAT'
+                                examples:
+                                  - true
     delete:
       responses:
         200:
@@ -36467,6 +36492,35 @@ components:
         vatRate:
           $ref: '#/components/schemas/typeVatRate'
           description: 'VAT rate'
+    productPrices:
+      type:
+        - object
+      additionalProperties: false
+      properties:
+        purchasePrice:
+          type: object
+          additionalProperties: false
+          description: 'purchase price of the product variant. Currently for preview only! Will be used as replace for buy price. Please watch API news.'
+          required:
+            - price
+            - vatRate
+            - includingVat
+          properties:
+            price:
+              $ref: '#/components/schemas/typePriceNullable'
+              description: 'purchase price of the product variant'
+              examples:
+                - '500.00'
+            vatRate:
+              $ref: '#/components/schemas/typeVatRate'
+              description: 'VAT rate'
+              examples:
+                - 21.0
+            includingVat:
+              type: boolean
+              description: 'flag, whether the purchase price is including VAT'
+              examples:
+                - true
     cartPrice:
       type: object
       additionalProperties: false
@@ -38786,6 +38840,8 @@ components:
                       description: 'price list identifier'
                       examples:
                         - 1
+                    prices:
+                      $ref: '#/components/schemas/productPrices'
               url:
                 type:
                   - string
@@ -38793,6 +38849,8 @@ components:
                 description: 'If product has multiple variants, URL of the variant is provided.'
                 examples:
                   - 'https://www.domena-eshopu.cz/category/?variantId=51238'
+              prices:
+                $ref: '#/components/schemas/productPrices'
         images:
           type: array
           description: 'information about images.'
@@ -42727,6 +42785,8 @@ components:
           sales:
             $ref: '#/components/schemas/priceSales'
             description: 'definition of discounts.'
+          prices:
+            $ref: '#/components/schemas/productPrices'
 x-tagGroups:
   -
     name: Orders
