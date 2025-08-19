@@ -3577,6 +3577,20 @@ paths:
         - Products
       parameters:
         -
+          name: availabilityId
+          in: query
+          description: 'product availability id. Optional.'
+          example: 1
+          schema:
+            type: number
+        -
+          name: availabilityWhenSoldOutId
+          in: query
+          description: 'product availability id when not stocked. Optional.'
+          example: -2
+          schema:
+            type: number
+        -
           name: creationTimeFrom
           in: query
           description: 'date of product creation, lower limit. Optional.'
@@ -4622,6 +4636,20 @@ paths:
           example: '356eb81e-d966-11e0-b04f-57a43310b768,519d8f84-1609-11f0-bcf6-06999863e34a,519d8f84-1609-11f0-bcf6-06999863e34a'
           schema:
             type: string
+        -
+          name: availabilityId
+          in: query
+          description: 'product availability id. Optional.'
+          example: 1
+          schema:
+            type: number
+        -
+          name: availabilityWhenSoldOutId
+          in: query
+          description: 'product availability id when not stocked. Optional.'
+          example: -2
+          schema:
+            type: number
         -
           name: creationTimeFrom
           in: query
