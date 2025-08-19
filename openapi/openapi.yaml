@@ -14148,6 +14148,79 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/project/sales-channels:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - salesChannels
+                    properties:
+                      salesChannels:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - guid
+                            - name
+                            - type
+                            - currencies
+                            - languages
+                            - createdAt
+                            - updatedAt
+                          properties:
+                            guid:
+                              $ref: '#/components/schemas/typeGuid'
+                              description: 'Sales channel GUID.'
+                            name:
+                              type: string
+                              description: 'Sales channel name.'
+                              examples:
+                                - 'My sales channel'
+                            type:
+                              enum:
+                                - in_store
+                                - market
+                                - marketplace
+                              description: 'Type of sales channel.'
+                              examples:
+                                - in_store
+                            currencies:
+                              type: array
+                              items:
+                                $ref: '#/components/schemas/typeCurrency'
+                              description: 'Currencies collection.'
+                            languages:
+                              type: array
+                              items:
+                                $ref: '#/components/schemas/typeLanguage'
+                              description: 'Languages collection.'
+                            createdAt:
+                              $ref: '#/components/schemas/typeDateTime'
+                            updatedAt:
+                              $ref: '#/components/schemas/typeDateTimeNullable'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'Project sales channels'
+      operationId: getProjectSalesChannels
+      description: 'Information about project sales channels.'
+      tags:
+        - Project
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/orders:
     get:
       responses:
@@ -35636,6 +35709,114 @@ components:
       description: 'Const symbol. Only numbers are allowed (max length 4).'
       examples:
         - '0308'
+    typeCurrency:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - title
+        - symbol
+        - isSymbolOnLeft
+        - precision
+        - decimalSeparator
+      properties:
+        code:
+          $ref: '#/components/schemas/typeCurrencyCode'
+        title:
+          type: string
+          description: 'Currency title.'
+          examples:
+            - Koruna
+        symbol:
+          type: string
+          description: 'Currency symbol.'
+          examples:
+            - Kč
+        isSymbolOnLeft:
+          type: boolean
+          description: 'Whether the currency symbol is on left side.'
+          examples:
+            - false
+        precision:
+          type: integer
+          description: 'Currency precision.'
+          examples:
+            - 2
+        priority:
+          type:
+            - integer
+            - 'null'
+          description: 'Currency priority.'
+          examples:
+            - 1
+        decimalSeparator:
+          type: string
+          description: 'Currency decimal separator.'
+          examples:
+            - ','
+        thousandSeparator:
+          type: string
+          description: 'Currency thousand separator.'
+          examples:
+            - .
+        isDefault:
+          type: boolean
+          description: 'Whether the language is default.'
+          examples:
+            - true
+    typeLanguage:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - name
+        - dateFormat
+        - timeFormat
+        - isVisible
+        - isBlocked
+      properties:
+        code:
+          type: string
+          description: 'Language code.'
+          examples:
+            - cs
+        name:
+          type: string
+          description: 'Language name.'
+          examples:
+            - Čeština
+        dateFormat:
+          type: string
+          description: 'Date format of language.'
+          examples:
+            - 'Y. n. j.'
+        timeFormat:
+          type: string
+          description: 'Time format of language.'
+          examples:
+            - 'H:i'
+        isVisible:
+          type: boolean
+          description: 'Whether the language is visible.'
+          examples:
+            - true
+        isBlocked:
+          type: boolean
+          description: 'Whether the language is blocked.'
+          examples:
+            - false
+        priority:
+          type:
+            - integer
+            - 'null'
+          description: 'Language priority.'
+          examples:
+            - 3
+        isDefault:
+          type: boolean
+          description: 'Whether the language is default.'
+          examples:
+            - true
     typeAmount:
       type: string
       pattern: '^(-)?[0-9]+\.[0-9]{3}$'
@@ -35691,7 +35872,7 @@ components:
     typeCurrencyCode:
       type: string
       pattern: '^[a-zA-Z]{3}$'
-      description: 'currency code. List of available currencies within the e-shop can be found in endpoint `GET /api/eshop`.'
+      description: 'Currency code. List of available currencies within the e-shop can be found in endpoint `GET /api/eshop`.'
       examples:
         - CZK
     typeCurrencyCodeNullable:
