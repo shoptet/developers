@@ -2770,6 +2770,11 @@ paths:
                           displayPriceWithoutDiscount:
                             type: boolean
                             description: 'If `true`, price before applying discount will be displayed on invoice.'
+                          displayTaxableSupplyDate:
+                            type: boolean
+                            description: 'If `true`, the tax date (DUZP – Date of taxable supply) will be displayed on the invoice.'
+                            examples:
+                              - true
                       creditNote:
                         additionalProperties: false
                         type:
