@@ -1,17 +1,86 @@
-name: Deploy collection
+name: Deploy Postman collection
 on:
   push:
     branches: [master]
     paths:
       - openapi/openapi.yaml
+  workflow_dispatch:
+    inputs:
+      postman_api_key:
+        description: Postman API key - For debugging purposes
+        default: ${{ secrets.POSTMAN_API_KEY }}
+      postman_workspace_name:
+        description: Postman Workspace name - For debugging purposes
+        default: 'Shoptet public API Workspace'
+      postman_collection_name:
+        description: Postman Collection name - For debugging purposes
+        default: 'Shoptet API'
+
+env:
+  POSTMAN_API_KEY: ${{ github.event.inputs.postman_api_key || secrets.POSTMAN_API_KEY }}
+  POSTMAN_WORKSPACE_NAME: ${{ github.event.inputs.postman_workspace_name || 'Shoptet public API Workspace' }}
+  POSTMAN_COLLECTION_NAME: ${{ github.event.inputs.postman_collection_name || 'Shoptet API' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: aanimesh23/openapi-publish-action@v1
+      - run: |
+          echo "$POSTMAN_API_KEY"
+          echo "$POSTMAN_WORKSPACE_NAME"
+          echo "$POSTMAN_COLLECTION_NAME"
+          exit 1
+
+      - name: 🛒 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🧰 Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          collectionName: Shoptet API
-          workspaceName: Shoptet public API Workspace
-          postmanApiKey: ${{ secrets.POSTMAN_API_KEY }}
-          openApiSpec: ./openapi/openapi.yaml
+          node-version: '20'
+
+      - name: 📦 Install openapi-to-postmanv2
+        run: npm install -g openapi-to-postmanv2
+
+      - name: 🔄 Generate Postman collection from OpenAPI
+        run: |
+          openapi2postmanv2 -s ./openapi/openapi.yaml -o postman_collection.json -p -O folderStrategy=Tags
+
+      - name: 🚀 Postman API - Get Workspace ID
+        id: get_postman_workspace_id
+        run: |
+          WORKSPACE_ID=$(curl --fail --silent --show-error --location --request GET \
+            "https://api.getpostman.com/workspaces" \
+            --header "X-Api-Key: $POSTMAN_API_KEY" \
+            --header "Content-Type: application/json" |
+          jq -c '.workspaces[] | select(.name == "$POSTMAN_WORKSPACE_NAME")'.id)
+          echo "workspace_id=$WORKSPACE_ID" >> $GITHUB_OUTPUT
+          if [[ $WORKSPACE_ID = '' ]]; then echo "No Workspace found. Please create a workspace with name $POSTMAN_WORKSPACE_NAME" exit 1; fi
+
+      - name: 🚀 Postman API - Get Collection ID
+        id: get_postman_collection_id
+        run: |
+          COLLECTION_ID=$(curl --fail --silent --show-error --location --request GET \
+            "https://api.getpostman.com/collections?workspace=${{ steps.get_postman_workspace_id.outputs.workspace_id }}" \
+            --header "X-Api-Key: $POSTMAN_API_KEY" \
+            --header "Content-Type: application/json" |
+          jq -c '.collections[] | select(.name == "POSTMAN_COLLECTION_NAME")'.id)
+          echo "collection_id=COLLECTION_ID" >> $GITHUB_OUTPUT
+
+      - name: 🚀 Postman API - Create Collection if not exists
+        if: steps.get_postman_workspace_id.outputs.collection_id == ''
+        run: |
+          curl --fail --silent --show-error --location --request POST \
+            "https://api.getpostman.com/collections?workspace=${{ steps.get_postman_workspace_id.outputs.workspace_id }}" \
+            --header "X-Api-Key: $POSTMAN_API_KEY" \
+            --header "Content-Type: application/json" \
+            --data @postman_collection.json
+
+      - name: 🚀 Postman API - Update existing Collection
+        if: steps.get_postman_workspace_id.outputs.collection_id != ''
+        run: |
+          curl --fail --silent --show-error --location --request PUT \
+            "https://api.getpostman.com/collections/${{ steps.get_postman_workspace_id.outputs.collection_id }}" \
+            --header "X-Api-Key: $POSTMAN_API_KEY" \
+            --header "Content-Type: application/json" \
+            --data @postman_collection.json
