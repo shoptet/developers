@@ -25,62 +25,80 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo "$POSTMAN_API_KEY"
-          echo "$POSTMAN_WORKSPACE_NAME"
-          echo "$POSTMAN_COLLECTION_NAME"
-          exit 1
-
-      - name: 🛒 Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: 🧰 Set up Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: 📦 Install openapi-to-postmanv2
+      - name: Install openapi-to-postmanv2
         run: npm install -g openapi-to-postmanv2
 
-      - name: 🔄 Generate Postman collection from OpenAPI
+      - name: Generate Postman collection from OpenAPI
         run: |
           openapi2postmanv2 -s ./openapi/openapi.yaml -o postman_collection.json -p -O folderStrategy=Tags
 
-      - name: 🚀 Postman API - Get Workspace ID
+      - name: Prepare Postman collection request body
+        run: |
+          jq '{ collection: . }' <postman_collection.json | jq --arg POSTMAN_COLLECTION_NAME "$POSTMAN_COLLECTION_NAME" '.collection.info.name |= $POSTMAN_COLLECTION_NAME' >postman_collection_request_body.json
+
+      - name: Postman API - Get Workspace ID
         id: get_postman_workspace_id
         run: |
-          WORKSPACE_ID=$(curl --fail --silent --show-error --location --request GET \
+          RESPONSE_BODY=$(curl --fail --silent --show-error --location --request GET \
             "https://api.getpostman.com/workspaces" \
             --header "X-Api-Key: $POSTMAN_API_KEY" \
-            --header "Content-Type: application/json" |
-          jq -c '.workspaces[] | select(.name == "$POSTMAN_WORKSPACE_NAME")'.id)
-          echo "workspace_id=$WORKSPACE_ID" >> $GITHUB_OUTPUT
-          if [[ $WORKSPACE_ID = '' ]]; then echo "No Workspace found. Please create a workspace with name $POSTMAN_WORKSPACE_NAME" exit 1; fi
+            --header "Content-Type: application/json")
+          echo "::debug::$RESPONSE_BODY"
 
-      - name: 🚀 Postman API - Get Collection ID
+          WORKSPACE_ID=$(echo $RESPONSE_BODY | jq -r --arg POSTMAN_WORKSPACE_NAME "$POSTMAN_WORKSPACE_NAME" '.workspaces[] | select(.name == $POSTMAN_WORKSPACE_NAME)'.id)
+          echo "::debug::$WORKSPACE_ID"
+
+          echo "workspace_id=$WORKSPACE_ID" >> $GITHUB_OUTPUT
+
+          if [[ $WORKSPACE_ID = '' ]]; then
+              echo "::error::No Workspace found. Please create a workspace with name $POSTMAN_WORKSPACE_NAME"
+              exit 1
+          fi
+
+      - name: Postman API - Get Collection ID
         id: get_postman_collection_id
         run: |
-          COLLECTION_ID=$(curl --fail --silent --show-error --location --request GET \
+          echo "::debug::${{ steps.get_postman_workspace_id.outputs.workspace_id }}"
+
+          RESPONSE_BODY=$(curl --fail --silent --show-error --location --request GET \
             "https://api.getpostman.com/collections?workspace=${{ steps.get_postman_workspace_id.outputs.workspace_id }}" \
             --header "X-Api-Key: $POSTMAN_API_KEY" \
-            --header "Content-Type: application/json" |
-          jq -c '.collections[] | select(.name == "POSTMAN_COLLECTION_NAME")'.id)
-          echo "collection_id=COLLECTION_ID" >> $GITHUB_OUTPUT
+            --header "Content-Type: application/json")
+          echo "::debug::$RESPONSE_BODY"
 
-      - name: 🚀 Postman API - Create Collection if not exists
-        if: steps.get_postman_workspace_id.outputs.collection_id == ''
+          COLLECTION_ID=$(echo $RESPONSE_BODY | jq -r --arg POSTMAN_COLLECTION_NAME "$POSTMAN_COLLECTION_NAME" '.collections[] | select(.name == $POSTMAN_COLLECTION_NAME)'.id)
+          echo "::debug::$COLLECTION_ID"
+
+          echo "collection_id=$COLLECTION_ID" >> $GITHUB_OUTPUT
+
+      - name: Postman API - Create Collection if not exists
+        if: steps.get_postman_collection_id.outputs.collection_id == ''
         run: |
-          curl --fail --silent --show-error --location --request POST \
+          echo "::debug::${{ steps.get_postman_workspace_id.outputs.workspace_id }}"
+
+          RESPONSE_BODY=$(curl --fail --silent --show-error --location --request POST \
             "https://api.getpostman.com/collections?workspace=${{ steps.get_postman_workspace_id.outputs.workspace_id }}" \
             --header "X-Api-Key: $POSTMAN_API_KEY" \
             --header "Content-Type: application/json" \
-            --data @postman_collection.json
+            --data @postman_collection_request_body.json)
+          echo "::debug::$RESPONSE_BODY"
 
-      - name: 🚀 Postman API - Update existing Collection
-        if: steps.get_postman_workspace_id.outputs.collection_id != ''
+      - name: Postman API - Update existing Collection
+        if: steps.get_postman_collection_id.outputs.collection_id != ''
         run: |
-          curl --fail --silent --show-error --location --request PUT \
-            "https://api.getpostman.com/collections/${{ steps.get_postman_workspace_id.outputs.collection_id }}" \
+          echo "::debug::${{ steps.get_postman_collection_id.outputs.collection_id }}"
+
+          RESPONSE_BODY=$(curl --fail --silent --show-error --location --request PUT \
+            "https://api.getpostman.com/collections/${{ steps.get_postman_collection_id.outputs.collection_id }}" \
             --header "X-Api-Key: $POSTMAN_API_KEY" \
             --header "Content-Type: application/json" \
-            --data @postman_collection.json
+            --data @postman_collection_request_body.json)
+          echo "::debug::$RESPONSE_BODY"
