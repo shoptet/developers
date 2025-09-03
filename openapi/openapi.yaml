@@ -12975,7 +12975,7 @@ paths:
       description: |-
         This method set given products (minimum 0, maximum 50), defined by product variant `code` to the bundle of products (product-set).
         Product defined in url by `guid`, must be set as `type` : `product-set`. When successfully saved, complete list of products in the set is returned in response.
-        It is not allowed to add a product of the `product-set` type to an existing product set.  
+        It is not allowed to add a product of the `product-set` type to an existing product set.
       tags:
         - 'Product sets'
       requestBody:
@@ -27759,6 +27759,13 @@ paths:
                               description: 'whether full profile is needed for customer.'
                               examples:
                                 - true
+                            defaultDueDays:
+                              type:
+                                - integer
+                                - 'null'
+                              description: 'Default maturity for documents in days'
+                              examples:
+                                - 14
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
