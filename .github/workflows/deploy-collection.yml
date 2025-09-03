@@ -8,7 +8,7 @@ on:
     inputs:
       postman_api_key:
         description: Postman API key - For debugging purposes
-        default: ${{ secrets.POSTMAN_API_KEY }}
+        default: ''
       postman_workspace_name:
         description: Postman Workspace name - For debugging purposes
         default: 'Shoptet public API Workspace'
