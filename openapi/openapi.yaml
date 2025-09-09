@@ -5630,6 +5630,41 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/products.jsonl" not found.'
+                    instance: batchFileUrlPath
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: products-batch-update
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: products-batch-update
       summary: 'Product BATCH update'
       operationId: productBatchUpdate
       description: |-
@@ -7916,6 +7951,41 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/categories.jsonl" not found.'
+                    instance: batchFileUrlPath
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: categories-batch-update
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: categories-batch-update
       summary: 'Product category BATCH update'
       operationId: updateProductCategoryBatch
       description: |-
@@ -18852,6 +18922,41 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/orders.jsonl" not found.'
+                    instance: batchFileUrlPath
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: orders-batch-insert
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: orders-batch-insert
       summary: 'Order BATCH insertion'
       operationId: orderBatchInsertion
       description: |-
@@ -25611,6 +25716,41 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/brands.jsonl" not found.'
+                    instance: batchFileUrlPath
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: brands-batch-create
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: brands-batch-create
       summary: 'BATCH creation of brands'
       operationId: createBrandBatch
       description: |-
