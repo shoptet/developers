@@ -8339,6 +8339,287 @@ paths:
             type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - parametricCategory
+                    properties:
+                      parametricCategory:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - guid
+                          - name
+                          - indexName
+                          - url
+                          - description
+                          - secondDescription
+                          - image
+                          - title
+                          - metaTagDescription
+                          - originalCategoryGuid
+                          - showInList
+                          - showInDetail
+                        properties:
+                          guid:
+                            type: string
+                            description: 'unique identifier of the category'
+                            examples:
+                              - 1b02cb8e-d7b5-11e0-9a5c-feab5ed617ed
+                          name:
+                            type: string
+                            description: 'category name'
+                            examples:
+                              - 'Watches: Space grey'
+                          indexName:
+                            type: string
+                            description: 'ending part of category URL'
+                            examples:
+                              - watches-space-grey
+                          url:
+                            type: string
+                            description: 'category URL in the e-shop'
+                            examples:
+                              - 'https://classic.shoptet.cz/watches-space-grey/'
+                          description:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'top category description'
+                            examples:
+                              - '<p>Horní popis kategorie</p>'
+                          secondDescription:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'bottom category description'
+                            examples:
+                              - '<p>Dolní popis kategorie</p>'
+                          image:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'header image'
+                            examples:
+                              - 'https://beta.shoptet.cz/user/categories/thumb/supreme-plush-santa-hat.jpg'
+                          title:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'HTML title element in the HTML header of the category page'
+                            examples:
+                              - 'Watches space grey nice ones'
+                          metaTagDescription:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'HTML META header `Description` in category page'
+                            examples:
+                              - 'Watches, spacegrey, nice, watch'
+                          originalCategoryGuid:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'unique identifier of the original category (from which was the parametric category created)'
+                            examples:
+                              - 1b02cb8e-d7b5-11e0-9a5c-feab5ed617ed
+                          showInList:
+                            type: boolean
+                            description: 'flag, whether the category is visible in product list'
+                            examples:
+                              - true
+                          showInDetail:
+                            type: boolean
+                            description: 'flag, whether the category is visible in product detail'
+                            examples:
+                              - true
+                          parameters:
+                            type: array
+                            description: 'parameters of the parametric category (requires `parameters` include in request url)'
+                            items:
+                              $ref: '#/components/schemas/parameterValueCombinations'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process this request as "advancedSeo" module is not active.'
+                    instance: advancedSeo
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Category with given \"11f7d2f4-4c42-11e7-819d-002590dc5efc\" does not exist.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Combination of the parameterCodes does not exists for the specified category.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Parametric category with the same combination of valueCodes already exists.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'One or more valueCodes does not exist for the specified parameters.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'File image.png does not exist in temp upload storage.'
+                    instance: data.sourceImageName
+      summary: 'Creation of parametric category'
+      operationId: createParametricCategory
+      description: |2-
+         Creates a new combination for a parametric category.
+        A parametric category for the selected parameter codes and the default category must exist. You can create only one parametric category combination for each combination of parameterCode and valueCode.
+        The "Advanced SEO" module must be active to use this endpoint.
+      tags:
+        - 'Parametric parameters'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - name
+                    - originalCategoryGuid
+                    - parameters
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                      description: 'Parametric category name'
+                      examples:
+                        - 'Green XL'
+                    originalCategoryGuid:
+                      $ref: '#/components/schemas/typeGuid'
+                      description: 'Unique identifier of the original category from which the parametric category is created'
+                      examples:
+                        - 1b02cb8e-d7b5-11e0-9a5c-feab5ed617ed
+                    parameters:
+                      type: array
+                      description: 'Parameters of the parametric category'
+                      items:
+                        $ref: '#/components/schemas/parameterValueCombinationsCodes'
+                      minItems: 1
+                      maxItems: 4
+                    indexName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                      description: 'Last part of url. Optional, generated from `valueCodes` if not set.'
+                      examples:
+                        - green-xl
+                    description:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Top parametric category description. Max length 65535 bytes. Optional.'
+                      examples:
+                        - '<p>Top parametric category description</p>'
+                    secondDescription:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Bottom parametric category description. Max length 65535 bytes. Optional.'
+                      examples:
+                        - '<p>Bottom parametric category description</p>'
+                    sourceImageName:
+                      $ref: '#/components/schemas/typeFilenameNullable'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as parametric category image.'
+                      examples:
+                        - image.png
+                    title:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 255
+                      description: 'Meta tag title. Optional.'
+                      examples:
+                        - 'Green XL t-shirt'
+                    metaTagDescription:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Meta tag description. Optional.'
+                      examples:
+                        - 'Green t-shirt, t-shirt xl, green, xl'
+                    showInList:
+                      type:
+                        - boolean
+                        - 'null'
+                      description: 'Flag, whether the parametric category is visible in category list. Default is `false`. Optional'
+                      examples:
+                        - true
+                    showInDetail:
+                      type:
+                        - boolean
+                        - 'null'
+                      description: 'Flag, whether the parametric category is visible in product detail. Default is `true`. Optional'
+                      examples:
+                        - true
+      parameters:
+        -
+          name: include
+          in: query
+          description: 'Include additional data in response. Possible values: `parameters`.'
+          example: parameters
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/parametric-categories/{categoryGuid}':
     get:
       responses:
@@ -13045,7 +13326,7 @@ paths:
       description: |-
         This method set given products (minimum 0, maximum 50), defined by product variant `code` to the bundle of products (product-set).
         Product defined in url by `guid`, must be set as `type` : `product-set`. When successfully saved, complete list of products in the set is returned in response.
-        It is not allowed to add a product of the `product-set` type to an existing product set.
+        It is not allowed to add a product of the `product-set` type to an existing product set.  
       tags:
         - 'Product sets'
       requestBody:
@@ -40706,6 +40987,23 @@ components:
           description: 'Name of the parameter value'
           examples:
             - Red
+    parameterValueCombinationsCodes:
+      type: object
+      additionalProperties: false
+      required:
+        - parameterCode
+        - valueCode
+      properties:
+        parameterCode:
+          type: string
+          description: 'Code of the parameter'
+          examples:
+            - color
+        valueCode:
+          type: string
+          description: 'Code of the parameter value'
+          examples:
+            - red
     xyDiscount:
       type: object
       additionalProperties: false
