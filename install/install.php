@@ -11,7 +11,7 @@ $clientId = 'ae5d72b8964a08ed';
 // If, in Partner e-shop administration -> Connections -> API partner -> Access to API,
 // you do not see the value, clientSecret has not been activated (older API partners),
 // so do not send it in communication // with OAuth server
-$clientSecret = 'dqwffewfsgdrgwefsfgdtjtkyodg';
+$clientSecret = 'shoasecret_dd37b1fc0504b16308115c9e270a785058cce61b067fde960bc13db37cc66674';
 
 // URL for authorization vs. OAuth server
 // This is an example only. For a specific value,
