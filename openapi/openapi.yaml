@@ -19942,7 +19942,7 @@ paths:
                             - code
                             - varSymbol
                             - isValid
-                            - proformaInvoiceCode
+                            - proformaInvoiceCodes
                             - orderCode
                             - creationTime
                             - billCompany
@@ -19966,13 +19966,6 @@ paths:
                               description: 'is the invoice valid?'
                               examples:
                                 - true
-                            proformaInvoiceCode:
-                              type:
-                                - string
-                                - 'null'
-                              description: 'DEPRECATED - proforma invoice number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc. If this property is null, please check also proformaInvoiceCodes if there are more than one proforma invoice linked to this invoice.'
-                              examples:
-                                - '2017000017'
                             proformaInvoiceCodes:
                               $ref: '#/components/schemas/proformaInvoiceCodes'
                               description: 'List of linked proforma invoices'
@@ -20684,10 +20677,6 @@ paths:
                     errorCode: proforma-invoice-and-invoice-has-different-currency
                     message: 'Proforma invoice with code "O-2017000017-01" is not in the same currency as the invoice "2017100013".'
                     instance: O-2017000017-01
-                  -
-                    errorCode: proforma-invoice-only-one-linked-to-invoice
-                    message: 'Only one proforma invoice can be linked to the invoice.'
-                    instance: data.proformaInvoiceCodes
               schema:
                 type: object
                 properties:
@@ -20700,8 +20689,7 @@ paths:
       summary: 'Invoice link proforma invoices'
       operationId: invoiceLinkProformaInvoices
       description: |-
-        Linking proforma invoices to invoice. Proforma invoices must be related to the order, must be in same currency as the order, must be valid and cannot be linked to another invoice.
-        Important note: this endpoint allowed only one proforma linked to the invoice at this time. Once `proformaInvoiceCode` is sunset, more proforma invoices will be allowed to link to the invoice.
+        Linking proforma invoices to invoice. Proforma invoices must be related to the order, must be in same currency as the order, must be valid and cannot be linked to another invoice. Multiple proforma invoices are allowed to link to the invoice.
         This endpoint has several sections, which are only sent when requested in the `include` parameter (see
         [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
 
@@ -43659,7 +43647,7 @@ components:
       required:
         - code
         - isValid
-        - proformaInvoiceCode
+        - proformaInvoiceCodes
         - orderCode
         - creationTime
         - changeTime
@@ -43692,14 +43680,6 @@ components:
           description: 'is the invoice valid?'
           examples:
             - true
-        proformaInvoiceCode:
-          type:
-            - string
-            - 'null'
-          description: 'DEPRECATED - proforma invoice number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
-          examples:
-            - '2017000017'
-          deprecated: true
         proformaInvoiceCodes:
           $ref: '#/components/schemas/proformaInvoiceCodes'
           description: 'List of linked proforma invoices'
