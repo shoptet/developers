@@ -1525,6 +1525,8 @@ paths:
                           - internals
                           - exchangeRateFlip
                           - negativeStockAmount
+                          - oss
+                          - stockControlDisabled
                         properties:
                           vatPayer:
                             type: boolean
@@ -1597,6 +1599,11 @@ paths:
                           oss:
                             type: boolean
                             description: 'Determines if eshop has the OSS (One stop shop) tax mode enabled, this affects behavior of VAT rates in the order.'
+                            examples:
+                              - false
+                          stockControlDisabled:
+                            type: boolean
+                            description: 'Determines if eshop has stock control disabled, this is also true if stock module is disabled.'
                             examples:
                               - false
                       currencies:
