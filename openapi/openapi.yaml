@@ -1058,6 +1058,9 @@ tags:
     name: 'Related products'
     description: 'Managing related products.'
   -
+    name: 'Product related files'
+    description: 'Managing product related files.'
+  -
     name: 'Product sets'
     description: 'Managing product sets.'
   -
@@ -7082,10 +7085,16 @@ paths:
                           type: object
                           additionalProperties: false
                           required:
+                            - id
                             - name
                             - url
                             - size
                           properties:
+                            id:
+                              type: integer
+                              description: 'Related file id'
+                              examples:
+                                - 426
                             name:
                               type:
                                 - string
@@ -7126,7 +7135,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       description: 'Linking related file from temporary storage to product.'
       tags:
-        - Products
+        - 'Product related files'
       requestBody:
         content:
           application/json:
@@ -7228,6 +7237,90 @@ paths:
           example: 93bc0dbe-7481-11e8-8216-002590dad85e
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/products/{guid}/related-files/{id}':
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process request as "relatedFiles" module is not active.'
+                    instance: relatedFiles
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File with ID "243" not found.'
+                    instance: id
+      summary: 'Delete one product related file'
+      operationId: deleteOneProductRelatedFile
+      description: "Deletes product's related file."
+      tags:
+        - 'Product related files'
+      parameters:
+        -
+          name: guid
+          in: path
+          description: "Product's guid"
+          required: true
+          example: 92d77e60-7481-11e8-8216-002590dad85e
+          schema:
+            type: string
+        -
+          name: id
+          in: path
+          description: 'Related file id'
+          required: true
+          example: 232
+          schema:
+            type: number
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/products/changes:
@@ -40129,10 +40222,16 @@ components:
             type: object
             additionalProperties: false
             required:
+              - id
               - name
               - url
               - size
             properties:
+              id:
+                type: integer
+                description: 'Related file id'
+                examples:
+                  - 426
               name:
                 type:
                   - string
@@ -43848,8 +43947,9 @@ x-tagGroups:
       - 'Product availabilities'
       - 'Product gifts'
       - 'Product images'
-      - 'Product sets'
       - 'Related products'
+      - 'Product related files'
+      - 'Product sets'
   -
     name: Customers
     tags:
