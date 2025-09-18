@@ -9169,6 +9169,82 @@ paths:
                       description: 'Flag, whether the parametric category is visible in product detail. Default is `true`. Optional'
                       examples:
                         - true
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                    additionalProperties: false
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process this request as "advancedSeo" module is not active.'
+                    instance: advancedSeo
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: parametric-category-not-found
+                    message: 'Parametric category "1e3f3f3f-3f3f-63ca-b93f-02423f1f0005" was not found.'
+                    instance: 1e3f3f3f-3f3f-63ca-b93f-02423f1f0005
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Delete of parametric category'
+      operationId: deleteParametricCategory
+      description: 'Delete existing parametric category. The "Advanced SEO" module must be active to use this endpoint.'
+      tags:
+        - 'Parametric categories'
+      parameters:
+        -
+          name: categoryGuid
+          in: path
+          description: 'Guid of parametric category.'
+          required: true
+          example: 5c498fb7-70ac-11e9-9208-08002774f818
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products/flags:
     get:
       responses:
