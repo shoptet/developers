@@ -4324,6 +4324,33 @@ paths:
                             description: 'Has atypical shipping?'
                             examples:
                               - true
+                          ossVatLevels:
+                            type: array
+                            description: 'OSS Tax setup'
+                            items:
+                              type: object
+                              additionalProperties: false
+                              required:
+                                - countryCode
+                                - taxLevel
+                              properties:
+                                countryCode:
+                                  type: string
+                                  maxLength: 2
+                                  description: 'Country code'
+                                  examples:
+                                    - CZ
+                                taxLevel:
+                                  enum:
+                                    - high
+                                    - low
+                                    - third
+                                    - none
+                                    - superLow
+                                    - parking
+                                  description: 'Tax level type. Use Enums: high: Standard tax rate, none: Zero tax rate, low: First reduced tax rate, third: Second reduced tax rate, superLow: Super low tax rate, parking: Parking tax rate.'
+                                  examples:
+                                    - high
                     indexName:
                       type: string
                       description: 'String which defines product url. Value is sanitized to fits url needs. If value is not present, indexName is created from product name.'
@@ -5489,6 +5516,33 @@ paths:
                             description: 'Has atypical shipping?'
                             examples:
                               - true
+                          ossVatLevels:
+                            type: array
+                            description: 'OSS Tax setup'
+                            items:
+                              type: object
+                              additionalProperties: false
+                              required:
+                                - countryCode
+                                - taxLevel
+                              properties:
+                                countryCode:
+                                  type: string
+                                  maxLength: 2
+                                  description: 'Country code'
+                                  examples:
+                                    - CZ
+                                taxLevel:
+                                  enum:
+                                    - high
+                                    - low
+                                    - third
+                                    - none
+                                    - superLow
+                                    - parking
+                                  description: 'Tax level type. Use Enums: high: Standard tax rate, none: Zero tax rate, low: First reduced tax rate, third: Second reduced tax rate, superLow: Super low tax rate, parking: Parking tax rate.'
+                                  examples:
+                                    - high
                     indexName:
                       type: string
                       minLength: 1
@@ -6341,6 +6395,33 @@ paths:
                             description: 'Has atypical shipping?'
                             examples:
                               - true
+                          ossVatLevels:
+                            type: array
+                            description: 'OSS Tax setup'
+                            items:
+                              type: object
+                              additionalProperties: false
+                              required:
+                                - countryCode
+                                - taxLevel
+                              properties:
+                                countryCode:
+                                  type: string
+                                  maxLength: 2
+                                  description: 'Country code'
+                                  examples:
+                                    - CZ
+                                taxLevel:
+                                  enum:
+                                    - high
+                                    - low
+                                    - third
+                                    - none
+                                    - superLow
+                                    - parking
+                                  description: 'Tax level type. Use Enums: high: Standard tax rate, none: Zero tax rate, low: First reduced tax rate, third: Second reduced tax rate, superLow: Super low tax rate, parking: Parking tax rate.'
+                                  examples:
+                                    - high
                     indexName:
                       type: string
                       minLength: 1
@@ -40044,6 +40125,47 @@ components:
                   - 'https://www.domena-eshopu.cz/category/?variantId=51238'
               prices:
                 $ref: '#/components/schemas/productPrices'
+              ossVatLevels:
+                type: array
+                description: 'OSS VAT levels'
+                items:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - countryCode
+                    - taxLevel
+                    - taxLevelDescription
+                    - taxValue
+                  properties:
+                    countryCode:
+                      type:
+                        - string
+                      description: 'Country code'
+                      examples:
+                        - CZ
+                    taxLevel:
+                      enum:
+                        - high
+                        - low
+                        - third
+                        - none
+                        - superLow
+                        - parking
+                      description: 'Tax level type. Use Enums: high: Standard tax rate, none: Zero tax rate, low: First reduced tax rate, third: Second reduced tax rate, superLow: Super low tax rate, parking: Parking tax rate.'
+                      examples:
+                        - high
+                    taxLevelDescription:
+                      type: string
+                      description: 'Description of tax level type'
+                      examples:
+                        - 'Standard tax rate'
+                    taxValue:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Tax value in %'
+                      examples:
+                        - 1024
         images:
           type: array
           description: 'information about images.'
