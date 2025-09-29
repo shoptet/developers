@@ -4353,7 +4353,7 @@ paths:
                                     - high
                     indexName:
                       type: string
-                      description: 'String which defines product url. Value is sanitized to fits url needs. If value is not present, indexName is created from product name.'
+                      description: 'String which defines product url. Value is sanitized to fits url needs = All characters except [a-zA-Z0-9_] will be converted to `-`. If value is not present, indexName is created from product name.'
                       examples:
                         - baleriny-modre-s-puntiky
                       minLength: 1
@@ -5546,7 +5546,7 @@ paths:
                     indexName:
                       type: string
                       minLength: 1
-                      description: 'String which defines product url. Value is sanitized to fits url needs. If value is not present, indexName is created from product name.'
+                      description: 'String which defines product url. Value is sanitized to fits url needs = All characters except [a-zA-Z0-9_] will be converted to `-`. If value is not present, indexName is created from product name.'
                       examples:
                         - baleriny-modre-s-puntiky
                     relatedVideos:
@@ -6425,7 +6425,7 @@ paths:
                     indexName:
                       type: string
                       minLength: 1
-                      description: 'String which defines product url. Value is sanitized to fits url needs. If value is not present, indexName is created from product name.'
+                      description: 'String which defines product url. Value is sanitized to fits url needs = All characters except [a-zA-Z0-9_] will be converted to `-`. If value is not present, indexName is created from product name.'
                       examples:
                         - baleriny-modre-s-puntiky
                     relatedVideos:
@@ -39414,6 +39414,11 @@ components:
           description: 'product name'
           examples:
             - 'Pelle 1978'
+        indexName:
+          type: string
+          description: 'String which defines product url.'
+          examples:
+            - baleriny-modre-s-puntiky
         brand:
           oneOf:
             -
