@@ -1266,6 +1266,12 @@ tags:
       Allows you to access the system measure unit. These units are convertible to
       each other and cannot be redefined or extended. For defining/extending your
       own units use [Units](#tag/units) in the **Settings** section.
+  -
+    name: Batch
+    description: 'Schemas related to batch actions.'
+  -
+    name: Snapshot
+    description: 'Schemas related to snapshot actions.'
 paths:
   /api/eshop:
     get:
@@ -4673,17 +4679,16 @@ paths:
       summary: 'List of all products'
       operationId: getListOfAllProducts
       description: |-
-        Using this endpoint, you can get list of all products with detailed info of each product (like in Product Detail endpoint)
-        asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our
-        developer's portal.
+        Using this endpoint, you can get list of all products with detailed info of each product (like in Product Detail endpoint) asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
 
 
         Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
-        One product in response has the same format as product detail response (in `data` attribute)
 
 
-        This endpoint has several sections, which are exported only when requested in the `include` parameter (see
-        [Section on demand](#section/basic-principles/section-on-demand)).
+        One product in response has the same format as product detail response. See [Product snapshot schema](#tag/snapshot/productsnapshot) for more details.
+
+
+        This endpoint has several sections, which are exported only when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
 
 
         Include parameter     | Meaning
@@ -4874,7 +4879,11 @@ paths:
       operationId: getListOfAllProductsAndPricelistPrices
       description: |-
         Using this endpoint, you can get list of all products with basic data such as  product guid, id, code and its prices across all pricelists.
-        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
+
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file. See [Product price list snapshot schema](#tag/snapshot/productpricelistsnapshot) for more details.
+
+
         Result file is compressed using GZIP.
       tags:
         - Products
@@ -5085,501 +5094,7 @@ paths:
                 - data
               properties:
                 data:
-                  type: object
-                  minProperties: 1
-                  additionalProperties: false
-                  properties:
-                    guid:
-                      $ref: '#/components/schemas/typeGuid'
-                      description: 'Product GUID. Must be unique if set.'
-                    type:
-                      type: string
-                      enum:
-                        - product
-                        - bazar
-                        - service
-                        - product-set
-                      description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product types](#section/code-lists/product-types) code list."
-                      examples:
-                        - product
-                        - bazar
-                        - service
-                        - product-set
-                    visibility:
-                      type: string
-                      enum:
-                        - hidden
-                        - visible
-                        - blocked
-                        - show-registered
-                        - block-unregistered
-                        - cash-desk-only
-                        - detail-only
-                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility](#section/code-lists/product-visibility) code list.'
-                      examples:
-                        - hidden
-                    name:
-                      type: string
-                      minLength: 1
-                      maxLength: 250
-                      description: "Product's name. Mandatory. Maximal length of 250 characters."
-                      examples:
-                        - 'Velká čokoláda'
-                    adult:
-                      type:
-                        - boolean
-                        - 'null'
-                      description: 'Whether the product is for adults only. Optional, default value `false`.'
-                      examples:
-                        - true
-                    shortDescription:
-                      type:
-                        - string
-                        - 'null'
-                      description: "Product's short description."
-                      examples:
-                        - 'Velice kvalitní a dobrá čokoláda.'
-                    description:
-                      type:
-                        - string
-                        - 'null'
-                      description: "Product's full description."
-                      examples:
-                        - '<p>Velice kvalitní a dobrá čokoláda. Chutná vždy dobře. <b>Neobsahuje arašídy.</b></p>'
-                    additionalName:
-                      type:
-                        - string
-                        - 'null'
-                      maxLength: 150
-                      description: "Product's additional name. Optional. Maximal length of 150 characters."
-                      examples:
-                        - 'Velice kvalitní a dobrá čokoláda.'
-                    metaTitle:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: "Product's seo title. Maximal length of 255 characters."
-                      examples:
-                        - 'Velice kvalitní a dobrá čokoláda.'
-                    metaDescription:
-                      type:
-                        - string
-                        - 'null'
-                      description: "Product's full description."
-                      examples:
-                        - 'Velice kvalitní a dobrá čokoláda. Chutná vždy dobře. Neobsahuje arašídy.'
-                    conditionGrade:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      description: 'Grade condition of second-hand product. Allowed only for `bazar` type.'
-                      examples:
-                        - used
-                    conditionDescription:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      description: 'Condition description of second-hand product. Allowed only for `bazar` type.'
-                      examples:
-                        - 'Without original package.'
-                    defaultCategoryGuid:
-                      $ref: '#/components/schemas/typeGuid'
-                      description: "Product's default category's GUID. Mandatory."
-                    brandCode:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      description: "Product's brand. Must exist if set."
-                      examples:
-                        - milka
-                    internalNote:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      description: 'Product internal note.'
-                      examples:
-                        - 'Internal note for product manager.'
-                    preauthorizationRequired:
-                      type: boolean
-                      description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
-                      examples:
-                        - true
-                    supplierGuid:
-                      $ref: '#/components/schemas/typeGuidNullable'
-                      minLength: 1
-                      description: 'Supplier GUID. Must exist if set.'
-                    categoryGuids:
-                      type: array
-                      minItems: 1
-                      items:
-                        $ref: '#/components/schemas/typeGuid'
-                    warrantyId:
-                      type:
-                        - integer
-                        - 'null'
-                      description: 'Warranty ID.'
-                      examples:
-                        - 1
-                    flags:
-                      type:
-                        - array
-                        - 'null'
-                      description: 'Must exist if set.'
-                      items:
-                        type: object
-                        additionalProperties: false
-                        required:
-                          - code
-                        properties:
-                          code:
-                            type: string
-                            description: 'flag identifier.'
-                            examples:
-                              - new
-                          dateFrom:
-                            $ref: '#/components/schemas/typeDateNullable'
-                            description: 'Date from which the flag is valid.'
-                          dateTo:
-                            $ref: '#/components/schemas/typeDateNullable'
-                            description: 'Date to which the flag is valid.'
-                    descriptiveParameters:
-                      type: array
-                      description: 'Product descriptive parameters.'
-                      items:
-                        type: object
-                        additionalProperties: false
-                        required:
-                          - name
-                        properties:
-                          name:
-                            type: string
-                            minLength: 1
-                            maxLength: 255
-                            description: 'Parameter name.'
-                            examples:
-                              - Material
-                          value:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'value of the descriptive parameter.'
-                            examples:
-                              - Cotton
-                          description:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'Description of the descriptive parameter.'
-                            examples:
-                              - 'Material the shirt is made of'
-                          priority:
-                            type:
-                              - integer
-                              - 'null'
-                            maximum: 99999
-                            description: 'Priority of the parameter.'
-                            examples:
-                              - 1
-                    filteringParameters:
-                      type:
-                        - array
-                        - 'null'
-                      items:
-                        type: object
-                        additionalProperties: false
-                        required:
-                          - code
-                          - values
-                        properties:
-                          code:
-                            type: string
-                            minLength: 1
-                            maxLength: 255
-                            description: 'Filtering parameter code.'
-                            examples:
-                              - action
-                          values:
-                            type: array
-                            minItems: 1
-                            description: 'Product filtering parameter values.'
-                            items:
-                              type: string
-                            examples:
-                              - Action
-                    surchargeParameters:
-                      type: array
-                      description: 'Product surcharge parameters. Not allowed for products with multiple tax classes.'
-                      items:
-                        $ref: '#/components/schemas/productRequestSurchargeParameter'
-                    variants:
-                      type: array
-                      minItems: 1
-                      items:
-                        type: object
-                        additionalProperties: false
-                        minProperties: 1
-                        properties:
-                          code:
-                            $ref: '#/components/schemas/typeVariantCodeRequest'
-                          newCode:
-                            type: string
-                            minLength: 1
-                            maxLength: 64
-                            description: 'New code of existing variant.'
-                            examples:
-                              - '0036'
-                          ean:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 255
-                            description: "Variant's ean."
-                            examples:
-                              - '8594001234567'
-                          unitId:
-                            type: integer
-                            description: "Variant's unit id. Optional"
-                            examples:
-                              - -1
-                          weight:
-                            $ref: '#/components/schemas/typeWeightRequest'
-                            description: "Variant's weight in kilograms. 3 decimal places, and maximum value of 99999.999."
-                            examples:
-                              - '13.500'
-                          width:
-                            $ref: '#/components/schemas/typeDimension'
-                            description: 'width of the product in cm. 1 decimal place, maximum 9999.9.'
-                          height:
-                            $ref: '#/components/schemas/typeDimension'
-                            description: 'height of the product in cm. 1 decimal place, maximum 9999.9.'
-                          depth:
-                            $ref: '#/components/schemas/typeDimension'
-                            description: 'depth of the product in cm. 1 decimal place, maximum 9999.9.'
-                          visible:
-                            type: boolean
-                            description: 'Is variant visible?'
-                            examples:
-                              - true
-                          manufacturerCode:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 32
-                            description: "Variant's manufacturer code."
-                            examples:
-                              - OKI
-                          pluCode:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 16
-                            description: "Variant's plu."
-                            examples:
-                              - '0828'
-                          isbn:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 32
-                            description: "Variant's ISBN."
-                            examples:
-                              - 978-80-251-0000-0
-                          serialNo:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 32
-                            description: "Variant's serial number."
-                            examples:
-                              - B412
-                          mpn:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 32
-                            description: "Variant's MPN."
-                            examples:
-                              - H3T5-87
-                          availabilityId:
-                            type:
-                              - number
-                              - 'null'
-                            description: 'Product availability id'
-                            examples:
-                              - -1
-                          availabilityWhenSoldOutId:
-                            type:
-                              - number
-                              - 'null'
-                            description: 'Product availability id when not stocked'
-                            examples:
-                              - -3
-                          image:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'image filename of this variant (image must exist within product).'
-                            examples:
-                              - 106.jpg
-                          parameters:
-                            type: array
-                            description: "Variant's parameters"
-                            items:
-                              type: object
-                              additionalProperties: false
-                              required:
-                                - nameIndex
-                                - valueIndex
-                              properties:
-                                nameIndex:
-                                  type: string
-                                  description: 'indexName of parameter name'
-                                  examples:
-                                    - color
-                                valueIndex:
-                                  type: string
-                                  description: 'indexName of parameter value'
-                                  examples:
-                                    - red
-                          minStockSupply:
-                            $ref: '#/components/schemas/typePositiveAmountNullable'
-                            description: 'Minimum stock supply.'
-                            examples:
-                              - '10.000'
-                          stocksLocations:
-                            type: array
-                            description: 'Locations and amounts in stocks.'
-                            items:
-                              type: object
-                              additionalProperties: false
-                              required:
-                                - stockId
-                                - location
-                              properties:
-                                stockId:
-                                  type: integer
-                                  description: 'Id of stock. Required if stocksLocations is set. Must fit existing stock Id. Check List of Stocks.'
-                                  examples:
-                                    - 1
-                                location:
-                                  type:
-                                    - string
-                                    - 'null'
-                                  description: 'Stock location.'
-                                  examples:
-                                    - H6/M11/R13
-                          negativeStockAllowed:
-                            type: boolean
-                            description: 'Product stock can be in negative numbers'
-                            examples:
-                              - true
-                          measureUnit:
-                            $ref: '#/components/schemas/measureUnit'
-                            description: 'Product variant measure and packaging units.'
-                          recyclingFeeId:
-                            type:
-                              - integer
-                              - 'null'
-                            description: 'Product recycling fee id'
-                            examples:
-                              - 123
-                          consumptionTaxId:
-                            type:
-                              - integer
-                              - 'null'
-                            description: 'Product consumption tax identifier'
-                            examples:
-                              - 1
-                          amountDecimalPlaces:
-                            type: integer
-                            enum:
-                              - 0
-                              - 1
-                              - 2
-                              - 3
-                            description: 'Amount of product variant decimal places.'
-                            examples:
-                              - 2
-                          atypicalBilling:
-                            type: boolean
-                            description: 'Has atypical billing?'
-                            examples:
-                              - true
-                          atypicalShipping:
-                            type: boolean
-                            description: 'Has atypical shipping?'
-                            examples:
-                              - true
-                          ossVatLevels:
-                            type: array
-                            description: 'OSS Tax setup'
-                            items:
-                              type: object
-                              additionalProperties: false
-                              required:
-                                - countryCode
-                                - taxLevel
-                              properties:
-                                countryCode:
-                                  type: string
-                                  maxLength: 2
-                                  description: 'Country code'
-                                  examples:
-                                    - CZ
-                                taxLevel:
-                                  enum:
-                                    - high
-                                    - low
-                                    - third
-                                    - none
-                                    - superLow
-                                    - parking
-                                  description: 'Tax level type. Use Enums: high: Standard tax rate, none: Zero tax rate, low: First reduced tax rate, third: Second reduced tax rate, superLow: Super low tax rate, parking: Parking tax rate.'
-                                  examples:
-                                    - high
-                    indexName:
-                      type: string
-                      minLength: 1
-                      description: 'String which defines product url. Value is sanitized to fits url needs = All characters except [a-zA-Z0-9_] will be converted to `-`. If value is not present, indexName is created from product name.'
-                      examples:
-                        - baleriny-modre-s-puntiky
-                    relatedVideos:
-                      type: array
-                      description: 'Product related videos.'
-                      items:
-                        type: object
-                        additionalProperties: false
-                        required:
-                          - code
-                          - type
-                        properties:
-                          code:
-                            type: string
-                            maxLength: 32
-                            description: 'related video code.'
-                            examples:
-                              - zpvmPA3me7o
-                          title:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 128
-                            description: 'related video title.'
-                            examples:
-                              - 'Test video'
-                          type:
-                            enum:
-                              - youtube
-                              - youtube-short
-                            description: 'related video type.'
-                            examples:
-                              - youtube
+                  $ref: '#/components/schemas/productUpdate'
     delete:
       responses:
         200:
@@ -5734,38 +5249,32 @@ paths:
       description: |-
         This endpoint allows you to update multiple products at once. Batch
         update is processed asynchronously in same way as for example products
-        snapshot,
-
-        but it does not have `resultUrl` with products to download in response.
-        Instead, you can check attribute `log` which contains successfully
-        updated products and errors.
+        snapshot, but it does not have `resultUrl` with products to download in response.
+        Instead, you can check attribute `log` which contains successfully updated products and errors.
 
 
-        See how [Asynchronous
-        requests](https://developers.shoptet.com/asynchronous-requests/) work on
-        our developer's portal.
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
 
 
-        File with data for update must be in JSONL
-        ([jsonlines](https://jsonlines.org/)) format. Each line must contain one
+        File with data for update must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one
         product in JSON format. Maximum size of file is 100MB.
 
-        Structure of JSON row is same as structure of JSON for single product
-        update above. You can add one extra optional attribute
-
-        "language" which defines language of updating product, so you are able
-        to update multiple language attributes (i.e. "name", "description" etc.)
+        Structure of JSON row is same as structure of JSON for single product update above. You can add one extra optional attribute
+        "language" which defines language of updating product, so you are able to update multiple language attributes (i.e. "name", "description" etc.)
         of one product in one batch file.
 
-        If language is not defined, default language of shop is used.
 
 
-        Asynchronous job process jsonl file row by row and try to validate and
-        save data. If there is any error, row is skipped and error is logged,
+        If language is not defined, default language of shop is used. See [Product batch update schema](#tag/batch/productbatchupdate) for more details.
+
+
+        Asynchronous job process jsonl file row by row and try to validate and save data. If there is any error, row is skipped and error is logged,
         but it does not stop processing of other rows.
 
-        In Log, every product is identified by its position in file (starting
-        from 1).
+
+
+        In Log, every product is identified by its position in file (starting from 1).
       tags:
         - Products
       requestBody:
@@ -5964,501 +5473,7 @@ paths:
                 - data
               properties:
                 data:
-                  type: object
-                  minProperties: 1
-                  additionalProperties: false
-                  properties:
-                    guid:
-                      $ref: '#/components/schemas/typeGuid'
-                      description: 'Product GUID. Must be unique if set.'
-                    type:
-                      type: string
-                      enum:
-                        - product
-                        - bazar
-                        - service
-                        - product-set
-                      description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product types](#section/code-lists/product-types) code list."
-                      examples:
-                        - product
-                        - bazar
-                        - service
-                        - product-set
-                    visibility:
-                      type: string
-                      enum:
-                        - hidden
-                        - visible
-                        - blocked
-                        - show-registered
-                        - block-unregistered
-                        - cash-desk-only
-                        - detail-only
-                      description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility](#section/code-lists/product-visibility) code list.'
-                      examples:
-                        - hidden
-                    name:
-                      type: string
-                      minLength: 1
-                      maxLength: 250
-                      description: "Product's name. Mandatory. Maximal length of 250 characters."
-                      examples:
-                        - 'Velká čokoláda'
-                    adult:
-                      type:
-                        - boolean
-                        - 'null'
-                      description: 'Whether the product is for adults only. Optional, default value `false`.'
-                      examples:
-                        - true
-                    shortDescription:
-                      type:
-                        - string
-                        - 'null'
-                      description: "Product's short description."
-                      examples:
-                        - 'Velice kvalitní a dobrá čokoláda.'
-                    description:
-                      type:
-                        - string
-                        - 'null'
-                      description: "Product's full description."
-                      examples:
-                        - '<p>Velice kvalitní a dobrá čokoláda. Chutná vždy dobře. <b>Neobsahuje arašídy.</b></p>'
-                    additionalName:
-                      type:
-                        - string
-                        - 'null'
-                      maxLength: 150
-                      description: "Product's additional name. Optional. Maximal length of 150 characters."
-                      examples:
-                        - 'Velice kvalitní a dobrá čokoláda.'
-                    metaTitle:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: "Product's seo title. Maximal length of 255 characters."
-                      examples:
-                        - 'Velice kvalitní a dobrá čokoláda.'
-                    metaDescription:
-                      type:
-                        - string
-                        - 'null'
-                      description: "Product's full description."
-                      examples:
-                        - 'Velice kvalitní a dobrá čokoláda. Chutná vždy dobře. Neobsahuje arašídy.'
-                    conditionGrade:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      description: 'Grade condition of second-hand product. Allowed only for `bazar` type.'
-                      examples:
-                        - used
-                    conditionDescription:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      description: 'Condition description of second-hand product. Allowed only for `bazar` type.'
-                      examples:
-                        - 'Without original package.'
-                    defaultCategoryGuid:
-                      $ref: '#/components/schemas/typeGuid'
-                      description: "Product's default category's GUID. Mandatory."
-                    brandCode:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      description: "Product's brand. Must exist if set."
-                      examples:
-                        - milka
-                    internalNote:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      description: 'Product internal note.'
-                      examples:
-                        - 'Internal note for product manager.'
-                    preauthorizationRequired:
-                      type: boolean
-                      description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
-                      examples:
-                        - true
-                    supplierGuid:
-                      $ref: '#/components/schemas/typeGuidNullable'
-                      minLength: 1
-                      description: 'Supplier GUID. Must exist if set.'
-                    categoryGuids:
-                      type: array
-                      minItems: 1
-                      items:
-                        $ref: '#/components/schemas/typeGuid'
-                    warrantyId:
-                      type:
-                        - integer
-                        - 'null'
-                      description: 'Warranty ID.'
-                      examples:
-                        - 1
-                    flags:
-                      type:
-                        - array
-                        - 'null'
-                      description: 'Must exist if set.'
-                      items:
-                        type: object
-                        additionalProperties: false
-                        required:
-                          - code
-                        properties:
-                          code:
-                            type: string
-                            description: 'flag identifier.'
-                            examples:
-                              - new
-                          dateFrom:
-                            $ref: '#/components/schemas/typeDateNullable'
-                            description: 'Date from which the flag is valid.'
-                          dateTo:
-                            $ref: '#/components/schemas/typeDateNullable'
-                            description: 'Date to which the flag is valid.'
-                    descriptiveParameters:
-                      type: array
-                      description: 'Product descriptive parameters.'
-                      items:
-                        type: object
-                        additionalProperties: false
-                        required:
-                          - name
-                        properties:
-                          name:
-                            type: string
-                            minLength: 1
-                            maxLength: 255
-                            description: 'Parameter name.'
-                            examples:
-                              - Material
-                          value:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'value of the descriptive parameter.'
-                            examples:
-                              - Cotton
-                          description:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'Description of the descriptive parameter.'
-                            examples:
-                              - 'Material the shirt is made of'
-                          priority:
-                            type:
-                              - integer
-                              - 'null'
-                            maximum: 99999
-                            description: 'Priority of the parameter.'
-                            examples:
-                              - 1
-                    filteringParameters:
-                      type:
-                        - array
-                        - 'null'
-                      items:
-                        type: object
-                        additionalProperties: false
-                        required:
-                          - code
-                          - values
-                        properties:
-                          code:
-                            type: string
-                            minLength: 1
-                            maxLength: 255
-                            description: 'Filtering parameter code.'
-                            examples:
-                              - action
-                          values:
-                            type: array
-                            minItems: 1
-                            description: 'Product filtering parameter values.'
-                            items:
-                              type: string
-                            examples:
-                              - Action
-                    surchargeParameters:
-                      type: array
-                      description: 'Product surcharge parameters. Not allowed for products with multiple tax classes.'
-                      items:
-                        $ref: '#/components/schemas/productRequestSurchargeParameter'
-                    variants:
-                      type: array
-                      minItems: 1
-                      items:
-                        type: object
-                        additionalProperties: false
-                        minProperties: 1
-                        properties:
-                          code:
-                            $ref: '#/components/schemas/typeVariantCodeRequest'
-                          newCode:
-                            type: string
-                            minLength: 1
-                            maxLength: 64
-                            description: 'New code of existing variant.'
-                            examples:
-                              - '0036'
-                          ean:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 255
-                            description: "Variant's ean."
-                            examples:
-                              - '8594001234567'
-                          unitId:
-                            type: integer
-                            description: "Variant's unit id. Optional"
-                            examples:
-                              - -1
-                          weight:
-                            $ref: '#/components/schemas/typeWeightRequest'
-                            description: "Variant's weight in kilograms. 3 decimal places, and maximum value of 99999.999."
-                            examples:
-                              - '13.500'
-                          width:
-                            $ref: '#/components/schemas/typeDimension'
-                            description: 'width of the product in cm. 1 decimal place, maximum 9999.9.'
-                          height:
-                            $ref: '#/components/schemas/typeDimension'
-                            description: 'height of the product in cm. 1 decimal place, maximum 9999.9.'
-                          depth:
-                            $ref: '#/components/schemas/typeDimension'
-                            description: 'depth of the product in cm. 1 decimal place, maximum 9999.9.'
-                          visible:
-                            type: boolean
-                            description: 'Is variant visible?'
-                            examples:
-                              - true
-                          manufacturerCode:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 32
-                            description: "Variant's manufacturer code."
-                            examples:
-                              - OKI
-                          pluCode:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 16
-                            description: "Variant's plu."
-                            examples:
-                              - '0828'
-                          isbn:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 32
-                            description: "Variant's ISBN."
-                            examples:
-                              - 978-80-251-0000-0
-                          serialNo:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 32
-                            description: "Variant's serial number."
-                            examples:
-                              - B412
-                          mpn:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 32
-                            description: "Variant's MPN."
-                            examples:
-                              - H3T5-87
-                          availabilityId:
-                            type:
-                              - number
-                              - 'null'
-                            description: 'Product availability id'
-                            examples:
-                              - -1
-                          availabilityWhenSoldOutId:
-                            type:
-                              - number
-                              - 'null'
-                            description: 'Product availability id when not stocked'
-                            examples:
-                              - -3
-                          image:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'image filename of this variant (image must exist within product).'
-                            examples:
-                              - 106.jpg
-                          parameters:
-                            type: array
-                            description: "Variant's parameters"
-                            items:
-                              type: object
-                              additionalProperties: false
-                              required:
-                                - nameIndex
-                                - valueIndex
-                              properties:
-                                nameIndex:
-                                  type: string
-                                  description: 'indexName of parameter name'
-                                  examples:
-                                    - color
-                                valueIndex:
-                                  type: string
-                                  description: 'indexName of parameter value'
-                                  examples:
-                                    - red
-                          minStockSupply:
-                            $ref: '#/components/schemas/typePositiveAmountNullable'
-                            description: 'Minimum stock supply.'
-                            examples:
-                              - '10.000'
-                          stocksLocations:
-                            type: array
-                            description: 'Locations and amounts in stocks.'
-                            items:
-                              type: object
-                              additionalProperties: false
-                              required:
-                                - stockId
-                                - location
-                              properties:
-                                stockId:
-                                  type: integer
-                                  description: 'Id of stock. Required if stocksLocations is set. Must fit existing stock Id. Check List of Stocks.'
-                                  examples:
-                                    - 1
-                                location:
-                                  type:
-                                    - string
-                                    - 'null'
-                                  description: 'Stock location.'
-                                  examples:
-                                    - H6/M11/R13
-                          negativeStockAllowed:
-                            type: boolean
-                            description: 'Product stock can be in negative numbers'
-                            examples:
-                              - true
-                          measureUnit:
-                            $ref: '#/components/schemas/measureUnit'
-                            description: 'Product variant measure and packaging units.'
-                          recyclingFeeId:
-                            type:
-                              - integer
-                              - 'null'
-                            description: 'Product recycling fee id'
-                            examples:
-                              - 123
-                          consumptionTaxId:
-                            type:
-                              - integer
-                              - 'null'
-                            description: 'Product consumption tax identifier'
-                            examples:
-                              - 1
-                          amountDecimalPlaces:
-                            type: integer
-                            enum:
-                              - 0
-                              - 1
-                              - 2
-                              - 3
-                            description: 'Amount of product variant decimal places.'
-                            examples:
-                              - 2
-                          atypicalBilling:
-                            type: boolean
-                            description: 'Has atypical billing?'
-                            examples:
-                              - true
-                          atypicalShipping:
-                            type: boolean
-                            description: 'Has atypical shipping?'
-                            examples:
-                              - true
-                          ossVatLevels:
-                            type: array
-                            description: 'OSS Tax setup'
-                            items:
-                              type: object
-                              additionalProperties: false
-                              required:
-                                - countryCode
-                                - taxLevel
-                              properties:
-                                countryCode:
-                                  type: string
-                                  maxLength: 2
-                                  description: 'Country code'
-                                  examples:
-                                    - CZ
-                                taxLevel:
-                                  enum:
-                                    - high
-                                    - low
-                                    - third
-                                    - none
-                                    - superLow
-                                    - parking
-                                  description: 'Tax level type. Use Enums: high: Standard tax rate, none: Zero tax rate, low: First reduced tax rate, third: Second reduced tax rate, superLow: Super low tax rate, parking: Parking tax rate.'
-                                  examples:
-                                    - high
-                    indexName:
-                      type: string
-                      minLength: 1
-                      description: 'String which defines product url. Value is sanitized to fits url needs = All characters except [a-zA-Z0-9_] will be converted to `-`. If value is not present, indexName is created from product name.'
-                      examples:
-                        - baleriny-modre-s-puntiky
-                    relatedVideos:
-                      type: array
-                      description: 'Product related videos.'
-                      items:
-                        type: object
-                        additionalProperties: false
-                        required:
-                          - code
-                          - type
-                        properties:
-                          code:
-                            type: string
-                            maxLength: 32
-                            description: 'related video code.'
-                            examples:
-                              - zpvmPA3me7o
-                          title:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 128
-                            description: 'related video title.'
-                            examples:
-                              - 'Test video'
-                          type:
-                            enum:
-                              - youtube
-                              - youtube-short
-                            description: 'related video type.'
-                            examples:
-                              - youtube
+                  $ref: '#/components/schemas/productUpdate'
     delete:
       responses:
         200:
@@ -7872,125 +6887,7 @@ paths:
                 - data
               properties:
                 data:
-                  type: object
-                  additionalProperties: false
-                  minProperties: 1
-                  properties:
-                    guid:
-                      $ref: '#/components/schemas/typeGuid'
-                      description: 'Category GUID. Must be unique if set. Optional.'
-                    name:
-                      type: string
-                      minLength: 1
-                      maxLength: 255
-                      description: 'Category name. Optional.'
-                      examples:
-                        - Watches
-                    parentGuid:
-                      $ref: '#/components/schemas/typeGuidNullable'
-                      description: 'Parent category GUID. Category must exist if set. Optional.'
-                    description:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'Category description. Max length 65535 bytes. Optional.'
-                      examples:
-                        - '<p>Top category description</p>'
-                    secondDescription:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'Bottom category description. Max length 65535 bytes. Optional.'
-                      examples:
-                        - '<p>Bottom category description</p>'
-                    imageName:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'Category image. File must exist on the server. Optional. (Use `sourceImageName` instead)'
-                      examples:
-                        - watches-category-image.jpg
-                      deprecated: true
-                    sourceImageName:
-                      $ref: '#/components/schemas/typeFilenameNullable'
-                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as category image.'
-                      examples:
-                        - image.png
-                    sortBefore:
-                      $ref: '#/components/schemas/typeGuid'
-                      description: 'Guid of category before which you want to move the category from the request. Not possible to use with `sortAfter`. Optional.'
-                    sortAfter:
-                      $ref: '#/components/schemas/typeGuid'
-                      description: 'Guid of category after which you want to move the category from the request. Not possible to use with `sortBefore`. Optional.'
-                    indexName:
-                      type: string
-                      minLength: 1
-                      description: 'Last part of url. Optional, generated from name if not set.'
-                      examples:
-                        - watches
-                    menuTitle:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'Label for menu. Optional.'
-                      examples:
-                        - Watches
-                    title:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'Meta tag title. Optional.'
-                      examples:
-                        - Watches
-                    metaTagDescription:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'Meta tag description. Optional.'
-                      examples:
-                        - 'Watches, Apple watch, black, white, garmin'
-                    visible:
-                      type: boolean
-                      description: 'Whether the category is visible. Optional, default `true`.'
-                      examples:
-                        - true
-                    customerVisibility:
-                      type: string
-                      enum:
-                        - all
-                        - registered
-                        - unregistered
-                      description: 'defines users of the e-shop who can see the category - `all` = all (default), `registered` = registered users, `unregistered` = non-registered users. Optional.'
-                      examples:
-                        - all
-                    productOrdering:
-                      type: string
-                      enum:
-                        - default
-                        - most-selling
-                        - cheapest
-                        - most-expensive
-                        - oldest
-                        - newest
-                        - alphabetically
-                        - alphabetically-desc
-                        - product-code
-                        - product-code-desc
-                        - category-priority
-                        - category-priority-desc
-                      description: 'defines how products are sorted in a category; see also [Sorting of products in category](#section/code-lists/sorting-of-products-in-category) code list'
-                      examples:
-                        - alphabetically
-                    similarProductsCategory:
-                      $ref: '#/components/schemas/typeGuidNullable'
-                      description: 'Similar category guid. Optional.'
-                    relatedProductsCategory:
-                      $ref: '#/components/schemas/typeGuidNullable'
-                      description: 'Related category guid. Optional.'
+                  $ref: '#/components/schemas/categoryUpdate'
     delete:
       responses:
         200:
@@ -8172,38 +7069,38 @@ paths:
       description: |-
         This endpoint allows you to update multiple categories at once. Batch
         update is processed asynchronously in same way as for example products
-        snapshot,
-
-        but it does not have `resultUrl` with categories to download in
+        snapshot, but it does not have `resultUrl` with categories to download in
         response. Instead, you can check attribute `log` which contains
         successfully updated categories and errors.
 
 
-        See how [Asynchronous
-        requests](https://developers.shoptet.com/asynchronous-requests/) work on
-        our developer's portal.
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
 
 
-        File with data for update must be in JSONL
-        ([jsonlines](https://jsonlines.org/)) format. Each line must contain one
+
+        File with data for update must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one
         category in JSON format. Maximum size of file is 100MB.
 
+
+
         Structure of JSON row is same as structure of JSON for single category
-        update above. You can add one extra optional attribute
+        update above. You can add one extra optional attribute "language" which defines language of updating category, so you are able
+        to update multiple language attributes (i.e. "name", "description" etc.) of one category in one batch file.
 
-        "language" which defines language of updating category, so you are able
-        to update multiple language attributes (i.e. "name", "description" etc.)
-        of one category in one batch file.
 
-        If language is not defined, default language of shop is used.
+
+        If language is not defined, default language of shop is used. See [Category batch update schema](#tag/batch/categorybatchupdate) for more details.
+
 
 
         Asynchronous job process jsonl file row by row and try to validate and
         save data. If there is any error, row is skipped and error is logged,
         but it does not stop processing of other rows.
 
-        In Log, every product is identified by its position in file (starting
-        from 1).
+
+
+        In Log, every product is identified by its position in file (starting from 1).
       tags:
         - Categories
       requestBody:
@@ -14446,7 +13343,9 @@ paths:
                       - pricelist
                     properties:
                       pricelist:
-                        $ref: '#/components/schemas/pricelistDetail'
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/pricelistDetail'
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -14969,13 +13868,13 @@ paths:
       summary: 'List of all price list details'
       operationId: getListOfAllPricelistDetails
       description: |-
-        Using this endpoint, you can get list of all price list details with information on each price 
-        (like in Price list Detail endpoint) asynchronously. See how 
-        [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer’s portal.
+        Using this endpoint, you can get list of all price list details with information on each price (like in Price list Detail endpoint) asynchronously. See how  [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer’s portal.
 
 
-        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
-        One price list in response has the same format as price list detail response.
+        Response will be in [jsonlines](https://jsonlines.org/) format with each price list taking one line of output file.
+
+
+        One price list in response has the same format as price list detail response. See [Price list snapshot schema](#tag/snapshot/pricelistsnapshot) for more details.
 
 
         Result file is compressed using GZIP.
@@ -16696,9 +15595,11 @@ paths:
 
         Response will be in [jsonlines](https://jsonlines.org/) format with each remark taking one line of output file.
 
-        One remark in response has the same format as an item in [List of remarks for order](#tag/order-history/getlistofremarksfororder) and is extended with `orderCode` field, which identifies the relation to the order.
+        One remark in response has the same format as an item in [List of remarks for order](#tag/order-history/getlistofremarksfororder) and is extended with `orderCode` field, which identifies the relation to the order. See [Order history snapshot schema](#tag/snapshot/orderhistorysnapshot) for more details.
+
 
         Use `orderCodes` request parameter to get the list of specific orders remarks. Order codes are separated by a comma. Please note that this parameter **accepts max. 50 order codes in request parameter**.
+
 
         Result file is compressed using GZIP.
       tags:
@@ -16789,9 +15690,7 @@ paths:
       summary: 'List of all orders'
       operationId: getListOfAllOrders
       description: |-
-        Using this endpoint, you can get list of all orders with detailed info of each order (like in Order Detail endpoint)
-        asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our
-        developer's portal.
+        Using this endpoint, you can get list of all orders with detailed info of each order (like in Order Detail endpoint) asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
 
 
         The list may be filtered by date of creation and order code. The code is the order identifier. Although this is usually
@@ -16799,11 +15698,12 @@ paths:
 
 
         Response will be in [jsonlines](https://jsonlines.org/) format with each order taking one line of output file.
-        One order in response has the same format as order detail response (in `data` attribute)
 
 
-        This endpoint has several sections, which are exported only when requested in the `include` parameter (see
-        [Section on demand](#section/basic-principles/section-on-demand)).
+        One order in response has the same format as order detail response. See [Order snapshot schema](#tag/snapshot/ordersnapshot) for more details.
+
+
+        This endpoint has several sections, which are exported only when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
 
 
         Include parameter     | Meaning
@@ -18769,59 +17669,7 @@ paths:
                       orderHistory:
                         type: array
                         items:
-                          type: object
-                          additionalProperties: false
-                          required:
-                            - id
-                            - creationTime
-                            - text
-                            - user
-                            - system
-                            - type
-                          properties:
-                            id:
-                              type: number
-                              description: 'order history identifier'
-                              examples:
-                                - 1
-                            creationTime:
-                              $ref: '#/components/schemas/typeDateTimeNullable'
-                              description: 'Creation time of the order history record.'
-                            text:
-                              type: string
-                              description: 'Transaction Id at payment gateway side: GHJ36'
-                              examples:
-                                - 'Transaction Id at payment gateway side: GHJ36KHDHDUJDL'
-                            user:
-                              type:
-                                - object
-                                - 'null'
-                              additionalProperties: false
-                              description: 'the user or system process that caused the change'
-                              required:
-                                - id
-                                - name
-                              properties:
-                                id:
-                                  type: string
-                                  description: 'identification of change originator, either user’s e-mail, or system process identifier'
-                                  examples:
-                                    - api.service-21@fenix.myshoptet.com
-                                name:
-                                  type: string
-                                  description: 'the user name or description of the system service that caused the change'
-                                  examples:
-                                    - 'stock monitoring addon'
-                            system:
-                              type: boolean
-                              description: 'flag, whether the remark is entered by Shoptet (`system: true`), by user, or by API (`system: false`)'
-                              examples:
-                                - true
-                            type:
-                              type: string
-                              description: 'Record type'
-                              examples:
-                                - system
+                          $ref: '#/components/schemas/orderHistory'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -19824,7 +18672,7 @@ paths:
 
         **The `settings` parameter:**
 
-        Default suppress params for each row can be defined in URL params same as in [Order insertion endpoint](#Orders/order-insertion) above. In the `settings` parameter, you can modify suppress parameters for specific row/record.
+        Default suppress params for each row can be defined in URL params same as in [Order insertion](#tag/orders/createorder) endpoint. In the `settings` parameter, you can modify suppress parameters for specific row/record.
 
         **All params in `settings` can be in 3 states:**
 
@@ -19834,48 +18682,11 @@ paths:
 
         - _parameter is missing_ - The value from corresponding request parameter is used, if corresponding request parameter is not defined the value is set to `false`.
 
-        **List of settings parameters:**
-        - `suppressDocumentGeneration`: (`boolean`, _optional_) - Suppress the generation of linked documents.
-
-        - `suppressEmailSending`: (`boolean`, _optional_) - Suppress sending the linked information e-mails.
-
-        - `suppressProductChecking`: (`boolean`, _optional_) - Suppress the product existence check as per code and GUID.
-
-        - `suppressStockMovements`: (`boolean`, _optional_) - Suppress deduction of the products from stock.
-
-        - `suppressHistoricalMandatoryFields`: (`boolean`, _optional_) - Set the flag that disables mandatory fields checking.
-
-        - `suppressHistoricalPaymentChecking`: (`boolean`, _optional_) - Set the flag that `paymentMethodGuid` can be `null`.
-
-        - `suppressHistoricalShippingChecking`: (`boolean`, _optional_) - Set the flag that `shippingGuid` can be `null`.
-
         **The `data` parameter:**
 
-        Structure of the `data` parameter is the same as the structure of JSON for single [order insertion](#Orders/order-insertion) above.
-        ***
-        For better understanding, see the example of one record bellow (**Warning:** _The example is formatted for better readability. For common use, it needs to be compressed on one line_):
+        Structure of the `data` parameter is the same as the structure of JSON for single [Order insertion](#tag/orders/createorder) endpoint. See [Order batch create schema](#tag/batch/orderbatchcreate) for more details.
 
-        ```json
-        {
-            'settings': {
-                'suppressDocumentGeneration': true,
-                `suppressEmailSending`: true
-            },
-            'data': {
-                'externalCode': 'X123',
-                'code': '2017000092',
-                ...
-                'items': [
-                    {
-                        'productGuid': '747fb32d-73bc-11e8-8216-002590dad85e',
-                        'name': 'Large chocolate',
-                        ...
-                    }
-                ]
-            }
-        }
-        ```
-          
+
         The asynchronous job processes the JSONL file row by row and tries to validate and save the data. If there is any error, the row is skipped and the error is logged, but it does not stop the processing of other rows. In the log, every order is identified by its position in the file (starting from 1).
       tags:
         - Orders
@@ -20372,24 +19183,26 @@ paths:
       operationId: getListOfAllInvoices
       description: |-
         Using this endpoint, you can get list of all invoices with detailed info of each invoice (like in Invoice Detail endpoint) asynchronously. 
-        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our
-        developer's portal.
 
 
-        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
-        One invoice in response has the same format as invoice detail response.
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each invoice taking one line of output file.
+
+
+        One invoice in response has the same format as invoice detail response. See [Invoice snapshot schema](#tag/snapshot/invoicesnapshot) for more details.
 
 
         Result file is compressed using GZIP.
 
 
-        This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Section on demand](#section/basic-principles/section-on-demand)).
+        This endpoint has several sections, which are only sent when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
 
 
-        Value | Section
-        --------|------
-        `surchargeParameters`| Item surcharge parameters
+        Value                 | Section
+        ---                   | ---
+        `surchargeParameters` | Item surcharge parameters
       tags:
         - Invoices
       parameters:
@@ -21561,25 +20374,24 @@ paths:
       summary: 'List of all proforma invoices'
       operationId: getListOfAllProformaInvoices
       description: |-
-        Using this endpoint, you can get list of all proforma invoices with detailed info of each invoice (like in Proforma Invoice Detail endpoint)
-        asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our
-        developer's portal.
+        Using this endpoint, you can get list of all proforma invoices with detailed info of each proforma invoice (like in Proforma invoice detail endpoint) asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
 
 
-        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
-        One invoice in response has the same format as invoice detail response.
+        Response will be in [jsonlines](https://jsonlines.org/) format with each proforma invoice taking one line of output file.
+
+
+        One invoice in response has the same format as invoice detail response. See [Proforma invoice snapshot schema](#tag/snapshot/proformainvoicesnapshot) for more details.
 
 
         Result file is compressed using GZIP.
 
 
-        This endpoint has one section, which is only sent when requested in the `include` parameter (see
-        [Section on demand](#section/basic-principles/section-on-demand)).
+        This endpoint has one section, which is only sent when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
 
 
-        Value | Section
-        --------|------
-        `surchargeParameters`| Item surcharge parameters
+        Value                 | Section
+        ---                   | ---
+        `surchargeParameters` | Item surcharge parameters
       tags:
         - 'Proforma invoices'
       parameters:
@@ -22561,7 +21373,11 @@ paths:
       description: |-
         Using this endpoint, you can get list of all proof payments with detailed info of each proof payment (like in Proof payment Detail endpoint).
 
-        Response will be in [jsonlines](https://jsonlines.org/) format with each proof payment taking one line of output file. One proof payment in response has the same format as proof payment detail response.
+        Response will be in [jsonlines](https://jsonlines.org/) format with each proof payment taking one line of output file.
+
+
+        One proof payment in response has the same format as proof payment detail response. See [Proof payment snapshot schema](#tag/snapshot/proofpaymentsnapshot) for more details.
+
 
         Result file is compressed using GZIP.
       tags:
@@ -23515,13 +22331,23 @@ paths:
       summary: 'List of all credit notes'
       operationId: getListOfAllCreditNotes
       description: |-
-        Additional information about one credit notes.
+        Using this endpoint, you can get list of all credit notes with detailed info of each credit note (like in Credit note detail endpoint) asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each credit note taking one line of output file.
+
+
+        One credit note in response has the same format as credit note detail response. See [Credit note snapshot schema](#tag/snapshot/creditnotesnapshot) for more details.
+
 
         This endpoint has several sections, which are only sent when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
 
-        Value | Section
-        --------|------
-        `surchargeParameters`| Item surcharge parameters
+
+        Value                 | Section
+        ---                   | ---
+        `surchargeParameters` | Item surcharge parameters.
+
+        Result file is compressed using GZIP.
       tags:
         - 'Credit notes'
       parameters:
@@ -25023,14 +23849,16 @@ paths:
       summary: 'List of all delivery notes'
       operationId: getListOfAllDeliveryNotes
       description: |-
-        Using this endpoint, you can get list of all delivery notes with detailed info of each delivery note 
-        (like in delivery Note Detail endpoint) asynchronously. 
-        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our
-        developer's portal.
+        Using this endpoint, you can get list of all delivery notes with detailed info of each delivery note  (like in Delivery note detail endpoint) asynchronously. 
 
 
-        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
-        One delivery note in response has the same format as delivery note detail response.
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each delivery note taking one line of output file.
+
+
+        One delivery note in response has the same format as delivery note detail response. See [Delivery note snapshot schema](#tag/snapshot/deliverynotesnapshot) for more details.
       tags:
         - 'Delivery notes'
       parameters:
@@ -26097,120 +24925,7 @@ paths:
                 - data
               properties:
                 data:
-                  type: object
-                  additionalProperties: false
-                  minProperties: 1
-                  required:
-                    - name
-                  properties:
-                    name:
-                      type: string
-                      minLength: 1
-                      maxLength: 200
-                      description: 'Brand name'
-                      examples:
-                        - 'Willy Wonka'
-                    indexName:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'unique index name of brand'
-                      examples:
-                        - willy-wonka
-                    brandWeb:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 200
-                      description: 'Brand website'
-                      examples:
-                        - 'https://willywonka.com'
-                    postalAddress:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 65535
-                      description: 'GPSR, postal address'
-                      examples:
-                        - 'Chocolate Factory, 1234 Candy Lane, Sweet City, SC 56789'
-                    contactEmail:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 100
-                      description: 'GPSR, contact email'
-                      examples:
-                        - willywonka@shoptet.cz
-                    europeanResellerPostalAddress:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 65535
-                      description: 'GPSR, european reseller postal address'
-                      examples:
-                        - 'Chocolate Factory, 1234 Candy Lane, Sweet City, SC 56789'
-                    europeanResellerContactEmail:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 100
-                      description: 'GPSR, reseller contact email'
-                      examples:
-                        - europeanreseller@shoptet.cz
-                    manufacturingCompanyName:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'GPSR, manufacturing company name'
-                      examples:
-                        - 'Shoptet a.s.'
-                    europeanResellerManufacturingCompanyName:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'GPSR, Reseller manufacturing company name'
-                      examples:
-                        - 'Shoptet a.s.'
-                    showInCategoriesMenu:
-                      type: boolean
-                      description: 'Is this brand shown in categories menu? Default is false'
-                      examples:
-                        - true
-                    showInBrandList:
-                      type: boolean
-                      description: 'Is this brand shown in brand list? Default is false'
-                      examples:
-                        - true
-                    description:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'Description of brand. May contain HTML characters'
-                      examples:
-                        - '<p>Brand new chocolate <strong>everyday</strong></p>'
-                    metaTitle:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'Meta title of brand'
-                      examples:
-                        - 'Willy Wonka'
-                    metaDescription:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'Meta description of brand'
-                      examples:
-                        - 'Brand new chocolate everyday'
+                  $ref: '#/components/schemas/brandCreate'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -26599,23 +25314,24 @@ paths:
       description: |-
         This endpoint allows you to create multiple brands at once. Batch
         creation is processed asynchronously in same way as for example products
-        snapshot,
-
-        but it does not have `resultUrl` in response. Instead, you can check
+        snapshot, but it does not have `resultUrl` in response. Instead, you can check
         attribute `log` which contains successfully created brands and errors.
 
 
-        See how [Asynchronous
-        requests](https://developers.shoptet.com/asynchronous-requests/) work on
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on
         our developer's portal.
 
 
-        File with data for update must be in JSONL
-        ([jsonlines](https://jsonlines.org/)) format. Each line must contain one
+
+        File with data for update must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one
         brand in JSON format. Maximum size of file is 100MB.
 
+
+
         Structure of JSON row is same as structure of JSON for single brand
-        creation above.
+        creation above. See [Brand batch create schema](#tag/batch/brandbatchcreate) for more details.
+
 
 
         Asynchronous job process jsonl file row by row and try to validate and
@@ -26928,13 +25644,13 @@ paths:
       summary: 'List of all customers'
       operationId: getListOfAllCustomers
       description: |-
-        Using this endpoint, you can get list of all customers with detailed info of each customer (like in Customer Detail endpoint)
-        asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our
-        developer's portal.
+        Using this endpoint, you can get list of all customers with detailed info of each customer (like in Customer Detail endpoint) asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
 
 
-        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
-        One product in response has the same format as product detail response (in `data.customer` attribute)
+        Response will be in [jsonlines](https://jsonlines.org/) format with each customer taking one line of output file.
+
+
+        One customer in response has the same format as customer detail response. See [Customer snapshot schema](#tag/snapshot/customersnapshot) for more details.
 
 
         Result file is compressed using GZIP.
@@ -31849,13 +30565,20 @@ paths:
       summary: 'List of all discount coupons'
       operationId: getListOfAllDiscountCoupons
       description: |-
-        Using this endpoint, you can get list of all discount coupons with detailed info of each discount coupon 
-        asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) 
-        work on our developer's portal.
+        Using this endpoint, you can get list of all discount coupons with detailed
+        info of each discount coupon asynchronously. See how [Asynchronous
+        requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
 
 
-        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
-        One discount coupon in response has the same format as one discount coupon item form list response.
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each
+        discount coupon taking one line of output file.
+
+
+
+        One discount coupon in response has the same format as one discount coupon
+        item form list response. See [Discount coupon snapshot schema](#tag/snapshot/discountcouponsnapshot) for more details.
+
 
 
         Result file is compressed using GZIP.
@@ -33933,11 +32656,18 @@ paths:
       summary: 'List of all quantity discounts'
       operationId: getListOfAllQuantityDiscounts
       description: |-
-        Using this endpoint, you can get list of all quantity discounts with detailed info of each article 
-        (like in Detail of quantity discount endpoint) asynchronously. 
+        Using this endpoint, you can get list of all quantity discounts with detailed info of each article (like in Detail of quantity discount endpoint) asynchronously. 
+
+
         See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
-        Response will be in [jsonlines](https://jsonlines.org/) format with each discount taking one line of output file.
-        One discount in response has the same format as in Detail of quantity discount endpoint response.
+
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each quantity discount taking one line of output file.
+
+
+        One quantity discount in response has the same format as in detail of quantity discount endpoint response. See [Quantity discount snapshot schema](#tag/snapshot/quantitydiscountsnapshot) for more details. 
+
+
         Result file is compressed using GZIP.
       tags:
         - 'Quantity discounts'
@@ -34642,14 +33372,16 @@ paths:
       summary: 'List of all articles'
       operationId: getListAllArticles
       description: |-
-        Using this endpoint, you can get list of all articles with detailed info of each article 
-        (like in Detail of article endpoint) asynchronously. 
-        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our
-        developer's portal.
+        Using this endpoint, you can get list of all articles with detailed info of each article (like in Detail of article endpoint) asynchronously. 
 
 
-        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
-        One article in response has the same format as article detail response.
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each article taking one line of output file.
+
+
+        One article in response has the same format as article detail response. See [Article snapshot schema](#tag/snapshot/articlesnapshot) for more details.
 
 
         Result file is compressed using GZIP.
@@ -38093,6 +36825,121 @@ components:
           description: 'Meta description of brand'
           examples:
             - 'Willy Wonka - Chocolate Factory'
+    brandCreate:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: 'Brand name'
+          examples:
+            - 'Willy Wonka'
+        indexName:
+          type:
+            - string
+            - 'null'
+          description: 'unique index name of brand'
+          examples:
+            - willy-wonka
+        brandWeb:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 200
+          description: 'Brand website'
+          examples:
+            - 'https://willywonka.com'
+        postalAddress:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 65535
+          description: 'GPSR, postal address'
+          examples:
+            - 'Chocolate Factory, 1234 Candy Lane, Sweet City, SC 56789'
+        contactEmail:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 100
+          description: 'GPSR, contact email'
+          examples:
+            - willywonka@shoptet.cz
+        europeanResellerPostalAddress:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 65535
+          description: 'GPSR, european reseller postal address'
+          examples:
+            - 'Chocolate Factory, 1234 Candy Lane, Sweet City, SC 56789'
+        europeanResellerContactEmail:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 100
+          description: 'GPSR, reseller contact email'
+          examples:
+            - europeanreseller@shoptet.cz
+        manufacturingCompanyName:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'GPSR, manufacturing company name'
+          examples:
+            - 'Shoptet a.s.'
+        europeanResellerManufacturingCompanyName:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'GPSR, Reseller manufacturing company name'
+          examples:
+            - 'Shoptet a.s.'
+        showInCategoriesMenu:
+          type: boolean
+          description: 'Is this brand shown in categories menu? Default is false'
+          examples:
+            - true
+        showInBrandList:
+          type: boolean
+          description: 'Is this brand shown in brand list? Default is false'
+          examples:
+            - true
+        description:
+          type:
+            - string
+            - 'null'
+          description: 'Description of brand. May contain HTML characters'
+          examples:
+            - '<p>Brand new chocolate <strong>everyday</strong></p>'
+        metaTitle:
+          type:
+            - string
+            - 'null'
+          description: 'Meta title of brand'
+          examples:
+            - 'Willy Wonka'
+        metaDescription:
+          type:
+            - string
+            - 'null'
+          description: 'Meta description of brand'
+          examples:
+            - 'Brand new chocolate everyday'
     brandNamed:
       type: object
       additionalProperties: false
@@ -40486,6 +39333,502 @@ components:
                 description: 'related video type'
                 examples:
                   - youtube-short
+    productUpdate:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        guid:
+          $ref: '#/components/schemas/typeGuid'
+          description: 'Product GUID. Must be unique if set.'
+        type:
+          type: string
+          enum:
+            - product
+            - bazar
+            - service
+            - product-set
+          description: "Product type. Please note that 'product-set' requires 'sets' module to be enabled. Enum - see [Product types](#section/code-lists/product-types) code list."
+          examples:
+            - product
+            - bazar
+            - service
+            - product-set
+        visibility:
+          type: string
+          enum:
+            - hidden
+            - visible
+            - blocked
+            - show-registered
+            - block-unregistered
+            - cash-desk-only
+            - detail-only
+          description: 'Product visibility. Optional, default value `visible`. Enum - see [Product visibility](#section/code-lists/product-visibility) code list.'
+          examples:
+            - hidden
+        name:
+          type: string
+          minLength: 1
+          maxLength: 250
+          description: "Product's name. Mandatory. Maximal length of 250 characters."
+          examples:
+            - 'Velká čokoláda'
+        adult:
+          type:
+            - boolean
+            - 'null'
+          description: 'Whether the product is for adults only. Optional, default value `false`.'
+          examples:
+            - true
+        shortDescription:
+          type:
+            - string
+            - 'null'
+          description: "Product's short description."
+          examples:
+            - 'Velice kvalitní a dobrá čokoláda.'
+        description:
+          type:
+            - string
+            - 'null'
+          description: "Product's full description."
+          examples:
+            - '<p>Velice kvalitní a dobrá čokoláda. Chutná vždy dobře. <b>Neobsahuje arašídy.</b></p>'
+        additionalName:
+          type:
+            - string
+            - 'null'
+          maxLength: 150
+          description: "Product's additional name. Optional. Maximal length of 150 characters."
+          examples:
+            - 'Velice kvalitní a dobrá čokoláda.'
+        metaTitle:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: "Product's seo title. Maximal length of 255 characters."
+          examples:
+            - 'Velice kvalitní a dobrá čokoláda.'
+        metaDescription:
+          type:
+            - string
+            - 'null'
+          description: "Product's full description."
+          examples:
+            - 'Velice kvalitní a dobrá čokoláda. Chutná vždy dobře. Neobsahuje arašídy.'
+        conditionGrade:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          description: 'Grade condition of second-hand product. Allowed only for `bazar` type.'
+          examples:
+            - used
+        conditionDescription:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          description: 'Condition description of second-hand product. Allowed only for `bazar` type.'
+          examples:
+            - 'Without original package.'
+        defaultCategoryGuid:
+          $ref: '#/components/schemas/typeGuid'
+          description: "Product's default category's GUID. Mandatory."
+        brandCode:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          description: "Product's brand. Must exist if set."
+          examples:
+            - milka
+        internalNote:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          description: 'Product internal note.'
+          examples:
+            - 'Internal note for product manager.'
+        preauthorizationRequired:
+          type: boolean
+          description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
+          examples:
+            - true
+        supplierGuid:
+          $ref: '#/components/schemas/typeGuidNullable'
+          minLength: 1
+          description: 'Supplier GUID. Must exist if set.'
+        categoryGuids:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/typeGuid'
+        warrantyId:
+          type:
+            - integer
+            - 'null'
+          description: 'Warranty ID.'
+          examples:
+            - 1
+        flags:
+          type:
+            - array
+            - 'null'
+          description: 'Must exist if set.'
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - code
+            properties:
+              code:
+                type: string
+                description: 'flag identifier.'
+                examples:
+                  - new
+              dateFrom:
+                $ref: '#/components/schemas/typeDateNullable'
+                description: 'Date from which the flag is valid.'
+              dateTo:
+                $ref: '#/components/schemas/typeDateNullable'
+                description: 'Date to which the flag is valid.'
+        descriptiveParameters:
+          type: array
+          description: 'Product descriptive parameters.'
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+                description: 'Parameter name.'
+                examples:
+                  - Material
+              value:
+                type:
+                  - string
+                  - 'null'
+                description: 'value of the descriptive parameter.'
+                examples:
+                  - Cotton
+              description:
+                type:
+                  - string
+                  - 'null'
+                description: 'Description of the descriptive parameter.'
+                examples:
+                  - 'Material the shirt is made of'
+              priority:
+                type:
+                  - integer
+                  - 'null'
+                maximum: 99999
+                description: 'Priority of the parameter.'
+                examples:
+                  - 1
+        filteringParameters:
+          type:
+            - array
+            - 'null'
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - code
+              - values
+            properties:
+              code:
+                type: string
+                minLength: 1
+                maxLength: 255
+                description: 'Filtering parameter code.'
+                examples:
+                  - action
+              values:
+                type: array
+                minItems: 1
+                description: 'Product filtering parameter values.'
+                items:
+                  type: string
+                examples:
+                  - Action
+        surchargeParameters:
+          type: array
+          description: 'Product surcharge parameters. Not allowed for products with multiple tax classes.'
+          items:
+            $ref: '#/components/schemas/productRequestSurchargeParameter'
+        variants:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            additionalProperties: false
+            minProperties: 1
+            properties:
+              code:
+                $ref: '#/components/schemas/typeVariantCodeRequest'
+              newCode:
+                type: string
+                minLength: 1
+                maxLength: 64
+                description: 'New code of existing variant.'
+                examples:
+                  - '0036'
+              ean:
+                type:
+                  - string
+                  - 'null'
+                maxLength: 255
+                description: "Variant's ean."
+                examples:
+                  - '8594001234567'
+              unitId:
+                type: integer
+                description: "Variant's unit id. Optional"
+                examples:
+                  - -1
+              weight:
+                $ref: '#/components/schemas/typeWeightRequest'
+                description: "Variant's weight in kilograms. 3 decimal places, and maximum value of 99999.999."
+                examples:
+                  - '13.500'
+              width:
+                $ref: '#/components/schemas/typeDimension'
+                description: 'width of the product in cm. 1 decimal place, maximum 9999.9.'
+              height:
+                $ref: '#/components/schemas/typeDimension'
+                description: 'height of the product in cm. 1 decimal place, maximum 9999.9.'
+              depth:
+                $ref: '#/components/schemas/typeDimension'
+                description: 'depth of the product in cm. 1 decimal place, maximum 9999.9.'
+              visible:
+                type: boolean
+                description: 'Is variant visible?'
+                examples:
+                  - true
+              manufacturerCode:
+                type:
+                  - string
+                  - 'null'
+                maxLength: 32
+                description: "Variant's manufacturer code."
+                examples:
+                  - OKI
+              pluCode:
+                type:
+                  - string
+                  - 'null'
+                maxLength: 16
+                description: "Variant's plu."
+                examples:
+                  - '0828'
+              isbn:
+                type:
+                  - string
+                  - 'null'
+                maxLength: 32
+                description: "Variant's ISBN."
+                examples:
+                  - 978-80-251-0000-0
+              serialNo:
+                type:
+                  - string
+                  - 'null'
+                maxLength: 32
+                description: "Variant's serial number."
+                examples:
+                  - B412
+              mpn:
+                type:
+                  - string
+                  - 'null'
+                maxLength: 32
+                description: "Variant's MPN."
+                examples:
+                  - H3T5-87
+              availabilityId:
+                type:
+                  - number
+                  - 'null'
+                description: 'Product availability id'
+                examples:
+                  - -1
+              availabilityWhenSoldOutId:
+                type:
+                  - number
+                  - 'null'
+                description: 'Product availability id when not stocked'
+                examples:
+                  - -3
+              image:
+                type:
+                  - string
+                  - 'null'
+                description: 'image filename of this variant (image must exist within product).'
+                examples:
+                  - 106.jpg
+              parameters:
+                type: array
+                description: "Variant's parameters"
+                items:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - nameIndex
+                    - valueIndex
+                  properties:
+                    nameIndex:
+                      type: string
+                      description: 'indexName of parameter name'
+                      examples:
+                        - color
+                    valueIndex:
+                      type: string
+                      description: 'indexName of parameter value'
+                      examples:
+                        - red
+              minStockSupply:
+                $ref: '#/components/schemas/typePositiveAmountNullable'
+                description: 'Minimum stock supply.'
+                examples:
+                  - '10.000'
+              stocksLocations:
+                type: array
+                description: 'Locations and amounts in stocks.'
+                items:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - stockId
+                    - location
+                  properties:
+                    stockId:
+                      type: integer
+                      description: 'Id of stock. Required if stocksLocations is set. Must fit existing stock Id. Check List of Stocks.'
+                      examples:
+                        - 1
+                    location:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Stock location.'
+                      examples:
+                        - H6/M11/R13
+              negativeStockAllowed:
+                type: boolean
+                description: 'Product stock can be in negative numbers'
+                examples:
+                  - true
+              measureUnit:
+                $ref: '#/components/schemas/measureUnit'
+                description: 'Product variant measure and packaging units.'
+              recyclingFeeId:
+                type:
+                  - integer
+                  - 'null'
+                description: 'Product recycling fee id'
+                examples:
+                  - 123
+              consumptionTaxId:
+                type:
+                  - integer
+                  - 'null'
+                description: 'Product consumption tax identifier'
+                examples:
+                  - 1
+              amountDecimalPlaces:
+                type: integer
+                enum:
+                  - 0
+                  - 1
+                  - 2
+                  - 3
+                description: 'Amount of product variant decimal places.'
+                examples:
+                  - 2
+              atypicalBilling:
+                type: boolean
+                description: 'Has atypical billing?'
+                examples:
+                  - true
+              atypicalShipping:
+                type: boolean
+                description: 'Has atypical shipping?'
+                examples:
+                  - true
+              ossVatLevels:
+                type: array
+                description: 'OSS Tax setup'
+                items:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - countryCode
+                    - taxLevel
+                  properties:
+                    countryCode:
+                      type: string
+                      maxLength: 2
+                      description: 'Country code'
+                      examples:
+                        - CZ
+                    taxLevel:
+                      enum:
+                        - high
+                        - low
+                        - third
+                        - none
+                        - superLow
+                        - parking
+                      description: 'Tax level type. Use Enums: high: Standard tax rate, none: Zero tax rate, low: First reduced tax rate, third: Second reduced tax rate, superLow: Super low tax rate, parking: Parking tax rate.'
+                      examples:
+                        - high
+        indexName:
+          type: string
+          minLength: 1
+          description: 'String which defines product url. Value is sanitized to fits url needs = All characters except [a-zA-Z0-9_] will be converted to `-`. If value is not present, indexName is created from product name.'
+          examples:
+            - baleriny-modre-s-puntiky
+        relatedVideos:
+          type: array
+          description: 'Product related videos.'
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - code
+              - type
+            properties:
+              code:
+                type: string
+                maxLength: 32
+                description: 'related video code.'
+                examples:
+                  - zpvmPA3me7o
+              title:
+                type:
+                  - string
+                  - 'null'
+                maxLength: 128
+                description: 'related video title.'
+                examples:
+                  - 'Test video'
+              type:
+                enum:
+                  - youtube
+                  - youtube-short
+                description: 'related video type.'
+                examples:
+                  - youtube
     category:
       type: object
       additionalProperties: false
@@ -40636,6 +39979,126 @@ components:
                 description: 'provider category'
                 examples:
                   - "Clothing | Women's T-Shirts"
+    categoryUpdate:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        guid:
+          $ref: '#/components/schemas/typeGuid'
+          description: 'Category GUID. Must be unique if set. Optional.'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: 'Category name. Optional.'
+          examples:
+            - Watches
+        parentGuid:
+          $ref: '#/components/schemas/typeGuidNullable'
+          description: 'Parent category GUID. Category must exist if set. Optional.'
+        description:
+          type:
+            - string
+            - 'null'
+          description: 'Category description. Max length 65535 bytes. Optional.'
+          examples:
+            - '<p>Top category description</p>'
+        secondDescription:
+          type:
+            - string
+            - 'null'
+          description: 'Bottom category description. Max length 65535 bytes. Optional.'
+          examples:
+            - '<p>Bottom category description</p>'
+        imageName:
+          type:
+            - string
+            - 'null'
+          description: 'Category image. File must exist on the server. Optional. (Use `sourceImageName` instead)'
+          examples:
+            - watches-category-image.jpg
+          deprecated: true
+        sourceImageName:
+          $ref: '#/components/schemas/typeFilenameNullable'
+          description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as category image.'
+          examples:
+            - image.png
+        sortBefore:
+          $ref: '#/components/schemas/typeGuid'
+          description: 'Guid of category before which you want to move the category from the request. Not possible to use with `sortAfter`. Optional.'
+        sortAfter:
+          $ref: '#/components/schemas/typeGuid'
+          description: 'Guid of category after which you want to move the category from the request. Not possible to use with `sortBefore`. Optional.'
+        indexName:
+          type: string
+          minLength: 1
+          description: 'Last part of url. Optional, generated from name if not set.'
+          examples:
+            - watches
+        menuTitle:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'Label for menu. Optional.'
+          examples:
+            - Watches
+        title:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'Meta tag title. Optional.'
+          examples:
+            - Watches
+        metaTagDescription:
+          type:
+            - string
+            - 'null'
+          description: 'Meta tag description. Optional.'
+          examples:
+            - 'Watches, Apple watch, black, white, garmin'
+        visible:
+          type: boolean
+          description: 'Whether the category is visible. Optional, default `true`.'
+          examples:
+            - true
+        customerVisibility:
+          type: string
+          enum:
+            - all
+            - registered
+            - unregistered
+          description: 'defines users of the e-shop who can see the category - `all` = all (default), `registered` = registered users, `unregistered` = non-registered users. Optional.'
+          examples:
+            - all
+        productOrdering:
+          type: string
+          enum:
+            - default
+            - most-selling
+            - cheapest
+            - most-expensive
+            - oldest
+            - newest
+            - alphabetically
+            - alphabetically-desc
+            - product-code
+            - product-code-desc
+            - category-priority
+            - category-priority-desc
+          description: 'defines how products are sorted in a category; see also [Sorting of products in category](#section/code-lists/sorting-of-products-in-category) code list'
+          examples:
+            - alphabetically
+        similarProductsCategory:
+          $ref: '#/components/schemas/typeGuidNullable'
+          description: 'Similar category guid. Optional.'
+        relatedProductsCategory:
+          $ref: '#/components/schemas/typeGuidNullable'
+          description: 'Related category guid. Optional.'
     orderItem:
       type: object
       additionalProperties: false
@@ -43415,6 +42878,60 @@ components:
                 description: 'identifier of the parent product set item, if the item is a product set item. If the item is not a product set item, this field is not present.'
                 examples:
                   - 123
+    orderHistory:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - creationTime
+        - text
+        - user
+        - system
+        - type
+      properties:
+        id:
+          type: number
+          description: 'order history identifier'
+          examples:
+            - 1
+        creationTime:
+          $ref: '#/components/schemas/typeDateTimeNullable'
+          description: 'Creation time of the order history record.'
+        text:
+          type: string
+          description: 'Transaction Id at payment gateway side: GHJ36'
+          examples:
+            - 'Transaction Id at payment gateway side: GHJ36KHDHDUJDL'
+        user:
+          type:
+            - object
+            - 'null'
+          additionalProperties: false
+          description: 'the user or system process that caused the change'
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: string
+              description: 'identification of change originator, either user’s e-mail, or system process identifier'
+              examples:
+                - api.service-21@fenix.myshoptet.com
+            name:
+              type: string
+              description: 'the user name or description of the system service that caused the change'
+              examples:
+                - 'stock monitoring addon'
+        system:
+          type: boolean
+          description: 'flag, whether the remark is entered by Shoptet (`system: true`), by user, or by API (`system: false`)'
+          examples:
+            - true
+        type:
+          type: string
+          description: 'Record type'
+          examples:
+            - system
     orderPreAuthorization:
       type:
         - object
@@ -44085,43 +43602,248 @@ components:
           $ref: '#/components/schemas/proofPaymentsForInvoice'
           description: 'List of linked proof payments'
     pricelistDetail:
-      type: array
-      items:
-        type: object
-        additionalProperties: false
-        required:
-          - code
-          - currencyCode
-          - includingVat
-          - vatRate
-          - price
-          - orderableAmount
-          - sales
-        properties:
-          code:
-            type: string
-            examples:
-              - '0006'
-          currencyCode:
-            $ref: '#/components/schemas/typeCurrencyCode'
-            examples:
-              - CZK
-          includingVat:
-            type: boolean
-            examples:
-              - true
-          vatRate:
-            $ref: '#/components/schemas/typeVatRate'
-          price:
-            $ref: '#/components/schemas/variantPrice'
-          orderableAmount:
-            $ref: '#/components/schemas/productOrderableAmount'
-            description: 'orderable quantity.'
-          sales:
-            $ref: '#/components/schemas/priceSales'
-            description: 'definition of discounts.'
-          prices:
-            $ref: '#/components/schemas/productPrices'
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - currencyCode
+        - includingVat
+        - vatRate
+        - price
+        - orderableAmount
+        - sales
+      properties:
+        code:
+          type: string
+          examples:
+            - '0006'
+        currencyCode:
+          $ref: '#/components/schemas/typeCurrencyCode'
+          examples:
+            - CZK
+        includingVat:
+          type: boolean
+          examples:
+            - true
+        vatRate:
+          $ref: '#/components/schemas/typeVatRate'
+        price:
+          $ref: '#/components/schemas/variantPrice'
+        orderableAmount:
+          $ref: '#/components/schemas/productOrderableAmount'
+          description: 'orderable quantity.'
+        sales:
+          $ref: '#/components/schemas/priceSales'
+          description: 'definition of discounts.'
+        prices:
+          $ref: '#/components/schemas/productPrices'
+    articleSnapshot:
+      title: Article
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/article'
+    brandBatchCreate:
+      title: 'Brand create'
+      x-tags:
+        - Batch
+      allOf:
+        -
+          $ref: '#/components/schemas/brandCreate'
+    categoryBatchUpdate:
+      title: 'Category update'
+      x-tags:
+        - Batch
+      properties:
+        language:
+          type: string
+          description: 'language of entity (available only if module `foreignLanguages` is active and initialized)'
+          examples:
+            - cs
+      allOf:
+        -
+          $ref: '#/components/schemas/categoryUpdate'
+    creditNoteSnapshot:
+      title: 'Credit note'
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/creditNote'
+    customerSnapshot:
+      title: Customer
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/customer'
+    deliveryNoteSnapshot:
+      title: 'Delivery note'
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/deliveryNote'
+    discountCouponSnapshot:
+      title: 'Discount coupon'
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/discountCoupon'
+    invoiceSnapshot:
+      title: Invoice
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/invoice'
+    orderBatchCreate:
+      title: 'Order create'
+      x-tags:
+        - Batch
+      type: object
+      additionalProperties: false
+      required:
+        - data
+      properties:
+        settings:
+          type: object
+          additionalProperties: false
+          properties:
+            suppressDocumentGeneration:
+              type: boolean
+              description: 'Suppress the generation of linked documents.'
+              examples:
+                - true
+            suppressEmailSending:
+              type: boolean
+              description: 'Suppress sending the linked information e-mails.'
+              examples:
+                - true
+            suppressProductChecking:
+              type: boolean
+              description: 'Suppress the product existence check as per code and GUID.'
+              examples:
+                - true
+            suppressStockMovements:
+              type: boolean
+              description: 'Suppress deduction of the products from stock.'
+              examples:
+                - true
+            suppressHistoricalMandatoryFields:
+              type: boolean
+              description: 'Set the flag that disables mandatory fields checking.'
+              examples:
+                - true
+            suppressHistoricalPaymentChecking:
+              type: boolean
+              description: 'Set the flag that `paymentMethodGuid` can be `null`.'
+              examples:
+                - true
+            suppressHistoricalShippingChecking:
+              type: boolean
+              description: 'Set the flag that `shippingGuid` can be `null`.'
+              examples:
+                - true
+        data:
+          properties:
+            language:
+              type: string
+              description: 'language of entity (available only if module `foreignLanguages` is active and initialized)'
+              examples:
+                - cs
+          $ref: '#/components/schemas/order'
+    orderSnapshot:
+      title: Order
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/order'
+    orderHistorySnapshot:
+      title: 'Order history'
+      x-tags:
+        - Snapshot
+      required:
+        - orderCode
+      properties:
+        orderCode:
+          type: string
+          description: 'Code of order, which identifies the relation to the order.'
+          examples:
+            - '2025000056'
+      allOf:
+        -
+          $ref: '#/components/schemas/orderHistory'
+    pricelistSnapshot:
+      title: 'Price list'
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/pricelistDetail'
+    productBatchUpdate:
+      title: 'Product update'
+      x-tags:
+        - Batch
+      properties:
+        language:
+          type: string
+          description: 'language of entity (available only if module `foreignLanguages` is active and initialized)'
+          examples:
+            - cs
+      allOf:
+        -
+          $ref: '#/components/schemas/productUpdate'
+    productSnapshot:
+      title: Product
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/product'
+    productPricelistSnapshot:
+      title: 'Product price list'
+      x-tags:
+        - Snapshot
+      required:
+        - productGuid
+        - productId
+      properties:
+        productGuid:
+          $ref: '#/components/schemas/typeGuidUnlimited'
+          description: 'unique product indicator'
+        productId:
+          type: integer
+          description: 'product identifier'
+          examples:
+            - 2
+      allOf:
+        -
+          $ref: '#/components/schemas/pricelistDetail'
+    proformaInvoiceSnapshot:
+      title: 'Proforma invoice'
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/proformaInvoice'
+    proofPaymentSnapshot:
+      title: 'Proof payment'
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/proofPaymentDetail'
+    quantityDiscountSnapshot:
+      title: 'Quantity discount'
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/quantityDiscount'
 x-tagGroups:
   -
     name: Orders
@@ -44211,3 +43933,8 @@ x-tagGroups:
       - 'Payment gateways'
       - 'Shipping requests'
       - Webhooks
+  -
+    name: 'JSON lines schemas'
+    tags:
+      - Batch
+      - Snapshot
