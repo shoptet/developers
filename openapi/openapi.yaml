@@ -35236,6 +35236,26 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: '"File with URL "https://example.com/image.png" not found."'
+                    instance: 'https://example.com/image.png'
         422:
           description: 'Unprocessable Entity'
           content:
@@ -35249,47 +35269,29 @@ paths:
                       - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
-              examples:
-                invalid-name:
-                  value:
-                    data: null
-                    errors:
-                      -
-                        errorCode: invalid-request-data
-                        message: 'Does not match the regex pattern ^[0-9a-zA-Z\\-.]+$'
-                        instance: data.name
-                file-upload-error:
-                  value:
-                    data: null
-                    errors:
-                      -
-                        errorCode: file-upload-error
-                        message: 'File upload failed.'
-                        instance: payload
-                file-upload-size-limit:
-                  value:
-                    data: null
-                    errors:
-                      -
-                        errorCode: file-upload-size-limit
-                        message: 'Uploaded file size limit exceeded. Limit is 2 MB.'
-                        instance: payload
-                file-upload-invalid-type:
-                  value:
-                    data: null
-                    errors:
-                      -
-                        errorCode: file-upload-invalid-type
-                        message: 'Unsupported filetype.'
-                        instance: payload
-                file-upload-invalid-chars:
-                  value:
-                    data: null
-                    errors:
-                      -
-                        errorCode: file-upload-invalid-chars
-                        message: 'Filename contains invalid characters or extension is missing.'
-                        instance: payload
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Does not match the regex pattern ^[0-9a-zA-Z\\-.]+$'
+                    instance: data.name
+                  -
+                    errorCode: file-upload-error
+                    message: 'File upload failed.'
+                    instance: payload
+                  -
+                    errorCode: file-upload-size-limit
+                    message: 'Uploaded file size limit exceeded. Limit is 2 MB.'
+                    instance: payload
+                  -
+                    errorCode: file-upload-invalid-type
+                    message: 'Unsupported filetype.'
+                    instance: payload
+                  -
+                    errorCode: file-upload-invalid-chars
+                    message: 'Filename contains invalid characters or extension is missing.'
+                    instance: payload
       summary: 'File upload'
       operationId: uploadFile
       description: |-
