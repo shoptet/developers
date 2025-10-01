@@ -35254,7 +35254,7 @@ paths:
                 errors:
                   -
                     errorCode: file-not-found
-                    message: '"File with URL "https://example.com/image.png" not found."'
+                    message: 'File with URL "https://example.com/image.png" not found.'
                     instance: 'https://example.com/image.png'
         422:
           description: 'Unprocessable Entity'
