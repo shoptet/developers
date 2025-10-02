@@ -28408,7 +28408,9 @@ paths:
                               examples:
                                 - true
                             priority:
-                              type: integer
+                              type:
+                                - integer
+                                - 'null'
                               description: 'sequence within the list'
                               examples:
                                 - 16
