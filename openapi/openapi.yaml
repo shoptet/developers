@@ -27759,22 +27759,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    additionalProperties: false
-                    required:
-                      - orderCode
-                      - returnUrl
-                    properties:
-                      orderCode:
-                        type: string
-                        description: 'order number. Caution! This does not have to be number only, it can contain also letters, dash, etc.'
-                        examples:
-                          - '2018000016'
-                      returnUrl:
-                        type: string
-                        description: 'URL, where the payment gateway should be redirected to, after the payment is completed'
-                        examples:
-                          - 'https://www.domena-eshopu.cz/api/pay/apigate/return?paymentCode=os8FtURz7PpO46Z87euEAoBAn9RClB2d'
+                    type:
+                      - object
+                      - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -27844,6 +27831,22 @@ paths:
           example: os8FtURz7PpO46Z87euEAoBAn9RClB2d
           schema:
             type: string
+        -
+          name: suppressDocumentGeneration
+          in: query
+          description: 'suppress the generation of linked documents.'
+          example: true
+          schema:
+            type: boolean
+            default: false
+        -
+          name: suppressEmailSending
+          in: query
+          description: 'suppress sending the linked information e-mails.'
+          example: true
+          schema:
+            type: boolean
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
