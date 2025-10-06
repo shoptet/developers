@@ -40,6 +40,12 @@ jobs:
         run: |
           openapi2postmanv2 -s ./openapi/openapi.yaml -o postman_collection.json -p -O folderStrategy=Tags
 
+      - name: Cleanup empty Postman collection items
+        run: |
+          cp postman_collection.json postman_collection.json.tmp &&
+          jq 'del(.item[] | select(.name == "Batch" or .name == "Snapshot"))' < postman_collection.json.tmp > postman_collection.json &&
+          rm postman_collection.json.tmp
+
       - name: Prepare Postman collection request body
         run: |
           jq '{ collection: . }' <postman_collection.json | jq --arg POSTMAN_COLLECTION_NAME "$POSTMAN_COLLECTION_NAME" '.collection.info.name |= $POSTMAN_COLLECTION_NAME' >postman_collection_request_body.json
