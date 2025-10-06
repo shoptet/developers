@@ -473,13 +473,13 @@ info:
     in API is handled by query parameter `language`, which can be used in whole
     API. If parameter is not set, default shop language is used.
 
-    Read endpoints (HTTP verb GET) will return corresponding language version of
-    texts where applicable.
+    When module foreignLanguages is active and initialized, read endpoints (HTTP 
+    verb GET) will return corresponding language version of texts where applicable.
 
 
     For write endpoints, first use POST endpoint to create entity and then use
     PATCH endpoint with corresponding language query parameter to set language
-    fields.
+    fields. Language can be set only when module foreignLanguages is active and initialized.
 
 
     Please note that in some endpoints (typically surcharge/filtering/variant
@@ -1527,7 +1527,6 @@ paths:
                           - maxProductAmount
                           - maxEmailAmount
                           - defaultPricelist
-                          - eshopLanguage
                           - timezone
                           - dateFormat
                           - timeFormat
@@ -1567,7 +1566,7 @@ paths:
                             description: 'default pricelist'
                           eshopLanguage:
                             type: string
-                            description: 'default language code of the e-shop'
+                            description: 'Default language code of the e-shop. Unavailable when module foreignLanguages is active and initialized.'
                             examples:
                               - cs
                           timezone:
@@ -2187,7 +2186,7 @@ paths:
                                 - 'https://cdn-api.myshoptet.com/usr/classic.shoptet.cz/user/shop/big/'
                       languages:
                         type: array
-                        description: 'supported languages in eshop'
+                        description: 'Supported languages in eshop. Available only if module Foreign languages is active and initialized.'
                         items:
                           type: object
                           additionalProperties: false
@@ -14950,7 +14949,7 @@ paths:
                     language:
                       type: string
                       minLength: 1
-                      description: 'Language of order. Default: default eshop language. (optional)'
+                      description: 'Language of order. Available only if module foreignLanguages is active and initialized.'
                       examples:
                         - cs
                     externalCode:
@@ -33585,7 +33584,7 @@ paths:
                         - Test
                     language:
                       type: string
-                      description: 'Language of the article'
+                      description: 'Language of the article. Available and settable only if module Foreign languages is active and initialized.'
                       examples:
                         - cs
                     defaultSectionId:
@@ -33822,7 +33821,7 @@ paths:
                         - Test
                     language:
                       type: string
-                      description: 'article section language'
+                      description: 'Article section language. Available and settable only if module Foreign languages is active and initialized.'
                       examples:
                         - cs
                     parentId:
@@ -34073,7 +34072,7 @@ paths:
                         - Test
                     language:
                       type: string
-                      description: 'article section language'
+                      description: 'Article section language. Available and settable only if module Foreign languages is active and initialized.'
                       examples:
                         - cs
                     indexName:
@@ -34774,7 +34773,6 @@ paths:
                             - completionTime
                             - status
                             - validUntil
-                            - language
                           properties:
                             jobId:
                               type: string
@@ -34804,6 +34802,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
+                              description: 'Available only if module Foreign languages is active and initialized.'
                               examples:
                                 - cs
                       paginator:
@@ -34876,7 +34875,6 @@ paths:
                           - resultUrl
                           - log
                           - validUntil
-                          - language
                         properties:
                           jobId:
                             type: string
@@ -34927,6 +34925,7 @@ paths:
                             type:
                               - string
                               - 'null'
+                            description: 'Available only if module Foreign languages is active and initialized.'
                             examples:
                               - cs
                   errors:
@@ -40458,7 +40457,6 @@ components:
       additionalProperties: false
       required:
         - id
-        - language
         - title
         - indexName
         - redirectUrl
@@ -40497,7 +40495,7 @@ components:
             - Test
         language:
           type: string
-          description: 'article language'
+          description: 'Article language. Available only if module foreignLanguages is active and initialized.'
           examples:
             - cs
         indexName:
@@ -40644,7 +40642,6 @@ components:
       additionalProperties: false
       required:
         - id
-        - language
         - title
       properties:
         id:
@@ -40666,7 +40663,7 @@ components:
             - Test
         language:
           type: string
-          description: 'article section language'
+          description: 'Article section language. Available only if module foreignLanguages is active and initialized.'
           examples:
             - cs
         indexName:
@@ -40814,7 +40811,7 @@ components:
             - Blog
         language:
           type: string
-          description: 'article section language'
+          description: 'Article section language. Available only if module foreignLanguages is active and initialized.'
           examples:
             - cs
     googleMappingType:
@@ -40952,7 +40949,6 @@ components:
       additionalProperties: false
       required:
         - id
-        - language
         - title
         - content
         - url
@@ -40971,7 +40967,7 @@ components:
             - 1
         language:
           type: string
-          description: 'page language'
+          description: 'Page language. Available only if module foreignLanguages is active and initialized.'
           examples:
             - cs
         title:
@@ -41451,7 +41447,6 @@ components:
         - vatId
         - taxId
         - companyId
-        - language
         - email
         - phone
         - source
@@ -41625,7 +41620,7 @@ components:
             - '12345678'
         language:
           type: string
-          description: 'Language code'
+          description: 'Language code. Available only if module foreignLanguages is active and initialized.'
           examples:
             - cs
         email:
@@ -42675,7 +42670,7 @@ components:
             - 'https://www.domena-eshopu.cz/api/pay/payu/redir?paymentCode=xyz123'
         language:
           type: string
-          description: 'language code of the order'
+          description: 'Language code of the order. Available only if module foreignLanguages is active and initialized.'
           examples:
             - cs
         referer:
