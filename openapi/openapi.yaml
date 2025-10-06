@@ -33933,6 +33933,16 @@ paths:
                       description: "flag indicating, whether the article section can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
                       examples:
                         - logged-in
+                    sourceImageName:
+                      $ref: '#/components/schemas/typeFilenameNullable'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article section image. When set to null, image will be removed.'
+                      examples:
+                        - image.png
+                    sourceOgImageName:
+                      $ref: '#/components/schemas/typeFilenameNullable'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article section open-graph image. When set to null, image will be removed.'
+                      examples:
+                        - image.png
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -34008,11 +34018,11 @@ paths:
                   data:
                     type: object
                     required:
-                      - article
+                      - articleSection
                     additionalProperties: false
                     properties:
-                      article:
-                        $ref: '#/components/schemas/article'
+                      articleSection:
+                        $ref: '#/components/schemas/articleSection'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -34177,6 +34187,16 @@ paths:
                       description: "flag indicating, whether the article section can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
                       examples:
                         - logged-in
+                    sourceImageName:
+                      $ref: '#/components/schemas/typeFilenameNullable'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article section image. When set to null, image will be removed.'
+                      examples:
+                        - image.png
+                    sourceOgImageName:
+                      $ref: '#/components/schemas/typeFilenameNullable'
+                      description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article section open-graph image. When set to null, image will be removed.'
+                      examples:
+                        - image.png
     delete:
       responses:
         200:
