@@ -18597,6 +18597,86 @@ paths:
             type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/orders/claims:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - orders
+                      - paginator
+                    properties:
+                      orders:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - orderCode
+                            - statusId
+                            - productCode
+                            - amount
+                            - amountCompleted
+                          properties:
+                            orderCode:
+                              type: string
+                              description: 'identifier (number) of the order, which can be used to query about the details.'
+                              examples:
+                                - '201800001'
+                            statusId:
+                              type: number
+                              description: 'Order status.'
+                              examples:
+                                - -1
+                            productCode:
+                              type: string
+                              description: 'unique identification of the product variant.'
+                              examples:
+                                - 26/BIL
+                            amount:
+                              $ref: '#/components/schemas/typeAmountNullable'
+                              description: 'amount ordered'
+                              examples:
+                                - '50'
+                            amountCompleted:
+                              $ref: '#/components/schemas/typePositiveAmountNullable'
+                              description: 'amount of completed product'
+                              examples:
+                                - 1.0
+                      paginator:
+                        $ref: '#/components/schemas/paginator'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'Orders with product claims'
+      operationId: getOrderClaims
+      description: |-
+        Endpoint listing all ordered products with unfulfilled claims.
+
+        Endpoint supports [Paging](#section/basic-principles/paging).
+      tags:
+        - Orders
+      parameters:
+        -
+          name: includeClosedAndCancelledOrders
+          in: query
+          description: 'Include orders in final state - such as closed and cancelled orders. Default `false`.'
+          example: true
+          schema:
+            type: boolean
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/orders/batch:
     post:
       responses:
