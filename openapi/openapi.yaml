@@ -1535,6 +1535,7 @@ paths:
                           - negativeStockAmount
                           - oss
                           - stockControlDisabled
+                          - wholesaleSplitActive
                         properties:
                           vatPayer:
                             type: boolean
@@ -1614,6 +1615,11 @@ paths:
                             description: 'Determines if eshop has stock control disabled, this is also true if stock module is disabled.'
                             examples:
                               - false
+                          wholesaleSplitActive:
+                            type: boolean
+                            description: 'Determines if the wholesale payment/shipping methods split is enabled. True if wholesale payment methods are permitted and split is active, otherwise false'
+                            examples:
+                              - true
                       currencies:
                         type: array
                         items:
@@ -28417,6 +28423,7 @@ paths:
                     required:
                       - shippingMethods
                       - wholesaleActive
+                      - wholesaleSplitActive
                       - defaultRetailMethod
                       - defaultWholesaleMethod
                     properties:
@@ -28511,6 +28518,11 @@ paths:
                       wholesaleActive:
                         type: boolean
                         description: 'flag, whether the wholesale shipping methods are permitted'
+                        examples:
+                          - true
+                      wholesaleSplitActive:
+                        type: boolean
+                        description: 'flag, whether the wholesale payment methods split is enabled. True if wholesale payment methods are permitted and split is active, otherwise false'
                         examples:
                           - true
                       defaultRetailMethod:
@@ -29332,6 +29344,7 @@ paths:
                     required:
                       - paymentMethods
                       - wholesaleActive
+                      - wholesaleSplitActive
                       - defaultRetailMethod
                       - defaultWholesaleMethod
                     properties:
@@ -29421,6 +29434,11 @@ paths:
                       wholesaleActive:
                         type: boolean
                         description: 'flag, whether the wholesale payment methods are permitted'
+                        examples:
+                          - true
+                      wholesaleSplitActive:
+                        type: boolean
+                        description: 'flag, whether the wholesale payment methods split is enabled. True if wholesale payment methods are permitted and split is active, otherwise false'
                         examples:
                           - true
                       defaultRetailMethod:
@@ -33344,7 +33362,7 @@ paths:
                         - Test
                     language:
                       type: string
-                      description: 'Language of the article'
+                      description: 'Language of the article. Available and settable only if module Foreign languages is active and initialized.'
                       examples:
                         - cs
                     defaultSectionId:
