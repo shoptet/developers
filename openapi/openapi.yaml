@@ -18682,6 +18682,20 @@ paths:
           schema:
             type: boolean
         -
+          name: productCode
+          in: query
+          description: 'Filter order claims by product code'
+          example: DS53437473
+          schema:
+            type: string
+        -
+          name: orderCode
+          in: query
+          description: 'Filter order claims by order code'
+          example: '2017000066'
+          schema:
+            type: string
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/orders/batch:
     post:
