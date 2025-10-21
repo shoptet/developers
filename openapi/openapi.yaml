@@ -36040,6 +36040,14 @@ components:
                 description: 'parameters name'
                 examples:
                   - Příplatek
+              subscription:
+                type:
+                  - boolean
+                  - 'null'
+                description: 'indicates whether this surcharge parameter is a subscription (recurring payment)'
+                examples:
+                  - true
+                  - false
           parameterValue:
             type: object
             additionalProperties: false
@@ -36128,6 +36136,10 @@ components:
                   - 'null'
               name:
                 type: string
+              subscription:
+                type:
+                  - boolean
+                  - 'null'
           parameterValue:
             type: object
             additionalProperties: false
@@ -36246,6 +36258,14 @@ components:
           description: "Is price in parameter's values including VAT?"
           examples:
             - true
+        subscription:
+          type:
+            - boolean
+            - 'null'
+          description: 'indicates whether this surcharge parameter is a subscription (recurring payment)'
+          examples:
+            - true
+            - false
         values:
           type: array
           description: "Possible parameter's values"
