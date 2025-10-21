@@ -4857,6 +4857,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/productSnapshot'
   /api/products/snapshot/pricelists:
     get:
       responses:
@@ -4896,6 +4897,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/productPricelistSnapshot'
   '/api/products/{guid}':
     get:
       responses:
@@ -13989,6 +13991,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/pricelistSnapshot'
   /api/project/domain:
     get:
       responses:
@@ -15645,6 +15648,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/orderHistorySnapshot'
   /api/orders/snapshot:
     get:
       responses:
@@ -15867,6 +15871,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/orderSnapshot'
   '/api/orders/{code}':
     get:
       responses:
@@ -19455,6 +19460,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/invoiceSnapshot'
   '/api/invoices/{code}':
     get:
       responses:
@@ -20581,6 +20587,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/proformaInvoiceSnapshot'
   '/api/proforma-invoices/{code}':
     get:
       responses:
@@ -21548,6 +21555,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/proofPaymentSnapshot'
   '/api/proof-payments/order/{code}':
     get:
       responses:
@@ -22594,6 +22602,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/creditNoteSnapshot'
   '/api/credit-notes/{code}':
     get:
       responses:
@@ -24034,6 +24043,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/deliveryNoteSnapshot'
   '/api/delivery-notes/{code}':
     get:
       responses:
@@ -25787,6 +25797,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/customerSnapshot'
   '/api/customers/{guid}':
     get:
       responses:
@@ -30788,6 +30799,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/discountCouponSnapshot'
   '/api/discount-coupons/{code}':
     get:
       responses:
@@ -32835,6 +32847,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/quantityDiscountSnapshot'
   '/api/quantity-discounts/{id}':
     get:
       responses:
@@ -33565,6 +33578,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/articleSnapshot'
   '/api/articles/{articleId}':
     get:
       responses:
