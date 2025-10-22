@@ -4020,7 +4020,7 @@ paths:
                     brandCode:
                       type: string
                       minLength: 1
-                      description: "Product's brand. Must exist if set."
+                      description: "Product's brand indexName/code. Must exist if set."
                       examples:
                         - milka
                     internalNote:
@@ -39617,7 +39617,7 @@ components:
             - string
             - 'null'
           minLength: 1
-          description: "Product's brand. Must exist if set."
+          description: "Product's brand indexName/code. Must exist if set."
           examples:
             - milka
         internalNote:
