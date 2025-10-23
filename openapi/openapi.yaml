@@ -7128,6 +7128,118 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-async-endpoint: true
+  /api/categories/products-priority/batch:
+    patch:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/category-product-priority.jsonl" not found.'
+                    instance: batchFileUrlPath
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: categories-batch-update
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: categories-batch-update
+      summary: 'Category products priority BATCH update'
+      operationId: updateCategoryProductsPriorityBatch
+      description: |-
+        This endpoint allows you to update multiple categories with product priorities at once. Batch
+        update is processed asynchronously in same way as for example products
+        snapshot, but it does not have `resultUrl` in response. Instead, you can check attribute `log` which contains
+        successfully updated categories and errors.
+
+
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+
+
+        File with data for update must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one
+        category with product priorities in JSON format. Maximum size of file is 100MB.
+
+
+
+        Structure of JSON row is defined by [Category product priority batch update schema](#tag/batch/categoryProductPriorityBatchUpdate).
+
+
+
+        Asynchronous job process jsonl file row by row and try to validate and
+        save data. If there is any error, row is skipped and error is logged,
+        but it does not stop processing of other rows.
+
+
+
+        In Log, every product is identified by its position in file (starting from 1).
+      tags:
+        - Categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - batchFileUrlPath
+              properties:
+                batchFileUrlPath:
+                  type: string
+                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  examples:
+                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      x-shoptet-async-endpoint: true
   '/api/categories/{categoryGuid}/productsPriority':
     get:
       responses:
@@ -43834,6 +43946,39 @@ components:
       allOf:
         -
           $ref: '#/components/schemas/categoryUpdate'
+    categoryProductPriorityBatchUpdate:
+      title: 'Category product priority update'
+      x-tags:
+        - Batch
+      type: object
+      additionalProperties: false
+      required:
+        - categoryGuid
+        - data
+      properties:
+        categoryGuid:
+          $ref: '#/components/schemas/typeGuid'
+          description: 'Category GUID.'
+        data:
+          type: array
+          description: 'Product priorities in a defined category.'
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - productGuid
+              - priority
+            properties:
+              productGuid:
+                $ref: '#/components/schemas/typeGuid'
+                description: 'Product GUID.'
+              priority:
+                type:
+                  - integer
+                  - 'null'
+                description: 'Product priority.'
+                examples:
+                  - 1
     creditNoteSnapshot:
       title: 'Credit note'
       x-tags:
