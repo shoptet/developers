@@ -4690,7 +4690,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file.
 
 
-        One product in response has the same format as product detail response. See [Product snapshot schema](#tag/snapshot/productsnapshot) for more details.
+        One product in response has the same format as product detail response. See [Product snapshot schema](/shoptet-api/openapi/snapshot/productsnapshot) for more details.
 
 
         This endpoint has several sections, which are exported only when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
@@ -4887,7 +4887,7 @@ paths:
         Using this endpoint, you can get list of all products with basic data such as  product guid, id, code and its prices across all pricelists.
 
 
-        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file. See [Product price list snapshot schema](#tag/snapshot/productpricelistsnapshot) for more details.
+        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file. See [Product price list snapshot schema](/shoptet-api/openapi/snapshot/productpricelistsnapshot) for more details.
 
 
         Result file is compressed using GZIP.
@@ -5273,7 +5273,7 @@ paths:
 
 
 
-        If language is not defined, default language of shop is used. See [Product batch update schema](#tag/batch/productbatchupdate) for more details.
+        If language is not defined, default language of shop is used. See [Product batch update schema](/shoptet-api/openapi/batch/productbatchupdate) for more details.
 
 
         Asynchronous job process jsonl file row by row and try to validate and save data. If there is any error, row is skipped and error is logged,
@@ -7097,7 +7097,7 @@ paths:
 
 
 
-        If language is not defined, default language of shop is used. See [Category batch update schema](#tag/batch/categorybatchupdate) for more details.
+        If language is not defined, default language of shop is used. See [Category batch update schema](/shoptet-api/openapi/batch/categorybatchupdate) for more details.
 
 
 
@@ -7209,7 +7209,7 @@ paths:
 
 
 
-        Structure of JSON row is defined by [Category product priority batch update schema](#tag/batch/categoryProductPriorityBatchUpdate).
+        Structure of JSON row is defined by [Category product priority batch update schema](/shoptet-api/openapi/batch/categoryproductprioritybatchupdate).
 
 
 
@@ -13993,7 +13993,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each price list taking one line of output file.
 
 
-        One price list in response has the same format as price list detail response. See [Price list snapshot schema](#tag/snapshot/pricelistsnapshot) for more details.
+        One price list in response has the same format as price list detail response. See [Price list snapshot schema](/shoptet-api/openapi/snapshot/pricelistsnapshot) for more details.
 
 
         Result file is compressed using GZIP.
@@ -15715,7 +15715,7 @@ paths:
 
         Response will be in [jsonlines](https://jsonlines.org/) format with each remark taking one line of output file.
 
-        One remark in response has the same format as an item in [List of remarks for order](#tag/order-history/getlistofremarksfororder) and is extended with `orderCode` field, which identifies the relation to the order. See [Order history snapshot schema](#tag/snapshot/orderhistorysnapshot) for more details.
+        One remark in response has the same format as an item in [List of remarks for order](#tag/order-history/getlistofremarksfororder) and is extended with `orderCode` field, which identifies the relation to the order. See [Order history snapshot schema](/shoptet-api/openapi/snapshot/orderhistorysnapshot) for more details.
 
 
         Use `orderCodes` request parameter to get the list of specific orders remarks. Order codes are separated by a comma. Please note that this parameter **accepts max. 50 order codes in request parameter**.
@@ -15821,7 +15821,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each order taking one line of output file.
 
 
-        One order in response has the same format as order detail response. See [Order snapshot schema](#tag/snapshot/ordersnapshot) for more details.
+        One order in response has the same format as order detail response. See [Order snapshot schema](/shoptet-api/openapi/snapshot/ordersnapshot) for more details.
 
 
         This endpoint has several sections, which are exported only when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
@@ -18900,7 +18900,7 @@ paths:
 
         **The `data` parameter:**
 
-        Structure of the `data` parameter is the same as the structure of JSON for single [Order insertion](#tag/orders/createorder) endpoint. See [Order batch create schema](#tag/batch/orderbatchcreate) for more details.
+        Structure of the `data` parameter is the same as the structure of JSON for single [Order insertion](#tag/orders/createorder) endpoint. See [Order batch create schema](/shoptet-api/openapi/batch/orderbatchcreate) for more details.
 
 
         The asynchronous job processes the JSONL file row by row and tries to validate and save the data. If there is any error, the row is skipped and the error is logged, but it does not stop the processing of other rows. In the log, every order is identified by its position in the file (starting from 1).
@@ -19407,7 +19407,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each invoice taking one line of output file.
 
 
-        One invoice in response has the same format as invoice detail response. See [Invoice snapshot schema](#tag/snapshot/invoicesnapshot) for more details.
+        One invoice in response has the same format as invoice detail response. See [Invoice snapshot schema](/shoptet-api/openapi/snapshot/invoicesnapshot) for more details.
 
 
         Result file is compressed using GZIP.
@@ -20597,7 +20597,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each proforma invoice taking one line of output file.
 
 
-        One invoice in response has the same format as invoice detail response. See [Proforma invoice snapshot schema](#tag/snapshot/proformainvoicesnapshot) for more details.
+        One invoice in response has the same format as invoice detail response. See [Proforma invoice snapshot schema](/shoptet-api/openapi/snapshot/proformainvoicesnapshot) for more details.
 
 
         Result file is compressed using GZIP.
@@ -21594,7 +21594,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each proof payment taking one line of output file.
 
 
-        One proof payment in response has the same format as proof payment detail response. See [Proof payment snapshot schema](#tag/snapshot/proofpaymentsnapshot) for more details.
+        One proof payment in response has the same format as proof payment detail response. See [Proof payment snapshot schema](/shoptet-api/openapi/snapshot/proofpaymentsnapshot) for more details.
 
 
         Result file is compressed using GZIP.
@@ -22556,7 +22556,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each credit note taking one line of output file.
 
 
-        One credit note in response has the same format as credit note detail response. See [Credit note snapshot schema](#tag/snapshot/creditnotesnapshot) for more details.
+        One credit note in response has the same format as credit note detail response. See [Credit note snapshot schema](/shoptet-api/openapi/snapshot/creditnotesnapshot) for more details.
 
 
         This endpoint has several sections, which are only sent when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
@@ -24078,7 +24078,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each delivery note taking one line of output file.
 
 
-        One delivery note in response has the same format as delivery note detail response. See [Delivery note snapshot schema](#tag/snapshot/deliverynotesnapshot) for more details.
+        One delivery note in response has the same format as delivery note detail response. See [Delivery note snapshot schema](/shoptet-api/openapi/snapshot/deliverynotesnapshot) for more details.
       tags:
         - 'Delivery notes'
       parameters:
@@ -25551,7 +25551,7 @@ paths:
 
 
         Structure of JSON row is same as structure of JSON for single brand
-        creation above. See [Brand batch create schema](#tag/batch/brandbatchcreate) for more details.
+        creation above. See [Brand batch create schema](/shoptet-api/openapi/batch/brandbatchcreate) for more details.
 
 
 
@@ -25871,7 +25871,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each customer taking one line of output file.
 
 
-        One customer in response has the same format as customer detail response. See [Customer snapshot schema](#tag/snapshot/customersnapshot) for more details.
+        One customer in response has the same format as customer detail response. See [Customer snapshot schema](/shoptet-api/openapi/snapshot/customersnapshot) for more details.
 
 
         Result file is compressed using GZIP.
@@ -30818,7 +30818,7 @@ paths:
 
 
         One discount coupon in response has the same format as one discount coupon
-        item form list response. See [Discount coupon snapshot schema](#tag/snapshot/discountcouponsnapshot) for more details.
+        item form list response. See [Discount coupon snapshot schema](/shoptet-api/openapi/snapshot/discountcouponsnapshot) for more details.
 
 
 
@@ -32907,7 +32907,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each quantity discount taking one line of output file.
 
 
-        One quantity discount in response has the same format as in detail of quantity discount endpoint response. See [Quantity discount snapshot schema](#tag/snapshot/quantitydiscountsnapshot) for more details. 
+        One quantity discount in response has the same format as in detail of quantity discount endpoint response. See [Quantity discount snapshot schema](/shoptet-api/openapi/snapshot/quantitydiscountsnapshot) for more details. 
 
 
         Result file is compressed using GZIP.
@@ -33624,7 +33624,7 @@ paths:
         Response will be in [jsonlines](https://jsonlines.org/) format with each article taking one line of output file.
 
 
-        One article in response has the same format as article detail response. See [Article snapshot schema](#tag/snapshot/articlesnapshot) for more details.
+        One article in response has the same format as article detail response. See [Article snapshot schema](/shoptet-api/openapi/snapshot/articlesnapshot) for more details.
 
 
         Result file is compressed using GZIP.
