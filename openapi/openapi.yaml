@@ -24470,6 +24470,120 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-async-endpoint: true
+  '/api/sales-channels/{guid}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - guid
+                      - name
+                      - type
+                      - currencies
+                      - languages
+                      - createdAt
+                      - updatedAt
+                    properties:
+                      guid:
+                        $ref: '#/components/schemas/typeGuid'
+                        description: 'Sales channel GUID.'
+                      name:
+                        type: string
+                        description: 'Sales channel name.'
+                        examples:
+                          - 'My sales channel'
+                      type:
+                        enum:
+                          - in_store
+                          - market
+                          - marketplace
+                        description: 'Type of sales channel.'
+                        examples:
+                          - in_store
+                      currencies:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/typeCurrency'
+                        description: 'Currencies collection.'
+                      languages:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/typeLanguage'
+                        description: 'Languages collection.'
+                      createdAt:
+                        $ref: '#/components/schemas/typeDateTime'
+                      updatedAt:
+                        $ref: '#/components/schemas/typeDateTimeNullable'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Module "Sales channel" is not active.'
+                    instance: salesChannel
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: sales-channel-not-found
+                    message: 'Sales channel with guid "0199bdfd-0979-71fb-85ce-e483c61d391a" not found.'
+                    instance: 0199bdfd-0979-71fb-85ce-e483c61d391a
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Sales channel detail'
+      operationId: getSalesChannelsDetail
+      description: 'Information about the detail of the sales channels. Module `Sales Channel` is required.'
+      tags:
+        - 'Sales channels'
+      parameters:
+        -
+          name: guid
+          in: path
+          description: 'Sales channel GUID'
+          required: true
+          example: 0199bdfd-0979-71fb-85ce-e483c61d391a
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/stocks:
     get:
       responses:
@@ -44732,6 +44846,10 @@ x-tagGroups:
       - Units
       - 'Variant parameters'
       - Warranties
+  -
+    name: 'Sales channels'
+    tags:
+      - 'Sales channels'
   -
     name: System
     tags:
