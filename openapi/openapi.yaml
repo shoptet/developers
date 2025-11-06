@@ -24734,6 +24734,14 @@ paths:
                               examples:
                                 - '2017000049'
                             productGuid:
+                              description: 'Product GUID, can be null for specific reasons, please see endpoint description for more information.'
+                              oneOf:
+                                -
+                                  $ref: '#/components/schemas/typeGuidUnlimited'
+                                -
+                                  type: 'null'
+                            historicalProductGuid:
+                              description: 'Product GUID at the time of the stock movement, can be null for specific reasons and has no current relation to returned `code`, please see endpoint description for more information.'
                               oneOf:
                                 -
                                   $ref: '#/components/schemas/typeGuidUnlimited'
@@ -24762,6 +24770,8 @@ paths:
         [Section on demand](#section/basic-principles/section-on-demand)). Please note that there is some
         performance penalty associated with the usage of "orderCode" `include`
         and/or query `parameter`.
+        Also please note that when include `productGuid` is used, the returned data can be `null` for specific cases. Either when this is a historic stock move, or the product code has been changed and/or is inconsistent with internally stored `guid`. This is to ensure that the returned `code` and `productGuid` always point to the same product consistently.
+        To return GUID of product at the time of the stock movement, please use the include and attribute `historicalProductGuid`. The returned data can still be null on historic stock movements.
       tags:
         - Stocks
       parameters:
@@ -24801,8 +24811,8 @@ paths:
         -
           name: include
           in: query
-          description: 'Optional parts of response.'
-          example: 'orderCode,productGuid,sumAmount'
+          description: 'Optional parts of response. For specific include behavior, please see the general description above.'
+          example: 'orderCode,productGuid,historicalProductGuid,sumAmount'
           schema:
             type: string
         -
