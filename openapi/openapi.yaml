@@ -34205,7 +34205,7 @@ paths:
                         - 'null'
                       description: 'ID of the parent article section. Maximum nesting depth of article section is 4 nodes.'
                       examples:
-                        - '1'
+                        - 1
                     indexName:
                       type:
                         - string
