@@ -14199,7 +14199,7 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
-  /api/project/sales-channels:
+  /api/sales-channels:
     get:
       responses:
         200:
@@ -14264,11 +14264,11 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
-      summary: 'Project sales channels'
-      operationId: getProjectSalesChannels
-      description: 'Information about project sales channels.'
+      summary: 'List of all sales channels'
+      operationId: getSalesChannels
+      description: 'Provides a list of all sales channels.'
       tags:
-        - Project
+        - 'Sales channels'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
