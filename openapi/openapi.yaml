@@ -18802,8 +18802,11 @@ paths:
         -
           name: includeClosedAndCancelledOrders
           in: query
-          description: 'Include orders in final state - such as closed and cancelled orders. Default `false`.'
+          description: |-
+            Include orders in final state - such as closed and cancelled orders. Default `false`.
+            DEPRECATED due to misleading name and actual irrelevance. To be removed in the future.
           example: true
+          deprecated: true
           schema:
             type: boolean
         -
