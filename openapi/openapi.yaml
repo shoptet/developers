@@ -35956,7 +35956,7 @@ paths:
             type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
-  /api/reviews/eshop:
+  /api/reviews/project:
     get:
       responses:
         200:
@@ -36097,16 +36097,16 @@ paths:
                 errors:
                   -
                     errorCode: missing-module
-                    message: 'Method requires active rating module in eshop.'
+                    message: 'Method requires active rating module in project.'
                     instance: rating
                   -
                     errorCode: rating-not-enabled
-                    message: 'The e-shop must have store ratings enabled. They are currently disabled.'
+                    message: 'The project must have store ratings enabled. They are currently disabled.'
                     instance: settings
-      summary: 'List of eshop reviews'
-      operationId: getListOfEshopReviews
+      summary: 'List of project reviews'
+      operationId: getListOfProjectReviews
       description: |-
-        Returns a list of the e-shop's reviews. This endpoint is available only when the 'Rating' module is active. Also, the e-shop must have store ratings enabled in the administration settings.
+        Returns a list of the project reviews. This endpoint is available only when the 'Rating' module is active. Also, the project must have store ratings enabled in the administration settings.
         The endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - Reviews
@@ -36126,7 +36126,7 @@ paths:
                     additionalProperties: false
                     properties:
                       review:
-                        $ref: '#/components/schemas/eshopReview'
+                        $ref: '#/components/schemas/reviewProject'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -36151,11 +36151,11 @@ paths:
                 errors:
                   -
                     errorCode: missing-module
-                    message: 'Method requires active rating module in eshop.'
+                    message: 'Method requires active rating module in project.'
                     instance: rating
                   -
                     errorCode: rating-not-enabled
-                    message: 'The e-shop must have store ratings enabled. They are currently disabled.'
+                    message: 'The project must have store ratings enabled. They are currently disabled.'
                     instance: settings
         404:
           description: 'Not Found'
@@ -36226,9 +36226,9 @@ paths:
                     errorCode: order-customer-mismatch
                     message: 'Order with code "2018000073" is not related to the customer with guid "747fb32d-73bc-11e8-8216-002590dad85e"'
                     instance: 'orderCode, customerGuid'
-      summary: 'Insert of eshop review'
-      operationId: createEshopReview
-      description: "Creates a new eshop review. This endpoint is available only when the 'Rating' module is active. Also, the e-shop must have store ratings enabled in the administration settings."
+      summary: 'Insert of project review'
+      operationId: createProjectReview
+      description: "Creates a new project review. This endpoint is available only when the 'Rating' module is active. Also, the e-shop must have store ratings enabled in the administration settings."
       tags:
         - Reviews
       requestBody:
@@ -36261,6 +36261,7 @@ paths:
                       examples:
                         - 5
                     description:
+                      minLength: 1
                       type:
                         - 'null'
                         - string
@@ -36271,6 +36272,7 @@ paths:
                       type:
                         - 'null'
                         - string
+                      minLength: 1
                       maxLength: 255
                       description: "Fullname of review's author. Can be null only if 'Comment and name is required' setting is disabled."
                       examples:
@@ -36335,6 +36337,153 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+  '/api/reviews/project/{reviewId}':
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - review
+                    additionalProperties: false
+                    properties:
+                      review:
+                        $ref: '#/components/schemas/reviewProject'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active rating module in project.'
+                    instance: rating
+                  -
+                    errorCode: rating-not-enabled
+                    message: 'The project must have store ratings enabled. They are currently disabled.'
+                    instance: settings
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: project-review-not-found
+                    message: 'Project review with ID "1" not found.'
+                    instance: '1'
+      summary: 'Update of project review'
+      operationId: updateProjectReview
+      description: "Updates the project review. This endpoint is available only when the 'Rating' module is active. Also, the project must have store ratings enabled in the administration settings."
+      parameters:
+        -
+          name: reviewId
+          in: path
+          description: 'review ID'
+          required: true
+          example: '1'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      tags:
+        - Reviews
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  minProperties: 1
+                  properties:
+                    description:
+                      type:
+                        - 'null'
+                        - string
+                      minLength: 1
+                      description: "Text of the review. Can be null only if 'Comment and name is required' setting is disabled."
+                      examples:
+                        - 'Snack was very good'
+                    fullName:
+                      type:
+                        - 'null'
+                        - string
+                      minLength: 1
+                      maxLength: 255
+                      description: "Fullname of review's author. Can be null only if 'Comment and name is required' setting is disabled."
+                      examples:
+                        - 'John Doe'
+                    visible:
+                      type: boolean
+                      examples:
+                        - false
+                    reaction:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        reactionFullName:
+                          type:
+                            - 'null'
+                            - string
+                          maxLength: 255
+                          description: 'Fullname of reaction author. Can be null.'
+                          examples:
+                            - 'John Doe'
+                        reactionEmail:
+                          type:
+                            - 'null'
+                            - string
+                          minLength: 1
+                          maxLength: 100
+                          description: 'Email of the reaction author.'
+                          examples:
+                            - johndoe@email.tld
+                        reactionText:
+                          type:
+                            - 'null'
+                            - string
+                          description: 'Text of the reaction.'
+                          examples:
+                            - 'Thank you for your review!'
 components:
   securitySchemes:
     shoptetAccessToken:
@@ -42037,7 +42186,7 @@ components:
           description: 'page og:image'
           examples:
             - 'https://www.some-eshop-url.com/image.jpg'
-    eshopReview:
+    reviewProject:
       type: object
       additionalProperties: false
       required:
