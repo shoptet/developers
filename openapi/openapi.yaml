@@ -3444,6 +3444,86 @@ paths:
         The endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - Reviews
+  '/api/online-stores/{id}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - onlineStore
+                    additionalProperties: false
+                    properties:
+                      onlineStore:
+                        $ref: '#/components/schemas/onlineStore'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Module "Multishop" is not active.'
+                    instance: multishop
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                example:
+                  data: null
+                  errors:
+                    -
+                      errorCode: online-store-not-found
+                      message: 'Online store with id "1" not found.'
+                      instance: '1'
+      summary: 'Online store detail'
+      operationId: getOnlineStoreDetail
+      description: "Information about the detail of the online store. This endpoint is available only when the 'Multishop' module is active."
+      tags:
+        - 'Online stores'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Online store ID'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products:
     get:
       responses:
@@ -36315,6 +36395,75 @@ components:
       description: 'Const symbol. Only numbers are allowed (max length 4).'
       examples:
         - '0308'
+    salesChannelCurrency:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - code
+        - title
+        - symbol
+        - isSymbolOnLeft
+        - precision
+        - decimalSeparator
+        - thousandSeparator
+        - documentPrecision
+        - rounding
+      properties:
+        id:
+          type: integer
+          description: 'Currency id.'
+          examples:
+            - 1
+        code:
+          $ref: '#/components/schemas/typeCurrencyCode'
+        title:
+          type: string
+          description: 'Currency title.'
+          examples:
+            - Koruna
+        symbol:
+          type: string
+          description: 'Currency symbol.'
+          examples:
+            - Kč
+        isSymbolOnLeft:
+          type: boolean
+          description: 'Whether the currency symbol is on left side.'
+          examples:
+            - false
+        precision:
+          type: integer
+          description: 'Currency precision.'
+          examples:
+            - 2
+        priority:
+          type:
+            - integer
+            - 'null'
+          description: 'Currency priority.'
+          examples:
+            - 1
+        decimalSeparator:
+          type: string
+          description: 'Currency decimal separator.'
+          examples:
+            - ','
+        thousandSeparator:
+          type: string
+          description: 'Currency thousand separator.'
+          examples:
+            - .
+        documentPrecision:
+          type: integer
+          description: 'Document precision.'
+          examples:
+            - 0
+        rounding:
+          type: integer
+          description: 'Currency rounding.'
+          examples:
+            - 3
     typeCurrency:
       type: object
       additionalProperties: false
@@ -36423,6 +36572,61 @@ components:
           description: 'Whether the language is default.'
           examples:
             - true
+    salesChannelLanguage:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - name
+        - indexName
+        - dateFormat
+        - timeFormat
+        - isVisible
+        - isBlocked
+        - priority
+      properties:
+        id:
+          type: integer
+          description: 'Language id.'
+          examples:
+            - 1
+        name:
+          type: string
+          description: 'Language name.'
+          examples:
+            - Čeština
+        indexName:
+          type: string
+          description: 'Language index name.'
+          examples:
+            - cs
+        dateFormat:
+          type: string
+          description: 'Date format of language.'
+          examples:
+            - 'Y. n. j.'
+        timeFormat:
+          type: string
+          description: 'Time format of language.'
+          examples:
+            - 'H:i'
+        isVisible:
+          type: boolean
+          description: 'Whether the language is visible.'
+          examples:
+            - true
+        isBlocked:
+          type: boolean
+          description: 'Whether the language is blocked.'
+          examples:
+            - false
+        priority:
+          type:
+            - integer
+            - 'null'
+          description: 'Language priority.'
+          examples:
+            - 3
     typeAmount:
       type: string
       pattern: '^(-)?[0-9]+\.[0-9]{3}$'
@@ -43154,6 +43358,191 @@ components:
             - 'null'
         maxWeight:
           type: integer
+    onlineStoreCountry:
+      type:
+        - object
+        - 'null'
+      additionalProperties: false
+      required:
+        - id
+        - name
+        - code
+        - codeAlpha3
+      properties:
+        id:
+          type: integer
+          description: 'Country identifier.'
+          examples:
+            - 1
+        name:
+          type: string
+          description: 'Country name.'
+          examples:
+            - 'Česká republika'
+        code:
+          type: string
+          description: 'Country code.'
+          examples:
+            - CZ
+        isoCode:
+          type: string
+          description: 'Country ISO code.'
+          examples:
+            - CZ
+        flagCode:
+          type: string
+          description: 'Country flag code.'
+          examples:
+            - CZ
+        codeAlpha3:
+          type: string
+          description: 'Country alpha-3 code.'
+          examples:
+            - CZE
+        currency:
+          type:
+            - string
+            - 'null'
+          description: 'Country currency.'
+          examples:
+            - CZK
+        language:
+          type:
+            - string
+            - 'null'
+          description: 'Country language.'
+          examples:
+            - cs
+        regionCount:
+          type: integer
+          description: 'Region count of country.'
+          examples:
+            - 0
+    salesChannel:
+      type:
+        - object
+        - 'null'
+      required:
+        - guid
+        - name
+        - type
+        - currencies
+        - languages
+        - createdAt
+        - updatedAt
+      properties:
+        guid:
+          $ref: '#/components/schemas/typeGuid'
+          description: 'Sales channel GUID.'
+        name:
+          type: string
+          description: 'Sales channel name.'
+          examples:
+            - 'My sales channel'
+        type:
+          enum:
+            - in_store
+            - market
+            - marketplace
+          description: 'Type of sales channel.'
+          examples:
+            - in_store
+        defaultCurrency:
+          type: string
+          description: 'Sales chanel default currency.'
+          examples:
+            - CZK
+        currencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/salesChannelCurrency'
+          description: 'Currencies collection.'
+        defaultLanguage:
+          type: string
+          description: 'Sales chanel default language.'
+          examples:
+            - Czech
+        languages:
+          type: array
+          items:
+            $ref: '#/components/schemas/salesChannelLanguage'
+          description: 'Languages collection.'
+        createdAt:
+          $ref: '#/components/schemas/typeDateTime'
+        updatedAt:
+          $ref: '#/components/schemas/typeDateTimeNullable'
+    onlineStore:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - status
+        - isPasswordProtected
+        - isPrimary
+      properties:
+        id:
+          type: integer
+          description: 'Online store identifier.'
+          examples:
+            - 1
+        name:
+          type: string
+          description: 'Name of online store.'
+          examples:
+            - 'Czech republic'
+        status:
+          type: string
+          description: 'Online store status'
+          enum:
+            - active
+            - pending
+          examples:
+            - active
+        domain:
+          type:
+            - string
+            - 'null'
+          description: 'Online store domain.'
+          examples:
+            - store.example.com
+        domainSetupMethod:
+          type:
+            - string
+            - 'null'
+          description: 'Online store domain setup method.'
+          examples:
+            - unresolved
+        addressFormat:
+          type: string
+          description: 'Address format of online store.'
+          examples:
+            - INTERNAL_PROJECT_CZ
+        timezone:
+          type: string
+          description: 'Timezone of online store.'
+          examples:
+            - Europe/Prague
+        defaultCountry:
+          $ref: '#/components/schemas/onlineStoreCountry'
+          description: 'Default country of online store.'
+        countries:
+          type: array
+          description: 'Countries of online store.'
+          items:
+            $ref: '#/components/schemas/onlineStoreCountry'
+        salesChannel:
+          $ref: '#/components/schemas/salesChannel'
+          description: 'Online store sales channel.'
+        isPasswordProtected:
+          type: boolean
+          description: 'Whether the online store is protected by password.'
+          examples:
+            - false
+        isPrimary:
+          type: boolean
+          description: 'Whether the online store is primary.'
+          examples:
+            - true
     articleUrls:
       type: object
       additionalProperties: false
@@ -44863,6 +45252,7 @@ x-tagGroups:
   -
     name: 'Sales channels'
     tags:
+      - 'Online stores'
       - 'Sales channels'
   -
     name: System
