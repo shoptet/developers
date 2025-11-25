@@ -29816,6 +29816,66 @@ paths:
                   - data
                   - errors
                 additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Module "Sales channel" is not active.'
+                    instance: salesChannel
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: sales-channel-not-found
+                    message: 'Sales channel with GUID "0199bdfd-0979-71fb-85ce-e483c61d391b" not found.'
+                    instance: salesChannelGuid
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: sales-channel-guid-invalid
+                    message: 'Sales channel GUID \"invalid\" is not valid.'
+                    instance: salesChannelGuid
       summary: 'Listing of payment methods'
       operationId: getListingOfPaymentMethods
       description: |-
@@ -29825,6 +29885,13 @@ paths:
       tags:
         - 'Payment methods'
       parameters:
+        -
+          name: salesChannelGuid
+          in: query
+          description: 'Sales channel GUID. Optional parameter, if not provided, all payment methods will be returned.'
+          example: 0199bdfd-0979-71fb-85ce-e483c61d391b
+          schema:
+            type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
