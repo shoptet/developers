@@ -35290,6 +35290,63 @@ paths:
             type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
+  '/api/discussions-posts/{id}':
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                    additionalProperties: false
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Module "Discussion" is not active.'
+                    instance: discussion
+      summary: 'Removal of discussion post'
+      operationId: deleteDiscussionById
+      description: 'Available only if module "Discussion" is active'
+      tags:
+        - Discussions
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID of discussion'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/system/jobs:
     get:
       responses:
