@@ -3452,6 +3452,105 @@ paths:
         The endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - Reviews
+  /api/online-stores:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - onlineStores
+                    properties:
+                      onlineStores:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - id
+                            - status
+                            - timezone
+                            - isPasswordProtected
+                            - isPrimary
+                          properties:
+                            id:
+                              type: integer
+                              description: 'Online store identifier.'
+                              examples:
+                                - 1
+                            status:
+                              type: string
+                              description: 'Online store status'
+                              enum:
+                                - active
+                                - pending
+                              examples:
+                                - active
+                            domain:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'Online store domain.'
+                              examples:
+                                - store.example.com
+                            timezone:
+                              type: string
+                              description: 'Timezone of online store.'
+                              examples:
+                                - Europe/Prague
+                            defaultCountry:
+                              $ref: '#/components/schemas/onlineStoreCountry'
+                              description: 'Default country of online store.'
+                            isPasswordProtected:
+                              type: boolean
+                              description: 'Whether the online store is protected by password.'
+                              examples:
+                                - false
+                            isPrimary:
+                              type: boolean
+                              description: 'Whether the online store is primary.'
+                              examples:
+                                - true
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Module "Multishop" is not active.'
+                    instance: multishop
+      summary: 'List of online stores'
+      operationId: getListOfOnlineStores
+      description: 'List of online stores.'
+      tags:
+        - 'Online stores'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   '/api/online-stores/{id}':
     get:
       responses:
@@ -14241,93 +14340,6 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
       x-shoptet-response-ref: '#/definitions/pricelistSnapshot'
-  /api/project/domain:
-    get:
-      responses:
-        200:
-          description: OK
-          content:
-            'application/json; charset=utf-8':
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    additionalProperties: false
-                    required:
-                      - domains
-                    properties:
-                      domains:
-                        type: array
-                        items:
-                          type: object
-                          required:
-                            - id
-                            - name
-                            - status
-                            - domain
-                          properties:
-                            id:
-                              type: integer
-                              description: 'Domain id'
-                              examples:
-                                - 2
-                            name:
-                              type: string
-                              description: 'Domain name'
-                              examples:
-                                - MyStore1
-                            status:
-                              enum:
-                                - active
-                                - pending
-                              description: 'Active or pending status of domain'
-                              examples:
-                                - active
-                            domain:
-                              type: string
-                              description: "Project's domain"
-                              examples:
-                                - mystoreone.com
-                            isPrimary:
-                              type: boolean
-                              description: 'Is it primary market?'
-                              examples:
-                                - true
-                  errors:
-                    $ref: '#/components/schemas/Errors'
-                required:
-                  - data
-                  - errors
-                additionalProperties: false
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type:
-                      - object
-                      - 'null'
-                  errors:
-                    $ref: '#/components/schemas/Errors'
-              example:
-                data: null
-                errors:
-                  -
-                    errorCode: missing-module
-                    message: 'Method requires active multishop module in eshop.'
-                    instance: multishop
-      summary: 'Project domains'
-      operationId: getProjectDomainList
-      description: 'List of all domains project has.'
-      tags:
-        - Project
-      parameters:
-        -
-          $ref: '#/components/parameters/DefaultContentType'
   /api/sales-channels:
     get:
       responses:
