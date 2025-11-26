@@ -1746,6 +1746,7 @@ paths:
                                 - accountNumber
                                 - iban
                                 - bic
+                                - bankAccountOwnerName
                               properties:
                                 accountNumber:
                                   type:
@@ -1768,6 +1769,13 @@ paths:
                                   description: BIC
                                   examples:
                                     - GIBACZPX
+                                bankAccountOwnerName:
+                                  type:
+                                    - string
+                                    - 'null'
+                                  description: 'Bank account owner name'
+                                  examples:
+                                    - 'Account Name'
                       taxClasses:
                         type: array
                         items:
@@ -9567,6 +9575,14 @@ paths:
                               description: "Is price of parameter's values including VAT."
                               examples:
                                 - true
+                            subscription:
+                              type:
+                                - boolean
+                                - 'null'
+                              description: 'Indicates whether this surcharge parameter is a subscription (recurring payment)'
+                              examples:
+                                - true
+                                - false
                             googleMapping:
                               $ref: '#/components/schemas/googleMappingType'
                               description: 'Possible parameter mapping with google.'
@@ -9673,6 +9689,14 @@ paths:
                             description: "Is price of parameter's values including VAT."
                             examples:
                               - true
+                          subscription:
+                            type:
+                              - boolean
+                              - 'null'
+                            description: 'Indicates whether this surcharge parameter is a subscription (recurring payment)'
+                            examples:
+                              - true
+                              - false
                           googleMapping:
                             $ref: '#/components/schemas/googleMappingType'
                             description: 'Possible parameter mapping with google.'
@@ -9896,6 +9920,14 @@ paths:
                             description: "Is price of parameter's values including VAT."
                             examples:
                               - true
+                          subscription:
+                            type:
+                              - boolean
+                              - 'null'
+                            description: 'Indicates whether this surcharge parameter is a subscription (recurring payment)'
+                            examples:
+                              - true
+                              - false
                           googleMapping:
                             $ref: '#/components/schemas/googleMappingType'
                             description: 'Possible parameter mapping with google.'
@@ -10191,6 +10223,14 @@ paths:
                             description: "Is price of parameter's values including VAT."
                             examples:
                               - true
+                          subscription:
+                            type:
+                              - boolean
+                              - 'null'
+                            description: 'Indicates whether this surcharge parameter is a subscription (recurring payment)'
+                            examples:
+                              - true
+                              - false
                           googleMapping:
                             $ref: '#/components/schemas/googleMappingType'
                             description: 'Possible parameter mapping with google.'
@@ -10437,6 +10477,14 @@ paths:
                             description: "Is price of parameter's values including VAT."
                             examples:
                               - true
+                          subscription:
+                            type:
+                              - boolean
+                              - 'null'
+                            description: 'Indicates whether this surcharge parameter is a subscription (recurring payment)'
+                            examples:
+                              - true
+                              - false
                           googleMapping:
                             $ref: '#/components/schemas/googleMappingType'
                             description: 'Possible parameter mapping with google.'
@@ -36563,7 +36611,6 @@ paths:
                       type:
                         - 'null'
                         - string
-                      minLength: 1
                       description: "Text of the review. Can be null only if 'Comment and name is required' setting is disabled."
                       examples:
                         - 'Snack was very good'
@@ -36571,7 +36618,6 @@ paths:
                       type:
                         - 'null'
                         - string
-                      minLength: 1
                       maxLength: 255
                       description: "Fullname of review's author. Can be null only if 'Comment and name is required' setting is disabled."
                       examples:
