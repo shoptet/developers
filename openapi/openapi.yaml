@@ -35501,9 +35501,23 @@ paths:
           schema:
             type: string
         -
+          name: creationTimeTo
+          in: query
+          description: 'date and time of job creation - upper limit'
+          example: '2018-05-28T14:17:00+02:00'
+          schema:
+            type: string
+        -
           name: completionTimeFrom
           in: query
           description: 'date and time of job completion - lower limit'
+          example: '2018-05-28T14:17:00+02:00'
+          schema:
+            type: string
+        -
+          name: completionTimeTo
+          in: query
+          description: 'date and time of job completion - upper limit'
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
