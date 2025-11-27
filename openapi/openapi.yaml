@@ -1981,7 +1981,7 @@ paths:
                                 - accountNumber
                                 - iban
                                 - bic
-                                - bankAccountOwnerName
+                                - ownerName
                               properties:
                                 accountNumber:
                                   type:
@@ -2004,11 +2004,11 @@ paths:
                                   description: BIC
                                   examples:
                                     - GIBACZPX
-                                bankAccountOwnerName:
+                                ownerName:
                                   type:
                                     - string
                                     - 'null'
-                                  description: 'Bank account owner name'
+                                  description: 'Owner name'
                                   examples:
                                     - 'Account Name'
                       taxClasses:
