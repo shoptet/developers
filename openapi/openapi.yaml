@@ -13646,6 +13646,7 @@ paths:
                               - '0006'
   /api/products/reviews:
     get:
+      deprecated: true
       responses:
         200:
           description: OK
@@ -13787,8 +13788,8 @@ paths:
                   - errors
                 additionalProperties: false
       summary: 'List of products reviews'
-      operationId: getListOfProductsReviews
-      description: "Returns list of product's reviews."
+      operationId: getListOfProductsReviewsDeprecated
+      description: "Returns list of product's reviews. Endpoint is deprecated. See new endpoint reviews/products replacing this."
       tags:
         - Reviews
       parameters:
@@ -35520,6 +35521,498 @@ paths:
                       description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article open-graph image. When set to null, image will be removed.'
                       examples:
                         - image.png
+  /api/reviews/products:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - reviews
+                      - paginator
+                    properties:
+                      reviews:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - guid
+                            - date
+                            - orderCode
+                            - rating
+                            - productName
+                            - productGuid
+                            - description
+                            - fullName
+                            - email
+                            - customerGuid
+                            - authorized
+                            - visible
+                            - reaction
+                            - updated
+                          properties:
+                            guid:
+                              $ref: '#/components/schemas/typeGuid'
+                            date:
+                              $ref: '#/components/schemas/typeDateTimeNullable'
+                              description: 'Review creation date.'
+                            orderCode:
+                              type:
+                                - 'null'
+                                - string
+                              description: 'Order code related to review. Can be null.'
+                              examples:
+                                - '2011000002'
+                            rating:
+                              type: number
+                              description: "Number from 1 to 5 representing starts of review's rating."
+                              examples:
+                                - 5
+                            productName:
+                              type: string
+                              description: 'Product name related to review.'
+                              examples:
+                                - Snack
+                            productGuid:
+                              oneOf:
+                                -
+                                  $ref: '#/components/schemas/typeGuidUnlimited'
+                                -
+                                  type: 'null'
+                              description: 'Product guid related to review.'
+                            description:
+                              type:
+                                - 'null'
+                                - string
+                              examples:
+                                - 'Snack was very good'
+                            fullName:
+                              type:
+                                - 'null'
+                                - string
+                              description: "Fullname of review's author. Can be null."
+                              examples:
+                                - 'John Doe'
+                            email:
+                              type:
+                                - 'null'
+                                - string
+                              description: "Email of the review author. If it's a registered customer and the review email is empty, it's filled with the customer's main account email. Can be null."
+                              examples:
+                                - johndoe@email.tld
+                            customerGuid:
+                              type:
+                                - 'null'
+                                - string
+                              description: 'Customer guid related to review. Can be null.'
+                              examples:
+                                - 443cad54-73bc-11e8-8216-002590dad85e
+                            authorized:
+                              type: boolean
+                              examples:
+                                - true
+                            visible:
+                              type: boolean
+                              examples:
+                                - false
+                            reaction:
+                              type: object
+                              additionalProperties: false
+                              required:
+                                - reactionCreated
+                                - reactionFullName
+                                - reactionEmail
+                                - reactionText
+                              properties:
+                                reactionCreated:
+                                  $ref: '#/components/schemas/typeDateTimeNullable'
+                                  description: 'Date of creation of reaction. Can be null.'
+                                reactionFullName:
+                                  type:
+                                    - 'null'
+                                    - string
+                                  examples:
+                                    - 'John Doe'
+                                reactionEmail:
+                                  type:
+                                    - 'null'
+                                    - string
+                                  examples:
+                                    - johndoe@email.tld
+                                reactionText:
+                                  type:
+                                    - 'null'
+                                    - string
+                                  examples:
+                                    - 'Thank you for your review!'
+                            updated:
+                              $ref: '#/components/schemas/typeDateTimeNullable'
+                              description: 'Timestamp whenever the rating is changed'
+                      paginator:
+                        $ref: '#/components/schemas/paginator'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'List of products reviews'
+      operationId: getListOfProductsReviews
+      description: "Returns list of product's reviews."
+      tags:
+        - Reviews
+      parameters:
+        -
+          name: dateFrom
+          in: query
+          description: 'Filter reviews with creation date after date'
+          required: true
+          example: '2019-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: dateTo
+          in: query
+          description: 'Filter reviews with creation date before date'
+          required: true
+          example: '2019-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: changeTimeFrom
+          in: query
+          description: 'Filter reviews changed after this date (included)'
+          required: true
+          example: '2019-09-05T00:00:00%2B0000'
+          schema:
+            type: string
+        -
+          name: productGuid
+          in: query
+          description: 'Product identifier to filter reviews by.'
+          required: true
+          example: 91670fd3-5b3d-11e7-819d-002590dc5efc
+          schema:
+            type: string
+        -
+          name: orderCode
+          in: query
+          description: 'Order identifier to filter reviews by.'
+          required: true
+          example: '2011000002'
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - guid
+                      - date
+                      - orderCode
+                      - rating
+                      - productName
+                      - productGuid
+                      - description
+                      - fullName
+                      - email
+                      - customerGuid
+                      - authorized
+                      - visible
+                      - reaction
+                      - updated
+                    properties:
+                      guid:
+                        $ref: '#/components/schemas/typeGuid'
+                      date:
+                        $ref: '#/components/schemas/typeDateTimeNullable'
+                        description: 'Review creation date.'
+                      orderCode:
+                        type:
+                          - 'null'
+                          - string
+                        description: 'Order code related to review. Can be null.'
+                        examples:
+                          - '2011000002'
+                      rating:
+                        type: number
+                        description: "Number from 1 to 5 representing starts of review's rating."
+                        examples:
+                          - 5
+                      productName:
+                        type: string
+                        description: 'Product name related to review.'
+                        examples:
+                          - Snack
+                      productGuid:
+                        oneOf:
+                          -
+                            $ref: '#/components/schemas/typeGuidUnlimited'
+                          -
+                            type: 'null'
+                        description: 'Product guid related to review.'
+                      description:
+                        type:
+                          - 'null'
+                          - string
+                        examples:
+                          - 'Snack was very good'
+                      fullName:
+                        type:
+                          - 'null'
+                          - string
+                        description: "Fullname of review's author. Can be null."
+                        examples:
+                          - 'John Doe'
+                      email:
+                        type:
+                          - 'null'
+                          - string
+                        description: "Email of the review author. If it's a registered customer and the review email is empty, it's filled with the customer's main account email. Can be null."
+                        examples:
+                          - johndoe@email.tld
+                      customerGuid:
+                        type:
+                          - 'null'
+                          - string
+                        description: 'Customer guid related to review. Can be null.'
+                        examples:
+                          - 443cad54-73bc-11e8-8216-002590dad85e
+                      authorized:
+                        type: boolean
+                        examples:
+                          - true
+                      visible:
+                        type: boolean
+                        examples:
+                          - false
+                      reaction:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - reactionCreated
+                          - reactionFullName
+                          - reactionEmail
+                          - reactionText
+                        properties:
+                          reactionCreated:
+                            $ref: '#/components/schemas/typeDateTimeNullable'
+                            description: 'Date of creation of reaction. Can be null.'
+                          reactionFullName:
+                            type:
+                              - 'null'
+                              - string
+                            examples:
+                              - 'John Doe'
+                          reactionEmail:
+                            type:
+                              - 'null'
+                              - string
+                            examples:
+                              - johndoe@email.tld
+                          reactionText:
+                            type:
+                              - 'null'
+                              - string
+                            examples:
+                              - 'Thank you for your review!'
+                      updated:
+                        $ref: '#/components/schemas/typeDateTimeNullable'
+                        description: 'Timestamp whenever the rating is changed'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active rating module in eshop.'
+                    instance: rating
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: product-not-found
+                    message: 'Product with guid "92a9d61e-7481-11e8-8216-002590dad85e" not found'
+                    instance: 1009d61e-7481-11e8-8216-002590dad5TG
+                  -
+                    errorCode: customer-not-found
+                    message: 'Customer with guid "92a9d61e-7481-11e8-8216-002590dad85e" not found'
+                    instance: 92a9d61e-7481-11e8-8216-002590dad85e
+                  -
+                    errorCode: order-not-found
+                    message: 'Order "20202020" not found.'
+                    instance: '20202020'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        errorCode:
+                          type: string
+                        message:
+                          type: string
+                        instance:
+                          type: string
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The property productGuid is required'
+                    instance: data.productGuid
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The property rate is required'
+                    instance: data.rating
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Invalid value number "6". Value must be from 1 to 5.'
+                    instance: data.rating
+                  -
+                    errorCode: rating-already-voted
+                    message: 'You have already submitted a review from this IP address.'
+                    instance: ipAddress
+      summary: 'Product review insertion'
+      operationId: createProductReview
+      description: 'Importing product reviews with option to backdate them'
+      tags:
+        - Reviews
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - productGuid
+                    - rating
+                  properties:
+                    productGuid:
+                      oneOf:
+                        -
+                          $ref: '#/components/schemas/typeGuidUnlimited'
+                        -
+                          type: 'null'
+                      description: 'Product guid related to review.'
+                    date:
+                      $ref: '#/components/schemas/typeDateTimeNullable'
+                      description: 'Review creation date.'
+                    fullName:
+                      type:
+                        - 'null'
+                        - string
+                      description: "Full name of review's author. Can be null."
+                      examples:
+                        - 'John Doe'
+                    email:
+                      type:
+                        - 'null'
+                        - string
+                      description: "Email of the review author. If it's a registered customer and the review email is empty, it's filled with the customer's main account email. Can be null."
+                      examples:
+                        - johndoe@email.tld
+                    description:
+                      type:
+                        - 'null'
+                        - string
+                      examples:
+                        - 'Snack was very good'
+                    rating:
+                      type: number
+                      minimum: 0
+                      maximum: 5
+                      description: "Number from 1 to 5 representing starts of review's rating."
+                      examples:
+                        - 5
+                    customerGuid:
+                      type:
+                        - 'null'
+                        - string
+                      description: 'Customer guid related to review. Can be null.'
+                      examples:
+                        - 443cad54-73bc-11e8-8216-002590dad85e
+                    orderCode:
+                      type:
+                        - 'null'
+                        - string
+                      description: 'Order code related to review. Can be null.'
+                      examples:
+                        - '2011000002'
+                    ipAddress:
+                      type:
+                        - string
+                        - 'null'
+                      maxLength: 255
+                      description: 'IP address of the client who made the review'
+                      examples:
+                        - 213.46.237.24
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/discussions-posts:
     get:
       responses:
