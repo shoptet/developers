@@ -7219,6 +7219,7 @@ paths:
                         - all
                         - registered
                         - unregistered
+                        - admin-only
                       description: 'defines users of the e-shop who can see the category - `all` = all (default), `registered` = registered users, `unregistered` = non-registered users. Optional.'
                       examples:
                         - all
@@ -34152,7 +34153,8 @@ paths:
                         - all
                         - logged-in
                         - logged-out
-                      description: "Flag indicating, whether the article can be viewed by everyone (value of the flag is: 'all'), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
+                        - admin-only
+                      description: "Flag indicating, whether the article can be viewed by everyone (value of the flag is: 'all'), by logged in users only ('logged-in'), by logged out users only ('logged-out'), or by administrators only ('admin-only')"
                       examples:
                         - logged-in
                     sourceImageName:
@@ -34476,7 +34478,8 @@ paths:
                         - all
                         - logged-in
                         - logged-out
-                      description: "Flag indicating, whether the article can be viewed by everyone (value of the flag is: 'all'), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
+                        - admin-only
+                      description: "Flag indicating, whether the article can be viewed by everyone (value of the flag is: 'all'), by logged in users only ('logged-in'), by logged out users only ('logged-out'), or by administrators only ('admin-only')"
                       examples:
                         - logged-in
                     sourceImageName:
@@ -35275,7 +35278,8 @@ paths:
                         - all
                         - logged-in
                         - logged-out
-                      description: "flag indicating, whether the page can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
+                        - admin-only
+                      description: "flag indicating, whether the page can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), by logged out users only ('logged-out'), or by administrators only ('admin-only')"
                       examples:
                         - logged-in
                     sourceOgImageName:
@@ -35513,7 +35517,8 @@ paths:
                         - all
                         - logged-in
                         - logged-out
-                      description: "flag indicating, whether the page can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
+                        - admin-only
+                      description: "flag indicating, whether the page can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), by logged out users only ('logged-out'), or by administrators only ('admin-only')"
                       examples:
                         - logged-in
                     sourceOgImageName:
@@ -42056,7 +42061,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'defines, which users of the e-shop have the category shown - `all` = all, `registered` = registered users, `unregistered` = non-registered users'
+          description: 'defines, which users of the e-shop have the category shown - `all` = all, `registered` = registered users, `unregistered` = non-registered users, `admin-only` = administrators'
           examples:
             - all
         productOrdering:
@@ -42179,6 +42184,7 @@ components:
             - all
             - registered
             - unregistered
+            - admin-only
           description: 'defines users of the e-shop who can see the category - `all` = all (default), `registered` = registered users, `unregistered` = non-registered users. Optional.'
           examples:
             - all
@@ -42675,7 +42681,8 @@ components:
             - all
             - logged-in
             - logged-out
-          description: "flag indicating, whether the article can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
+            - admin-only
+          description: "flag indicating, whether the article can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), or by logged out users only ('logged-out'), or by administrators only ('admin-only')"
           examples:
             - logged-in
         image:
@@ -42879,7 +42886,8 @@ components:
             - all
             - logged-in
             - logged-out
-          description: "flag indicating, whether the article section can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
+            - admin-only
+          description: "flag indicating, whether the article section can be viewed by everyone (value of the flag is: `all`), by logged in users only ('logged-in'), or by logged out users only ('logged-out'), or by administrators only ('admin-only')"
           examples:
             - logged-in
         image:
@@ -43129,7 +43137,8 @@ components:
             - all
             - logged-in
             - logged-out
-          description: "flag indicating, whether the page can be viewed by everyone (value of the flag is: 'all'), by logged in users only ('logged-in'), or by logged out users only ('logged-out')"
+            - admin-only
+          description: "flag indicating, whether the page can be viewed by everyone (value of the flag is: 'all'), by logged in users only ('logged-in'), or by logged out users only ('logged-out'), or by administrators only ('admin-only')"
           examples:
             - logged-in
         ogImage:
