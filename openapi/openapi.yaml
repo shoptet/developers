@@ -41439,9 +41439,13 @@ components:
                 examples:
                   - 'How to use the product'
               type:
+                type:
+                  - string
+                  - 'null'
                 enum:
                   - youtube
                   - youtube-short
+                  - null
                 description: 'related video type'
                 examples:
                   - youtube-short
