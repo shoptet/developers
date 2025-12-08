@@ -16408,6 +16408,7 @@ paths:
         `shippingDetails`| Transport details
         `stockLocation`| Position in the stock
         `surchargeParameters`| Item surcharge parameters
+        `paymentTransactions`| Payment transactions within the order
         `productFlags`| Item product flags
 
         Returns the detail for one order. In the `items` field, the individual
@@ -45308,6 +45309,43 @@ components:
                 description: 'identifier of the parent product set item, if the item is a product set item. If the item is not a product set item, this field is not present.'
                 examples:
                   - 123
+        paymentTransactions:
+          type: array
+          description: 'all order payment transactions'
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - transactionId
+              - price
+              - status
+              - creationTime
+              - changeTime
+            properties:
+              transactionId:
+                type:
+                  - string
+                description: 'payment transaction identifier'
+                examples:
+                  - 018myestp7sjopi9zs5obatbhwcor33e
+              price:
+                $ref: '#/components/schemas/typePrice'
+                description: 'payment transaction price'
+              status:
+                type: string
+                description: 'status of the payment transaction'
+                examples:
+                  - OK
+                  - NEW
+                  - FAILED
+                  - PENDING
+                  - UNKNOWN
+              creationTime:
+                $ref: '#/components/schemas/typeDateTimeNullable'
+                description: 'payment transaction creation date and time'
+              changeTime:
+                $ref: '#/components/schemas/typeDateTimeNullable'
+                description: 'payment transaction last change date and time'
     orderHistory:
       type: object
       additionalProperties: false
