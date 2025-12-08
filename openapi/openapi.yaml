@@ -44586,6 +44586,24 @@ components:
           $ref: '#/components/schemas/typeDateTime'
         updatedAt:
           $ref: '#/components/schemas/typeDateTimeNullable'
+    onlineStoreDesign:
+      type: object
+      required:
+        - header
+      properties:
+        header:
+          type: object
+          additionalProperties: false
+          required:
+            - logoUrl
+          properties:
+            logoUrl:
+              type:
+                - string
+                - 'null'
+              description: 'URL of online store logo.'
+              examples:
+                - 'https://dummy.myshoptet.com/user/logos/shoptet-logo.png'
     onlineStore:
       type: object
       additionalProperties: false
@@ -44658,6 +44676,9 @@ components:
           description: 'Whether the online store is primary.'
           examples:
             - true
+        design:
+          $ref: '#/components/schemas/onlineStoreDesign'
+          description: 'Online store design.'
     articleUrls:
       type: object
       additionalProperties: false
