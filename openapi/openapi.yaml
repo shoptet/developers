@@ -35558,7 +35558,7 @@ paths:
                 additionalProperties: false
       summary: 'List of discussion posts'
       operationId: getListOfDiscussionPosts
-      description: "List of discussion posts, filterable by product GUID, author's e-mail and creation date."
+      description: "List of discussion posts, filterable by product GUID, article ID, page ID, customer GUID, author's e-mail, and creation date."
       tags:
         - Discussions
       parameters:
@@ -35567,6 +35567,27 @@ paths:
           in: query
           description: 'guid of the product associated to discussion'
           example: 356eb81e-d966-11e0-b04f-57a43310b768
+          schema:
+            type: string
+        -
+          name: articleId
+          in: query
+          description: 'identifier of the article associated to discussion'
+          example: 1
+          schema:
+            type: number
+        -
+          name: pageId
+          in: query
+          description: 'identifier of the page associated to discussion'
+          example: 1
+          schema:
+            type: number
+        -
+          name: customerGuid
+          in: query
+          description: 'guid of the customer associated to discussion'
+          example: 443cad54-73bc-11e8-8216-002590dad85e
           schema:
             type: string
         -
@@ -35590,6 +35611,202 @@ paths:
           example: '2022-12-31T23:59:59+02:00'
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: product-discussions-not-enabled
+                    message: 'The project must have product discussions enabled. They are currently disabled. Skipped.'
+                    instance: 'data[0]'
+                  -
+                    errorCode: article-discussions-not-enabled
+                    message: 'The project must have article discussions enabled. They are currently disabled. Skipped.'
+                    instance: 'data[0]'
+                  -
+                    errorCode: page-discussions-not-enabled
+                    message: 'The project must have page discussions enabled. They are currently disabled. Skipped.'
+                    instance: 'data[0]'
+                  -
+                    errorCode: invalid-request-data
+                    message: 'One of productGuid, articleId, and pageId is required. Skipped.'
+                    instance: 'data[0]'
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Only one of productGuid, articleId, and pageId is allowed. Skipped.'
+                    instance: 'data[1]'
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Product \"c5112055-d7c0-11e0-9a5c-feab5ed617ed\" does not exist. Skipped.'
+                    instance: 'data[0].productGuid'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'There must be a maximum of 100 items in the array'
+                    instance: data
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Must be at most 128 characters long.'
+                    instance: 'data[0].name'
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Invalid email'
+                    instance: 'data[0].email'
+      summary: 'Creation of discussion posts'
+      operationId: createDiscussionPosts
+      description: |-
+        Allows the creation of multiple discussion posts at once. The limit of items per request is defined to 100.
+
+
+        Discussions can be created for: products, articles, and pages. To accept these types of discussions, each of the discussion types must be activated in settings.
+
+
+        Request is processing all the items. If there are some errors in item definitions, only these items are skipped and summarized in response errors. Valid items are processed even if some error items are skipped.
+
+
+        If at least one item is processed successfully, the response code is `201`. If all the items contain errors, the response code is `400`. If basic validation of items fails, the response code is `422` and the request is not processed.
+      tags:
+        - Discussions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: object
+                    required:
+                      - email
+                      - content
+                      - authorized
+                    additionalProperties: false
+                    properties:
+                      parentId:
+                        type:
+                          - number
+                          - 'null'
+                        minimum: 1
+                        description: 'Discussion post parent identifier.'
+                        examples:
+                          - 1
+                      productGuid:
+                        oneOf:
+                          -
+                            $ref: '#/components/schemas/typeGuidUnlimited'
+                          -
+                            type: 'null'
+                        description: 'Discussion post product identifier.'
+                      articleId:
+                        type:
+                          - number
+                          - 'null'
+                        minimum: 1
+                        description: 'Discussion post article identifier.'
+                        examples:
+                          - 2
+                      pageId:
+                        type:
+                          - number
+                          - 'null'
+                        minimum: 1
+                        description: 'Discussion post page identifier.'
+                        examples:
+                          - 3
+                      customerGuid:
+                        oneOf:
+                          -
+                            $ref: '#/components/schemas/typeGuidUnlimited'
+                          -
+                            type: 'null'
+                        description: 'Discussion post customer identifier.'
+                      name:
+                        type:
+                          - string
+                          - 'null'
+                        maxLength: 128
+                        description: 'Name of the author.'
+                        examples:
+                          - 'John Doe'
+                      email:
+                        type: string
+                        maxLength: 100
+                        format: email
+                        description: 'Email of the author.'
+                        examples:
+                          - john.doe@example.com
+                      title:
+                        type:
+                          - string
+                          - 'null'
+                        maxLength: 255
+                        description: 'Title of the post.'
+                        examples:
+                          - 'Some title'
+                      content:
+                        type: string
+                        minLength: 1
+                        description: 'Content of the post.'
+                        examples:
+                          - 'Some content'
+                      creationDate:
+                        $ref: '#/components/schemas/typeDateTimeNullable'
+                        description: 'Date and time of the post creation. If not provided, current date and time is used.'
+                      authorized:
+                        type: boolean
+                        description: 'Flag whether the post is authorized (visible on the web).'
+                        examples:
+                          - true
+      parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/discussions-posts/{id}':
@@ -42957,6 +43174,8 @@ components:
         - id
         - parentId
         - productGuid
+        - articleId
+        - pageId
         - customerGuid
         - name
         - email
@@ -42978,19 +43197,33 @@ components:
           examples:
             - 1
         productGuid:
+          oneOf:
+            -
+              $ref: '#/components/schemas/typeGuidUnlimited'
+            -
+              type: 'null'
+          description: 'Discussion post product identifier.'
+        articleId:
           type:
-            - string
+            - number
             - 'null'
-          description: 'product guid of the product associated to the post'
+          description: 'Discussion post article identifier.'
           examples:
-            - 07f7a4c1-d7b1-11e0-9a5c-feab5ed617ed
+            - 2
+        pageId:
+          type:
+            - number
+            - 'null'
+          description: 'Discussion post page identifier.'
+          examples:
+            - 3
         customerGuid:
-          type:
-            - string
-            - 'null'
-          description: 'customer guid of the customer associated to the post'
-          examples:
-            - 07f7a4c1-d7b1-11e0-9a5c-feab5ed617ed
+          oneOf:
+            -
+              $ref: '#/components/schemas/typeGuidUnlimited'
+            -
+              type: 'null'
+          description: 'Discussion post customer identifier.'
         name:
           type:
             - string
