@@ -13668,6 +13668,7 @@ paths:
                         items:
                           type: object
                           required:
+                            - id
                             - guid
                             - date
                             - orderCode
@@ -13683,6 +13684,11 @@ paths:
                             - reaction
                             - updated
                           properties:
+                            id:
+                              type: integer
+                              description: 'Review id.'
+                              examples:
+                                - 1
                             guid:
                               $ref: '#/components/schemas/typeGuid'
                             date:
@@ -36635,6 +36641,7 @@ paths:
                         items:
                           type: object
                           required:
+                            - id
                             - guid
                             - date
                             - orderCode
@@ -36650,6 +36657,11 @@ paths:
                             - reaction
                             - updated
                           properties:
+                            id:
+                              type: integer
+                              description: 'Review id.'
+                              examples:
+                                - 1
                             guid:
                               $ref: '#/components/schemas/typeGuid'
                             date:
@@ -36880,6 +36892,13 @@ paths:
                         description: "Email of the review author. If it's a registered customer and the review email is empty, it's filled with the customer's main account email. Can be null."
                         examples:
                           - johndoe@email.tld
+                      ipAddress:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'IP address of the client who made the review. Can be null.'
+                        examples:
+                          - 213.46.237.24
                       customerGuid:
                         type:
                           - 'null'
@@ -37134,6 +37153,268 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+  '/api/reviews/products/{reviewId}':
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - guid
+                      - date
+                      - orderCode
+                      - rating
+                      - productName
+                      - productGuid
+                      - description
+                      - fullName
+                      - email
+                      - customerGuid
+                      - authorized
+                      - visible
+                      - reaction
+                      - updated
+                    properties:
+                      guid:
+                        $ref: '#/components/schemas/typeGuid'
+                      date:
+                        $ref: '#/components/schemas/typeDateTimeNullable'
+                        description: 'Review creation date.'
+                      orderCode:
+                        type:
+                          - 'null'
+                          - string
+                        description: 'Order code related to review. Can be null.'
+                        examples:
+                          - '2011000002'
+                      rating:
+                        type: number
+                        description: "Number from 1 to 5 representing starts of review's rating."
+                        examples:
+                          - 5
+                      productName:
+                        type: string
+                        description: 'Product name related to review.'
+                        examples:
+                          - Snack
+                      productGuid:
+                        oneOf:
+                          -
+                            $ref: '#/components/schemas/typeGuidUnlimited'
+                          -
+                            type: 'null'
+                        description: 'Product guid related to review.'
+                      description:
+                        type:
+                          - 'null'
+                          - string
+                        examples:
+                          - 'Snack was very good'
+                      fullName:
+                        type:
+                          - 'null'
+                          - string
+                        description: "Fullname of review's author. Can be null."
+                        examples:
+                          - 'John Doe'
+                      email:
+                        type:
+                          - 'null'
+                          - string
+                        description: "Email of the review author. If it's a registered customer and the review email is empty, it's filled with the customer's main account email. Can be null."
+                        examples:
+                          - johndoe@email.tld
+                      ipAddress:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'IP address of the client who made the review. Can be null.'
+                        examples:
+                          - 213.46.237.24
+                      customerGuid:
+                        type:
+                          - 'null'
+                          - string
+                        description: 'Customer guid related to review. Can be null.'
+                        examples:
+                          - 443cad54-73bc-11e8-8216-002590dad85e
+                      authorized:
+                        type: boolean
+                        examples:
+                          - true
+                      visible:
+                        type: boolean
+                        examples:
+                          - false
+                      reaction:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - reactionCreated
+                          - reactionFullName
+                          - reactionEmail
+                          - reactionText
+                        properties:
+                          reactionCreated:
+                            $ref: '#/components/schemas/typeDateTimeNullable'
+                            description: 'Date of creation of reaction. Can be null.'
+                          reactionFullName:
+                            type:
+                              - 'null'
+                              - string
+                            examples:
+                              - 'John Doe'
+                          reactionEmail:
+                            type:
+                              - 'null'
+                              - string
+                            examples:
+                              - johndoe@email.tld
+                          reactionText:
+                            type:
+                              - 'null'
+                              - string
+                            examples:
+                              - 'Thank you for your review!'
+                      updated:
+                        $ref: '#/components/schemas/typeDateTimeNullable'
+                        description: 'Timestamp whenever the rating is changed'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active rating module in eshop.'
+                    instance: rating
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: product-review-not-found
+                    message: 'Product review with ID "1" not found.'
+                    instance: '1'
+      summary: 'Product review update'
+      operationId: updateProductReview
+      description: "Updates the product review. This endpoint is available only when the 'Rating' module is active."
+      parameters:
+        -
+          name: reviewId
+          in: path
+          description: 'review ID'
+          required: true
+          example: '1'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      tags:
+        - Reviews
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  minProperties: 1
+                  properties:
+                    description:
+                      type:
+                        - 'null'
+                        - string
+                      description: "Text of the review. Can be null only if 'Comment is required' setting is disabled."
+                      examples:
+                        - 'Snack was very good'
+                    fullName:
+                      type:
+                        - 'null'
+                        - string
+                      maxLength: 64
+                      description: "Fullname of review's author. Can be null only if 'Comment is required' setting is disabled."
+                      examples:
+                        - 'John Doe'
+                    authorized:
+                      type: boolean
+                      examples:
+                        - false
+                      description: 'flag whether the review is authorized'
+                    visible:
+                      type: boolean
+                      examples:
+                        - false
+                      description: 'flag whether the review is visible on web'
+                    reaction:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        reactionFullName:
+                          type:
+                            - 'null'
+                            - string
+                          maxLength: 255
+                          description: 'Fullname of reaction author. Can be null.'
+                          examples:
+                            - 'John Doe'
+                        reactionEmail:
+                          type:
+                            - 'null'
+                            - string
+                          minLength: 1
+                          maxLength: 100
+                          description: 'Email of the reaction author.'
+                          examples:
+                            - johndoe@email.tld
+                        reactionText:
+                          type:
+                            - 'null'
+                            - string
+                          description: 'Text of the reaction.'
+                          examples:
+                            - 'Thank you for your review!'
   /api/reviews/project:
     get:
       responses:
@@ -37443,7 +37724,7 @@ paths:
                       type:
                         - 'null'
                         - string
-                      description: "Text of the review. Can be null only if 'Comment and name is required' setting is disabled."
+                      description: "Text of the review. Can be null only if 'Comment is required' setting is disabled."
                       examples:
                         - 'Snack was very good'
                     fullName:
@@ -37452,7 +37733,7 @@ paths:
                         - string
                       minLength: 1
                       maxLength: 255
-                      description: "Fullname of review's author. Can be null only if 'Comment and name is required' setting is disabled."
+                      description: "Fullname of review's author. Can be null only if 'Comment is required' setting is disabled."
                       examples:
                         - 'John Doe'
                     email:
@@ -37473,12 +37754,13 @@ paths:
                       type: boolean
                       examples:
                         - false
+                      description: 'Flag whether the review is visible on web.'
                     ipAddress:
                       type:
                         - string
                         - 'null'
                       maxLength: 255
-                      description: 'IP address of the client who made the review'
+                      description: 'IP address of the client who made the review.'
                       examples:
                         - 213.46.237.24
                     reaction:
@@ -37583,7 +37865,7 @@ paths:
                     errorCode: project-review-not-found
                     message: 'Project review with ID "1" not found.'
                     instance: '1'
-      summary: 'Update of project review'
+      summary: 'Project review update'
       operationId: updateProjectReview
       description: "Updates the project review. This endpoint is available only when the 'Rating' module is active. Also, the project must have store ratings enabled in the administration settings."
       parameters:
@@ -37632,6 +37914,7 @@ paths:
                       type: boolean
                       examples:
                         - false
+                      description: 'Flag whether the review is visible on web.'
                     reaction:
                       type: object
                       additionalProperties: false
@@ -43484,14 +43767,14 @@ components:
               type:
                 - 'null'
                 - string
-              description: 'Email of the reaction author.'
+              description: 'Email of the reaction author. Can be null.'
               examples:
                 - johndoe@email.tld
             reactionText:
               type:
                 - 'null'
                 - string
-              description: 'Text of the reaction.'
+              description: 'Text of the reaction. Can be null.'
               examples:
                 - 'Thank you for your review!'
     parameterValueCombinations:
