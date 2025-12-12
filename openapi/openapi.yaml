@@ -19596,6 +19596,203 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/in-stores:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - inStores
+                    properties:
+                      inStores:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - id
+                            - guid
+                            - address
+                            - contact
+                            - projectCategoryId
+                          properties:
+                            id:
+                              type: integer
+                              description: 'In-store identifier.'
+                              examples:
+                                - 1
+                            guid:
+                              type: string
+                              description: 'In-store GUID.'
+                              examples:
+                                - 550e8400-e29b-41d4-a716-446655440000
+                            address:
+                              oneOf:
+                                -
+                                  $ref: '#/components/schemas/inStoreAddress'
+                                -
+                                  type: 'null'
+                              description: 'In-store address (can be null).'
+                            contact:
+                              $ref: '#/components/schemas/inStoreContact'
+                              description: 'In-store contact information.'
+                            projectCategoryId:
+                              type: integer
+                              description: 'Project category identifier.'
+                              examples:
+                                - 2
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Module "In-store sales channel" is not active.'
+                    instance: inStoreSalesChannel
+      summary: 'List of all in-stores'
+      operationId: getListOfInStores
+      description: "Provides a list of in-stores. This endpoint is available only when the 'In-store sales channel' module is active. It is currently considered beta/experimental, and its structure may change in the future."
+      tags:
+        - In-stores
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/in-stores/{id}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - inStore
+                    properties:
+                      inStore:
+                        type: object
+                        required:
+                          - id
+                          - guid
+                          - address
+                          - contact
+                          - projectCategoryId
+                        properties:
+                          id:
+                            type: integer
+                            description: 'In-store identifier.'
+                            examples:
+                              - 1
+                          guid:
+                            type: string
+                            description: 'In-store GUID.'
+                            examples:
+                              - 550e8400-e29b-41d4-a716-446655440000
+                          address:
+                            oneOf:
+                              -
+                                $ref: '#/components/schemas/inStoreAddress'
+                              -
+                                type: 'null'
+                            description: 'In-store address (can be null).'
+                          contact:
+                            $ref: '#/components/schemas/inStoreContact'
+                            description: 'In store contact information.'
+                          projectCategoryId:
+                            type: integer
+                            description: 'Project category identifier.'
+                            examples:
+                              - 2
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Module "In-store sales channel" is not active.'
+                    instance: inStoreSalesChannel
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                example:
+                  data: null
+                  errors:
+                    -
+                      errorCode: in-store-not-found
+                      message: 'In-store with id "1" not found.'
+                      instance: '1'
+      summary: 'In-store detail'
+      operationId: getInStoreDetail
+      description: "Provides detailed information about the in-store. This endpoint is available only when the 'In-store sales channel' module is active. It is currently considered beta/experimental, and its structure may change in the future."
+      tags:
+        - In-stores
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'In-store ID'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/invoices:
     get:
       responses:
@@ -40305,6 +40502,78 @@ components:
           $ref: '#/components/schemas/itemSurchargeParameters'
         specificSurchargeParameters:
           $ref: '#/components/schemas/itemSpecificSurchargeParameters'
+    inStoreAddress:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - countryCode
+        - city
+        - zipCode
+        - street
+      properties:
+        id:
+          type: integer
+          description: 'in-store address unique ID'
+          examples:
+            - 1
+        countryCode:
+          type: string
+          description: 'country code'
+          examples:
+            - CZ
+        city:
+          type: string
+          description: city
+          examples:
+            - Prague
+        zipCode:
+          type: string
+          description: 'ZIP code'
+          examples:
+            - '11000'
+        street:
+          type: string
+          description: street
+          examples:
+            - 'Main street 123'
+    inStoreContact:
+      type: object
+      additionalProperties: false
+      required:
+        - email
+        - phone
+        - openingHour
+        - transport
+      properties:
+        email:
+          type:
+            - string
+            - 'null'
+          description: 'in-store contact email'
+          examples:
+            - jan.novak@shoptet.cz
+        phone:
+          type:
+            - string
+            - 'null'
+          description: 'in-store contact phone'
+          examples:
+            - '+420123456789'
+        openingHour:
+          type:
+            - string
+            - 'null'
+          description: 'in-store opening hours'
+          examples:
+            - 'Mon-Fri 9:00-18:00'
+        transport:
+          type:
+            - string
+            - 'null'
+          description: 'in-store transport information'
+          examples:
+            - 'Near the central station'
     invoiceItem:
       type: object
       additionalProperties: false
@@ -46944,6 +47213,7 @@ x-tagGroups:
     tags:
       - 'Online stores'
       - 'Sales channels'
+      - In-stores
   -
     name: System
     tags:
