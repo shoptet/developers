@@ -754,6 +754,7 @@ info:
     quantityDiscount:create | Quantity discount creation event | ID of quantity discount
     quantityDiscount:update | Quantity discount change event | ID of quantity discount
     quantityDiscount:delete | Quantity discount deleting event | ID of quantity discount
+    salesChannel:create | Sales channel create event | GUID of sales channel
     shippingMethod:change | Shipping method change event | Shipping method GUID
     shippingRequest:cancelled | Shipping request was not chosen for order delivery | `shippingRequestCode` associated with the cart
     shippingRequest:confirmed | Shipping request was chosen for order delivery | `shippingRequestCode` associated with the cart
