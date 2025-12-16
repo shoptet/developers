@@ -18853,6 +18853,128 @@ paths:
                       examples:
                         - all
                       description: 'Scope of the order copy. Check endpoint description for more information.'
+  '/api/orders/{code}/delivery-notes':
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - deliveryNote
+                    properties:
+                      deliveryNote:
+                        $ref: '#/components/schemas/deliveryNote'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: order-not-found
+                    message: 'Order "2018000012" not found.'
+                    instance: '2018000012'
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: delivery-note-already-exist
+                    message: 'Delivery note code must be unique.'
+                    instance: '2018000012'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Unable to create a delivery note. The order 2015000205 is in the Cancel status.'
+                    instance: payload
+      summary: 'Delivery note from Order creation'
+      operationId: deliveryNoteFromOrder
+      description: 'Creating delivery note from existing order.'
+      tags:
+        - 'Delivery notes'
+      parameters:
+        -
+          name: code
+          in: path
+          description: 'Order code'
+          required: true
+          example: '2018000053'
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - code
+                  properties:
+                    code:
+                      type: string
+                      description: 'Delivery note code.'
+                      examples:
+                        - '2021000021'
+                    date:
+                      $ref: '#/components/schemas/typeDate'
+                      description: 'Document creation date.'
   /api/orders/statuses:
     get:
       responses:
