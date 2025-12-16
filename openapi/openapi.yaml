@@ -748,6 +748,7 @@ info:
     proformaInvoice:delete | Proforma invoice deleting event   | Number (`code`) of proforma invoice
     proformaInvoice:update | Proforma invoice change event     | Number (`code`) of proforma invoice
     projectReview:create | Project review creation event | ID of project review
+    productReview:created | Product review creation event | ID of product review
     proofPayment:create | Proof of payment creation event | Number (`code`) of proof payment
     proofPayment:delete | Proof of payment deleting event | Number (`code`) of proof payment
     proofPayment:update | Proof of payment change event   | Number (`code`) of proof payment
