@@ -15715,6 +15715,7 @@ paths:
                         - boolean
                         - 'null'
                       description: 'flag, whether the billing and delivery addresses are the same'
+                      default: true
                       examples:
                         - true
                     deliveryAddress:
