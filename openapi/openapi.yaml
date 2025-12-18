@@ -40520,6 +40520,7 @@ components:
         - weight
         - additionalField
         - itemPrice
+        - unitPrice
         - buyPrice
         - purchasePrice
         - itemId
@@ -40600,6 +40601,9 @@ components:
         itemPrice:
           $ref: '#/components/schemas/itemPrice'
           description: 'item price'
+        unitPrice:
+          $ref: '#/components/schemas/itemPrice'
+          description: 'unit price'
         buyPrice:
           oneOf:
             -
@@ -40719,6 +40723,7 @@ components:
         - weight
         - additionalField
         - itemPrice
+        - unitPrice
         - buyPrice
         - purchasePrice
         - consumptionTax
@@ -40806,6 +40811,9 @@ components:
         itemPrice:
           $ref: '#/components/schemas/itemPrice'
           description: 'item price'
+        unitPrice:
+          $ref: '#/components/schemas/itemPrice'
+          description: 'unit price'
         buyPrice:
           oneOf:
             -
@@ -43132,6 +43140,7 @@ components:
         - priceRatio
         - status
         - itemPrice
+        - unitPrice
         - purchasePrice
         - recyclingFee
         - itemId
@@ -43243,6 +43252,9 @@ components:
         itemPrice:
           $ref: '#/components/schemas/itemPrice'
           description: 'the price of the item including the discount (`priceRatio`) and quantity (`amount`).'
+        unitPrice:
+          $ref: '#/components/schemas/itemPrice'
+          description: 'unit price'
         displayPrices:
           type: array
           items:
