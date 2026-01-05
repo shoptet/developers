@@ -18285,6 +18285,26 @@ paths:
                     errorCode: order-not-found
                     message: 'Order "2018000012" not found.'
                     instance: '2018000012'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Does not have a value in the enumeration ["comment","system"]'
+                    instance: data.type
       summary: 'Insertion of remark to order'
       operationId: createOrderRemark
       description: |-
@@ -18333,9 +18353,14 @@ paths:
                         - 'Transported from Jičín, will be here on Wednesday'
                     type:
                       type: string
+                      enum:
+                        - comment
+                        - system
                       minLength: 1
+                      description: 'Record type'
                       examples:
                         - comment
+                        - system
   '/api/orders/{code}/history/{id}':
     delete:
       responses:
@@ -46349,8 +46374,12 @@ components:
             - true
         type:
           type: string
+          enum:
+            - comment
+            - system
           description: 'Record type'
           examples:
+            - comment
             - system
     orderPreAuthorization:
       type:
