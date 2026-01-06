@@ -422,20 +422,12 @@ info:
     Some endpoints can return larger quantity of records. Such endpoints do not
     return the entire result, but support pagination of results.
 
-    You can page using `page` (int) and `itemsPerPage` (int) parameters. The
-    first page has number 1. If you require a different
+    You can page using `page` (int) and `itemsPerPage` (int) parameters.
+    The first page has number 1. If you require a different quantity of items per page, use the `itemsPerPage` parameter. 
+    `itemsPerPage` has a default value used when the parameter is not specified, and a maximum value that cannot be exceeded. If a higher value is provided, the maximum is applied automatically.
+    The default and maximum value can be different for each endpoint.
 
-    quantity of items per page, use the `itemsPerPage` parameter. CAUTION: the
-    number of items per page can be decreased only, the default
-
-    value is maximum. The default value can be different for each endpoint.
-
-
-    When paging, check the total number of items, if not altered (`totalCount`),
-    then the
-
-    items on pages could be shifted and some of them could be missed or
-    processed twice.
+    When paging, check the total number of items, if not altered (`totalCount`), then the items on pages could be shifted and some of them could be missed or processed twice.
 
 
     ## Section on demand
@@ -3691,6 +3683,13 @@ paths:
         The endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - Reviews
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/online-stores:
     get:
       responses:
@@ -4228,6 +4227,15 @@ paths:
           example: '2028-02-28T17:04:47+0100'
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 20. Max value is 1000.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -7061,6 +7069,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 1000.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/categories:
     get:
@@ -7097,6 +7114,15 @@ paths:
       tags:
         - Categories
       parameters:
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 500. Max value is 1000.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -7737,6 +7763,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 500. Max value is 2000.'
+          example: '888'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
@@ -7990,6 +8025,15 @@ paths:
           example: parameters
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 100.'
+          example: '90'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -9945,6 +9989,15 @@ paths:
         - 'Surcharge parameters'
       parameters:
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 500.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -10993,6 +11046,15 @@ paths:
         - 'Filtering parameters'
       parameters:
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 100.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -11794,6 +11856,15 @@ paths:
           example: values
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 50. Max value is 100.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -13845,6 +13916,10 @@ paths:
           schema:
             type: string
         -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/pricelists:
     get:
@@ -13984,6 +14059,15 @@ paths:
           example: 94fe7ffc-7481-11e8-8216-002590dad85e
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 100.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
     patch:
@@ -15014,6 +15098,15 @@ paths:
           example: '2025000004,2025000002,2017000038,2017000025,2015000248'
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 50.'
+          example: '44'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -19264,6 +19357,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 20. Max value is 1000.'
+          example: '888'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/orders/claims:
     get:
@@ -19360,6 +19462,15 @@ paths:
           example: '2017000066'
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 100. Max value is 250.'
+          example: '110'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/orders/batch:
@@ -20117,6 +20228,15 @@ paths:
           example: 666
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 20. Max value is 1000.'
+          example: '888'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/invoices/snapshot:
@@ -21155,6 +21275,10 @@ paths:
           schema:
             type: string
         -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/proforma-invoices:
     get:
@@ -21290,6 +21414,15 @@ paths:
           example: 666
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 20. Max value is 100.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/proforma-invoices/snapshot:
@@ -21692,6 +21825,10 @@ paths:
           schema:
             type: string
         -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/proof-payments:
     get:
@@ -21786,6 +21923,15 @@ paths:
           example: true
           schema:
             type: boolean
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 20. Max value is 100.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -23106,6 +23252,10 @@ paths:
           schema:
             type: string
         -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/credit-notes:
     get:
@@ -23267,6 +23417,10 @@ paths:
           example: P--2017200011-1
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/credit-notes/snapshot:
@@ -24685,6 +24839,10 @@ paths:
           schema:
             type: string
         -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/delivery-notes:
     get:
@@ -24778,6 +24936,15 @@ paths:
           example: 2018000012
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 20. Max value is 100.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/delivery-notes/snapshot:
@@ -25553,6 +25720,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 25. Max value is 1000.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     patch:
       responses:
@@ -25912,6 +26088,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 1000.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/suppliers:
     get:
@@ -25947,6 +26132,18 @@ paths:
       description: 'Returns the list of suppliers. Supports the [Paging](#section/basic-principles/paging)'
       tags:
         - Suppliers
+      parameters:
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 200. Max value is 500.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/brands:
     get:
       responses:
@@ -25982,6 +26179,15 @@ paths:
       tags:
         - Brands
       parameters:
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 500. Max value is 1000.'
+          example: '888'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -26537,6 +26743,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 20. Max value is 1000.'
+          example: '888'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -27059,6 +27274,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 1000.'
+          example: '888'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -27532,6 +27756,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 1000.'
+          example: '888'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -27986,6 +28219,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 1000.'
+          example: '888'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -28371,6 +28613,10 @@ paths:
           example: edit
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/customers/regions:
@@ -29014,6 +29260,15 @@ paths:
         - Webhooks
       parameters:
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 20. Max value is 500.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -29411,6 +29666,15 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 20. Max value is 500.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/shipping-methods:
@@ -30844,6 +31108,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 1000.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -31039,6 +31312,15 @@ paths:
                       examples:
                         - 'Newsletters list'
       parameters:
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 500.'
+          example: '350'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/mailing-lists/{code}':
@@ -31310,6 +31592,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 500.'
+          example: '400'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/discount-coupons:
     get:
@@ -31402,6 +31693,15 @@ paths:
           example: '2028-05-28'
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 1000.'
+          example: '888'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -32806,6 +33106,10 @@ paths:
           schema:
             type: string
         -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -33598,6 +33902,10 @@ paths:
           schema:
             type: boolean
         -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -34314,6 +34622,10 @@ paths:
           schema:
             type: string
         -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/articles:
     get:
@@ -34350,6 +34662,15 @@ paths:
       tags:
         - Articles
       parameters:
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 10.'
+          example: '10'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -35501,6 +35822,10 @@ paths:
         - Pages
       parameters:
         -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -35987,6 +36312,15 @@ paths:
           schema:
             type: string
         -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 100.'
+          example: '98'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -36363,6 +36697,15 @@ paths:
           example: '2018-05-28T14:17:00+02:00'
           schema:
             type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 100. Max value is 500.'
+          example: '50'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/system/jobs/{jobId}':
@@ -37191,6 +37534,10 @@ paths:
           schema:
             type: string
         -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -37946,6 +38293,13 @@ paths:
         The endpoint supports [Paging](#section/basic-principles/paging).
       tags:
         - Reviews
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
         201:
@@ -38338,6 +38692,20 @@ components:
       schema:
         type: string
         default: application/json
+    DefaultItemsPerPageParameter:
+      name: itemsPerPage
+      in: query
+      description: 'Returned items per page. Default and max value is 20.'
+      example: '15'
+      schema:
+        type: number
+    DefaultPageParameter:
+      name: page
+      in: query
+      description: 'Page number to return. Default value is 1.'
+      example: '3'
+      schema:
+        type: number
   schemas:
     Errors:
       type:
