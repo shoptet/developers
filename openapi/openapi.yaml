@@ -14100,6 +14100,42 @@ paths:
                     instance: 43/BIL
         400:
           description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              examples:
+                buy-price-and-purchase-price:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Input data for code "0001" is not correct. Cannot set "price.buyPrice" and "prices.purchasePrice" at the same time. Please use "prices.purchasePrice" only as buy price is deprecated. Code skipped.'
+                        instance: '0001'
+                invalid-vat-rate:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Input data for code "0001" is not correct. Invalid "vatRate" value. Code skipped.'
+                        instance: '0001'
+                invalid-vat-rate-purchase-price:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Input data for code "0001" is not correct. Invalid "purchasePriceVatRate" value. Code skipped.'
+                        instance: '0001'
         404:
           description: 'Not Found'
           content:
@@ -14300,9 +14336,10 @@ paths:
                               - '750.00'
                           buyPrice:
                             $ref: '#/components/schemas/typePriceNullable'
-                            description: 'purchase price.'
+                            description: 'purchase price. Deprecated, use `prices.purchasePrice` instead.'
                             examples:
                               - '500.00'
+                            deprecated: true
                           priceRatio:
                             $ref: '#/components/schemas/typePriceRatio'
                             description: 'price ratio. The price of the product shall be calculated by multiplying the price and this coefficient. The price ratio affects only the price (`price`), the special discounted price (`actionPrice`) is not affected by the ratio. This ratio has 3 decimal places and can be greater than 1,000'
@@ -14347,9 +14384,10 @@ paths:
                               - '750.00'
                           buyPrice:
                             $ref: '#/components/schemas/typePriceNullable'
-                            description: 'purchase price.'
+                            description: 'purchase price. Deprecated, use `prices.purchasePrice` instead.'
                             examples:
                               - '500.00'
+                            deprecated: true
                           priceRatio:
                             $ref: '#/components/schemas/typePriceRatio'
                             description: 'price ratio. The price of the product shall be calculated by multiplying the price and this coefficient. The price ratio affects only the price (`price`), the special discounted price (`actionPrice`) is not affected by the ratio. This ratio has 3 decimal places and can be greater than 1,000'
@@ -14394,9 +14432,10 @@ paths:
                               - '750.00'
                           buyPrice:
                             $ref: '#/components/schemas/typePriceNullable'
-                            description: 'purchase price.'
+                            description: 'purchase price. Deprecated, use `prices.purchasePrice` instead.'
                             examples:
                               - '500.00'
+                            deprecated: true
                           priceRatio:
                             $ref: '#/components/schemas/typePriceRatio'
                             description: 'price ratio. The price of the product shall be calculated by multiplying the price and this coefficient. The price ratio affects only the price (`price`), the special discounted price (`actionPrice`) is not affected by the ratio. This ratio has 3 decimal places and can be greater than 1,000'
