@@ -41093,6 +41093,13 @@ components:
           $ref: '#/components/schemas/itemSurchargeParameters'
         specificSurchargeParameters:
           $ref: '#/components/schemas/itemSpecificSurchargeParameters'
+        itemPriceVatBreakdown:
+          type:
+            - array
+            - 'null'
+          description: 'Detailed VAT list displaying tax amounts for each VAT rate used in the document. Applied for non product items.'
+          items:
+            $ref: '#/components/schemas/itemPrice'
     inStoreAddress:
       type: object
       additionalProperties: false
@@ -41306,6 +41313,13 @@ components:
         consumptionTax:
           $ref: '#/components/schemas/documentConsumptionTax'
           description: 'consumption tax of invoice item'
+        itemPriceVatBreakdown:
+          type:
+            - array
+            - 'null'
+          description: 'Detailed VAT list displaying tax amounts for each VAT rate used in the invoice. Applied for non product items.'
+          items:
+            $ref: '#/components/schemas/itemPrice'
     documentConsumptionTax:
       type:
         - object
@@ -43830,6 +43844,13 @@ components:
         consumptionTax:
           $ref: '#/components/schemas/documentConsumptionTax'
           description: 'consumption tax of order item'
+        itemPriceVatBreakdown:
+          type:
+            - array
+            - 'null'
+          description: 'Detailed VAT list displaying tax amounts for each VAT rate used in the document. Applied for non product items.'
+          items:
+            $ref: '#/components/schemas/itemPrice'
     relatedProduct:
       type: object
       additionalProperties: false
