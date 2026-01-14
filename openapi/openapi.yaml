@@ -36726,6 +36726,186 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/discussions-posts/{id}':
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - discussion
+                    additionalProperties: false
+                    properties:
+                      discussion:
+                        $ref: '#/components/schemas/discussionPost'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Module \"Discussion\" is not active.'
+                    instance: discussion
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: discussion-post-not-found
+                    message: 'Discussion post with id "999" was not found.'
+                    instance: '1'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Must be at least 1 characters long'
+                    instance: data.name
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Must be at least 1 characters long'
+                    instance: data.email
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Invalid email'
+                    instance: data.email
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Must be no more than 100 characters long'
+                    instance: data.email
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Must be no more than 255 characters long'
+                    instance: data.title
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Must be at least 1 characters long'
+                    instance: data.content
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Does not match the regex pattern ^[0-9]{4}-[01][0-9]-[0123][0-9]T[012][0-9]:[0-5][0-9]:[0-5][0-9]\+[0-9]{4}$'
+                    instance: data.creationDate
+                  -
+                    errorCode: invalid-request-data
+                    message: 'String value found, but a boolean is required'
+                    instance: data.authorized
+      summary: 'Discussion post update'
+      operationId: updateDiscussionPost
+      description: 'Updates discussion post''s data. Requires "discussion" module to be active.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Discussion post id'
+          required: true
+          example: '1'
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      tags:
+        - Discussions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  minProperties: 1
+                  properties:
+                    name:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 128
+                      description: 'Name of the author.'
+                      examples:
+                        - 'John Doe'
+                    email:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                      format: email
+                      description: 'Email of the author.'
+                      examples:
+                        - john.doe@example.com
+                    title:
+                      type:
+                        - string
+                        - 'null'
+                      maxLength: 255
+                      description: 'Title of the post.'
+                      examples:
+                        - 'Some title'
+                    content:
+                      type: string
+                      minLength: 1
+                      description: 'Content of the post.'
+                      examples:
+                        - 'Some content'
+                    creationDate:
+                      $ref: '#/components/schemas/typeDateTimeNullable'
+                      description: 'Date and time of the discussion post creation.'
+                    authorized:
+                      type: boolean
+                      description: 'Flag whether the post is authorized (visible on the web).'
+                      examples:
+                        - true
     delete:
       responses:
         200:
