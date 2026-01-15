@@ -3733,7 +3733,6 @@ paths:
                             domain:
                               type:
                                 - string
-                                - 'null'
                               description: 'Online store domain.'
                               examples:
                                 - store.example.com
@@ -46380,7 +46379,6 @@ components:
         domain:
           type:
             - string
-            - 'null'
           description: 'Online store domain.'
           examples:
             - store.example.com
