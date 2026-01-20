@@ -44078,7 +44078,7 @@ components:
               $ref: '#/components/schemas/itemPrice'
             -
               type: 'null'
-          description: 'purchase price of the item including the discount (`priceRatio`) and quantity (`amount`).  (or possibly `null`)'
+          description: 'purchase price of the item (or possibly `null`). Deprecated, use `purchasePrice` instead'
           deprecated: true
         purchasePrice:
           oneOf:
