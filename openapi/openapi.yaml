@@ -39181,7 +39181,9 @@ components:
           examples:
             - ','
         thousandSeparator:
-          type: string
+          type:
+            - string
+            - 'null'
           description: 'Currency thousand separator.'
           examples:
             - .
