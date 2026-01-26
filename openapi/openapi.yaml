@@ -3578,7 +3578,7 @@ paths:
                               examples:
                                 - '2011000002'
                             rating:
-                              type: number
+                              type: integer
                               description: "Number from 1 to 5 representing starts of review's rating."
                               examples:
                                 - 5
@@ -4002,7 +4002,7 @@ paths:
                                   examples:
                                     - '100_purple-apple.jpg?59393c3a'
                                 priority:
-                                  type: number
+                                  type: integer
                                   description: "the key for the sequence of images matching the sequence in administration - it's not necessarily from the first, and the series may contain gaps."
                                   examples:
                                     - 1
@@ -4103,14 +4103,14 @@ paths:
           description: 'product availability id. Optional.'
           example: 1
           schema:
-            type: number
+            type: integer
         -
           name: availabilityWhenSoldOutId
           in: query
           description: 'product availability id when not stocked. Optional.'
           example: -2
           schema:
-            type: number
+            type: integer
         -
           name: creationTimeFrom
           in: query
@@ -4230,9 +4230,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 20. Max value is 1000.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -4674,14 +4674,14 @@ paths:
                               - H3T5-87
                           availabilityId:
                             type:
-                              - number
+                              - integer
                               - 'null'
                             description: 'Product availability id'
                             examples:
                               - -1
                           availabilityWhenSoldOutId:
                             type:
-                              - number
+                              - integer
                               - 'null'
                             description: 'Product availability id when not stocked'
                             examples:
@@ -5198,14 +5198,14 @@ paths:
           description: 'product availability id. Optional.'
           example: 1
           schema:
-            type: number
+            type: integer
         -
           name: availabilityWhenSoldOutId
           in: query
           description: 'product availability id when not stocked. Optional.'
           example: -2
           schema:
-            type: number
+            type: integer
         -
           name: creationTimeFrom
           in: query
@@ -6865,7 +6865,7 @@ paths:
           required: true
           example: 232
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/products/changes:
@@ -7071,9 +7071,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 1000.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -7117,9 +7117,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 500. Max value is 1000.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -7734,7 +7734,7 @@ paths:
                                 - 0198418d-acde-708e-9389-0c5113d9b5f3
                             priority:
                               type:
-                                - number
+                                - integer
                                 - 'null'
                               description: 'Order in the list'
                               examples:
@@ -7765,9 +7765,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 500. Max value is 2000.'
-          example: '888'
+          example: 888
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -7864,13 +7864,13 @@ paths:
                           - 0198418d-acde-708e-9389-0c5113d9b5f3
                       priority:
                         type:
-                          - number
+                          - integer
                           - 'null'
                         minimum: 0
                         maximum: 65535
                         description: 'Priority of the product'
                         examples:
-                          - '100'
+                          - 100
   /api/parametric-categories:
     get:
       responses:
@@ -8028,9 +8028,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 100.'
-          example: '90'
+          example: 90
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -9789,9 +9789,9 @@ paths:
           in: path
           description: 'product availability ID'
           required: true
-          example: '123'
+          example: 123
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
     delete:
@@ -9866,9 +9866,9 @@ paths:
           in: path
           description: 'product availability ID'
           required: true
-          example: '123'
+          example: 123
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/products/surcharge-parameters:
@@ -9991,9 +9991,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 500.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -11048,9 +11048,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 100.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -11859,9 +11859,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 50. Max value is 100.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -12737,7 +12737,7 @@ paths:
           required: true
           example: 8
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -12827,7 +12827,7 @@ paths:
           required: true
           example: 8
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/products/recycling-fee-categories:
@@ -13776,7 +13776,7 @@ paths:
                               examples:
                                 - '2011000002'
                             rating:
-                              type: number
+                              type: integer
                               description: "Number from 1 to 5 representing starts of review's rating."
                               examples:
                                 - 5
@@ -14043,7 +14043,7 @@ paths:
           required: true
           example: 1
           schema:
-            type: number
+            type: integer
         -
           name: code
           in: query
@@ -14062,9 +14062,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 100.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -14610,9 +14610,9 @@ paths:
           in: path
           description: 'Price list ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           name: codeFrom
           in: query
@@ -14907,7 +14907,7 @@ paths:
                                   examples:
                                     - Processing
                                 id:
-                                  type: number
+                                  type: integer
                                   description: 'status identifier'
                                   examples:
                                     - -1
@@ -14928,7 +14928,7 @@ paths:
                                   examples:
                                     - E-Shop
                                 id:
-                                  type: number
+                                  type: integer
                                   description: 'source identifier'
                                   examples:
                                     - -1
@@ -15011,7 +15011,7 @@ paths:
           in: query
           description: 'Purchase order filtering, according to order status id.'
           schema:
-            type: number
+            type: integer
           example: -1
         -
           name: shippingGuid
@@ -15125,7 +15125,7 @@ paths:
             Order source filtering according to source id. For more information,
             see List of order sources endpoint.
           schema:
-            type: number
+            type: integer
           example: -1
         -
           name: orderCodes
@@ -15140,9 +15140,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 50.'
-          example: '44'
+          example: 44
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -15611,13 +15611,13 @@ paths:
                       type: boolean
                       description: 'flag, if the order was created via the cash desk. Optional. `false` is the default value.'
                     statusId:
-                      type: number
+                      type: integer
                       description: 'Order status. Optional. If not indicated, the default status of the order is used, as per e-shop settings. If the status definition sets the payment flag, the parameter `paid` is set to `true`. if the request also mentions `paid`, the `paid` variant has priority. If the status definition has selected the setting of item statuses, the status is also set for items. Otherwise, the initial status is the set based on e-shop defaults. If the item has status set explicitly (see below `items[].statusId`), the value from the item shall be used.'
                       examples:
                         - -1
                     sourceId:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       examples:
                         - -1
@@ -15684,7 +15684,7 @@ paths:
                               examples:
                                 - 'Test branch'
                             carrierId:
-                              type: number
+                              type: integer
                               description: 'CarrierId, use only for Zasilkovna/Packeta, use their carrierID.'
                               examples:
                                 - 3060
@@ -15696,7 +15696,7 @@ paths:
                       examples:
                         - true
                     billingMethodCode:
-                      type: number
+                      type: integer
                       minimum: 1
                       maximum: 4
                       description: 'Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Optional.'
@@ -16006,7 +16006,7 @@ paths:
                                     examples:
                                       - 'Processed by Doe'
                     stockId:
-                      type: number
+                      type: integer
                       description: 'stock number. Optional, the default value is the default stock, taken from e-shop settings. In Shoptet, the only alternative to the default stock is to collect in person at the shop, otherwise the default stock is used.'
                       examples:
                         - 1
@@ -16176,7 +16176,7 @@ paths:
                               - '21.00'
                           statusId:
                             type:
-                              - number
+                              - integer
                               - 'null'
                             description: 'Order item status. Optional, if not indicated, default value is guided by the order status. If the order status was indicated and this status has the `Change status of items in the order` flag set, then the item will have this status. Otherwise the default status of the e-shop is used.'
                             examples:
@@ -16392,7 +16392,7 @@ paths:
           in: query
           description: 'Purchase order filtering, according to order status id.'
           schema:
-            type: number
+            type: integer
           example: -1
         -
           name: shippingGuid
@@ -16506,7 +16506,7 @@ paths:
             Order source filtering according to source id. For more information,
             see List of order sources endpoint.
           schema:
-            type: number
+            type: integer
           example: -1
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -17316,7 +17316,7 @@ paths:
                       examples:
                         - 1
                     statusId:
-                      type: number
+                      type: integer
                       description: 'Order item status. Optional, if not indicated, default value is guided by the order status. If the order status was indicated and this status has the `Change status of items in the order` flag set, then the item will have this status. Otherwise the default status of the e-shop is used.'
                       examples:
                         - -1
@@ -17632,7 +17632,7 @@ paths:
                       examples:
                         - 1
                     statusId:
-                      type: number
+                      type: integer
                       description: 'Order item status. Optional, if not indicated, default value is guided by the order status. If the order status was indicated and this status has the `Change status of items in the order` flag set, then the item will have this status. Otherwise the default status of the e-shop is used.'
                       examples:
                         - -1
@@ -17768,9 +17768,9 @@ paths:
           in: path
           description: 'order item id'
           required: true
-          example: '3120'
+          example: 3120
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -17858,9 +17858,9 @@ paths:
           in: path
           description: 'order item id'
           required: true
-          example: '3120'
+          example: 3120
           schema:
-            type: number
+            type: integer
         -
           name: relationId
           in: path
@@ -17956,7 +17956,7 @@ paths:
                       examples:
                         - 'Payment information'
                     statusId:
-                      type: number
+                      type: integer
                       description: 'Order item status. Optional, if not indicated, default value is guided by the order status. If the order status was indicated and this status has the `Change status of items in the order` flag set, then the item will have this status. Otherwise the default status of the e-shop is used.'
                       examples:
                         - -1
@@ -18003,9 +18003,9 @@ paths:
           in: path
           description: 'id of order item'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -18049,7 +18049,7 @@ paths:
                       examples:
                         - 'Payment information'
                     statusId:
-                      type: number
+                      type: integer
                       description: 'Order item status. Optional, if not indicated, default value is guided by the order status. If the order status was indicated and this status has the `Change status of items in the order` flag set, then the item will have this status. Otherwise the default status of the e-shop is used.'
                       examples:
                         - -1
@@ -18136,7 +18136,7 @@ paths:
                       examples:
                         - 'Home delivery'
                     statusId:
-                      type: number
+                      type: integer
                       description: 'Order item status. Optional, if not indicated, default value is guided by the order status. If the order status was indicated and this status has the `Change status of items in the order` flag set, then the item will have this status. Otherwise the default status of the e-shop is used.'
                       examples:
                         - -1
@@ -18183,9 +18183,9 @@ paths:
           in: path
           description: 'id of order item'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -18229,7 +18229,7 @@ paths:
                       examples:
                         - 'Home delivery'
                     statusId:
-                      type: number
+                      type: integer
                       description: 'Order item status. Optional, if not indicated, default value is guided by the order status. If the order status was indicated and this status has the `Change status of items in the order` flag set, then the item will have this status. Otherwise the default status of the e-shop is used.'
                       examples:
                         - -1
@@ -18551,9 +18551,9 @@ paths:
           in: path
           description: 'ID of history item'
           required: true
-          example: '4'
+          example: 4
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/orders/{code}/notes':
@@ -18672,7 +18672,7 @@ paths:
                           - text
                         properties:
                           index:
-                            type: number
+                            type: integer
                             enum:
                               - 1
                               - 2
@@ -18875,7 +18875,7 @@ paths:
                   additionalProperties: false
                   properties:
                     statusId:
-                      type: number
+                      type: integer
                       description: 'New order status. The order statuses are specific for each e-shopand it is possible to gain these from the endpoint [Eshop info](#tag/eshop/geteshopinfo) with the `include=orderStatuses` parameter'
                       examples:
                         - -1
@@ -18887,7 +18887,7 @@ paths:
                       examples:
                         - true
                     billingMethodId:
-                      type: number
+                      type: integer
                       description: 'billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list'
                       examples:
                         - 1
@@ -19150,7 +19150,7 @@ paths:
                     additionalProperties: false
                     properties:
                       defaultStatus:
-                        type: number
+                        type: integer
                       statuses:
                         type: array
                         items:
@@ -19167,7 +19167,7 @@ paths:
                           additionalProperties: false
                           properties:
                             id:
-                              type: number
+                              type: integer
                               description: 'order status id'
                               examples:
                                 - 1
@@ -19182,7 +19182,7 @@ paths:
                               examples:
                                 - true
                             order:
-                              type: number
+                              type: integer
                               description: 'status order sequence in the administration'
                               examples:
                                 - 1
@@ -19286,7 +19286,7 @@ paths:
                           additionalProperties: false
                           properties:
                             id:
-                              type: number
+                              type: integer
                               description: 'order source ID, it can also be negative'
                               examples:
                                 - -1
@@ -19398,9 +19398,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 20. Max value is 1000.'
-          example: '888'
+          example: 888
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -19440,7 +19440,7 @@ paths:
                               examples:
                                 - '201800001'
                             statusId:
-                              type: number
+                              type: integer
                               description: 'Order status.'
                               examples:
                                 - -1
@@ -19504,9 +19504,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 100. Max value is 250.'
-          example: '110'
+          example: 110
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -19761,9 +19761,9 @@ paths:
           in: path
           description: 'ID of gift'
           required: true
-          example: '4'
+          example: 4
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/orders/gifts/settings:
@@ -20270,9 +20270,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 20. Max value is 1000.'
-          example: '888'
+          example: 888
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -20670,7 +20670,7 @@ paths:
                         - 201323134
                     billingMethodId:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       description: "Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Defaults to order's."
                       examples:
@@ -20842,7 +20842,7 @@ paths:
                         - 36534576
                     billingMethodId:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       description: "Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Defaults to order's."
                       examples:
@@ -20939,7 +20939,7 @@ paths:
                         - 201323134
                     billingMethodId:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       description: "Id of [billing method](#section/code-lists/Invoice-Billing-Methods). Defaults to order's."
                       examples:
@@ -21616,9 +21616,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 20. Max value is 100.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -22125,9 +22125,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 20. Max value is 100.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -23381,19 +23381,19 @@ paths:
                         type: object
                         properties:
                           totalCount:
-                            type: number
+                            type: integer
                             description: 'total number of available records'
                           page:
-                            type: number
+                            type: integer
                             description: 'current page'
                           pageCount:
-                            type: number
+                            type: integer
                             description: 'total number of available pages'
                           itemsOnPage:
-                            type: number
+                            type: integer
                             description: 'number of currently returned records'
                           itemsPerPage:
-                            type: number
+                            type: integer
                             description: 'required number of records per page'
                         required:
                           - totalCount
@@ -23984,7 +23984,7 @@ paths:
                       examples:
                         - 201323134
                     billingMethodId:
-                      type: number
+                      type: integer
                       description: "Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Defaults to order's."
                       examples:
                         - 1
@@ -24271,7 +24271,7 @@ paths:
                       examples:
                         - 201323134
                     billingMethodId:
-                      type: number
+                      type: integer
                       description: 'Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Defaults to order.'
                       examples:
                         - 1
@@ -24476,7 +24476,7 @@ paths:
                       examples:
                         - 201323134
                     billingMethodId:
-                      type: number
+                      type: integer
                       description: 'Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Optional.'
                       examples:
                         - 1
@@ -24665,11 +24665,11 @@ paths:
           in: path
           description: |-
             credit note item id. Can be found in field
-            `data.creditNote.items.itemId` in Credit note detail.  (number)
+            `data.creditNote.items.itemId` in Credit note detail.
           required: true
-          example: '198'
+          example: 198
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -24807,11 +24807,11 @@ paths:
           in: path
           description: |-
             credit note item id. Can be found in field
-            `data.creditNote.items.itemId` in Credit note detail.  (number)
+            `data.creditNote.items.itemId` in Credit note detail.
           required: true
-          example: '198'
+          example: 198
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/credit-notes/{code}/pdf':
@@ -25138,9 +25138,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 20. Max value is 100.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -25758,9 +25758,9 @@ paths:
           in: path
           description: ''
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/stocks/{stockId}/movements':
@@ -25882,18 +25882,18 @@ paths:
           in: path
           description: 'ID of stock for which we would like the movements.'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           name: lastId
           in: query
           description: |-
             ID of last transfered record. If missing, the older records are
             sent.
-          example: '45'
+          example: 45
           schema:
-            type: number
+            type: integer
         -
           name: changeTimeFrom
           in: query
@@ -25921,9 +25921,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 25. Max value is 1000.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -26042,9 +26042,9 @@ paths:
           in: path
           description: 'ID of the stock for which we would like the movements.'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -26144,9 +26144,9 @@ paths:
           in: path
           description: 'ID of stock for which we would like the movements.'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/stocks/{stockId}/supplies':
@@ -26250,9 +26250,9 @@ paths:
           in: path
           description: ''
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           name: productGuid
           in: query
@@ -26289,9 +26289,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 1000.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -26335,9 +26335,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 200. Max value is 500.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -26381,9 +26381,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 500. Max value is 1000.'
-          example: '888'
+          example: 888
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -26944,9 +26944,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 20. Max value is 1000.'
-          example: '888'
+          example: 888
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -27475,9 +27475,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 1000.'
-          example: '888'
+          example: 888
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -27957,9 +27957,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 1000.'
-          example: '888'
+          example: 888
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -28420,9 +28420,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 1000.'
-          example: '888'
+          example: 888
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -29461,9 +29461,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 20. Max value is 500.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -29606,9 +29606,9 @@ paths:
           in: path
           description: ''
           required: true
-          example: '3'
+          example: 3
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
     patch:
@@ -29666,9 +29666,9 @@ paths:
           in: path
           description: ''
           required: true
-          example: '3'
+          example: 3
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -29742,9 +29742,9 @@ paths:
           in: path
           description: ''
           required: true
-          example: '3'
+          example: 3
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/webhooks/renew-signature-key:
@@ -29868,9 +29868,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 20. Max value is 500.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -31309,9 +31309,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 1000.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -31514,9 +31514,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 500.'
-          example: '350'
+          example: 350
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -31793,9 +31793,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 500.'
-          example: '400'
+          example: 400
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -31895,9 +31895,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 1000.'
-          example: '888'
+          example: 888
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -32607,7 +32607,7 @@ paths:
                     - reusable
                   properties:
                     count:
-                      type: number
+                      type: integer
                       minimum: 2
                       maximum: 999
                       examples:
@@ -32829,7 +32829,7 @@ paths:
                               description: 'group of users for whom the discount coupons shall be available.'
                               properties:
                                 id:
-                                  type: number
+                                  type: integer
                                   description: 'customer group ID'
                                   examples:
                                     - 1
@@ -32945,7 +32945,7 @@ paths:
                         description: 'group of users for whom the discount coupons shall be available.'
                         properties:
                           id:
-                            type: number
+                            type: integer
                             description: 'customer group ID'
                             examples:
                               - 1
@@ -33489,9 +33489,9 @@ paths:
           in: path
           description: 'discount ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
     patch:
@@ -33544,9 +33544,9 @@ paths:
           in: path
           description: 'discount ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -33704,9 +33704,9 @@ paths:
           in: path
           description: 'discount ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/xy-discounts/settings:
@@ -34457,9 +34457,9 @@ paths:
           in: path
           description: 'discount ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
     patch:
@@ -34512,9 +34512,9 @@ paths:
           in: path
           description: 'discount ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -34722,9 +34722,9 @@ paths:
           in: path
           description: 'discount ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/volume-discounts:
@@ -34864,9 +34864,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 10.'
-          example: '10'
+          example: 10
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -34962,7 +34962,7 @@ paths:
                       examples:
                         - cs
                     defaultSectionId:
-                      type: number
+                      type: integer
                       description: 'Id of the section'
                       examples:
                         - 682
@@ -34971,9 +34971,9 @@ paths:
                       description: 'Id of the section'
                       minItems: 1
                       items:
-                        type: number
+                        type: integer
                         examples:
-                          - '682'
+                          - 682
                     indexName:
                       type: string
                       description: 'ending part of article URL'
@@ -35091,16 +35091,16 @@ paths:
           name: idFrom
           in: query
           description: 'Export articles with id bigger or equal than given value'
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           name: idTo
           in: query
           description: 'Export articles with id lower or equal than given value'
-          example: '10'
+          example: 10
           schema:
-            type: number
+            type: integer
         -
           name: articleLanguage
           in: query
@@ -35180,9 +35180,9 @@ paths:
           in: path
           description: 'article ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       tags:
@@ -35256,9 +35256,9 @@ paths:
           in: path
           description: 'article ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       tags:
@@ -35287,7 +35287,7 @@ paths:
                       examples:
                         - cs
                     defaultSectionId:
-                      type: number
+                      type: integer
                       description: 'Id of the section'
                       examples:
                         - 682
@@ -35296,9 +35296,9 @@ paths:
                       description: 'Id of the section'
                       minItems: 1
                       items:
-                        type: number
+                        type: integer
                         examples:
-                          - '682'
+                          - 682
                     indexName:
                       type: string
                       description: 'ending part of article URL'
@@ -35396,9 +35396,9 @@ paths:
           in: path
           description: 'article ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       tags:
@@ -35526,7 +35526,7 @@ paths:
                         - cs
                     parentId:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       description: 'ID of the parent article section. Maximum nesting depth of article section is 4 nodes.'
                       examples:
@@ -35554,14 +35554,14 @@ paths:
                         - '<p>Content of the second article section</p>'
                     limit:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       description: 'Number of articles displayed in the listing'
                       examples:
                         - 4
                     homepageLimit:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       description: 'Number of articles displayed on the homepage'
                       examples:
@@ -35576,7 +35576,7 @@ paths:
                         - alphabetically
                     perexLimit:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       description: 'Number of character displayed in the article perex'
                       examples:
@@ -35698,9 +35698,9 @@ paths:
           in: path
           description: 'article section ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
     patch:
@@ -35755,9 +35755,9 @@ paths:
           in: path
           description: 'article section ID'
           required: true
-          example: '123'
+          example: 123
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       tags:
@@ -35808,14 +35808,14 @@ paths:
                         - '<p>Content of the second article section</p>'
                     limit:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       description: 'Number of articles displayed in the listing'
                       examples:
                         - 4
                     homepageLimit:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       description: 'Number of articles displayed on the homepage'
                       examples:
@@ -35830,7 +35830,7 @@ paths:
                         - alphabetically
                     perexLimit:
                       type:
-                        - number
+                        - integer
                         - 'null'
                       description: 'Number of character displayed in the article perex'
                       examples:
@@ -35970,9 +35970,9 @@ paths:
           in: path
           description: 'article section ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           name: force
           in: query
@@ -36220,9 +36220,9 @@ paths:
           in: path
           description: 'page ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       tags:
@@ -36257,9 +36257,9 @@ paths:
           in: path
           description: 'page ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       tags:
@@ -36316,9 +36316,9 @@ paths:
           in: path
           description: 'page ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       tags:
@@ -36473,14 +36473,14 @@ paths:
           description: 'identifier of the article associated to discussion'
           example: 1
           schema:
-            type: number
+            type: integer
         -
           name: pageId
           in: query
           description: 'identifier of the page associated to discussion'
           example: 1
           schema:
-            type: number
+            type: integer
         -
           name: customerGuid
           in: query
@@ -36513,9 +36513,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default and max value is 100.'
-          example: '98'
+          example: 98
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -36648,7 +36648,7 @@ paths:
                     properties:
                       parentId:
                         type:
-                          - number
+                          - integer
                           - 'null'
                         minimum: 1
                         description: 'Discussion post parent identifier.'
@@ -36663,7 +36663,7 @@ paths:
                         description: 'Discussion post product identifier.'
                       articleId:
                         type:
-                          - number
+                          - integer
                           - 'null'
                         minimum: 1
                         description: 'Discussion post article identifier.'
@@ -36671,7 +36671,7 @@ paths:
                           - 2
                       pageId:
                         type:
-                          - number
+                          - integer
                           - 'null'
                         minimum: 1
                         description: 'Discussion post page identifier.'
@@ -36845,9 +36845,9 @@ paths:
           in: path
           description: 'Discussion post id'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       tags:
@@ -37079,9 +37079,9 @@ paths:
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 100. Max value is 500.'
-          example: '50'
+          example: 50
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -37663,7 +37663,7 @@ paths:
                                 - description
                               properties:
                                 id:
-                                  type: number
+                                  type: integer
                                   description: 'endpoint group ID'
                                   examples:
                                     - 2
@@ -37773,7 +37773,7 @@ paths:
                               examples:
                                 - '2011000002'
                             rating:
-                              type: number
+                              type: integer
                               description: "Number from 1 to 5 representing starts of review's rating."
                               examples:
                                 - 5
@@ -37958,7 +37958,7 @@ paths:
                         examples:
                           - '2011000002'
                       rating:
-                        type: number
+                        type: integer
                         description: "Number from 1 to 5 representing starts of review's rating."
                         examples:
                           - 5
@@ -38197,7 +38197,7 @@ paths:
                       examples:
                         - 'Snack was very good'
                     rating:
-                      type: number
+                      type: integer
                       minimum: 1
                       maximum: 5
                       description: "Number from 1 to 5 representing starts of review's rating."
@@ -38297,7 +38297,7 @@ paths:
                         examples:
                           - '2011000002'
                       rating:
-                        type: number
+                        type: integer
                         description: "Number from 1 to 5 representing starts of review's rating."
                         examples:
                           - 5
@@ -38443,9 +38443,9 @@ paths:
           in: path
           description: 'review ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       tags:
@@ -38566,7 +38566,7 @@ paths:
                               examples:
                                 - '2011000002'
                             rating:
-                              type: number
+                              type: integer
                               description: "Number from 1 to 5 representing starts of review's rating."
                               examples:
                                 - 5
@@ -38824,7 +38824,7 @@ paths:
                       examples:
                         - '2011000002'
                     rating:
-                      type: number
+                      type: integer
                       description: "Number from 1 to 5 representing stars of review's rating."
                       examples:
                         - 5
@@ -38983,9 +38983,9 @@ paths:
           in: path
           description: 'review ID'
           required: true
-          example: '1'
+          example: 1
           schema:
-            type: number
+            type: integer
         -
           $ref: '#/components/parameters/DefaultContentType'
       tags:
@@ -39074,16 +39074,16 @@ components:
       name: itemsPerPage
       in: query
       description: 'Returned items per page. Default and max value is 20.'
-      example: '15'
+      example: 15
       schema:
-        type: number
+        type: integer
     DefaultPageParameter:
       name: page
       in: query
       description: 'Page number to return. Default value is 1.'
-      example: '3'
+      example: 3
       schema:
-        type: number
+        type: integer
   schemas:
     Errors:
       type:
@@ -41426,7 +41426,7 @@ components:
           items:
             $ref: '#/components/schemas/itemPrice'
         itemId:
-          type: number
+          type: integer
           description: 'item identifier for manipulation with this item'
           examples:
             - 123
@@ -41544,7 +41544,7 @@ components:
               type: 'null'
           description: 'global unique permanent product identifier.'
         itemId:
-          type: number
+          type: integer
           description: 'item identifier for manipulation with this item'
           examples:
             - 123
@@ -42571,7 +42571,7 @@ components:
                       examples:
                         - image.jpg
                     valuePriority:
-                      type: number
+                      type: integer
                       description: 'priority of the parameter value.'
                       examples:
                         - 1
@@ -43493,14 +43493,14 @@ components:
                   - H3T5-87
               availabilityId:
                 type:
-                  - number
+                  - integer
                   - 'null'
                 description: 'Product availability id'
                 examples:
                   - -1
               availabilityWhenSoldOutId:
                 type:
-                  - number
+                  - integer
                   - 'null'
                 description: 'Product availability id when not stocked'
                 examples:
@@ -43736,7 +43736,7 @@ components:
             - 0198566d-2eeb-73ed-8dc4-0c94b5a7e035
         priority:
           type:
-            - number
+            - integer
             - 'null'
           description: 'priority (specifies the order of categories)'
           examples:
@@ -44060,7 +44060,7 @@ components:
               examples:
                 - Canceled
             id:
-              type: number
+              type: integer
               description: 'identifier of order item status'
               examples:
                 - -1
@@ -44121,7 +44121,7 @@ components:
               examples:
                 - '100_purple-apple.jpg?59393c3a'
             priority:
-              type: number
+              type: integer
               description: "the key for the sequence of images matching the sequence in administration - it's not necessarily from the first, and the series may contain gaps. (can be `null`)."
               examples:
                 - 1
@@ -44150,7 +44150,7 @@ components:
           examples:
             - 'Dodavatel s.r.o'
         itemId:
-          type: number
+          type: integer
           description: 'order item identifier'
           examples:
             - 342
@@ -44315,24 +44315,24 @@ components:
         - access
       properties:
         id:
-          type: number
+          type: integer
           description: 'article ID'
           examples:
             - 1
         defaultSectionId:
-          type: number
+          type: integer
           description: 'article section ID'
           examples:
-            - '682'
+            - 682
         sectionIds:
           type:
             - array
             - 'null'
           description: 'array of section IDs'
           items:
-            type: number
+            type: integer
             examples:
-              - '682'
+              - 682
         title:
           type: string
           description: 'article title'
@@ -44444,20 +44444,20 @@ components:
         - visible
       properties:
         id:
-          type: number
+          type: integer
           description: 'article ID'
           examples:
             - 1
         defaultSectionId:
-          type: number
+          type: integer
           description: 'article section ID'
           examples:
-            - '682'
+            - 682
         sectionId:
-          type: number
+          type: integer
           description: 'article section ID'
           examples:
-            - '682'
+            - 682
         title:
           type: string
           description: 'article title'
@@ -44491,13 +44491,13 @@ components:
         - title
       properties:
         id:
-          type: number
+          type: integer
           description: 'article section ID'
           examples:
             - 1
         parentId:
           type:
-            - number
+            - integer
             - 'null'
           description: 'article section parent ID'
           examples:
@@ -44541,14 +44541,14 @@ components:
             - '<p>Content of the secondary article section</p>'
         limit:
           type:
-            - number
+            - integer
             - 'null'
           description: 'Number of articles displayed in the listing'
           examples:
             - 4
         homepageLimit:
           type:
-            - number
+            - integer
             - 'null'
           description: 'Number of articles displayed on the homepage'
           examples:
@@ -44563,7 +44563,7 @@ components:
             - alphabetically
         perexLimit:
           type:
-            - number
+            - integer
             - 'null'
           description: 'Number of character displayed in the article perex'
           examples:
@@ -44647,10 +44647,10 @@ components:
         - title
       properties:
         id:
-          type: number
+          type: integer
           description: 'article section ID'
           examples:
-            - '683'
+            - 683
         title:
           type: string
           description: 'article section title'
@@ -44698,13 +44698,13 @@ components:
         - authorized
       properties:
         id:
-          type: number
+          type: integer
           description: 'discussion post ID'
           examples:
             - 2
         parentId:
           type:
-            - number
+            - integer
             - 'null'
           description: 'discussion post parent ID'
           examples:
@@ -44718,14 +44718,14 @@ components:
           description: 'Discussion post product identifier.'
         articleId:
           type:
-            - number
+            - integer
             - 'null'
           description: 'Discussion post article identifier.'
           examples:
             - 2
         pageId:
           type:
-            - number
+            - integer
             - 'null'
           description: 'Discussion post page identifier.'
           examples:
@@ -44781,7 +44781,7 @@ components:
         - title
       properties:
         id:
-          type: number
+          type: integer
           description: 'page ID'
           examples:
             - 1
@@ -44824,7 +44824,7 @@ components:
         - ogImage
       properties:
         id:
-          type: number
+          type: integer
           description: 'page ID'
           examples:
             - 1
@@ -44930,7 +44930,7 @@ components:
           examples:
             - '2011000002'
         rating:
-          type: number
+          type: integer
           description: "Number from 1 to 5 representing stars of review's rating."
           examples:
             - 5
@@ -45617,7 +45617,7 @@ components:
             - name
           properties:
             id:
-              type: number
+              type: integer
               description: 'source identifier'
               examples:
                 - 1
@@ -45628,7 +45628,7 @@ components:
                 - Administration
         cashdeskId:
           type:
-            - number
+            - integer
             - 'null'
           description: 'cashdesk identifier'
           examples:
@@ -45642,7 +45642,7 @@ components:
               type: 'null'
         customerProfileId:
           type:
-            - number
+            - integer
             - 'null'
           description: 'customer profile identifier (can be `null`)'
           examples:
@@ -46433,10 +46433,10 @@ components:
         - url
       properties:
         sectionId:
-          type: number
+          type: integer
           description: 'article section ID'
           examples:
-            - '682'
+            - 682
         url:
           type: string
           description: 'article URL'
@@ -46623,7 +46623,7 @@ components:
           examples:
             - true
         stockId:
-          type: number
+          type: integer
           description: 'identifier of the stock, from which the order was taken'
           examples:
             - 1
@@ -46798,7 +46798,7 @@ components:
               examples:
                 - Processing
             id:
-              type: number
+              type: integer
               description: 'status identifier'
               examples:
                 - -1
@@ -46820,7 +46820,7 @@ components:
               examples:
                 - E-Shop
             id:
-              type: number
+              type: integer
               description: 'source identifier'
               examples:
                 - -1
@@ -46870,7 +46870,7 @@ components:
               paymentMethod:
                 $ref: '#/components/schemas/paymentMethod'
               itemId:
-                type: number
+                type: integer
                 description: 'payment method identifier within order'
                 examples:
                   - 564
@@ -46901,7 +46901,7 @@ components:
                     examples:
                       - PPL
               itemId:
-                type: number
+                type: integer
                 description: 'transport method identifier within order'
                 examples:
                   - 897
@@ -47039,7 +47039,7 @@ components:
                   - ks
               itemId:
                 type:
-                  - number
+                  - integer
                   - 'null'
                 description: 'Order item identifier. This field is null for product set items.'
                 examples:
@@ -47050,7 +47050,7 @@ components:
                 examples:
                   - 1.0
               parentProductSetItemId:
-                type: number
+                type: integer
                 description: 'identifier of the parent product set item, if the item is a product set item. If the item is not a product set item, this field is not present.'
                 examples:
                   - 123
@@ -47103,7 +47103,7 @@ components:
         - type
       properties:
         id:
-          type: number
+          type: integer
           description: 'order history identifier'
           examples:
             - 1
@@ -47208,7 +47208,7 @@ components:
           description: 'group of customers'
           properties:
             id:
-              type: number
+              type: integer
               description: 'customer group ID'
               examples:
                 - 1
