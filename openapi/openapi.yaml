@@ -17932,7 +17932,7 @@ paths:
                       $ref: '#/components/schemas/typeGuid'
                       description: 'Guid of payment method.'
                     vatRate:
-                      type: string
+                      $ref: '#/components/schemas/typePrice'
                       description: 'VAT rate (`0.00` for VAT non-payers).'
                       examples:
                         - '21.00'
