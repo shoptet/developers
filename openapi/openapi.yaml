@@ -14957,6 +14957,9 @@ paths:
                                 - true
                             preAuthorization:
                               $ref: '#/components/schemas/orderPreAuthorization'
+                            salesChannelGuid:
+                              $ref: '#/components/schemas/typeGuidNullable'
+                              description: 'sales channel guid'
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -15627,6 +15630,12 @@ paths:
                       examples:
                         - -1
                       description: 'Order source id. Optional. If not indicated, no source will be used (null). If `sourceId` is positive, `cashDeskOnly` must also be set to `true`, otherwise if `sourceId` is negative, `cashDeskOnly` must be set to `false`, otherwise error will be returned. Current possible values of `sourceId` can be determined by calling the list of order sources endpoint.'
+                    salesChannelGuid:
+                      $ref: '#/components/schemas/typeGuidNullable'
+                      minLength: 1
+                      description: 'Sales channel GUID. Requires actived module `Sales Channel`. Optional.'
+                      examples:
+                        - b57f91bb-e920-11e0-baa3-7dc668b75ca8
                     email:
                       type: string
                       minLength: 1
@@ -46993,9 +47002,12 @@ components:
                 - E-Shop
             id:
               type: integer
-              description: 'source identifier'
+              description: 'DEPRECATED source identifier'
               examples:
                 - -1
+        salesChannelGuid:
+          $ref: '#/components/schemas/typeGuidNullable'
+          description: 'sales channel guid'
         price:
           $ref: '#/components/schemas/price'
           description: 'price of the order'
