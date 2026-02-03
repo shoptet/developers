@@ -4782,6 +4782,7 @@ paths:
                             description: 'When enabled, pickup lockers cannot be selected in the cart.'
                             examples:
                               - true
+                            default: false
                           ossVatLevels:
                             type: array
                             description: 'OSS Tax setup'
@@ -14754,7 +14755,7 @@ paths:
                             type:
                               enum:
                                 - in_store
-                                - market
+                                - online_store
                                 - marketplace
                               description: 'Type of sales channel.'
                               examples:
@@ -25791,7 +25792,7 @@ paths:
                           type:
                             enum:
                               - in_store
-                              - market
+                              - online_store
                               - marketplace
                             description: 'Type of sales channel.'
                             examples:
