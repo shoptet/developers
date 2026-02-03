@@ -4777,6 +4777,11 @@ paths:
                             description: 'Has atypical shipping?'
                             examples:
                               - true
+                          boxRestriction:
+                            type: boolean
+                            description: 'When enabled, pickup lockers cannot be selected in the cart.'
+                            examples:
+                              - true
                           ossVatLevels:
                             type: array
                             description: 'OSS Tax setup'
@@ -42708,6 +42713,11 @@ components:
                 description: 'Has atypical shipping?'
                 examples:
                   - true
+              boxRestriction:
+                type: boolean
+                description: 'When enabled, pickup lockers cannot be selected in the cart.'
+                examples:
+                  - true
               perStockAmounts:
                 type:
                   - array
@@ -43599,6 +43609,11 @@ components:
               atypicalShipping:
                 type: boolean
                 description: 'Has atypical shipping?'
+                examples:
+                  - true
+              boxRestriction:
+                type: boolean
+                description: 'When enabled, pickup lockers cannot be selected in the cart.'
                 examples:
                   - true
               ossVatLevels:
