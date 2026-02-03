@@ -16517,6 +16517,163 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
       x-shoptet-response-ref: '#/definitions/orderSnapshot'
+  /api/orders/status-change:
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                    additionalProperties: false
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Orders with codes 2017000040, 2017000041, 2017000042, 2017000043, 2017000044, 2017000045 do not exist. Skipped.'
+                    instance: data.orderCodes
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        errorCode:
+                          type: string
+                        message:
+                          type: string
+                        instance:
+                          type: string
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Invalid statusId "2026".'
+                    instance: data.statusId
+                  -
+                    errorCode: invalid-request-data
+                    message: 'There must be a maximum of 100 items in the array'
+                    instance: data.orderCodes
+      summary: 'Bulk order status change'
+      operationId: bulkOrderStatusChange
+      description: |-
+        The endpoint allows you to change the status for multiple order codes simultaneously.
+
+
+
+        Non-existing order codes are skipped and summarized in response errors. The request process continues even if some 
+        order codes are skipped.
+
+
+
+        If you try to set the status that the order already has, no change is done and the request process continues.
+
+
+
+        If at least one order code is processed successfully, the response code is `200`. If all the order codes are 
+        skipped, the response code is `400`. If basic validation of data fails, the response code is `422` and the request 
+        is not processed.
+
+
+
+        Status definition can include an e-mail/SMS sending, or document generation. To suppress these types of consequences
+        you can use following query parameters: `suppressEmailSending=true`, `suppressSmsSending=true`,
+        `suppressDocumentGeneration=true`.
+      tags:
+        - Orders
+      parameters:
+        -
+          name: suppressDocumentGeneration
+          in: query
+          description: 'Suppress the generation of linked documents.'
+          example: true
+          schema:
+            type: boolean
+            default: false
+        -
+          name: suppressEmailSending
+          in: query
+          description: 'Suppress sending the linked information e-mails.'
+          example: true
+          schema:
+            type: boolean
+            default: false
+        -
+          name: suppressSmsSending
+          in: query
+          description: 'Suppress sending the linked information SMS messages.'
+          example: true
+          schema:
+            type: boolean
+            default: false
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  required:
+                    - orderCodes
+                    - statusId
+                  additionalProperties: false
+                  properties:
+                    orderCodes:
+                      type: array
+                      minItems: 1
+                      maxItems: 100
+                      description: 'order codes'
+                      items:
+                        type: string
+                        examples:
+                          - '2017000052'
+                    statusId:
+                      type: number
+                      description: 'order status identifier'
+                      examples:
+                        - -1
   '/api/orders/{code}':
     get:
       responses:
@@ -18881,7 +19038,7 @@ paths:
                   properties:
                     statusId:
                       type: integer
-                      description: 'New order status. The order statuses are specific for each e-shopand it is possible to gain these from the endpoint [Eshop info](#tag/eshop/geteshopinfo) with the `include=orderStatuses` parameter'
+                      description: 'New order status. The order statuses are specific for each e-shop and it is possible to gain these from the endpoint [Eshop info](#tag/eshop/geteshopinfo) with the `include=orderStatuses` parameter'
                       examples:
                         - -1
                     paid:
