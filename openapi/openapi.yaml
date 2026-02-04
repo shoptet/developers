@@ -3692,6 +3692,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
   /api/online-stores:
     get:
+      deprecated: true
       responses:
         200:
           description: OK
@@ -3782,7 +3783,11 @@ paths:
                     instance: multishop
       summary: 'List of online stores'
       operationId: getListOfOnlineStores
-      description: 'List of online stores.'
+      description: |
+        This endpoint is deprecated. 
+        Use the sales channels endpoint (/api/sales-channels) instead.
+
+        List of online stores.
       tags:
         - 'Online stores'
       parameters:
@@ -3790,6 +3795,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
   '/api/online-stores/{id}':
     get:
+      deprecated: true
       responses:
         200:
           description: OK
@@ -3854,7 +3860,11 @@ paths:
                       instance: '1'
       summary: 'Online store detail'
       operationId: getOnlineStoreDetail
-      description: "Information about the detail of the online store. This endpoint is available only when the 'Multishop' module is active."
+      description: |
+        This endpoint is deprecated. 
+        Use the general sales channels endpoint (/api/sales-channels/{guid}) instead.
+
+        Information about the detail of the online store. This endpoint is available only when the 'Multishop' module is active.
       tags:
         - 'Online stores'
       parameters:
@@ -20071,6 +20081,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
   /api/in-stores:
     get:
+      deprecated: true
       responses:
         200:
           description: OK
@@ -20149,7 +20160,12 @@ paths:
                     instance: inStoreSalesChannel
       summary: 'List of all in-stores'
       operationId: getListOfInStores
-      description: "Provides a list of in-stores. This endpoint is available only when the 'In-store sales channel' module is active. It is currently considered beta/experimental, and its structure may change in the future."
+      description: |
+        This endpoint is deprecated. 
+        Use the sales channels endpoint (/api/sales-channels) instead.
+
+        Provides a list of in-stores.
+        This endpoint is available only when the 'In-store sales channel' module is active. It is currently considered beta/experimental, and its structure may change in the future.
       tags:
         - In-stores
       parameters:
@@ -20157,6 +20173,7 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
   '/api/in-stores/{id}':
     get:
+      deprecated: true
       responses:
         200:
           description: OK
@@ -20252,7 +20269,12 @@ paths:
                       instance: '1'
       summary: 'In-store detail'
       operationId: getInStoreDetail
-      description: "Provides detailed information about the in-store. This endpoint is available only when the 'In-store sales channel' module is active. It is currently considered beta/experimental, and its structure may change in the future."
+      description: |
+        This endpoint is deprecated. 
+        Use the general sales channels endpoint (/api/sales-channels/{guid}) instead.
+
+        Provides detailed information about the in-store.
+        This endpoint is available only when the 'In-store sales channel' module is active. It is currently considered beta/experimental, and its structure may change in the future.
       tags:
         - In-stores
       parameters:
