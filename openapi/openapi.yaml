@@ -15595,647 +15595,7 @@ paths:
                 - data
               properties:
                 data:
-                  type: object
-                  additionalProperties: false
-                  required:
-                    - externalCode
-                    - currency
-                  properties:
-                    creationTime:
-                      type: string
-                      description: 'time of order creation. Optional, current time is the default value.'
-                      examples:
-                        - '2018-01-21T14:15:47+0100'
-                    code:
-                      type: string
-                      minLength: 1
-                      maxLength: 10
-                      description: 'Unique identifier for an e-shop order. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
-                      examples:
-                        - 2024-123
-                    language:
-                      type: string
-                      minLength: 1
-                      description: 'Language of order. Available only if module foreignLanguages is active and initialized.'
-                      examples:
-                        - cs
-                    externalCode:
-                      type: string
-                      minLength: 1
-                      maxLength: 255
-                      description: 'order identification within the external system (mandatory, must be unique).'
-                      examples:
-                        - X123
-                    cashDeskOrder:
-                      type: boolean
-                      description: 'flag, if the order was created via the cash desk. Optional. `false` is the default value.'
-                    statusId:
-                      type: integer
-                      description: 'Order status. Optional. If not indicated, the default status of the order is used, as per e-shop settings. If the status definition sets the payment flag, the parameter `paid` is set to `true`. if the request also mentions `paid`, the `paid` variant has priority. If the status definition has selected the setting of item statuses, the status is also set for items. Otherwise, the initial status is the set based on e-shop defaults. If the item has status set explicitly (see below `items[].statusId`), the value from the item shall be used.'
-                      examples:
-                        - -1
-                    sourceId:
-                      type:
-                        - integer
-                        - 'null'
-                      examples:
-                        - -1
-                      description: 'Order source id. Optional. If not indicated, no source will be used (null). If `sourceId` is positive, `cashDeskOnly` must also be set to `true`, otherwise if `sourceId` is negative, `cashDeskOnly` must be set to `false`, otherwise error will be returned. Current possible values of `sourceId` can be determined by calling the list of order sources endpoint.'
-                    salesChannelGuid:
-                      $ref: '#/components/schemas/typeGuidNullable'
-                      minLength: 1
-                      description: 'Sales channel GUID. Requires actived module `Sales Channel`. Optional.'
-                      examples:
-                        - b57f91bb-e920-11e0-baa3-7dc668b75ca8
-                    email:
-                      type: string
-                      minLength: 1
-                      maxLength: 100
-                      description: 'customer e-mail (can be omitted only when ordering via cash desk).'
-                      examples:
-                        - foo@bar.cz
-                    phone:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 32
-                      description: 'phone number of the customer. Optional, if not set as mandatory item in shop settings.'
-                      examples:
-                        - '+420123456789'
-                    birthDate:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'customer birth date (optional, if not made mandatory by the e-shop settings).'
-                      examples:
-                        - '1990-01-01'
-                    vatPayer:
-                      type: boolean
-                      examples:
-                        - true
-                      description: 'Flag, whether the invoice was issued in VAT payer mode, or VAT non-payer mode. Optional, if not indicated, it is used as per current settings of the e-shop (only makes sense for historical orders, if e-shop changed its status form VAT payer to different or vice versa)'
-                    paymentMethodGuid:
-                      $ref: '#/components/schemas/typeGuidNullable'
-                      minLength: 1
-                      description: 'Payment method. Optional, for an order via cash desk or eshop order. Does not automatically generate payment item in the list of items, and does not check the consistency with payment item. Billing item type is mandatory if paymentMethodGuid is filled.'
-                      examples:
-                        - b57f91bb-e920-11e0-baa3-7dc668b75ca8
-                    shippingGuid:
-                      $ref: '#/components/schemas/typeGuidNullable'
-                      minLength: 1
-                      description: 'Transport method. Optional, for an order via cash desk or eshop order. Does not automatically generate transport item in the list of items, and does not check the consistency with the transport item. Shipping item type is mandatory if shippingGuid is filled.'
-                      examples:
-                        - b57f91bb-e920-11e0-baa3-7dc668b75ca8
-                    shippingDetails:
-                      description: 'additional information for transport, if any. typically ID of Zásilkovna branches, postal offices, etc. (optional)'
-                      oneOf:
-                        -
-                          type: 'null'
-                        -
-                          type: object
-                          additionalProperties: false
-                          required:
-                            - branchId
-                          properties:
-                            branchId:
-                              type: string
-                              description: 'branch ID, if delivered to Uloženka branch, DPD, etc.'
-                              examples:
-                                - '45'
-                            branchName:
-                              type: string
-                              description: 'branch name, if delivered to Uloženka branch, DPD, etc.'
-                              examples:
-                                - 'Test branch'
-                            carrierId:
-                              type: integer
-                              description: 'CarrierId, use only for Zasilkovna/Packeta, use their carrierID.'
-                              examples:
-                                - 3060
-                    paid:
-                      type:
-                        - boolean
-                        - 'null'
-                      description: 'flag, whether the order was paid'
-                      examples:
-                        - true
-                    billingMethodCode:
-                      type: integer
-                      minimum: 1
-                      maximum: 4
-                      description: 'Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Optional.'
-                      examples:
-                        - 2
-                    clientIPAddress:
-                      type:
-                        - string
-                        - 'null'
-                      maxLength: 255
-                      description: 'IP address of the customer, from where the order was made'
-                      examples:
-                        - 62.128.123.12
-                    customerGuid:
-                      $ref: '#/components/schemas/typeGuidNullable'
-                      minLength: 1
-                      description: 'Customer GUID, if not done under known registered customer (optional).'
-                    billingAddress:
-                      type: object
-                      additionalProperties: false
-                      description: 'invoicing address'
-                      properties:
-                        company:
-                          type:
-                            - string
-                            - 'null'
-                          maxLength: 255
-                          description: 'company name. Optional, if not set as mandatory item in shop settings.'
-                          examples:
-                            - 'Smith & Smith'
-                        fullName:
-                          type:
-                            - string
-                            - 'null'
-                          maxLength: 255
-                          description: 'customer name. Optional, if not set as mandatory item in shop settings.'
-                          examples:
-                            - 'John Doe'
-                        street:
-                          type:
-                            - string
-                            - 'null'
-                          maxLength: 255
-                          description: '(string, optional) - street of the customer. Optional, if not set as mandatory item in shop settings.'
-                          examples:
-                            - 'Main Street'
-                        streetWithNr:
-                          type:
-                            - string
-                            - 'null'
-                          maxLength: 255
-                          description: 'Street, including street number. Optional, if necessary, to be divided to street and street number and saved in respective fields. Use if you only have the combined data. Usually, the `street` and `houseNumber` will not be needed (if they are used, however, they have priority).'
-                          examples:
-                            - 'Main Street 123'
-                        houseNumber:
-                          type:
-                            - string
-                            - 'null'
-                          maxLength: 255
-                          description: 'street number. Optional, if not set as mandatory item in shop settings.'
-                          examples:
-                            - '123'
-                        city:
-                          type:
-                            - string
-                            - 'null'
-                          maxLength: 255
-                          description: 'City/Town. Optional, if not set as mandatory item in shop settings.'
-                          examples:
-                            - 'Flat Country'
-                        district:
-                          type:
-                            - string
-                            - 'null'
-                          maxLength: 255
-                          description: 'County. Optional, if not set as mandatory item in shop settings.'
-                          examples:
-                            - Bohemia
-                        additional:
-                          type:
-                            - string
-                            - 'null'
-                          maxLength: 255
-                          description: 'Additional information for the address. Optional.'
-                          examples:
-                            - '3rd floor'
-                        zip:
-                          type:
-                            - string
-                            - 'null'
-                          maxLength: 255
-                          description: 'ZIP or postal code. Optional, if not set as mandatory item in shop settings.'
-                          examples:
-                            - '123 00'
-                        countryCode:
-                          type: string
-                          minLength: 1
-                          description: '(string, optional) - country of the customer. Optional, the default delivery country is used as the default value, taken from eshop settings.'
-                          examples:
-                            - CZ
-                        regionName:
-                          type:
-                            - string
-                            - 'null'
-                          minLength: 1
-                          maxLength: 255
-                          description: 'region. Optional.'
-                          examples:
-                            - 'Central Bohemia'
-                        regionShortcut:
-                          type:
-                            - string
-                            - 'null'
-                          minLength: 1
-                          maxLength: 255
-                          description: 'region abbreviation. Optional.'
-                          examples:
-                            - SC
-                        companyId:
-                          type:
-                            - string
-                            - 'null'
-                          minLength: 1
-                          maxLength: 18
-                          description: 'Company registration number of the customer, if purchasing as a company. Optional.'
-                          examples:
-                            - '123456'
-                        vatId:
-                          type:
-                            - string
-                            - 'null'
-                          minLength: 1
-                          maxLength: 16
-                          description: 'VAT identification number of the customer, if purchasing on the company.'
-                          examples:
-                            - CZ123456
-                        taxId:
-                          type:
-                            - string
-                            - 'null'
-                          minLength: 1
-                          maxLength: 16
-                          description: 'TAX identification number of the customer, if purchasing on the company. For Czech address, taxId must be the same as vatId, or left empty. Optional.'
-                          examples:
-                            - CZ123456
-                    addressesEqual:
-                      type:
-                        - boolean
-                        - 'null'
-                      description: 'flag, whether the billing and delivery addresses are the same'
-                      default: true
-                      examples:
-                        - true
-                    deliveryAddress:
-                      oneOf:
-                        -
-                          type: 'null'
-                        -
-                          type: object
-                          additionalProperties: false
-                          properties:
-                            company:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 255
-                              description: 'company name. Optional, if not set as mandatory item in shop settings.'
-                              examples:
-                                - 'Smith & Smith'
-                            fullName:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 255
-                              description: 'customer name. Optional, if not set as mandatory item in shop settings.'
-                              examples:
-                                - 'John Doe'
-                            street:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 255
-                              description: '(string, optional) - street for delivery. Optional, if not set as mandatory item in shop settings.'
-                              examples:
-                                - 'Main Street'
-                            streetWithNr:
-                              type: string
-                              maxLength: 255
-                              description: 'Street, including street number. Optional, if necessary, to be divided to street and street number and saved in the respective fields. Use if you only have the combined data. Usually, `street` and `houseNumber` will not be needed (if they are used, however, they have priority).'
-                              examples:
-                                - 'Main Street 123'
-                            houseNumber:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 255
-                              description: 'street number. Optional, if not set as mandatory item in shop settings.'
-                              examples:
-                                - '123'
-                            city:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 255
-                              description: 'City/Town. Optional, if not set as mandatory item in shop settings.'
-                              examples:
-                                - 'Flat Country'
-                            district:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 255
-                              description: 'County. Optional, if not set as mandatory item in shop settings.'
-                              examples:
-                                - Bohemia
-                            additional:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 255
-                              description: 'Additional information for the address. Optional.'
-                              examples:
-                                - '3rd floor'
-                            zip:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 255
-                              description: 'ZIP or postal code. Optional, if not set as mandatory item in shop settings.'
-                              examples:
-                                - '123 00'
-                            countryCode:
-                              type:
-                                - string
-                                - 'null'
-                              description: 'country of the customer. Optional, the default delivery country is used as the default value, taken from eshop settings.'
-                              examples:
-                                - CZ
-                            regionName:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 255
-                              description: 'region. Optional.'
-                              examples:
-                                - 'Central Bohemia'
-                            regionShortcut:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 255
-                              description: 'region abbreviation. Optional.'
-                              examples:
-                                - SC
-                    notes:
-                      description: 'additional notes for the order'
-                      oneOf:
-                        -
-                          type: 'null'
-                        -
-                          type: object
-                          additionalProperties: false
-                          properties:
-                            customerRemark:
-                              type:
-                                - string
-                                - 'null'
-                              description: 'Remark of customer. Optional.'
-                              examples:
-                                - 'Please deliver in the morning.'
-                            eshopRemark:
-                              type:
-                                - string
-                                - 'null'
-                              description: 'remark of e-shop (not visible for customer). Optional.'
-                              examples:
-                                - 'Order from the cash desk'
-                            trackingNumber:
-                              type:
-                                - string
-                                - 'null'
-                              maxLength: 32
-                              description: 'tracking number of the shipment.'
-                              examples:
-                                - TR123345
-                            additionalFields:
-                              type: array
-                              minItems: 1
-                              description: 'additional optional fields (maximum 6).'
-                              items:
-                                type: object
-                                additionalProperties: false
-                                required:
-                                  - index
-                                  - text
-                                properties:
-                                  index:
-                                    type: integer
-                                    minimum: 1
-                                    maximum: 6
-                                    description: 'number of optional field (1-6). Mandatory.'
-                                    examples:
-                                      - 1
-                                  text:
-                                    type: string
-                                    description: 'remark text. Mandatory'
-                                    examples:
-                                      - 'Processed by Doe'
-                    stockId:
-                      type: integer
-                      description: 'stock number. Optional, the default value is the default stock, taken from e-shop settings. In Shoptet, the only alternative to the default stock is to collect in person at the shop, otherwise the default stock is used.'
-                      examples:
-                        - 1
-                    currency:
-                      type: object
-                      additionalProperties: false
-                      required:
-                        - code
-                      properties:
-                        code:
-                          $ref: '#/components/schemas/typeCurrencyCode'
-                          description: 'currency abbreviation. Mandatory.'
-                          examples:
-                            - CZK
-                        exchangeRate:
-                          type:
-                            - string
-                            - 'null'
-                          pattern: '^[0-9]+\.[0-9]{2,8}$'
-                          description: 'exchange rate for main e-shop currency.'
-                          examples:
-                            - '1.0000'
-                    vatMode:
-                      type: string
-                      description: 'VAT mode, `Normal` is used by default, possible values: `Normal`, `One Stop Shop`*, `Reverse charge`, `Outside the EU`. Please note, that `One Stop Shop` value requires eshop `OSS` setting to be `true`.'
-                      examples:
-                        - Normal
-                    items:
-                      type: array
-                      minItems: 1
-                      description: 'order items. The order must have at least one product item'
-                      items:
-                        type: object
-                        additionalProperties: false
-                        required:
-                          - itemType
-                          - vatRate
-                        properties:
-                          itemType:
-                            type: string
-                            minLength: 1
-                            description: 'Item type. Mandatory field. See also [Type of order items](#section/code-lists/types-of-order-items) code list. `product` item type is min required. If `billing` type is present paymentMethodGuid must be provided. If `shipping` type is present shippingGuid must be provided.'
-                            examples:
-                              - product
-                          name:
-                            type: string
-                            maxLength: 250
-                            description: 'Product name (optional, but usually filled in). Mandatory only for transport and payment, for other items, it is loaded according to `code`.'
-                            examples:
-                              - 'Large chocolate'
-                          variantName:
-                            type: string
-                            maxLength: 128
-                            description: 'Product variant name.'
-                            examples:
-                              - 'Dark chocolate'
-                          brand:
-                            type: string
-                            maxLength: 64
-                            description: 'brand (manufacturer). Optional.'
-                            examples:
-                              - 'Willy Wonka'
-                          supplierName:
-                            type: string
-                            maxLength: 255
-                            description: 'supplier name.'
-                            examples:
-                              - 'Dodavatel s.r.o.'
-                          productGuid:
-                            $ref: '#/components/schemas/typeGuid'
-                            minLength: 1
-                            description: 'Product GUID in item. When used with the `?suppressProductChecking=true` parameter, this field has no influence.'
-                          code:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 64
-                            examples:
-                              - 123-456
-                          remark:
-                            type: string
-                            description: 'remark for the item. Optional.'
-                            examples:
-                              - 'With cubicles'
-                          warrantyDescription:
-                            type:
-                              - string
-                              - 'null'
-                            minLength: 1
-                            maxLength: 255
-                            description: 'textual description of warranty length (can be `null`)'
-                            examples:
-                              - '2 years'
-                          amountCompleted:
-                            $ref: '#/components/schemas/typePositiveAmountNullable'
-                            description: 'quantity of completed product'
-                          additionalField:
-                            type:
-                              - string
-                              - 'null'
-                            maxLength: 255
-                            description: 'additional information. Used for transport to specify the branch (can be `null`)'
-                            examples:
-                              - 'TO BALÍKOVNA, Karlínské náměstí 145/1, Karlín, 18600, Prague'
-                          amount:
-                            type: string
-                            pattern: '^[0-9]+\.?[0-9]{0,3}$'
-                            description: 'amount, 3 decimal places accuracy, optional, default value `1.000`.'
-                            examples:
-                              - '1.000'
-                          amountUnit:
-                            type: string
-                            minLength: 1
-                            maxLength: 16
-                            description: 'unit of quantity (optional)'
-                            examples:
-                              - ks
-                          weight:
-                            type: string
-                            description: 'product weight in kilograms. Maximum 3 decimal places, and maximum value of 99999.'
-                            examples:
-                              - '100'
-                          priceRatio:
-                            type: string
-                            description: 'discount in the form of coefficient (0.7 = 70 % of the original price, i.e. 30 % discount). Optional, default value is `1.0000`'
-                            examples:
-                              - '0.7'
-                          vatRate:
-                            type: string
-                            description: 'VAT rate (`0.00` for VAT non-payers). Mandatory.'
-                            examples:
-                              - '21.00'
-                          itemPriceWithVat:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'item amount including VAT. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered'
-                            examples:
-                              - '121.00'
-                          itemPriceWithoutVat:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'item amount excluding VAT. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered'
-                            examples:
-                              - '100.00'
-                          buyPriceWithVat:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'Purchase price, including VAT. Price including tax and price excluding tax cannot be combined. This is used for profit margin calculation and statistics.'
-                            examples:
-                              - '121.00'
-                          buyPriceWithoutVat:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'Purchase price, excluding VAT. Optional. Price including tax and price excluding tax cannot be combined. This is used for profit margin calculation and statistics.'
-                            examples:
-                              - '100.00'
-                          buyPriceVatRate:
-                            type:
-                              - string
-                              - 'null'
-                            description: 'VAT rate for purchase price.'
-                            examples:
-                              - '21.00'
-                          statusId:
-                            type:
-                              - integer
-                              - 'null'
-                            description: 'Order item status. Optional, if not indicated, default value is guided by the order status. If the order status was indicated and this status has the `Change status of items in the order` flag set, then the item will have this status. Otherwise the default status of the e-shop is used.'
-                            examples:
-                              - -1
-                          recyclingFeeId:
-                            type:
-                              - integer
-                              - 'null'
-                            description: 'ID of the recycling fee.'
-                            examples:
-                              - 2
-                          surchargeParameters:
-                            type: array
-                            items:
-                              type: object
-                              additionalProperties: false
-                              required:
-                                - parameterCode
-                                - valueIndex
-                              properties:
-                                parameterCode:
-                                  type: string
-                                  minLength: 1
-                                  examples:
-                                    - surchargeCode
-                                valueIndex:
-                                  type: string
-                                  minLength: 1
-                                  examples:
-                                    - high
-                                price:
-                                  $ref: '#/components/schemas/typePrice'
-                          consumptionTaxId:
-                            $ref: '#/components/schemas/consumptionTaxId'
+                  $ref: '#/components/schemas/orderCreate'
   /api/orders/history/snapshot:
     get:
       responses:
@@ -17377,12 +16737,24 @@ paths:
                         - '21.00'
                     itemPriceWithVat:
                       type: string
-                      description: 'Item price, including VAT. Optional. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithVat` instead. Item price including VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
                       examples:
                         - '121.00'
+                      deprecated: true
                     itemPriceWithoutVat:
                       type: string
-                      description: 'Item price, excluding VAT. Optional. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithoutVat` instead. Item price excluding VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
+                      examples:
+                        - '100.00'
+                      deprecated: true
+                    unitPriceWithVat:
+                      type: string
+                      description: 'Unit price including VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
+                      examples:
+                        - '121.00'
+                    unitPriceWithoutVat:
+                      type: string
+                      description: 'Unit price excluding VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
                       examples:
                         - '100.00'
                     buyPriceWithVat:
@@ -17693,12 +17065,24 @@ paths:
                         - '21.00'
                     itemPriceWithVat:
                       type: string
-                      description: 'Item price, including VAT. Optional. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithVat` instead. Item price including VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
                       examples:
                         - '121.00'
+                      deprecated: true
                     itemPriceWithoutVat:
                       type: string
-                      description: 'Item price, excluding VAT. Optional. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithoutVat` instead. Item price excluding VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
+                      examples:
+                        - '100.00'
+                      deprecated: true
+                    unitPriceWithVat:
+                      type: string
+                      description: 'Unit price including VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
+                      examples:
+                        - '121.00'
+                    unitPriceWithoutVat:
+                      type: string
+                      description: 'Unit price excluding VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
                       examples:
                         - '100.00'
                     buyPriceWithVat:
@@ -18114,20 +17498,37 @@ paths:
                       $ref: '#/components/schemas/typeGuid'
                       description: 'Guid of payment method.'
                     vatRate:
-                      $ref: '#/components/schemas/typePrice'
+                      $ref: '#/components/schemas/typeVatRate'
                       description: 'VAT rate (`0.00` for VAT non-payers).'
                       examples:
                         - '21.00'
                     itemPriceWithVat:
                       type: string
-                      description: 'Item price, including VAT. Optional. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithVat` instead. Item price including VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
                       examples:
                         - '121.00'
+                      deprecated: true
                     itemPriceWithoutVat:
                       type: string
-                      description: 'Item price, excluding VAT. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithoutVat` instead. Item price excluding VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
                       examples:
                         - '100.00'
+                      deprecated: true
+                    unitPriceWithVat:
+                      type: string
+                      description: 'Unit price including VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
+                      examples:
+                        - '121.00'
+                    unitPriceWithoutVat:
+                      type: string
+                      description: 'Unit price excluding VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
+                      examples:
+                        - '100.00'
+                    buyPriceWithVat:
+                      type: string
+                      description: 'Purchase price, including VAT. Optional. Price including tax and price excluding tax cannot be combined. This is used for profit margin calculation and statistics.'
+                      examples:
+                        - '121.00'
                     additionalField:
                       type:
                         - string
@@ -18213,12 +17614,24 @@ paths:
                         - '21.00'
                     itemPriceWithVat:
                       type: string
-                      description: 'Item price, including VAT. Optional. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithVat` instead. Item price including VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
                       examples:
                         - '121.00'
+                      deprecated: true
                     itemPriceWithoutVat:
                       type: string
-                      description: 'Item price, excluding VAT. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithoutVat` instead. Item price excluding VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
+                      examples:
+                        - '100.00'
+                      deprecated: true
+                    unitPriceWithVat:
+                      type: string
+                      description: 'Unit price including VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
+                      examples:
+                        - '121.00'
+                    unitPriceWithoutVat:
+                      type: string
+                      description: 'Unit price excluding VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
                       examples:
                         - '100.00'
                     additionalField:
@@ -18300,12 +17713,24 @@ paths:
                         - '21.00'
                     itemPriceWithVat:
                       type: string
-                      description: 'Item price, including VAT. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithVat` instead. Item price including VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
                       examples:
                         - '121.00'
+                      deprecated: true
                     itemPriceWithoutVat:
                       type: string
-                      description: 'Item price, excluding VAT. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithoutVat` instead. Item price excluding VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
+                      examples:
+                        - '100.00'
+                      deprecated: true
+                    unitPriceWithVat:
+                      type: string
+                      description: 'Unit price including VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
+                      examples:
+                        - '121.00'
+                    unitPriceWithoutVat:
+                      type: string
+                      description: 'Unit price excluding VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
                       examples:
                         - '100.00'
                     additionalField:
@@ -18393,12 +17818,24 @@ paths:
                         - '21.00'
                     itemPriceWithVat:
                       type: string
-                      description: 'Item price, including VAT. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithVat` instead. Item price including VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
                       examples:
                         - '121.00'
+                      deprecated: true
                     itemPriceWithoutVat:
                       type: string
-                      description: 'Item price, excluding VAT. Price including tax and price excluding tax cannot be combined.'
+                      description: 'Deprecated: use `unitPriceWithoutVat` instead. Item price excluding VAT. Optional. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
+                      examples:
+                        - '100.00'
+                      deprecated: true
+                    unitPriceWithVat:
+                      type: string
+                      description: 'Unit price including VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
+                      examples:
+                        - '121.00'
+                    unitPriceWithoutVat:
+                      type: string
+                      description: 'Unit price excluding VAT. Optional. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
                       examples:
                         - '100.00'
                     additionalField:
@@ -47436,6 +46873,664 @@ components:
               changeTime:
                 $ref: '#/components/schemas/typeDateTimeNullable'
                 description: 'payment transaction last change date and time'
+    orderCreate:
+      type: object
+      additionalProperties: false
+      required:
+        - externalCode
+        - currency
+      properties:
+        creationTime:
+          type: string
+          description: 'time of order creation. Optional, current time is the default value.'
+          examples:
+            - '2018-01-21T14:15:47+0100'
+        code:
+          type: string
+          minLength: 1
+          maxLength: 10
+          description: 'Unique identifier for an e-shop order. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
+          examples:
+            - 2024-123
+        language:
+          type: string
+          minLength: 1
+          description: 'Language of order. Available only if module foreignLanguages is active and initialized.'
+          examples:
+            - cs
+        externalCode:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: 'order identification within the external system (mandatory, must be unique).'
+          examples:
+            - X123
+        cashDeskOrder:
+          type: boolean
+          description: 'flag, if the order was created via the cash desk. Optional. `false` is the default value.'
+        statusId:
+          type: integer
+          description: 'Order status. Optional. If not indicated, the default status of the order is used, as per e-shop settings. If the status definition sets the payment flag, the parameter `paid` is set to `true`. if the request also mentions `paid`, the `paid` variant has priority. If the status definition has selected the setting of item statuses, the status is also set for items. Otherwise, the initial status is the set based on e-shop defaults. If the item has status set explicitly (see below `items[].statusId`), the value from the item shall be used.'
+          examples:
+            - -1
+        sourceId:
+          type:
+            - integer
+            - 'null'
+          examples:
+            - -1
+          description: 'Order source id. Optional. If not indicated, no source will be used (null). If `sourceId` is positive, `cashDeskOnly` must also be set to `true`, otherwise if `sourceId` is negative, `cashDeskOnly` must be set to `false`, otherwise error will be returned. Current possible values of `sourceId` can be determined by calling the list of order sources endpoint.'
+        salesChannelGuid:
+          $ref: '#/components/schemas/typeGuidNullable'
+          minLength: 1
+          description: 'Sales channel GUID. Requires actived module `Sales Channel`. Optional.'
+          examples:
+            - b57f91bb-e920-11e0-baa3-7dc668b75ca8
+        email:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: 'customer e-mail (can be omitted only when ordering via cash desk).'
+          examples:
+            - foo@bar.cz
+        phone:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 32
+          description: 'phone number of the customer. Optional, if not set as mandatory item in shop settings.'
+          examples:
+            - '+420123456789'
+        birthDate:
+          type:
+            - string
+            - 'null'
+          description: 'customer birth date (optional, if not made mandatory by the e-shop settings).'
+          examples:
+            - '1990-01-01'
+        vatPayer:
+          type: boolean
+          examples:
+            - true
+          description: 'Flag, whether the invoice was issued in VAT payer mode, or VAT non-payer mode. Optional, if not indicated, it is used as per current settings of the e-shop (only makes sense for historical orders, if e-shop changed its status form VAT payer to different or vice versa)'
+        paymentMethodGuid:
+          $ref: '#/components/schemas/typeGuidNullable'
+          minLength: 1
+          description: 'Payment method. Optional, for an order via cash desk or eshop order. Does not automatically generate payment item in the list of items, and does not check the consistency with payment item. Billing item type is mandatory if paymentMethodGuid is filled.'
+          examples:
+            - b57f91bb-e920-11e0-baa3-7dc668b75ca8
+        shippingGuid:
+          $ref: '#/components/schemas/typeGuidNullable'
+          minLength: 1
+          description: 'Transport method. Optional, for an order via cash desk or eshop order. Does not automatically generate transport item in the list of items, and does not check the consistency with the transport item. Shipping item type is mandatory if shippingGuid is filled.'
+          examples:
+            - b57f91bb-e920-11e0-baa3-7dc668b75ca8
+        shippingDetails:
+          description: 'additional information for transport, if any. typically ID of Zásilkovna branches, postal offices, etc. (optional)'
+          oneOf:
+            -
+              type: 'null'
+            -
+              type: object
+              additionalProperties: false
+              required:
+                - branchId
+              properties:
+                branchId:
+                  type: string
+                  description: 'branch ID, if delivered to Uloženka branch, DPD, etc.'
+                  examples:
+                    - '45'
+                branchName:
+                  type: string
+                  description: 'branch name, if delivered to Uloženka branch, DPD, etc.'
+                  examples:
+                    - 'Test branch'
+                carrierId:
+                  type: integer
+                  description: 'CarrierId, use only for Zasilkovna/Packeta, use their carrierID.'
+                  examples:
+                    - 3060
+        paid:
+          type:
+            - boolean
+            - 'null'
+          description: 'flag, whether the order was paid'
+          examples:
+            - true
+        billingMethodCode:
+          type: integer
+          minimum: 1
+          maximum: 4
+          description: 'Billing method identifier - see also [Invoice billing methods](#section/code-lists/invoice-billing-methods) code list. Optional.'
+          examples:
+            - 2
+        clientIPAddress:
+          type:
+            - string
+            - 'null'
+          maxLength: 255
+          description: 'IP address of the customer, from where the order was made'
+          examples:
+            - 62.128.123.12
+        customerGuid:
+          $ref: '#/components/schemas/typeGuidNullable'
+          minLength: 1
+          description: 'Customer GUID, if not done under known registered customer (optional).'
+        billingAddress:
+          type: object
+          additionalProperties: false
+          description: 'invoicing address'
+          properties:
+            company:
+              type:
+                - string
+                - 'null'
+              maxLength: 255
+              description: 'company name. Optional, if not set as mandatory item in shop settings.'
+              examples:
+                - 'Smith & Smith'
+            fullName:
+              type:
+                - string
+                - 'null'
+              maxLength: 255
+              description: 'customer name. Optional, if not set as mandatory item in shop settings.'
+              examples:
+                - 'John Doe'
+            street:
+              type:
+                - string
+                - 'null'
+              maxLength: 255
+              description: '(string, optional) - street of the customer. Optional, if not set as mandatory item in shop settings.'
+              examples:
+                - 'Main Street'
+            streetWithNr:
+              type:
+                - string
+                - 'null'
+              maxLength: 255
+              description: 'Street, including street number. Optional, if necessary, to be divided to street and street number and saved in respective fields. Use if you only have the combined data. Usually, the `street` and `houseNumber` will not be needed (if they are used, however, they have priority).'
+              examples:
+                - 'Main Street 123'
+            houseNumber:
+              type:
+                - string
+                - 'null'
+              maxLength: 255
+              description: 'street number. Optional, if not set as mandatory item in shop settings.'
+              examples:
+                - '123'
+            city:
+              type:
+                - string
+                - 'null'
+              maxLength: 255
+              description: 'City/Town. Optional, if not set as mandatory item in shop settings.'
+              examples:
+                - 'Flat Country'
+            district:
+              type:
+                - string
+                - 'null'
+              maxLength: 255
+              description: 'County. Optional, if not set as mandatory item in shop settings.'
+              examples:
+                - Bohemia
+            additional:
+              type:
+                - string
+                - 'null'
+              maxLength: 255
+              description: 'Additional information for the address. Optional.'
+              examples:
+                - '3rd floor'
+            zip:
+              type:
+                - string
+                - 'null'
+              maxLength: 255
+              description: 'ZIP or postal code. Optional, if not set as mandatory item in shop settings.'
+              examples:
+                - '123 00'
+            countryCode:
+              type: string
+              minLength: 1
+              description: '(string, optional) - country of the customer. Optional, the default delivery country is used as the default value, taken from eshop settings.'
+              examples:
+                - CZ
+            regionName:
+              type:
+                - string
+                - 'null'
+              minLength: 1
+              maxLength: 255
+              description: 'region. Optional.'
+              examples:
+                - 'Central Bohemia'
+            regionShortcut:
+              type:
+                - string
+                - 'null'
+              minLength: 1
+              maxLength: 255
+              description: 'region abbreviation. Optional.'
+              examples:
+                - SC
+            companyId:
+              type:
+                - string
+                - 'null'
+              minLength: 1
+              maxLength: 18
+              description: 'Company registration number of the customer, if purchasing as a company. Optional.'
+              examples:
+                - '123456'
+            vatId:
+              type:
+                - string
+                - 'null'
+              minLength: 1
+              maxLength: 16
+              description: 'VAT identification number of the customer, if purchasing on the company.'
+              examples:
+                - CZ123456
+            taxId:
+              type:
+                - string
+                - 'null'
+              minLength: 1
+              maxLength: 16
+              description: 'TAX identification number of the customer, if purchasing on the company. For Czech address, taxId must be the same as vatId, or left empty. Optional.'
+              examples:
+                - CZ123456
+        addressesEqual:
+          type:
+            - boolean
+            - 'null'
+          description: 'flag, whether the billing and delivery addresses are the same'
+          default: true
+          examples:
+            - true
+        deliveryAddress:
+          oneOf:
+            -
+              type: 'null'
+            -
+              type: object
+              additionalProperties: false
+              properties:
+                company:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 255
+                  description: 'company name. Optional, if not set as mandatory item in shop settings.'
+                  examples:
+                    - 'Smith & Smith'
+                fullName:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 255
+                  description: 'customer name. Optional, if not set as mandatory item in shop settings.'
+                  examples:
+                    - 'John Doe'
+                street:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 255
+                  description: '(string, optional) - street for delivery. Optional, if not set as mandatory item in shop settings.'
+                  examples:
+                    - 'Main Street'
+                streetWithNr:
+                  type: string
+                  maxLength: 255
+                  description: 'Street, including street number. Optional, if necessary, to be divided to street and street number and saved in the respective fields. Use if you only have the combined data. Usually, `street` and `houseNumber` will not be needed (if they are used, however, they have priority).'
+                  examples:
+                    - 'Main Street 123'
+                houseNumber:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 255
+                  description: 'street number. Optional, if not set as mandatory item in shop settings.'
+                  examples:
+                    - '123'
+                city:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 255
+                  description: 'City/Town. Optional, if not set as mandatory item in shop settings.'
+                  examples:
+                    - 'Flat Country'
+                district:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 255
+                  description: 'County. Optional, if not set as mandatory item in shop settings.'
+                  examples:
+                    - Bohemia
+                additional:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 255
+                  description: 'Additional information for the address. Optional.'
+                  examples:
+                    - '3rd floor'
+                zip:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 255
+                  description: 'ZIP or postal code. Optional, if not set as mandatory item in shop settings.'
+                  examples:
+                    - '123 00'
+                countryCode:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'country of the customer. Optional, the default delivery country is used as the default value, taken from eshop settings.'
+                  examples:
+                    - CZ
+                regionName:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 255
+                  description: 'region. Optional.'
+                  examples:
+                    - 'Central Bohemia'
+                regionShortcut:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 255
+                  description: 'region abbreviation. Optional.'
+                  examples:
+                    - SC
+        notes:
+          description: 'additional notes for the order'
+          oneOf:
+            -
+              type: 'null'
+            -
+              type: object
+              additionalProperties: false
+              properties:
+                customerRemark:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Remark of customer. Optional.'
+                  examples:
+                    - 'Please deliver in the morning.'
+                eshopRemark:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'remark of e-shop (not visible for customer). Optional.'
+                  examples:
+                    - 'Order from the cash desk'
+                trackingNumber:
+                  type:
+                    - string
+                    - 'null'
+                  maxLength: 32
+                  description: 'tracking number of the shipment.'
+                  examples:
+                    - TR123345
+                additionalFields:
+                  type: array
+                  minItems: 1
+                  description: 'additional optional fields (maximum 6).'
+                  items:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - index
+                      - text
+                    properties:
+                      index:
+                        type: integer
+                        minimum: 1
+                        maximum: 6
+                        description: 'number of optional field (1-6). Mandatory.'
+                        examples:
+                          - 1
+                      text:
+                        type: string
+                        description: 'remark text. Mandatory'
+                        examples:
+                          - 'Processed by Doe'
+        stockId:
+          type: integer
+          description: 'stock number. Optional, the default value is the default stock, taken from e-shop settings. In Shoptet, the only alternative to the default stock is to collect in person at the shop, otherwise the default stock is used.'
+          examples:
+            - 1
+        currency:
+          type: object
+          additionalProperties: false
+          required:
+            - code
+          properties:
+            code:
+              $ref: '#/components/schemas/typeCurrencyCode'
+              description: 'currency abbreviation. Mandatory.'
+              examples:
+                - CZK
+            exchangeRate:
+              type:
+                - string
+                - 'null'
+              pattern: '^[0-9]+\.[0-9]{2,8}$'
+              description: 'exchange rate for main e-shop currency.'
+              examples:
+                - '1.0000'
+        vatMode:
+          type: string
+          description: 'VAT mode, `Normal` is used by default, possible values: `Normal`, `One Stop Shop`*, `Reverse charge`, `Outside the EU`. Please note, that `One Stop Shop` value requires eshop `OSS` setting to be `true`.'
+          examples:
+            - Normal
+        items:
+          type: array
+          minItems: 1
+          description: 'order items. The order must have at least one product item'
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - itemType
+              - vatRate
+            properties:
+              itemType:
+                type: string
+                minLength: 1
+                description: 'Item type. Mandatory field. See also [Type of order items](#section/code-lists/types-of-order-items) code list. `product` item type is min required. If `billing` type is present paymentMethodGuid must be provided. If `shipping` type is present shippingGuid must be provided.'
+                examples:
+                  - product
+              name:
+                type: string
+                maxLength: 250
+                description: 'Product name (optional, but usually filled in). Mandatory only for transport and payment, for other items, it is loaded according to `code`.'
+                examples:
+                  - 'Large chocolate'
+              variantName:
+                type: string
+                maxLength: 128
+                description: 'Product variant name.'
+                examples:
+                  - 'Dark chocolate'
+              brand:
+                type: string
+                maxLength: 64
+                description: 'brand (manufacturer). Optional.'
+                examples:
+                  - 'Willy Wonka'
+              supplierName:
+                type: string
+                maxLength: 255
+                description: 'supplier name.'
+                examples:
+                  - 'Dodavatel s.r.o.'
+              productGuid:
+                $ref: '#/components/schemas/typeGuid'
+                minLength: 1
+                description: 'Product GUID in item. When used with the `?suppressProductChecking=true` parameter, this field has no influence.'
+              code:
+                type:
+                  - string
+                  - 'null'
+                maxLength: 64
+                examples:
+                  - 123-456
+              remark:
+                type: string
+                description: 'remark for the item. Optional.'
+                examples:
+                  - 'With cubicles'
+              warrantyDescription:
+                type:
+                  - string
+                  - 'null'
+                minLength: 1
+                maxLength: 255
+                description: 'textual description of warranty length (can be `null`)'
+                examples:
+                  - '2 years'
+              amountCompleted:
+                $ref: '#/components/schemas/typePositiveAmountNullable'
+                description: 'quantity of completed product'
+              additionalField:
+                type:
+                  - string
+                  - 'null'
+                maxLength: 255
+                description: 'additional information. Used for transport to specify the branch (can be `null`)'
+                examples:
+                  - 'TO BALÍKOVNA, Karlínské náměstí 145/1, Karlín, 18600, Prague'
+              amount:
+                type: string
+                pattern: '^[0-9]+\.?[0-9]{0,3}$'
+                description: 'amount, 3 decimal places accuracy, optional, default value `1.000`.'
+                examples:
+                  - '1.000'
+              amountUnit:
+                type: string
+                minLength: 1
+                maxLength: 16
+                description: 'unit of quantity (optional)'
+                examples:
+                  - ks
+              weight:
+                type: string
+                description: 'product weight in kilograms. Maximum 3 decimal places, and maximum value of 99999.'
+                examples:
+                  - '100'
+              priceRatio:
+                type: string
+                description: 'discount in the form of coefficient (0.7 = 70 % of the original price, i.e. 30 % discount). Optional, default value is `1.0000`'
+                examples:
+                  - '0.7'
+              vatRate:
+                type: string
+                description: 'VAT rate (`0.00` for VAT non-payers). Mandatory.'
+                examples:
+                  - '21.00'
+              itemPriceWithVat:
+                type:
+                  - string
+                  - 'null'
+                description: 'Deprecated: use `unitPriceWithVat` instead. Item price including VAT. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
+                examples:
+                  - '121.00'
+                deprecated: true
+              itemPriceWithoutVat:
+                type:
+                  - string
+                  - 'null'
+                description: 'Deprecated: use `unitPriceWithoutVat` instead. Item price excluding VAT. Only one of the items `itemPriceWithVat` or `itemPriceWithoutVat` must be entered.'
+                examples:
+                  - '100.00'
+                deprecated: true
+              unitPriceWithVat:
+                type:
+                  - string
+                  - 'null'
+                description: 'Unit price including VAT. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
+                examples:
+                  - '121.00'
+              unitPriceWithoutVat:
+                type:
+                  - string
+                  - 'null'
+                description: 'Unit price excluding VAT. Only one of the items `unitPriceWithVat` or `unitPriceWithoutVat` must be entered.'
+                examples:
+                  - '100.00'
+              buyPriceWithVat:
+                type:
+                  - string
+                  - 'null'
+                description: 'Purchase price, including VAT. Price including tax and price excluding tax cannot be combined. This is used for profit margin calculation and statistics.'
+                examples:
+                  - '121.00'
+              buyPriceWithoutVat:
+                type:
+                  - string
+                  - 'null'
+                description: 'Purchase price, excluding VAT. Optional. Price including tax and price excluding tax cannot be combined. This is used for profit margin calculation and statistics.'
+                examples:
+                  - '100.00'
+              buyPriceVatRate:
+                type:
+                  - string
+                  - 'null'
+                description: 'VAT rate for purchase price.'
+                examples:
+                  - '21.00'
+              statusId:
+                type:
+                  - integer
+                  - 'null'
+                description: 'Order item status. Optional, if not indicated, default value is guided by the order status. If the order status was indicated and this status has the `Change status of items in the order` flag set, then the item will have this status. Otherwise the default status of the e-shop is used.'
+                examples:
+                  - -1
+              recyclingFeeId:
+                type:
+                  - integer
+                  - 'null'
+                description: 'ID of the recycling fee.'
+                examples:
+                  - 2
+              surchargeParameters:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - parameterCode
+                    - valueIndex
+                  properties:
+                    parameterCode:
+                      type: string
+                      minLength: 1
+                      examples:
+                        - surchargeCode
+                    valueIndex:
+                      type: string
+                      minLength: 1
+                      examples:
+                        - high
+                    price:
+                      $ref: '#/components/schemas/typePrice'
+              consumptionTaxId:
+                $ref: '#/components/schemas/consumptionTaxId'
     orderHistory:
       type: object
       additionalProperties: false
@@ -48349,7 +48444,7 @@ components:
               description: 'language of entity (available only if module `foreignLanguages` is active and initialized)'
               examples:
                 - cs
-          $ref: '#/components/schemas/order'
+          $ref: '#/components/schemas/orderCreate'
     orderSnapshot:
       title: Order
       x-tags:
