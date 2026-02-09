@@ -39344,6 +39344,7 @@ components:
         - isVisible
         - isBlocked
         - priority
+        - locale
       properties:
         id:
           type: integer
@@ -39387,6 +39388,11 @@ components:
           description: 'Language priority.'
           examples:
             - 3
+        locale:
+          type: string
+          description: 'Locale of language.'
+          examples:
+            - cs_CZ
     typeAmount:
       type: string
       pattern: '^(-)?[0-9]+\.[0-9]{3}$'
