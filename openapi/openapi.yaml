@@ -19548,7 +19548,7 @@ paths:
                             - guid
                             - address
                             - contact
-                            - projectCategoryId
+                            - categoryId
                           properties:
                             id:
                               type: integer
@@ -19570,7 +19570,7 @@ paths:
                             contact:
                               $ref: '#/components/schemas/inStoreContact'
                               description: 'In-store contact information.'
-                            projectCategoryId:
+                            categoryId:
                               type: integer
                               description: 'Project category identifier.'
                               examples:
@@ -19637,7 +19637,7 @@ paths:
                           - guid
                           - address
                           - contact
-                          - projectCategoryId
+                          - categoryId
                         properties:
                           id:
                             type: integer
@@ -19659,7 +19659,7 @@ paths:
                           contact:
                             $ref: '#/components/schemas/inStoreContact'
                             description: 'In store contact information.'
-                          projectCategoryId:
+                          categoryId:
                             type: integer
                             description: 'Project category identifier.'
                             examples:
@@ -25368,7 +25368,7 @@ paths:
                           - guid
                           - address
                           - contact
-                          - projectCategoryId
+                          - categoryId
                         properties:
                           id:
                             type: integer
@@ -25390,7 +25390,7 @@ paths:
                           contact:
                             $ref: '#/components/schemas/inStoreContact'
                             description: 'In store contact information.'
-                          projectCategoryId:
+                          categoryId:
                             type: integer
                             description: 'Project category identifier.'
                             examples:
