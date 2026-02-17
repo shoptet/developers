@@ -735,7 +735,8 @@ info:
     order:update | Order change event. Throws `409 Conflict` when try to register simultaneously with `order:cancel` | Number (`code`) of order
     orderHistoryRemarks:change | Order history remarks have been changed. Emitted when order remark is created or deleted | Number (`code`) of order
     orderStatusesList:change | Order status list change event. Emitted when order status is created, updated or deleted | Order status `ID`
-    pricelist:delete | Pricelist delete event | ID of pricelist
+    pricelist:create | Pricelist creation event | ID of pricelist
+    pricelist:delete | Pricelist deleting event | ID of pricelist
     paymentMethod:change | Payment method change event | Payment method GUID
     proformaInvoice:create | Proforma invoice creation event | Number (`code`) of proforma invoice
     proformaInvoice:delete | Proforma invoice deleting event   | Number (`code`) of proforma invoice
@@ -25621,7 +25622,7 @@ paths:
                           - guid
                           - address
                           - contact
-                          - projectCategoryId
+                          - categoryId
                         properties:
                           id:
                             type: integer
@@ -25643,7 +25644,7 @@ paths:
                           contact:
                             $ref: '#/components/schemas/inStoreContact'
                             description: 'In store contact information.'
-                          projectCategoryId:
+                          categoryId:
                             type: integer
                             description: 'Project category identifier.'
                             examples:
