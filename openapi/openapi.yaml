@@ -14805,6 +14805,13 @@ paths:
         - 'Sales channels'
       parameters:
         -
+          name: type
+          in: query
+          description: 'supported values: `in_store`, `online_store`, `marketplace`'
+          example: in_store
+          schema:
+            type: string
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/orders:
     get:
