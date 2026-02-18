@@ -14775,6 +14775,7 @@ paths:
                                 - in_store
                                 - online_store
                                 - marketplace
+                                - system
                               description: 'Type of sales channel.'
                               examples:
                                 - in_store
@@ -25268,11 +25269,14 @@ paths:
                               - in_store
                               - online_store
                               - marketplace
+                              - system
                             description: 'Type of sales channel.'
                             examples:
                               - in_store
                           defaultCurrency:
-                            type: string
+                            type:
+                              - string
+                              - 'null'
                             description: 'Sales chanel default currency.'
                             examples:
                               - CZK
@@ -25282,7 +25286,9 @@ paths:
                               $ref: '#/components/schemas/typeCurrency'
                             description: 'Currencies collection.'
                           defaultLanguage:
-                            type: string
+                            type:
+                              - string
+                              - 'null'
                             description: 'Sales chanel default language.'
                             examples:
                               - cs
@@ -25520,11 +25526,14 @@ paths:
                               - in_store
                               - online_store
                               - marketplace
+                              - system
                             description: 'Type of sales channel.'
                             examples:
                               - in_store
                           defaultCurrency:
-                            type: string
+                            type:
+                              - string
+                              - 'null'
                             description: 'Sales chanel default currency.'
                             examples:
                               - CZK
@@ -25534,7 +25543,9 @@ paths:
                               $ref: '#/components/schemas/typeCurrency'
                             description: 'Currencies collection.'
                           defaultLanguage:
-                            type: string
+                            type:
+                              - string
+                              - 'null'
                             description: 'Sales chanel default language.'
                             examples:
                               - cs
