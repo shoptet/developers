@@ -44143,7 +44143,7 @@ components:
               $ref: '#/components/schemas/itemPrice'
             -
               type: 'null'
-          description: 'purchase price of the item (or possibly `null`). Deprecated, use `purchasePrice` instead'
+          description: 'Deprecated, use `purchasePrice` instead. Purchase price of the item (or possibly `null`). Including the discount (`priceRatio`) and quantity (`amount`).'
           deprecated: true
         purchasePrice:
           oneOf:
