@@ -47203,11 +47203,11 @@ components:
             - 'null'
           examples:
             - -1
-          description: 'Order source id. Optional. If not indicated, no source will be used (null). If `sourceId` is positive, `cashDeskOnly` must also be set to `true`, otherwise if `sourceId` is negative, `cashDeskOnly` must be set to `false`, otherwise error will be returned. Current possible values of `sourceId` can be determined by calling the list of order sources endpoint.'
+          description: 'Order source id. Optional. If not indicated, no source will be used (null). If `sourceId` is positive, `cashDeskOnly` must also be set to `true`, otherwise if `sourceId` is negative, `cashDeskOnly` must be set to `false`, otherwise error will be returned. Current possible values of `sourceId` can be determined by calling the list of order sources endpoint, but marketplace sources are not supported for order creation.'
         salesChannelGuid:
           $ref: '#/components/schemas/typeGuidNullable'
           minLength: 1
-          description: 'Sales channel GUID. Requires actived module `Sales Channel`. Optional.'
+          description: 'Sales channel GUID. Requires actived module `Sales Channel`. Optional.  Marketplace sales channels are not supported for order creation.'
           examples:
             - b57f91bb-e920-11e0-baa3-7dc668b75ca8
         email:
