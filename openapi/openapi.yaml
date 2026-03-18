@@ -7692,13 +7692,18 @@ paths:
 
 
 
+        Each item must identify the product by either `productGuid` or `productCode`
+        (exactly one must be provided per item).
+
+
+
         Asynchronous job process jsonl file row by row and try to validate and
-        save data. If there is any error, row is skipped and error is logged,
-        but it does not stop processing of other rows.
+        save data. If there is any error in a row, the failed products are skipped and errors are logged,
+        but it does not stop processing of other rows or other products within the same row.
 
 
 
-        In Log, every product is identified by its position in file (starting from 1).
+        In Log, every row is identified by its position in file (starting from 1). Within a row, failed products are identified by their `productGuid` or `productCode`.
       tags:
         - Categories
       requestBody:
@@ -7839,6 +7844,9 @@ paths:
         You can request multiple updates at once; the maximum is 300 updates per
         request.
 
+        Each item must identify the product by either `productGuid` or `productCode`
+        (exactly one must be provided per item).
+
         In case of a partial failure, the response code will be `200 OK` and the
         errorneous items will be
 
@@ -7871,15 +7879,29 @@ paths:
                   type: array
                   items:
                     type: object
-                    required:
-                      - productGuid
-                      - priority
+                    additionalProperties: false
+                    oneOf:
+                      -
+                        required:
+                          - productGuid
+                          - priority
+                      -
+                        required:
+                          - productCode
+                          - priority
                     properties:
                       productGuid:
                         $ref: '#/components/schemas/typeGuidUnlimited'
                         description: 'GUID of the product'
                         examples:
                           - 0198418d-acde-708e-9389-0c5113d9b5f3
+                      productCode:
+                        type: string
+                        maxLength: 255
+                        minLength: 1
+                        description: 'Code of the product'
+                        examples:
+                          - ABC123
                       priority:
                         type:
                           - integer
@@ -48623,21 +48645,43 @@ components:
           description: 'Product priorities in a defined category.'
           items:
             type: object
-            additionalProperties: false
-            required:
-              - productGuid
-              - priority
-            properties:
-              productGuid:
-                $ref: '#/components/schemas/typeGuid'
-                description: 'Product GUID.'
-              priority:
-                type:
-                  - integer
-                  - 'null'
-                description: 'Product priority.'
-                examples:
-                  - 1
+            oneOf:
+              -
+                additionalProperties: false
+                required:
+                  - productGuid
+                  - priority
+                properties:
+                  productGuid:
+                    $ref: '#/components/schemas/typeGuid'
+                    description: 'Product GUID.'
+                  priority:
+                    type:
+                      - integer
+                      - 'null'
+                    description: 'Product priority.'
+                    examples:
+                      - 1
+              -
+                additionalProperties: false
+                required:
+                  - productCode
+                  - priority
+                properties:
+                  productCode:
+                    type: string
+                    maxLength: 255
+                    minLength: 1
+                    description: 'Product code.'
+                    examples:
+                      - ABC123
+                  priority:
+                    type:
+                      - integer
+                      - 'null'
+                    description: 'Product priority.'
+                    examples:
+                      - 1
     creditNoteSnapshot:
       title: 'Credit note'
       x-tags:
