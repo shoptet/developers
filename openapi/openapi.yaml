@@ -14774,6 +14774,7 @@ paths:
                             - guid
                             - name
                             - type
+                            - abilities
                             - currencies
                             - languages
                             - createdAt
@@ -14801,6 +14802,15 @@ paths:
                               description: 'Type of sales channel.'
                               examples:
                                 - in_store
+                            abilities:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                  - delivery_method_linkable
+                                  - disable_shipment_status_email_notification
+                                  - enable_update_in_detail_pages
+                              description: 'List of abilities of the sales channel.'
                             currencies:
                               type: array
                               items:
@@ -25268,6 +25278,7 @@ paths:
                           - guid
                           - name
                           - type
+                          - abilities
                           - currencies
                           - languages
                           - createdAt
@@ -25295,11 +25306,20 @@ paths:
                             description: 'Type of sales channel.'
                             examples:
                               - in_store
+                          abilities:
+                            type: array
+                            items:
+                              type: string
+                              enum:
+                                - delivery_method_linkable
+                                - disable_shipment_status_email_notification
+                                - enable_update_in_detail_pages
+                            description: 'List of abilities of the sales channel.'
                           defaultCurrency:
                             type:
                               - string
                               - 'null'
-                            description: 'Sales chanel default currency.'
+                            description: 'Sales channel default currency.'
                             examples:
                               - CZK
                           currencies:
@@ -25311,7 +25331,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'Sales chanel default language.'
+                            description: 'Sales channel default language.'
                             examples:
                               - cs
                           languages:
@@ -25525,6 +25545,7 @@ paths:
                           - guid
                           - name
                           - type
+                          - abilities
                           - currencies
                           - languages
                           - createdAt
@@ -25552,11 +25573,20 @@ paths:
                             description: 'Type of sales channel.'
                             examples:
                               - in_store
+                          abilities:
+                            type: array
+                            items:
+                              type: string
+                              enum:
+                                - delivery_method_linkable
+                                - disable_shipment_status_email_notification
+                                - enable_update_in_detail_pages
+                            description: 'List of abilities of the sales channel.'
                           defaultCurrency:
                             type:
                               - string
                               - 'null'
-                            description: 'Sales chanel default currency.'
+                            description: 'Sales channel default currency.'
                             examples:
                               - CZK
                           currencies:
@@ -25568,7 +25598,7 @@ paths:
                             type:
                               - string
                               - 'null'
-                            description: 'Sales chanel default language.'
+                            description: 'Sales channel default language.'
                             examples:
                               - cs
                           languages:
@@ -46396,7 +46426,7 @@ components:
             - in_store
         defaultCurrency:
           type: string
-          description: 'Sales chanel default currency.'
+          description: 'Sales channel default currency.'
           examples:
             - CZK
         currencies:
@@ -46406,7 +46436,7 @@ components:
           description: 'Currencies collection.'
         defaultLanguage:
           type: string
-          description: 'Sales chanel default language.'
+          description: 'Sales channel default language.'
           examples:
             - Czech
         languages:
