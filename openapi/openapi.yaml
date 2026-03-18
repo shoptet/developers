@@ -16736,7 +16736,7 @@ paths:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'Item type. Mandatory field. See also [Types of order items](#section/code-lists/types-of-order-items) code list. Only `product`, `product-set`, `service`, `bazar` or `discount-coupon` item type is allowed.'
+                      description: 'Item type. Mandatory field. See also [Types of order items](#section/code-lists/types-of-order-items) code list. Only `product`, `product-set`, `service`, `bazar`, `volume-discount` or `discount-coupon` item type is allowed.'
                       examples:
                         - product
                     code:
@@ -16792,7 +16792,7 @@ paths:
                       type: string
                       minLength: 1
                       maxLength: 250
-                      description: 'Product name (optional, but usually filled in). Mandatory only for discount-coupon, transport and payment, for other items, it is loaded according to `code`.'
+                      description: 'Product name (optional, but usually filled in). Mandatory only for volume-discount, discount-coupon, transport and payment, for other items, it is loaded according to `code`.'
                       examples:
                         - 'Large chocolate'
                     variantName:
@@ -17064,7 +17064,7 @@ paths:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'Item type. Mandatory field; see also [Types of order items](#section/code-lists/types-of-order-items) code list. Only `product`, `product-set`, `service`, `bazar` or `discount-coupon` item type is allowed.'
+                      description: 'Item type. Mandatory field; see also [Types of order items](#section/code-lists/types-of-order-items) code list. Only `product`, `product-set`, `service`, `bazar`, `volume-discount` or `discount-coupon` item type is allowed.'
                       examples:
                         - product
                     code:
