@@ -29113,6 +29113,283 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - customerGroups
+                    properties:
+                      customerGroups:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - id
+                            - name
+                            - customerGroupCode
+                            - description
+                            - defaultPricelistId
+                            - maxDiscount
+                            - priority
+                            - emailNotification
+                            - authRequired
+                            - registrationAllowed
+                            - wholesale
+                            - tableLayout
+                            - fullProfileRequired
+                          properties:
+                            id:
+                              type: integer
+                              description: 'Customer group ID'
+                              examples:
+                                - 1
+                            name:
+                              type: string
+                              description: 'Customer group name'
+                              examples:
+                                - 'Wholesale customers'
+                            customerGroupCode:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'index name of customer group used to identify group while insert/edit customer'
+                              examples:
+                                - wholesale
+                            description:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'description of customer group.'
+                              examples:
+                                - 'Wholesale customers are the best customers'
+                            defaultPricelistId:
+                              type:
+                                - integer
+                                - 'null'
+                              description: 'ID of default pricelist for this group'
+                              examples:
+                                - 1
+                            maxDiscount:
+                              oneOf:
+                                -
+                                  $ref: '#/components/schemas/typePriceRatio'
+                                -
+                                  type: 'null'
+                              description: 'Ratio of maximal discount (0.55 -> 55% max discount). Maximum 0.9999. Null when no maximal discount is set.'
+                              examples:
+                                - '0.55'
+                            priority:
+                              type:
+                                - integer
+                                - 'null'
+                              description: 'Priority of customer group'
+                              examples:
+                                - 100
+                            emailNotification:
+                              type: boolean
+                              description: 'whether e-mail will be sent on new customer registration in this group.'
+                              examples:
+                                - true
+                            authRequired:
+                              type: boolean
+                              description: 'whether authorization of new customer by eshop administrator is be required'
+                              examples:
+                                - true
+                            registrationAllowed:
+                              type: boolean
+                              description: 'whether customers can register to this group.'
+                              examples:
+                                - true
+                            wholesale:
+                              type: boolean
+                              description: 'whether customers and their orders in this group are marked as wholesale'
+                              examples:
+                                - true
+                            tableLayout:
+                              type: boolean
+                              description: 'whether table layout will be shown instead to classical layout. Might not be supported by all templates.'
+                              examples:
+                                - true
+                            fullProfileRequired:
+                              type: boolean
+                              description: 'whether full profile is needed for customer.'
+                              examples:
+                                - true
+                            defaultDueDays:
+                              type:
+                                - integer
+                                - 'null'
+                              description: 'Default maturity for documents in days'
+                              examples:
+                                - 14
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Wholesale features require active wholesale module in eshop.'
+                    instance: wholesale
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Customer group with name "VIP" already exists.'
+                    instance: data.name
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Pricelist with ID 999 does not exist.'
+                    instance: data.defaultPricelistId
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Authorization requirement can only be set when wholesale module is active.'
+                    instance: data.authRequired
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Email notification can only be enabled when wholesale module is active.'
+                    instance: data.emailNotification
+      summary: 'Creation of customer group'
+      operationId: createCustomerGroup
+      description: |-
+        Creates a new customer group with specified settings. The customer group name must be unique. Returns the full list of customer groups including the newly created one.
+
+        **Note:** To use wholesale features (`registrationAllowed`, `wholesale`, `tableLayout`, `fullProfileRequired`), the `wholesale` module must be active in the e-shop.
+      tags:
+        - Customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                      description: 'Customer group name'
+                      minLength: 1
+                      maxLength: 255
+                      examples:
+                        - 'Wholesale customers'
+                    description:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'Description of customer group'
+                      examples:
+                        - 'Wholesale customers are the best customers'
+                    defaultPricelistId:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'ID of default pricelist for this group'
+                      examples:
+                        - 1
+                    emailNotification:
+                      type: boolean
+                      description: 'Whether e-mail will be sent on new customer registration in this group. Can only be enabled when wholesale module is active.'
+                      default: false
+                      examples:
+                        - true
+                    authRequired:
+                      type: boolean
+                      description: 'Whether authorization of new customer by eshop administrator is required. Can only be enabled when wholesale module is active.'
+                      default: false
+                      examples:
+                        - true
+                    maxDiscount:
+                      type:
+                        - string
+                        - 'null'
+                      pattern: '[0-9]+\.[0-9]{4}$'
+                      description: 'Ratio of maximal discount (0.5500 -> 55% max discount)'
+                      examples:
+                        - '0.5500'
+                        - '0.9999'
+                    defaultDueDays:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'Default maturity for documents in days (0-365)'
+                      minimum: 0
+                      maximum: 365
+                      examples:
+                        - 14
+                    registrationAllowed:
+                      type: boolean
+                      description: 'Whether customers can register to this group. Requires wholesale module to be active.'
+                      default: true
+                      examples:
+                        - true
+                    wholesale:
+                      type: boolean
+                      description: 'Whether customers and their orders in this group are marked as wholesale. Requires wholesale module to be active.'
+                      default: false
+                      examples:
+                        - true
+                    tableLayout:
+                      type: boolean
+                      description: 'Whether table layout will be shown instead to classical layout. Might not be supported by all templates. Requires wholesale module to be active.'
+                      default: false
+                      examples:
+                        - true
+                    fullProfileRequired:
+                      type: boolean
+                      description: 'Whether full profile (billing information and address) is needed for customer. Requires wholesale module to be active.'
+                      default: false
+                      examples:
+                        - true
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/template-include:
     get:
       responses:
