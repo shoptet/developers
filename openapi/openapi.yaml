@@ -29390,6 +29390,83 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+  '/api/customers/groups/{id}':
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                    additionalProperties: false
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: customer-group-not-found
+                    message: 'Customer group with id "999" not found.'
+                    instance: '999'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: customer-group-delete-blocked
+                    message: 'Cannot delete default customer group. Please mark other group as default before deleting.'
+                    instance: payload
+      summary: 'Deletion of customer group'
+      operationId: deleteCustomerGroup
+      description: 'Is not possible to delete default customer group. Deletion of customer group will not delete customers assigned to this group, but they will be assigned to default customer group.'
+      tags:
+        - Customers
+      parameters:
+        -
+          name: id
+          in: path
+          description: ''
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/template-include:
     get:
       responses:
