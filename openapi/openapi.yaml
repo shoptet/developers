@@ -13918,7 +13918,6 @@ paths:
           name: dateFrom
           in: query
           description: 'Filter reviews with creation date after date'
-          required: true
           example: '2019-09-05T00:00:00%2B0000'
           schema:
             type: string
@@ -13926,7 +13925,6 @@ paths:
           name: dateTo
           in: query
           description: 'Filter reviews with creation date before date'
-          required: true
           example: '2019-09-05T00:00:00%2B0000'
           schema:
             type: string
@@ -13934,7 +13932,6 @@ paths:
           name: changeTimeFrom
           in: query
           description: 'Filter reviews changed after this date (included)'
-          required: true
           example: '2019-09-05T00:00:00%2B0000'
           schema:
             type: string
@@ -13942,7 +13939,6 @@ paths:
           name: productGuid
           in: query
           description: 'Product identifier to filter reviews by.'
-          required: true
           example: 91670fd3-5b3d-11e7-819d-002590dc5efc
           schema:
             type: string
@@ -13950,7 +13946,6 @@ paths:
           name: orderCode
           in: query
           description: 'Order identifier to filter reviews by.'
-          required: true
           example: '2011000002'
           schema:
             type: string
@@ -29462,7 +29457,7 @@ paths:
           in: path
           description: ''
           required: true
-          example: 1
+          example: 999
           schema:
             type: integer
         -
@@ -38382,7 +38377,6 @@ paths:
           name: dateFrom
           in: query
           description: 'Filter reviews with creation date after date'
-          required: true
           example: '2019-09-05T00:00:00%2B0000'
           schema:
             type: string
@@ -38390,7 +38384,6 @@ paths:
           name: dateTo
           in: query
           description: 'Filter reviews with creation date before date'
-          required: true
           example: '2019-09-05T00:00:00%2B0000'
           schema:
             type: string
@@ -38398,7 +38391,6 @@ paths:
           name: changeTimeFrom
           in: query
           description: 'Filter reviews changed after this date (included)'
-          required: true
           example: '2019-09-05T00:00:00%2B0000'
           schema:
             type: string
@@ -38406,7 +38398,6 @@ paths:
           name: productGuid
           in: query
           description: 'Product identifier to filter reviews by.'
-          required: true
           example: 91670fd3-5b3d-11e7-819d-002590dc5efc
           schema:
             type: string
@@ -38414,7 +38405,6 @@ paths:
           name: orderCode
           in: query
           description: 'Order identifier to filter reviews by.'
-          required: true
           example: '2011000002'
           schema:
             type: string
