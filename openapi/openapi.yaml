@@ -38405,6 +38405,7 @@ paths:
           name: orderCode
           in: query
           description: 'Order identifier to filter reviews by.'
+          required: true
           example: '2011000002'
           schema:
             type: string
