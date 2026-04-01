@@ -1548,7 +1548,7 @@ paths:
                           eshopId:
                             type: integer
                             examples:
-                              - '9993'
+                              - 9993
                             description: 'e-shop ID'
                           eshopName:
                             type: string
@@ -3298,7 +3298,7 @@ paths:
                               - 'null'
                             description: 'Default maturity. Available only if module `invoicing` is active.'
                             examples:
-                              - '14'
+                              - 14
                           invoiceRemark:
                             type:
                               - string
@@ -3343,8 +3343,7 @@ paths:
                           - string
                           - 'null'
                         description: 'Logo URL.'
-                        example:
-                          - 'https://example.com/logo.png'
+                        example: 'https://example.com/logo.png'
                       companyStamp:
                         additionalProperties: false
                         type:
@@ -3359,19 +3358,18 @@ paths:
                             type: integer
                             description: 'How many pixel should be logo shifted to the right on X axis.'
                             examples:
-                              - '0'
+                              - 0
                           yAxisCorrection:
                             type: integer
                             description: 'How many pixel should be logo shifted to the right on Y axis.'
                             examples:
-                              - '0'
+                              - 0
                           stampUrl:
                             type:
                               - string
                               - 'null'
                             description: 'Company stamp URL.'
-                            example:
-                              - 'https://example.com/stamp.png'
+                            example: 'https://example.com/stamp.png'
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -4588,7 +4586,8 @@ paths:
                             items:
                               type: string
                             examples:
-                              - Action
+                              -
+                                - Action
                     surchargeParameters:
                       type: array
                       minItems: 1
@@ -14694,7 +14693,7 @@ paths:
           name: orderableMinAmount
           in: query
           description: 'Export price list items with orderable minimal amount'
-          example: '10'
+          example: 10
           schema:
             type: number
         -
@@ -14703,7 +14702,7 @@ paths:
           description: |-
             Export price list items with orderable minimal amount amount after
             given value
-          example: '10'
+          example: 10
           schema:
             type: number
         -
@@ -14712,14 +14711,14 @@ paths:
           description: |-
             Export price list items with orderable minimal amount before given
             value
-          example: '100'
+          example: 100
           schema:
             type: number
         -
           name: orderableMaxAmount
           in: query
           description: 'Export price list items with orderable maximal amount'
-          example: '20'
+          example: 20
           schema:
             type: number
         -
@@ -14728,7 +14727,7 @@ paths:
           description: |-
             Export price list items with orderable maximal amount after given
             value
-          example: '20'
+          example: 20
           schema:
             type: number
         -
@@ -14737,7 +14736,7 @@ paths:
           description: |-
             Export price list items with orderable maximal amount before given
             value
-          example: '200'
+          example: 200
           schema:
             type: number
         -
@@ -15122,14 +15121,14 @@ paths:
           description: 'Purchase order filtering, according to order code.'
           schema:
             type: string
-          example: 6
+          example: '0000000006'
         -
           name: codeTo
           in: query
           description: 'Purchase order filtering, according to order code.'
           schema:
             type: string
-          example: 6
+          example: '0000000006'
         -
           name: customerGuid
           in: query
@@ -15154,7 +15153,7 @@ paths:
             format only (+420123456789)
           schema:
             type: string
-            example: 420123456789
+            example: '+420123456789'
         -
           name: productCode
           in: query
@@ -15869,14 +15868,14 @@ paths:
           description: 'Purchase order filtering, according to order code.'
           schema:
             type: string
-          example: 6
+          example: '0000000006'
         -
           name: codeTo
           in: query
           description: 'Purchase order filtering, according to order code.'
           schema:
             type: string
-          example: 6
+          example: '0000000006'
         -
           name: customerGuid
           in: query
@@ -15901,7 +15900,7 @@ paths:
             format only (+420123456789)
           schema:
             type: string
-          example: 420123456789
+          example: '+420123456789'
         -
           name: productCode
           in: query
@@ -19812,7 +19811,7 @@ paths:
                                 - 'null'
                               description: 'variable symbol'
                               examples:
-                                - '666'
+                                - 666
                             isValid:
                               type: boolean
                               description: 'is the invoice valid?'
@@ -19888,7 +19887,7 @@ paths:
           name: proformaInvoiceCode
           in: query
           description: 'filtering according to number of proforma invoice'
-          example: 2017000017
+          example: '2017000017'
           schema:
             type: string
         -
@@ -19916,28 +19915,28 @@ paths:
           name: orderCode
           in: query
           description: 'filtering according to order code of invoice'
-          example: 2018000012
+          example: '2018000012'
           schema:
             type: string
         -
           name: codeFrom
           in: query
           description: 'filtering according to code of invoice'
-          example: 2018000001
+          example: '2018000001'
           schema:
             type: string
         -
           name: codeTo
           in: query
           description: 'filtering according to code of invoice'
-          example: 2018000012
+          example: '2018000012'
           schema:
             type: string
         -
           name: varSymbol
           in: query
           description: 'filtering according to variable symbol of invoice'
-          example: 666
+          example: '666'
           schema:
             type: string
         -
@@ -21258,7 +21257,7 @@ paths:
           name: orderCode
           in: query
           description: 'filtering according to number of order.'
-          example: 2018000012
+          example: '2018000012'
           schema:
             type: string
         -
@@ -21283,7 +21282,7 @@ paths:
           name: varSymbol
           in: query
           description: 'filtering according to variable symbol of proforma invoice'
-          example: 666
+          example: '666'
           schema:
             type: string
         -
@@ -24805,7 +24804,7 @@ paths:
           name: orderCode
           in: query
           description: 'sorting according to number of order'
-          example: 2018000012
+          example: '2018000012'
           schema:
             type: string
         -
@@ -25775,7 +25774,7 @@ paths:
           in: path
           description: 'Sales channel ID'
           required: true
-          example: 2
+          example: '2'
           schema:
             type: string
         -
@@ -25891,7 +25890,7 @@ paths:
                               type: integer
                               description: 'Synthetic unique incremental ID of log with changes in stock'
                               examples:
-                                - '126222'
+                                - 126222
                             productCode:
                               type: string
                               description: 'unique identification of the product variant.'
@@ -26217,7 +26216,7 @@ paths:
                         type: integer
                         description: 'Synthetic unique incremental ID of log with changes in stock'
                         examples:
-                          - '736'
+                          - 736
                       lastChangeTime:
                         $ref: '#/components/schemas/typeDateTime'
                         description: 'DateTime stock movement.'
@@ -32505,7 +32504,8 @@ paths:
                       items:
                         type: string
                       examples:
-                        - john.doe@example.com
+                        -
+                          - john.doe@example.com
   '/api/mailing-lists/{code}/changes':
     get:
       responses:
@@ -34845,7 +34845,7 @@ paths:
                                 - expired
                                 - planned
                               examples:
-                                - active
+                                - available
                             isActive:
                               type: boolean
                               description: 'defines if discount is in active or inactive stage'
@@ -40317,7 +40317,7 @@ components:
       pattern: '^[0-9]+\.[0-9]{9}$'
       description: 'Unit ratio'
       examples:
-        - '0.001'
+        - '0.001000000'
     typeGuid:
       type: string
       maxLength: 36
@@ -41159,6 +41159,11 @@ components:
           description: 'flag, whether the stock is also a distribution point'
           examples:
             - false
+        visibleOnEshop:
+          type: boolean
+          description: 'flag, whether the stock is visible on eshop'
+          examples:
+            - true
         deliveryPointTitle:
           type:
             - string
@@ -41201,6 +41206,11 @@ components:
           description: 'flag, whether the stock is also a distribution point'
           examples:
             - false
+        visibleOnEshop:
+          type: boolean
+          description: 'flag, whether the stock is visible on eshop'
+          examples:
+            - true
         deliveryPointTitle:
           type:
             - string
@@ -43665,7 +43675,7 @@ components:
                         - 'null'
                       description: 'Tax value in %'
                       examples:
-                        - 1024
+                        - '21.00'
         images:
           type: array
           description: 'information about images.'
@@ -44212,7 +44222,8 @@ components:
                 items:
                   type: string
                 examples:
-                  - Action
+                  -
+                    - Action
         surchargeParameters:
           type: array
           description: 'Product surcharge parameters. Not allowed for products with multiple tax classes.'
@@ -46696,7 +46707,7 @@ components:
             - expired
             - planned
           examples:
-            - active
+            - available
         targetingLevel:
           type: string
           description: 'targeting level of the discount'
@@ -49231,7 +49242,7 @@ components:
           type: number
           description: 'variable symbol'
           examples:
-            - '666'
+            - 666
         constSymbol:
           type:
             - string
@@ -49245,7 +49256,7 @@ components:
             - 'null'
           description: 'specific symbol'
           examples:
-            - '36534576'
+            - 36534576
         weight:
           $ref: '#/components/schemas/typeWeightUnlimited'
           description: 'weight in kg, unpacked. 3 decimal places.'
