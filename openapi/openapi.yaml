@@ -43803,7 +43803,6 @@ components:
         - additionalField
         - itemPrice
         - unitPrice
-        - buyPrice
         - purchasePrice
         - itemId
       properties:
@@ -43886,14 +43885,6 @@ components:
         unitPrice:
           $ref: '#/components/schemas/itemPrice'
           description: 'unit price'
-        buyPrice:
-          oneOf:
-            -
-              $ref: '#/components/schemas/itemPrice'
-            -
-              type: 'null'
-          description: 'buy price of the part, can be `null`.'
-          deprecated: true
         purchasePrice:
           oneOf:
             -
@@ -44013,7 +44004,6 @@ components:
         - additionalField
         - itemPrice
         - unitPrice
-        - buyPrice
         - purchasePrice
         - consumptionTax
       properties:
@@ -44103,14 +44093,6 @@ components:
         unitPrice:
           $ref: '#/components/schemas/itemPrice'
           description: 'unit price'
-        buyPrice:
-          oneOf:
-            -
-              $ref: '#/components/schemas/itemPrice'
-            -
-              type: 'null'
-          description: 'buy price of the part, can be `null`.'
-          deprecated: true
         purchasePrice:
           oneOf:
             -
@@ -46566,14 +46548,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/itemPrice'
-        buyPrice:
-          oneOf:
-            -
-              $ref: '#/components/schemas/itemPrice'
-            -
-              type: 'null'
-          description: 'Deprecated, use `purchasePrice` instead. Purchase price of the item (or possibly `null`). Including the discount (`priceRatio`) and quantity (`amount`).'
-          deprecated: true
         purchasePrice:
           oneOf:
             -
