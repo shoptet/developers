@@ -771,6 +771,9 @@ info:
     stock:inStock (*) | Stock change event - sum across all of the stocks raised above 0 (beta, see below) | Number (`code`) of product
     stock:soldOut (*) | Stock change event - sum across all of the stocks reached 0 (beta, see below) | Number (`code`) of product
     stock:minStockSupplyReached (*) | Stock change event - sum across all of the stocks reached minimum stock supply value, if this limit is set for product (beta, see below) | Number (`code`) of product
+    supplier:create | Supplier creation event | String (`guid`) of supplier
+    supplier:update | Supplier change event | String (`guid`) of supplier
+    supplier:delete | Supplier deletion event | String (`guid`) of supplier
 
     (*) These webhooks are considered beta/experimental, for more information, please visit the X-url
 
