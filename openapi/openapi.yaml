@@ -45186,13 +45186,45 @@ components:
           type:
             - array
             - 'null'
-          description: 'Must exist if set.'
+          description: 'Must exist if set. Cannot be set together with the param `flagsManagement`.'
           items:
             type: object
             additionalProperties: false
             required:
               - code
             properties:
+              code:
+                type: string
+                description: 'flag identifier.'
+                examples:
+                  - new
+              dateFrom:
+                $ref: '#/components/schemas/typeDateNullable'
+                description: 'Date from which the flag is valid.'
+              dateTo:
+                $ref: '#/components/schemas/typeDateNullable'
+                description: 'Date to which the flag is valid.'
+        flagsManagement:
+          type:
+            - array
+            - 'null'
+          description: 'Alternative way to manage the flags by specific `actions`. Cannot be set together with the param `flags`.'
+          minItems: 1
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - action
+              - code
+            properties:
+              action:
+                type: string
+                enum:
+                  - set
+                  - unset
+                description: '`set` - adds or updates the flag, `unset` - removes the flag'
+                examples:
+                  - set
               code:
                 type: string
                 description: 'flag identifier.'
