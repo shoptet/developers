@@ -3554,175 +3554,6 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
-  /api/eshop/reviews:
-    get:
-      deprecated: true
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    additionalProperties: false
-                    required:
-                      - reviews
-                      - paginator
-                    properties:
-                      reviews:
-                        type: array
-                        items:
-                          type: object
-                          required:
-                            - id
-                            - date
-                            - orderCode
-                            - rating
-                            - description
-                            - fullName
-                            - email
-                            - customerGuid
-                            - visible
-                            - reaction
-                          properties:
-                            id:
-                              type: integer
-                              description: 'Review id.'
-                              examples:
-                                - 1
-                            date:
-                              $ref: '#/components/schemas/typeDateTimeNullable'
-                              description: 'Review creation date.'
-                            orderCode:
-                              type:
-                                - 'null'
-                                - string
-                              description: 'Order code related to review. Can be null.'
-                              examples:
-                                - '2011000002'
-                            rating:
-                              type: integer
-                              description: "Number from 1 to 5 representing starts of review's rating."
-                              examples:
-                                - 5
-                            description:
-                              type:
-                                - 'null'
-                                - string
-                              examples:
-                                - 'Snack was very good'
-                            fullName:
-                              type:
-                                - 'null'
-                                - string
-                              description: "Fullname of review's author. Can be null."
-                              examples:
-                                - 'John Doe'
-                            email:
-                              type:
-                                - 'null'
-                                - string
-                              description: "Email of the review author. If it's a registered customer and the review email is empty, it's filled with the customer's main account email. Can be null."
-                              examples:
-                                - johndoe@email.tld
-                            customerGuid:
-                              type:
-                                - 'null'
-                                - string
-                              description: 'Customer guid related to review. Can be null.'
-                              examples:
-                                - 443cad54-73bc-11e8-8216-002590dad85e
-                            visible:
-                              type: boolean
-                              description: 'flag, whether the review is visible'
-                              examples:
-                                - false
-                            reaction:
-                              type: object
-                              additionalProperties: false
-                              required:
-                                - reactionCreated
-                                - reactionFullName
-                                - reactionEmail
-                                - reactionText
-                              properties:
-                                reactionCreated:
-                                  $ref: '#/components/schemas/typeDateTimeNullable'
-                                  description: 'Date of creation of reaction. Can be null.'
-                                reactionFullName:
-                                  type:
-                                    - 'null'
-                                    - string
-                                  examples:
-                                    - 'John Doe'
-                                reactionEmail:
-                                  type:
-                                    - 'null'
-                                    - string
-                                  examples:
-                                    - johndoe@email.tld
-                                reactionText:
-                                  type:
-                                    - 'null'
-                                    - string
-                                  examples:
-                                    - 'Thank you for your review!'
-                      paginator:
-                        $ref: '#/components/schemas/paginator'
-                  errors:
-                    $ref: '#/components/schemas/Errors'
-                  metadata:
-                    $ref: '#/components/schemas/Metadata'
-                required:
-                  - data
-                  - errors
-                  - metadata
-                additionalProperties: false
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type:
-                      - object
-                      - 'null'
-                  errors:
-                    $ref: '#/components/schemas/Errors'
-                  metadata:
-                    $ref: '#/components/schemas/Metadata'
-              example:
-                data: null
-                errors:
-                  -
-                    errorCode: missing-module
-                    message: 'Method requires active rating module in eshop.'
-                    instance: rating
-                  -
-                    errorCode: rating-not-enabled
-                    message: 'The e-shop must have store ratings enabled. They are currently disabled.'
-                    instance: settings
-                metadata:
-                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
-      summary: 'List of eshop reviews'
-      operationId: getListOfEshopReviewsDeprecated
-      description: |-
-        Returns a list of the e-shop's reviews. This endpoint is available only when the 'Rating' module is active. Also, the e-shop must have store ratings enabled in the administration settings.
-        The endpoint supports [Paging](#section/basic-principles/paging).
-      tags:
-        - Reviews
-      parameters:
-        -
-          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
-        -
-          $ref: '#/components/parameters/DefaultPageParameter'
-        -
-          $ref: '#/components/parameters/DefaultContentType'
   /api/products:
     get:
       responses:
@@ -41093,18 +40924,18 @@ components:
       schema:
         type: string
         default: application/json
-    DefaultItemsPerPageParameter:
-      name: itemsPerPage
-      in: query
-      description: 'Returned items per page. Default and max value is 20.'
-      example: 15
-      schema:
-        type: integer
     DefaultPageParameter:
       name: page
       in: query
       description: 'Page number to return. Default value is 1.'
       example: 3
+      schema:
+        type: integer
+    DefaultItemsPerPageParameter:
+      name: itemsPerPage
+      in: query
+      description: 'Returned items per page. Default and max value is 20.'
+      example: 15
       schema:
         type: integer
   schemas:
