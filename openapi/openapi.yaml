@@ -764,6 +764,9 @@ info:
     salesChannel:update | Sales channel update event | GUID of sales channel
     salesChannel:delete | Sales channel delete event | GUID of sales channel
     shippingMethod:change | Shipping method change event | Shipping method GUID
+    sectionArticle:create | Article section create event | ID of article section
+    sectionArticle:update | Article section update event | ID of article section
+    sectionArticle:delete | Article section delete event | ID of article section
     shippingRequest:cancelled | Shipping request was not chosen for order delivery | `shippingRequestCode` associated with the cart
     shippingRequest:confirmed | Shipping request was chosen for order delivery | `shippingRequestCode` associated with the cart
     stock:movement | Stock change event | Stock ID
