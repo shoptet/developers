@@ -45580,9 +45580,20 @@ components:
           examples:
             - all
         productOrdering:
-          type:
-            - string
-            - 'null'
+          type: string
+          enum:
+            - default
+            - most-selling
+            - cheapest
+            - most-expensive
+            - oldest
+            - newest
+            - alphabetically
+            - alphabetically-desc
+            - product-code
+            - product-code-desc
+            - category-priority
+            - category-priority-desc
           description: 'Defines, how products are sorted in a category. See also [Sorting of products in category](#section/code-lists/sorting-of-products-in-category) code list.'
           examples:
             - alphabetically
