@@ -45758,7 +45758,7 @@ components:
             examples:
               - CZK
           vatRate:
-            $ref: '#/components/schemas/typePriceNullable'
+            $ref: '#/components/schemas/typeVatRateNullable'
             description: 'VatRate for prices'
             examples:
               - '21.00'
@@ -45982,7 +45982,7 @@ components:
                     examples:
                       - '500.00'
                   vatRate:
-                    $ref: '#/components/schemas/typePriceNullable'
+                    $ref: '#/components/schemas/typeVatRateNullable'
                     description: 'VatRate for prices'
                     examples:
                       - '21.00'
