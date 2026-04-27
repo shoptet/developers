@@ -14437,258 +14437,7 @@ paths:
                 - data
               properties:
                 data:
-                  type: array
-                  items:
-                    type: object
-                    additionalProperties: false
-                    required:
-                      - code
-                    minProperties: 2
-                    properties:
-                      code:
-                        type: string
-                        description: 'Product variant code'
-                        examples:
-                          - 106/BIL
-                      currencyCode:
-                        type: string
-                        description: 'Currency code. List of available currencies within the e-shop can be found in [Eshop info](#tag/eshop/geteshopinfo) endpoint.'
-                        examples:
-                          - CZK
-                      vatRate:
-                        $ref: '#/components/schemas/typeVatRateNullable'
-                        description: 'VatRate for prices'
-                        examples:
-                          - '21.00'
-                      includingVat:
-                        type: boolean
-                        description: 'Whether the product prices are saved with vat or without.'
-                        examples:
-                          - true
-                      orderableAmount:
-                        type: object
-                        additionalProperties: false
-                        description: 'Orderable quantity'
-                        properties:
-                          minimumAmount:
-                            $ref: '#/components/schemas/typePositiveAmountNullable'
-                            description: 'Minimum orderable quantity'
-                            examples:
-                              - '1'
-                          maximumAmount:
-                            $ref: '#/components/schemas/typePositiveAmountNullable'
-                            description: 'Maximum orderable quantity'
-                            examples:
-                              - '10'
-                      sales:
-                        type: object
-                        additionalProperties: false
-                        description: 'Definition of discounts'
-                        properties:
-                          minPriceRatio:
-                            $ref: '#/components/schemas/typePriceRatio'
-                            description: '3 decimal places accuracy, (from `0.0000` to `1.0000`), maximum permitted discount.'
-                            examples:
-                              - '0.880'
-                          freeShipping:
-                            type: boolean
-                            description: 'flag, whether the product will have a free transport after it is placed in the cart.'
-                            examples:
-                              - true
-                          freeBilling:
-                            type: boolean
-                            description: 'flag, whether the product will have a free payment after it is placed in the cart.'
-                            examples:
-                              - true
-                          loyaltyDiscount:
-                            type: boolean
-                            description: 'flag, whether the loyalty discount should be used.'
-                            examples:
-                              - true
-                          volumeDiscount:
-                            type: boolean
-                            description: 'flag, whether the volume discount should be used.'
-                            examples:
-                              - true
-                          quantityDiscount:
-                            type: boolean
-                            description: 'flag, whether the volume/multibuy discount should be used.'
-                            examples:
-                              - true
-                          discountCoupon:
-                            type: boolean
-                            description: 'flag, whether a discount coupon can be applied.'
-                            examples:
-                              - true
-                      price:
-                        type: object
-                        additionalProperties: false
-                        description: Prices
-                        properties:
-                          price:
-                            $ref: '#/components/schemas/typePriceNullable'
-                            description: 'Price, at which the customer can purchase the product. It can be loaded by the special discounted price and influenced by the price ratio. (can be `null`)'
-                            examples:
-                              - '650.00'
-                          commonPrice:
-                            $ref: '#/components/schemas/typePriceNullable'
-                            description: 'standard price, use for information and comparison to competitors (can be `null`)'
-                            examples:
-                              - '750.00'
-                          buyPrice:
-                            $ref: '#/components/schemas/typePriceNullable'
-                            description: 'purchase price. Deprecated, use `prices.purchasePrice` instead.'
-                            examples:
-                              - '500.00'
-                            deprecated: true
-                          priceRatio:
-                            $ref: '#/components/schemas/typePriceRatio'
-                            description: 'price ratio. The price of the product shall be calculated by multiplying the price and this coefficient. The price ratio affects only the price (`price`), the special discounted price (`actionPrice`) is not affected by the ratio. This ratio has 3 decimal places and can be greater than 1,000'
-                            examples:
-                              - '1.000'
-                          actionPrice:
-                            type:
-                              - object
-                              - 'null'
-                            additionalProperties: false
-                            description: 'Special discounted price'
-                            properties:
-                              price:
-                                $ref: '#/components/schemas/typePriceNullable'
-                                description: 'special discounted price. It is only used if set and if the validity date is set too, form (`fromDate`) to (`toData`).'
-                                examples:
-                                  - '600.00'
-                              fromDate:
-                                $ref: '#/components/schemas/typeDateNullable'
-                                description: 'special discounted price effective date - from'
-                                examples:
-                                  - '2018-02-19'
-                              toDate:
-                                $ref: '#/components/schemas/typeDateNullable'
-                                description: 'special discounted price effective date - up to'
-                                examples:
-                                  - '2018-02-25'
-                      priceWithVat:
-                        type: object
-                        additionalProperties: false
-                        description: 'Prices with VAT'
-                        properties:
-                          price:
-                            $ref: '#/components/schemas/typePriceNullable'
-                            description: 'Price, at which the customer can purchase the product. It can be loaded by the special discounted price and influenced by the price ratio. (can be `null`)'
-                            examples:
-                              - '650.00'
-                          commonPrice:
-                            $ref: '#/components/schemas/typePriceNullable'
-                            description: 'standard price, use for information and comparison to competitors (can be `null`)'
-                            examples:
-                              - '750.00'
-                          buyPrice:
-                            $ref: '#/components/schemas/typePriceNullable'
-                            description: 'purchase price. Deprecated, use `prices.purchasePrice` instead.'
-                            examples:
-                              - '500.00'
-                            deprecated: true
-                          priceRatio:
-                            $ref: '#/components/schemas/typePriceRatio'
-                            description: 'price ratio. The price of the product shall be calculated by multiplying the price and this coefficient. The price ratio affects only the price (`price`), the special discounted price (`actionPrice`) is not affected by the ratio. This ratio has 3 decimal places and can be greater than 1,000'
-                            examples:
-                              - '1.000'
-                          actionPrice:
-                            type:
-                              - object
-                              - 'null'
-                            additionalProperties: false
-                            description: 'Special discounted price'
-                            properties:
-                              price:
-                                $ref: '#/components/schemas/typePriceNullable'
-                                description: 'special discounted price. It is only used if set and if the validity date is set too, form (`fromDate`) to (`toData`).'
-                                examples:
-                                  - '600.00'
-                              fromDate:
-                                $ref: '#/components/schemas/typeDateNullable'
-                                description: 'special discounted price effective date - from'
-                                examples:
-                                  - '2018-02-19'
-                              toDate:
-                                $ref: '#/components/schemas/typeDateNullable'
-                                description: 'special discounted price effective date - up to'
-                                examples:
-                                  - '2018-02-25'
-                      priceWithoutVat:
-                        type: object
-                        additionalProperties: false
-                        description: 'Prices without VAT'
-                        properties:
-                          price:
-                            $ref: '#/components/schemas/typePriceNullable'
-                            description: 'Price, at which the customer can purchase the product. It can be loaded by the special discounted price and influenced by the price ratio. (can be `null`)'
-                            examples:
-                              - '650.00'
-                          commonPrice:
-                            $ref: '#/components/schemas/typePriceNullable'
-                            description: 'standard price, use for information and comparison to competitors (can be `null`)'
-                            examples:
-                              - '750.00'
-                          buyPrice:
-                            $ref: '#/components/schemas/typePriceNullable'
-                            description: 'purchase price. Deprecated, use `prices.purchasePrice` instead.'
-                            examples:
-                              - '500.00'
-                            deprecated: true
-                          priceRatio:
-                            $ref: '#/components/schemas/typePriceRatio'
-                            description: 'price ratio. The price of the product shall be calculated by multiplying the price and this coefficient. The price ratio affects only the price (`price`), the special discounted price (`actionPrice`) is not affected by the ratio. This ratio has 3 decimal places and can be greater than 1,000'
-                            examples:
-                              - '1.000'
-                          actionPrice:
-                            type:
-                              - object
-                              - 'null'
-                            additionalProperties: false
-                            description: 'Special discounted price'
-                            properties:
-                              price:
-                                $ref: '#/components/schemas/typePriceNullable'
-                                description: 'special discounted price. It is only used if set and if the validity date is set too, form (`fromDate`) to (`toData`).'
-                                examples:
-                                  - '600.00'
-                              fromDate:
-                                $ref: '#/components/schemas/typeDateNullable'
-                                description: 'special discounted price effective date - from'
-                                examples:
-                                  - '2018-02-19'
-                              toDate:
-                                $ref: '#/components/schemas/typeDateNullable'
-                                description: 'special discounted price effective date - up to'
-                                examples:
-                                  - '2018-02-25'
-                      prices:
-                        type:
-                          - object
-                        additionalProperties: false
-                        properties:
-                          purchasePrice:
-                            type: object
-                            additionalProperties: false
-                            description: 'Purchase price. Currently for preview only! Will be used as replace for buy price. Please watch API news.'
-                            properties:
-                              price:
-                                $ref: '#/components/schemas/typePriceNullable'
-                                description: 'purchase price.'
-                                examples:
-                                  - '500.00'
-                              vatRate:
-                                $ref: '#/components/schemas/typeVatRateNullable'
-                                description: 'VatRate for prices'
-                                examples:
-                                  - '21.00'
-                              includingVat:
-                                type: boolean
-                                description: 'flag, whether the purchase price is including VAT'
-                                examples:
-                                  - true
+                  $ref: '#/components/schemas/pricelistUpdate'
     delete:
       responses:
         200:
@@ -14924,6 +14673,132 @@ paths:
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
       x-shoptet-response-ref: '#/definitions/pricelistSnapshot'
+  '/api/pricelists/{id}/batch':
+    patch:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/pricelists.jsonl" not found.'
+                    instance: batchFileUrlPath
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: pricelist-batch-update
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: pricelist-batch-update
+      summary: 'Batch pricelist update'
+      operationId: updatePricelistBatch
+      description: |-
+        This endpoint allows updating multiple prices at once. Price fields and other attributes from a pricelist of a product (variant) can be updated. Batch update  is processed asynchronously in same way as for example products snapshot, but  it does not have `resultUrl` with prices to download in response. Instead, you can check attribute `log` which contains successfully updated prices and errors.
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+        File with data for update must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one pricelist price in JSON format. Maximum size of file is 100MB.
+
+        Structure of JSON row is same as structure of JSON for single pricelist update.  See [Pricelist update schema](https://api.docs.shoptet.com/shoptet-api/openapi/price-lists/updatepricelist)  for more details.
+
+        Asynchronous job process jsonl file row by row and try to validate and save data. If there is any error,  row is skipped and error is logged, but it does not stop processing of other rows.
+
+        In Log, every product is identified by its position in file (starting from 1).
+
+        The request must contain a product variant code `code` and at least one  of the `price`, `priceWithVat`, `priceWithoutVat`, `orderableAmount` or `sales` objects. Send only fields you want to change, the others will stay untouched. Be aware of the difference between
+
+        - not providing a field: the field will not be changed
+
+        - providing e. g. `data.price.buyPrice: null` will remove the price
+
+        If you set `includingVat` or `vatRate` field, current data for product (or variant) will be recalculated.  (even through untouched by your request)
+
+        Object `price` directly sets price of product, without recalculating.
+
+        Object `priceWithVat` sets price of product, respecting it is price **with** VAT and thus recalculating if needed.
+
+        Object `priceWithoutVat` sets price of product, respecting it is price **without** VAT and thus recalculating if needed.
+
+        Note, that you can change `buyPrice` only for default price list! For others price lists, value stays `null`.
+
+        For non-vat payer e-shops, `vatRate` and `includingVat` fields are forbidden to use and fields `price`,  `priceWithVat` and `priceWithoutVat` all works the same.
+
+        In order to change the currency of the prices, you will need to have the Currencies module activated on  the customer's e-shop.
+
+        Note that if you change the currency code of the price list, all prices will not be recalculated to  the new currency; only the currency code will be changed.
+      tags:
+        - 'Price lists'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Pricelist id'
+          required: true
+          example: '1'
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - batchFileUrlPath
+              properties:
+                batchFileUrlPath:
+                  type: string
+                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  examples:
+                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+      x-shoptet-async-endpoint: true
   /api/sales-channels:
     get:
       responses:
@@ -45852,6 +45727,259 @@ components:
         relatedProductsCategory:
           $ref: '#/components/schemas/typeGuidNullable'
           description: 'Related category guid. Optional.'
+    pricelistUpdate:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        required:
+          - code
+        minProperties: 2
+        properties:
+          code:
+            type: string
+            description: 'Product variant code'
+            examples:
+              - 106/BIL
+          currencyCode:
+            type: string
+            description: 'Currency code. List of available currencies within the e-shop can be found in [Eshop info](#tag/eshop/geteshopinfo) endpoint.'
+            examples:
+              - CZK
+          vatRate:
+            $ref: '#/components/schemas/typePriceNullable'
+            description: 'VatRate for prices'
+            examples:
+              - '21.00'
+          includingVat:
+            type: boolean
+            description: 'Whether the product prices are saved with vat or without.'
+            examples:
+              - true
+          orderableAmount:
+            type: object
+            additionalProperties: false
+            description: 'Orderable quantity'
+            properties:
+              minimumAmount:
+                $ref: '#/components/schemas/typePositiveAmountNullable'
+                description: 'Minimum orderable quantity'
+                examples:
+                  - '1'
+              maximumAmount:
+                $ref: '#/components/schemas/typePositiveAmountNullable'
+                description: 'Maximum orderable quantity'
+                examples:
+                  - '10'
+          sales:
+            type: object
+            additionalProperties: false
+            description: 'Definition of discounts'
+            properties:
+              minPriceRatio:
+                $ref: '#/components/schemas/typePriceRatio'
+                description: '3 decimal places accuracy, (from `0.0000` to `1.0000`), maximum permitted discount.'
+                examples:
+                  - '0.880'
+              freeShipping:
+                type: boolean
+                description: 'flag, whether the product will have a free transport after it is placed in the cart.'
+                examples:
+                  - true
+              freeBilling:
+                type: boolean
+                description: 'flag, whether the product will have a free payment after it is placed in the cart.'
+                examples:
+                  - true
+              loyaltyDiscount:
+                type: boolean
+                description: 'flag, whether the loyalty discount should be used.'
+                examples:
+                  - true
+              volumeDiscount:
+                type: boolean
+                description: 'flag, whether the volume discount should be used.'
+                examples:
+                  - true
+              quantityDiscount:
+                type: boolean
+                description: 'flag, whether the volume/multibuy discount should be used.'
+                examples:
+                  - true
+              discountCoupon:
+                type: boolean
+                description: 'flag, whether a discount coupon can be applied.'
+                examples:
+                  - true
+          price:
+            type: object
+            additionalProperties: false
+            description: Prices
+            properties:
+              price:
+                $ref: '#/components/schemas/typePriceNullable'
+                description: 'Price, at which the customer can purchase the product. It can be loaded by the special discounted price and influenced by the price ratio. (can be `null`)'
+                examples:
+                  - '650.00'
+              commonPrice:
+                $ref: '#/components/schemas/typePriceNullable'
+                description: 'standard price, use for information and comparison to competitors (can be `null`)'
+                examples:
+                  - '750.00'
+              buyPrice:
+                $ref: '#/components/schemas/typePriceNullable'
+                description: 'purchase price. Deprecated, use `prices.purchasePrice` instead.'
+                examples:
+                  - '500.00'
+                deprecated: true
+              priceRatio:
+                $ref: '#/components/schemas/typePriceRatio'
+                description: 'price ratio. The price of the product shall be calculated by multiplying the price and this coefficient. The price ratio affects only the price (`price`), the special discounted price (`actionPrice`) is not affected by the ratio. This ratio has 3 decimal places and can be greater than 1,000'
+                examples:
+                  - '1.000'
+              actionPrice:
+                type:
+                  - object
+                  - 'null'
+                additionalProperties: false
+                description: 'Special discounted price'
+                properties:
+                  price:
+                    $ref: '#/components/schemas/typePriceNullable'
+                    description: 'special discounted price. It is only used if set and if the validity date is set too, form (`fromDate`) to (`toData`).'
+                    examples:
+                      - '600.00'
+                  fromDate:
+                    $ref: '#/components/schemas/typeDateNullable'
+                    description: 'special discounted price effective date - from'
+                    examples:
+                      - '2018-02-19'
+                  toDate:
+                    $ref: '#/components/schemas/typeDateNullable'
+                    description: 'special discounted price effective date - up to'
+                    examples:
+                      - '2018-02-25'
+          priceWithVat:
+            type: object
+            additionalProperties: false
+            description: 'Prices with VAT'
+            properties:
+              price:
+                $ref: '#/components/schemas/typePriceNullable'
+                description: 'Price, at which the customer can purchase the product. It can be loaded by the special discounted price and influenced by the price ratio. (can be `null`)'
+                examples:
+                  - '650.00'
+              commonPrice:
+                $ref: '#/components/schemas/typePriceNullable'
+                description: 'standard price, use for information and comparison to competitors (can be `null`)'
+                examples:
+                  - '750.00'
+              buyPrice:
+                $ref: '#/components/schemas/typePriceNullable'
+                description: 'purchase price. Deprecated, use `prices.purchasePrice` instead.'
+                examples:
+                  - '500.00'
+                deprecated: true
+              priceRatio:
+                $ref: '#/components/schemas/typePriceRatio'
+                description: 'price ratio. The price of the product shall be calculated by multiplying the price and this coefficient. The price ratio affects only the price (`price`), the special discounted price (`actionPrice`) is not affected by the ratio. This ratio has 3 decimal places and can be greater than 1,000'
+                examples:
+                  - '1.000'
+              actionPrice:
+                type:
+                  - object
+                  - 'null'
+                additionalProperties: false
+                description: 'Special discounted price'
+                properties:
+                  price:
+                    $ref: '#/components/schemas/typePriceNullable'
+                    description: 'special discounted price. It is only used if set and if the validity date is set too, form (`fromDate`) to (`toData`).'
+                    examples:
+                      - '600.00'
+                  fromDate:
+                    $ref: '#/components/schemas/typeDateNullable'
+                    description: 'special discounted price effective date - from'
+                    examples:
+                      - '2018-02-19'
+                  toDate:
+                    $ref: '#/components/schemas/typeDateNullable'
+                    description: 'special discounted price effective date - up to'
+                    examples:
+                      - '2018-02-25'
+          priceWithoutVat:
+            type: object
+            additionalProperties: false
+            description: 'Prices without VAT'
+            properties:
+              price:
+                $ref: '#/components/schemas/typePriceNullable'
+                description: 'Price, at which the customer can purchase the product. It can be loaded by the special discounted price and influenced by the price ratio. (can be `null`)'
+                examples:
+                  - '650.00'
+              commonPrice:
+                $ref: '#/components/schemas/typePriceNullable'
+                description: 'standard price, use for information and comparison to competitors (can be `null`)'
+                examples:
+                  - '750.00'
+              buyPrice:
+                $ref: '#/components/schemas/typePriceNullable'
+                description: 'purchase price. Deprecated, use `prices.purchasePrice` instead.'
+                examples:
+                  - '500.00'
+                deprecated: true
+              priceRatio:
+                $ref: '#/components/schemas/typePriceRatio'
+                description: 'price ratio. The price of the product shall be calculated by multiplying the price and this coefficient. The price ratio affects only the price (`price`), the special discounted price (`actionPrice`) is not affected by the ratio. This ratio has 3 decimal places and can be greater than 1,000'
+                examples:
+                  - '1.000'
+              actionPrice:
+                type:
+                  - object
+                  - 'null'
+                additionalProperties: false
+                description: 'Special discounted price'
+                properties:
+                  price:
+                    $ref: '#/components/schemas/typePriceNullable'
+                    description: 'special discounted price. It is only used if set and if the validity date is set too, form (`fromDate`) to (`toData`).'
+                    examples:
+                      - '600.00'
+                  fromDate:
+                    $ref: '#/components/schemas/typeDateNullable'
+                    description: 'special discounted price effective date - from'
+                    examples:
+                      - '2018-02-19'
+                  toDate:
+                    $ref: '#/components/schemas/typeDateNullable'
+                    description: 'special discounted price effective date - up to'
+                    examples:
+                      - '2018-02-25'
+          prices:
+            type:
+              - object
+            additionalProperties: false
+            properties:
+              purchasePrice:
+                type: object
+                additionalProperties: false
+                description: 'Purchase price. Currently for preview only! Will be used as replace for buy price. Please watch API news.'
+                properties:
+                  price:
+                    $ref: '#/components/schemas/typePriceNullable'
+                    description: 'purchase price.'
+                    examples:
+                      - '500.00'
+                  vatRate:
+                    $ref: '#/components/schemas/typePriceNullable'
+                    description: 'VatRate for prices'
+                    examples:
+                      - '21.00'
+                  includingVat:
+                    type: boolean
+                    description: 'flag, whether the purchase price is including VAT'
+                    examples:
+                      - true
     orderItem:
       type: object
       additionalProperties: false
@@ -50505,6 +50633,13 @@ components:
                     description: 'Product priority.'
                     examples:
                       - 1
+    pricelistBatchUpdate:
+      title: 'Pricelist update'
+      x-tags:
+        - Batch
+      allOf:
+        -
+          $ref: '#/components/schemas/pricelistUpdate'
     creditNoteSnapshot:
       title: 'Credit note'
       x-tags:
