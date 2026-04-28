@@ -25558,28 +25558,28 @@ paths:
           name: dateFrom
           in: query
           description: ''
-          example: '2022-12-12T22:08:01+0100'
+          example: '2022-12-12'
           schema:
             type: string
         -
           name: dateTo
           in: query
           description: ''
-          example: '2023-12-12T22:08:01+0100'
+          example: '2023-12-12'
           schema:
             type: string
         -
           name: taxDateFrom
           in: query
           description: ''
-          example: '2022-12-12T22:08:01+0100'
+          example: '2022-12-12'
           schema:
             type: string
         -
           name: taxDateTo
           in: query
           description: ''
-          example: '2023-12-12T22:08:01+0100'
+          example: '2023-12-12'
           schema:
             type: string
         -
