@@ -5401,6 +5401,112 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/products/batch:
+    delete:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/products.jsonl" not found.'
+                    instance: batchFileUrlPath
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: products-batch-delete
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: products-batch-delete
+      summary: 'Product BATCH delete'
+      operationId: productBatchDelete
+      description: |-
+        This endpoint allows you to delete multiple products or product variants at once. Batch
+        delete is processed asynchronously.
+
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+
+        File with data must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one
+        item in JSON format. Maximum size of file is 100MB.
+
+        Each JSON row must contain either `guid` (to delete a whole product) or `code` (to delete a single variant).
+        If a product has only one variant, providing `code` deletes the whole product.
+
+
+        Asynchronous job processes the jsonl file row by row and tries to validate and delete each item. If there is
+        any error, the row is skipped and the error is logged, but processing of other rows continues.
+
+
+        In Log, every item is identified by its position in file (starting from 1).
+
+
+        See [Product batch delete schema](/shoptet-api/openapi/batch/productbatchdelete) for more details.
+      tags:
+        - Products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - batchFileUrlPath
+              properties:
+                batchFileUrlPath:
+                  type: string
+                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  examples:
+                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      x-shoptet-async-endpoint: true
     patch:
       responses:
         202:
@@ -44922,6 +45028,16 @@ components:
                 description: 'related video type'
                 examples:
                   - youtube-short
+    productBatchDelete:
+      type: object
+      additionalProperties: false
+      properties:
+        guid:
+          $ref: '#/components/schemas/typeGuid'
+        code:
+          type: string
+          minLength: 1
+          maxLength: 255
     productUpdate:
       type: object
       minProperties: 1
@@ -50784,6 +50900,13 @@ components:
       allOf:
         -
           $ref: '#/components/schemas/productUpdate'
+    productBatchDeleteSchema:
+      title: 'Product batch delete'
+      x-tags:
+        - Batch
+      allOf:
+        -
+          $ref: '#/components/schemas/productBatchDelete'
     productSnapshot:
       title: Product
       x-tags:
