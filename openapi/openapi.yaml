@@ -8905,6 +8905,127 @@ paths:
             type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
+  '/api/parametric-categories-available-parameters/{categoryGuid}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - categoryGuid
+                      - categoryName
+                      - parameters
+                    properties:
+                      categoryGuid:
+                        type: string
+                        description: 'Unique identifier of the parent category'
+                        examples:
+                          - 1b02cb8e-d7b5-11e0-9a5c-feab5ed617ed
+                      categoryName:
+                        type: string
+                        description: 'Name of the parent category'
+                        examples:
+                          - T-shirts
+                      parameters:
+                        type: array
+                        description: 'All parameters available for parent category that can be used when creating parametric categories and their combinations'
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - parameterCode
+                            - parameterName
+                            - parameterType
+                          properties:
+                            parameterCode:
+                              type: string
+                              description: 'Code of the parameter'
+                              examples:
+                                - barva
+                            parameterName:
+                              type: string
+                              description: 'Name of the parameter'
+                              examples:
+                                - Barva
+                            parameterType:
+                              type: string
+                              description: 'Type of the parameter — PV (variant parameter) or PF (filtering parameter)'
+                              enum:
+                                - PV
+                                - PF
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process this request as "advancedSeo" module is not active.'
+                    instance: advancedSeo
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: category-not-found
+                    message: 'Category with guid "1e3f3f3f-3f3f-63ca-b93f-02423f1f0005" not found.'
+                    instance: 1e3f3f3f-3f3f-63ca-b93f-02423f1f0005
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Parametric category available parameters'
+      operationId: getParametricCategoryAvailableParameters
+      description: |-
+        Returns all available parameters for a parent category that can be used when creating
+        parametric categories and their combinations.
+
+        The "Advanced SEO" module must be active to use this endpoint.
+      tags:
+        - 'Parametric categories'
+      parameters:
+        -
+          name: categoryGuid
+          in: path
+          description: 'Guid of the parent category.'
+          required: true
+          example: 5c498fb7-70ac-11e9-9208-08002774f818
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/products/flags:
     get:
       responses:
