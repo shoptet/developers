@@ -8241,7 +8241,7 @@ paths:
                     instance: integration-call
                   -
                     errorCode: invalid-request-data
-                    message: 'Combination of the parameterCodes does not exists for the specified category.'
+                    message: 'No parametric category definition exists for this combination of parameterCodes. Create a definition first using the /parametric-categories-definition endpoint.'
                     instance: integration-call
                   -
                     errorCode: invalid-request-data
@@ -8262,8 +8262,11 @@ paths:
       description: |-
         Creates a new combination for a parametric category.
 
-        A parametric category for the selected parameter codes and the default category must exist.
-        You can create only one parametric category combination for each combination of parameterCode and valueCode.
+        **Prerequisites:** Before creating a combination, a parametric category definition for the selected
+        `parameterCodes` and the given category must exist. Create one via `POST /parametric-categories-definition`.
+        To discover which `parameterCodes` are available for a category, use `GET /parametric-categories-available-parameters`.
+
+        You can create only one parametric category combination for each combination of `parameterCode` and `valueCode`.
 
         The "Advanced SEO" module must be active to use this endpoint.
       tags:
@@ -9024,6 +9027,142 @@ paths:
           example: 5c498fb7-70ac-11e9-9208-08002774f818
           schema:
             type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  /api/parametric-categories-definition:
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process this request as "advancedSeo" module is not active.'
+                    instance: advancedSeo
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Category with given guid "11f7d2f4-4c42-11e7-819d-002590dc5efc" does not exist.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Parameter with code "neexistujici-parametr" does not exist.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Parametric category definition with the same set of parameters already exists for this category.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Duplicate parameterCodes are not allowed.'
+                    instance: integration-call
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Creation of parametric category definition'
+      operationId: createParametricCategoryDefinition
+      description: |-
+        Creates a new parametric category definition for a given category and set of parameters.
+
+        The definition specifies which parameters are used to generate parametric category pages for the specified category.
+        You can specify 1 to 4 parameters. Each `parameterCode` must exist and must be unique within the request.
+        Only one definition with the same set of parameters can exist per category.
+
+        The "Advanced SEO" module must be active to use this endpoint.
+      tags:
+        - 'Parametric categories'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - categoryGuid
+                    - parameters
+                  properties:
+                    categoryGuid:
+                      $ref: '#/components/schemas/typeGuid'
+                      description: 'Unique identifier of the category for which the parametric category parent is being created'
+                      examples:
+                        - 1b02cb8e-d7b5-11e0-9a5c-feab5ed617ed
+                    parameters:
+                      type: array
+                      description: 'List of parameter codes that define the parametric category parent (1–4 parameters)'
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - parameterCode
+                        properties:
+                          parameterCode:
+                            type: string
+                            minLength: 1
+                            description: 'Code of the parameter'
+                            examples:
+                              - color
+                      minItems: 1
+                      maxItems: 4
+      parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
   /api/products/flags:
