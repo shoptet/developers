@@ -706,6 +706,9 @@ info:
 
     Value  | Description | Identifier meaning
     -------- | --------- | ---------
+    availability:create | Availability creation event | Availability ID 
+    availability:update | Availability change event   | Availability ID
+    availability:delete | Availability deleting event | Availability ID
     brand:create | Brand creation event | String (`code`) - brand unique code
     brand:update | Brand change event     | String (`code`) - brand unique code
     brand:delete | Brand deleting event   | String (`code`) - brand unique code
