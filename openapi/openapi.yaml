@@ -4007,7 +4007,7 @@ paths:
                 errors:
                   -
                     errorCode: invalid-request-data
-                    message: 'The property consumptionTaxId is not allowed. Module "consumptionTax" required.'
+                    message: 'Maximum number of variants per product is 512.'
                     instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
@@ -4018,28 +4018,23 @@ paths:
         for an import from an external system.
 
         Request is sent in JSON format in its body. For detailed description of
-        items, which can be provided, see the right-most
-
-        pane, section "Request" » "Attributes".
-
-
-        **Currently it is possible to insert only a basic product attributes**
+        items, which can be provided, see the right-most pane, section
+        "Request" » "Attributes".
 
 
-        When creating product without variants, add one variant to `variants`
-        array and it will be created as product without variants,
+        When creating a product without variants, add one variant to the `variants`
+        array — it will be created as a single-variant product with the values
+        specified in that variant.
 
-        but with values specified in the `variant`.
+
+        When creating a product with multiple variants, each variant must have
+        a unique combination of `parameters` (e.g. color:black + size:XXL vs.
+        color:yellow + size:XXL). Two variants with identical parameter combinations
+        are not allowed. Also, `nameIndex` must be unique within a single variant
+        (e.g. two `color` parameters in one variant is not allowed).
 
 
-        When creating product with multiple variants, you must specify
-        `parameters` which are different in each variant (variant A with
-
-        color black and size XXL and variant B with color yellow and size XXL is
-        correct, but two variants with color black and size XXL is not correct).
-
-        Also, `nameIndex` must be unique in a variant (variant A with color
-        black and color white is not correct).
+        **Maximum number of variants per product is 512.**
       tags:
         - Products
       parameters:
@@ -5242,36 +5237,38 @@ paths:
                 errors:
                   -
                     errorCode: invalid-request-data
-                    message: 'The property consumptionTaxId is not allowed. Module "consumptionTax" required.'
+                    message: 'Maximum number of variants per product is 512.'
                     instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product update'
       operationId: updateProduct
       description: |-
-        Allows you to change a product, which is identified by the guid.
-
-
-        This endpoint allows you to update products in Shoptet.
+        This endpoint allows you to update a product identified by its `guid`.
 
         Request is sent in JSON format in its body. For detailed description of
-        items, which can be updated and their format,
-
-        check the right-most pane, section "Request" » "Attributes"
-
-
-        Product variant can be updated by specifying its `code`. When `code` is
-        not specified or not existing, new variant will be created.
-
-        If you want to change `code` of variant, use `code` to specify variant
-        to be changed and `newCode` for specifying new code.
+        items which can be updated and their format, check the right-most pane,
+        section "Request" » "Attributes".
 
 
-        Field `parameters` should contain ALL parameters that the edited variant
-        should contain.
+        **Updating variants**
 
-        That means, if you have for example "color:black" in variant and you
-        specify only new parameter "size", parameter color will be deleted.
+        Specify `code` to update an existing variant. If `code` is not provided
+        or does not match any existing variant, a new variant is created.
+
+        To rename a variant code, use `code` to identify the variant and `newCode`
+        for the new code value.
+
+
+        **Variant parameters**
+
+        Field `parameters` must contain ALL parameters the variant should have
+        after the update. Omitting an existing parameter will delete it — e.g.
+        if a variant has "color:black" and you send only "size:XL", "color" will
+        be removed.
+
+
+        **Maximum number of variants per product is 512.**
       tags:
         - Products
       parameters:
