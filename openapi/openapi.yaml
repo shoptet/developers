@@ -15224,6 +15224,7 @@ paths:
                                 type: string
                                 enum:
                                   - delivery_method_linkable
+                                  - disable_order_status_email_notification
                                   - disable_shipment_status_email_notification
                                   - enable_update_in_detail_pages
                               description: 'List of abilities of the sales channel.'
@@ -26019,6 +26020,7 @@ paths:
                               type: string
                               enum:
                                 - delivery_method_linkable
+                                - disable_order_status_email_notification
                                 - disable_shipment_status_email_notification
                                 - enable_update_in_detail_pages
                             description: 'List of abilities of the sales channel.'
@@ -26297,6 +26299,7 @@ paths:
                               type: string
                               enum:
                                 - delivery_method_linkable
+                                - disable_order_status_email_notification
                                 - disable_shipment_status_email_notification
                                 - enable_update_in_detail_pages
                             description: 'List of abilities of the sales channel.'
