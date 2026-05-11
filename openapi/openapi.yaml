@@ -3108,6 +3108,7 @@ paths:
                           - printItemRemark
                           - defaultReasonRemark
                           - restock
+                          - checkComplianceWithInvoice
                           - forbiddenItemTypes
                         description: 'Available only if module `invoicing` is active.'
                         properties:
@@ -3158,6 +3159,11 @@ paths:
                           addNotesFromOrder:
                             type: boolean
                             description: 'If `true` and `order.syncDocuments` enabled, note from order will be added to invoice.'
+                            examples:
+                              - true
+                          checkComplianceWithInvoice:
+                            type: boolean
+                            description: 'If `true`, the system validates that the credit note items comply with the original invoice.'
                             examples:
                               - true
                           forbiddenItemTypes:
