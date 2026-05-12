@@ -1327,6 +1327,9 @@ tags:
     name: 'Customer delivery addresses'
     description: 'Managing customer delivery addresses.'
   -
+    name: 'Customer groups'
+    description: 'Managing customer groups in the e-shop.'
+  -
     name: 'Customer remarks'
     description: 'Managing customer remarks.'
   -
@@ -29889,6 +29892,8 @@ paths:
                             - wholesale
                             - tableLayout
                             - fullProfileRequired
+                            - defaultDueDays
+                            - defaultOrderStatusId
                           properties:
                             id:
                               type: integer
@@ -29974,6 +29979,13 @@ paths:
                               description: 'Default maturity for documents in days'
                               examples:
                                 - 14
+                            defaultOrderStatusId:
+                              type:
+                                - integer
+                                - 'null'
+                              description: 'ID of the default order status for orders placed by customers in this group.'
+                              examples:
+                                - -2
                   errors:
                     $ref: '#/components/schemas/Errors'
                   metadata:
@@ -29987,7 +29999,7 @@ paths:
       operationId: getListOfCustomerGroups
       description: 'Returns list of customer groups ordered by priority. List is not paginated.'
       tags:
-        - Customers
+        - 'Customer groups'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -30025,6 +30037,8 @@ paths:
                             - wholesale
                             - tableLayout
                             - fullProfileRequired
+                            - defaultDueDays
+                            - defaultOrderStatusId
                           properties:
                             id:
                               type: integer
@@ -30110,6 +30124,13 @@ paths:
                               description: 'Default maturity for documents in days'
                               examples:
                                 - 14
+                            defaultOrderStatusId:
+                              type:
+                                - integer
+                                - 'null'
+                              description: 'ID of the default order status for orders placed by customers in this group.'
+                              examples:
+                                - -2
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -30168,6 +30189,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'Email notification can only be enabled when wholesale module is active.'
                     instance: data.emailNotification
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Invalid statusId "999".'
+                    instance: data.defaultOrderStatusId
       summary: 'Creation of customer group'
       operationId: createCustomerGroup
       description: |-
@@ -30175,7 +30200,7 @@ paths:
 
         **Note:** To use wholesale features (`registrationAllowed`, `wholesale`, `tableLayout`, `fullProfileRequired`), the `wholesale` module must be active in the e-shop.
       tags:
-        - Customers
+        - 'Customer groups'
       requestBody:
         content:
           application/json:
@@ -30265,6 +30290,13 @@ paths:
                       default: false
                       examples:
                         - true
+                    defaultOrderStatusId:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'Default order status ID for orders placed by customers in this group.'
+                      examples:
+                        - -2
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -30333,7 +30365,7 @@ paths:
       operationId: deleteCustomerGroup
       description: 'Is not possible to delete default customer group. Deletion of customer group will not delete customers assigned to this group, but they will be assigned to default customer group.'
       tags:
-        - Customers
+        - 'Customer groups'
       parameters:
         -
           name: id
@@ -30379,6 +30411,8 @@ paths:
                             - wholesale
                             - tableLayout
                             - fullProfileRequired
+                            - defaultDueDays
+                            - defaultOrderStatusId
                           properties:
                             id:
                               type: integer
@@ -30464,6 +30498,13 @@ paths:
                               description: 'Default maturity for documents in days'
                               examples:
                                 - 14
+                            defaultOrderStatusId:
+                              type:
+                                - integer
+                                - 'null'
+                              description: 'ID of the default order status for orders placed by customers in this group.'
+                              examples:
+                                - -2
                   errors:
                     $ref: '#/components/schemas/Errors'
                 required:
@@ -30542,6 +30583,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'Default customer group must be allowed for registration.'
                     instance: data.registrationAllowed
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Invalid statusId "999".'
+                    instance: data.defaultOrderStatusId
       summary: 'Update of customer group'
       operationId: updateCustomerGroup
       description: |-
@@ -30549,7 +30594,7 @@ paths:
 
         **Note:** To use wholesale features (`registrationAllowed`, `wholesale`, `tableLayout`, `fullProfileRequired`), the `Wholesale` module must be active in the e-shop.
       tags:
-        - Customers
+        - 'Customer groups'
       requestBody:
         content:
           application/json:
@@ -30632,6 +30677,13 @@ paths:
                       description: 'Whether full profile (billing information and address) is needed for customer. Requires `Wholesale` module to be active.'
                       examples:
                         - true
+                    defaultOrderStatusId:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'ID of the default order status for orders placed by customers in this group.'
+                      examples:
+                        - -2
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -51260,6 +51312,7 @@ x-tagGroups:
       - Customers
       - 'Customer accounts'
       - 'Customer delivery addresses'
+      - 'Customer groups'
       - 'Customer remarks'
   -
     name: Content
