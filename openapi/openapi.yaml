@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: 'Shoptet API'
-  version: 1.0.0
+  version: VERSION_PLACEHOLDER
   description: |-
     Created in cooperation with the Ministry of Industry and Trade of the Czech
     Republic within the "The Country for the Future" programme.
