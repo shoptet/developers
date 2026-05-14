@@ -4443,6 +4443,7 @@ paths:
                                     - 50.0
                                 location:
                                   type: string
+                                  maxLength: 255
                                   description: 'Stock location.'
                                   examples:
                                     - H6/M11/R13
@@ -45525,6 +45526,7 @@ components:
                       type:
                         - string
                         - 'null'
+                      maxLength: 255
                       description: 'Stock location.'
                       examples:
                         - H6/M11/R13
