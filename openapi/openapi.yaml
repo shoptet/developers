@@ -16715,7 +16715,6 @@ paths:
                           type:
                             - string
                             - 'null'
-                          minLength: 1
                           maxLength: 255
                           description: 'company name. Optional, if not set as mandatory item in shop settings.'
                           examples:
@@ -49471,7 +49470,6 @@ components:
               type:
                 - string
                 - 'null'
-              minLength: 1
               maxLength: 255
               description: 'company name. Optional, if not set as mandatory item in shop settings.'
               examples:
