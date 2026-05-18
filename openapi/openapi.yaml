@@ -48248,6 +48248,8 @@ components:
     shipmentCustomer:
       type: object
       additionalProperties: false
+      deprecated: true
+      description: '[DEPRECATED] use recipient. Customer (recipient) info.'
       properties:
         name:
           type:
@@ -48285,6 +48287,64 @@ components:
           type:
             - string
             - 'null'
+    shipmentSenderRecipientAddress:
+      type:
+        - object
+        - 'null'
+      additionalProperties: false
+      description: 'Structured sender or recipient address.'
+      properties:
+        name:
+          type:
+            - string
+            - 'null'
+          description: "Person name. For sender: contact person at the dispatch location. For recipient: customer's full name."
+          examples:
+            - 'John Doe'
+        company:
+          type:
+            - string
+            - 'null'
+          description: "Organization name. For sender: name printed on the shipping label. For recipient: customer's company (null for private persons)."
+          examples:
+            - 'Doe Company'
+        street:
+          type:
+            - string
+            - 'null'
+          examples:
+            - 'Green Line 54'
+        city:
+          type:
+            - string
+            - 'null'
+          examples:
+            - London
+        zip:
+          type:
+            - string
+            - 'null'
+          examples:
+            - ABC123
+        countryCode:
+          type:
+            - string
+            - 'null'
+          description: 'ISO 3166-1 alpha-2 country code.'
+          examples:
+            - CZ
+        phone:
+          type:
+            - string
+            - 'null'
+          examples:
+            - '+420123456789'
+        email:
+          type:
+            - string
+            - 'null'
+          examples:
+            - doe@company.com
     shipmentPrice:
       type: object
       additionalProperties: false
