@@ -38002,6 +38002,30 @@ paths:
                 errors: null
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: cannot-delete-page
+                    message: 'Page with ID "404" cannot be deleted!'
+                    instance: '404'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Delete of page'
       operationId: deletePage
       description: 'Deletes the page.'
