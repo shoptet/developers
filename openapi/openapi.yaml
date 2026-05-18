@@ -766,6 +766,9 @@ info:
     salesChannel:create | Sales channel create event | GUID of sales channel
     salesChannel:update | Sales channel update event | GUID of sales channel
     salesChannel:delete | Sales channel delete event | GUID of sales channel
+    shipment:create | Shipment confirmation event. Carrier confirmed the shipment (tracking number assigned, label ready) | Shipment ID
+    shipment:update | Shipment status change event (in transit, delivered, returned, closed, cancel requested, etc.) | Shipment ID
+    shipment:fail | Shipment failure event. Status changed to failed | Shipment ID
     shippingMethod:change | Shipping method change event | Shipping method GUID
     sectionArticle:create | Article section create event | ID of article section
     sectionArticle:update | Article section update event | ID of article section
@@ -865,6 +868,35 @@ info:
     Mini One Stop Shop |
     Reverse charge |
     Outside the EU |
+
+    ## Shipment carrier types
+    Value |
+    ------|
+    core |
+    external |
+    integration |
+    integration_product_contract |
+    balikobot |
+    system |
+
+    ## Shipment statuses
+    Value |
+    ------|
+    requested |
+    request_failed |
+    created |
+    in_transit |
+    ready_for_pickup |
+    delivered |
+    failed |
+    carrier_issue |
+    back_transit |
+    returned |
+    canceled |
+    cancel_requested |
+    closed |
+    deleted |
+
 
     # Postman collection
 
@@ -1523,6 +1555,9 @@ tags:
       Allows you to access the system measure unit. These units are convertible to
       each other and cannot be redefined or extended. For defining/extending your
       own units use [Units](#tag/units) in the **Settings** section.
+  -
+    name: Delivery
+    description: 'Managing shipments and carriers in the e-shop.'
   -
     name: Batch
     description: 'Schemas related to batch actions.'
@@ -15084,6 +15119,1153 @@ paths:
           in: query
           description: 'supported values: `in_store`, `online_store`, `marketplace`'
           example: in_store
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  /api/shipments:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - items
+                      - paginator
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            guid:
+                              $ref: '#/components/schemas/typeGuid'
+                              description: 'Shipment GUID'
+                            orderCode:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'Order code'
+                              examples:
+                                - '2024000008'
+                            sender:
+                              $ref: '#/components/schemas/shipmentSenderRecipientAddress'
+                              description: 'Sender address.'
+                            recipient:
+                              $ref: '#/components/schemas/shipmentSenderRecipientAddress'
+                              description: 'Recipient address.'
+                            carrierAddress:
+                              $ref: '#/components/schemas/shipmentAddress'
+                              deprecated: true
+                              description: '[DEPRECATED] use sender.'
+                            status:
+                              type: string
+                              description: 'Shipment status, for possible values see [Shipment statuses](#section/code-lists/shipment-statuses) code list'
+                              examples:
+                                - requested
+                            serviceCode:
+                              type: string
+                              description: 'Service code'
+                              examples:
+                                - logistics-ppl-parcel-cz-private-home-delivery
+                            cod:
+                              $ref: '#/components/schemas/shipmentCoDPrice'
+                              description: 'Cash on delivery'
+                            value:
+                              $ref: '#/components/schemas/shipmentPrice'
+                              description: 'total cost sum of products inside of shipment'
+                            customer:
+                              $ref: '#/components/schemas/shipmentCustomer'
+                              deprecated: true
+                              description: '[DEPRECATED] use recipient.'
+                            packages:
+                              type: array
+                              items:
+                                $ref: '#/components/schemas/shipmentPackage'
+                            note:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'Shipment note'
+                              examples:
+                                - 'This is a note'
+                      paginator:
+                        $ref: '#/components/schemas/paginator'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'List of shipments'
+      operationId: getListOfShipments
+      description: 'Returns a paginated list of shipments. Optionally filter by status or order code.'
+      tags:
+        - Delivery
+      parameters:
+        -
+          name: status
+          in: query
+          description: 'Filtering by shipment status. Optional. For possible values see [Shipment statuses](#section/code-lists/shipment-statuses) code list.'
+          required: false
+          example: closed
+          schema:
+            type: string
+        -
+          name: orderCode
+          in: query
+          description: 'filtering according to order code. Optional.'
+          required: false
+          example: '2024000008'
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      guid:
+                        type: string
+                        description: 'Shipment GUID'
+                        examples:
+                          - 1e3f3f32-3f3f-6766-3f3f-02423f1f0004
+                      checkUrls:
+                        type:
+                          - array
+                          - 'null'
+                        description: 'URL to check and create blocking request until shipment is done. This feature is not available by default and this field is always null. To enable this feature consult your use case with your Shoptet contact.'
+                        examples:
+                          - 'https://logistics-api.myshoptet.com/gls-shipment-addon/checkShipment?eshopId=100000&shipmentIds=123'
+                          - 'https://logistics-api.myshoptet.com/gls-shipment-addon/checkShipment?eshopId=100000&shipmentIds=456'
+                        items:
+                          type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/json; charset=utf-8':
+              examples:
+                example1:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: shipment-validation-failed
+                        message: 'Bank account ID is required.'
+                        instance: data.bankAccountId
+                      -
+                        errorCode: shipment-validation-failed
+                        message: 'Max value of COD is 100000.00.'
+                        instance: data.cod
+                      -
+                        errorCode: shipment-validation-failed
+                        message: 'Invalid currency of order, allowed currencies: CZK.'
+                        instance: data.orderCode
+                      -
+                        errorCode: shipment-validation-failed
+                        message: 'Invalid country of order, allowed countries: CZ.'
+                        instance: data.orderCode
+                      -
+                        errorCode: shipment-validation-failed
+                        message: |-
+                          Invalid recipient of order, missing fields: phone, email,
+                          fullName, street, city, zip, country.
+                        instance: data.orderCode
+                      -
+                        errorCode: shipment-validation-failed
+                        message: 'Missing delivery point of order.'
+                        instance: data.orderCode
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Shipment insertion'
+      operationId: createShipment
+      description: |-
+        In the `packages` field, you can send an object containing three
+        combinations of child fields:
+
+        - `orderPackagingId` only,
+        - `packaging` and `weight`,
+        - `width`, `height`, `depth`, and `weight`.
+      tags:
+        - Delivery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  minProperties: 1
+                  required:
+                    - orderCode
+                  properties:
+                    orderCode:
+                      type: string
+                      description: 'Order code'
+                      examples:
+                        - '2024000008'
+                    note:
+                      type:
+                        - string
+                        - 'null'
+                      description: 'shipment note'
+                      examples:
+                        - 'shipment note'
+                    cod:
+                      $ref: '#/components/schemas/typePriceNullable'
+                      description: 'COD price of shipment. If `null` or omitted, COD is resolved from the order. If `"0.00"`, COD is overridden to no COD regardless of the order. Any other value overrides the COD amount.'
+                    shippingId:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'shipping ID; required; you can get this ID via [Shipment shipping options](#tag/Delivery/operation/getShipmentShippingOptionsByOrderCode)'
+                      examples:
+                        - 250
+                    addressId:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'address ID; required; you can get this ID via [Shipment shipping options](#tag/Delivery/operation/getShipmentShippingOptionsByOrderCode)'
+                      examples:
+                        - 1
+                    bankAccountId:
+                      type:
+                        - integer
+                        - 'null'
+                      description: 'shipper bank account ID; optional, can be `null`; required if `cod` send'
+                      examples:
+                        - 1
+                    packages:
+                      type:
+                        - array
+                        - 'null'
+                      minItems: 1
+                      description: 'shipment packages; at least one package is required'
+                      items:
+                        oneOf:
+                          -
+                            type: object
+                            additionalProperties: false
+                            required:
+                              - orderPackagingId
+                            properties:
+                              orderPackagingId:
+                                type: integer
+                                description: 'packaging ID; required if sent'
+                                examples:
+                                  - 3
+                          -
+                            type: object
+                            additionalProperties: false
+                            required:
+                              - packaging
+                              - weight
+                            properties:
+                              packaging:
+                                type: integer
+                                description: 'packaging ID; required if sent'
+                                examples:
+                                  - 6
+                              weight:
+                                type:
+                                  - string
+                                  - 'null'
+                                  - integer
+                                description: 'package weight; required, can be `null`'
+                                examples:
+                                  - '1.00'
+                          -
+                            type: object
+                            additionalProperties: false
+                            required:
+                              - width
+                              - height
+                              - depth
+                              - weight
+                            properties:
+                              width:
+                                type:
+                                  - integer
+                                  - 'null'
+                                description: 'package width; required, can be `null`'
+                                examples:
+                                  - 10
+                              height:
+                                type:
+                                  - integer
+                                  - 'null'
+                                description: 'package height; required, can be `null`'
+                                examples:
+                                  - 20
+                              depth:
+                                type:
+                                  - integer
+                                  - 'null'
+                                description: 'package depth; required, can be `null`'
+                                examples:
+                                  - 10
+                              weight:
+                                type:
+                                  - string
+                                  - 'null'
+                                  - integer
+                                description: 'package weight; required, can be `null`'
+                                examples:
+                                  - '1.00'
+  '/api/shipments/{guid}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - guid
+                      - carrierAddress
+                      - status
+                      - serviceCode
+                      - customer
+                      - packages
+                    properties:
+                      guid:
+                        $ref: '#/components/schemas/typeGuid'
+                        description: 'Shipment GUID'
+                      orderCode:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Order code'
+                        examples:
+                          - '2024000008'
+                      sender:
+                        $ref: '#/components/schemas/shipmentSenderRecipientAddress'
+                        description: 'Sender address.'
+                      recipient:
+                        $ref: '#/components/schemas/shipmentSenderRecipientAddress'
+                        description: 'Recipient address.'
+                      carrierAddress:
+                        $ref: '#/components/schemas/shipmentAddress'
+                        deprecated: true
+                        description: '[DEPRECATED] use sender.'
+                      status:
+                        type: string
+                        description: 'Shipment status, for possible values see [Shipment statuses](#section/code-lists/shipment-statuses) code list'
+                        examples:
+                          - requested
+                      serviceCode:
+                        type: string
+                        description: 'Service code'
+                        examples:
+                          - logistics-ppl-parcel-cz-private-home-delivery
+                      cod:
+                        $ref: '#/components/schemas/shipmentCoDPrice'
+                        description: 'Cash on delivery'
+                      value:
+                        $ref: '#/components/schemas/shipmentPrice'
+                        description: 'total cost sum of products inside of shipment'
+                      customer:
+                        $ref: '#/components/schemas/shipmentCustomer'
+                        deprecated: true
+                        description: '[DEPRECATED] use recipient.'
+                      packages:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/shipmentPackageWithHistory'
+                      note:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Shipment note'
+                        examples:
+                          - 'This is a note'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            'application/json; charset=utf-8':
+              examples:
+                example1:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: shipment-not-found
+                        message: |-
+                          Shipment with guid "93bc0dbe-7481-11e8-8216-002590dad85e"
+                          not found.
+                        instance: payload
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Shipment detail'
+      operationId: getShipmentDetail
+      description: 'Returns detail of a single shipment identified by its GUID.'
+      tags:
+        - Delivery
+      parameters:
+        -
+          name: guid
+          in: path
+          description: 'Shipment GUID.'
+          required: true
+          example: 93bc0dbe-7481-11e8-8216-002590dad85e
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/shipments/order/{code}':
+    post:
+      deprecated: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              example:
+                data:
+                  guid: 1e3f3f32-3f3f-6766-3f3f-02423f1f0004
+                errors: []
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      guid:
+                        type: string
+                        description: 'Shipment GUID'
+                        examples:
+                          - 1e3f3f32-3f3f-6766-3f3f-02423f1f0004
+                      checkUrls:
+                        type:
+                          - array
+                          - 'null'
+                        description: 'URL to check and create blocking request until shipment is done. This feature is not available by default and this field is always null. To enable this feature consult your use case with your Shoptet contact.'
+                        examples:
+                          - 'https://logistics-api.myshoptet.com/gls-shipment-addon/checkShipment?eshopId=100000&shipmentIds=123'
+                          - 'https://logistics-api.myshoptet.com/gls-shipment-addon/checkShipment?eshopId=100000&shipmentIds=456'
+                        items:
+                          type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: order-not-found
+                    message: 'Order "2024000008" not found.'
+                    instance: '2024000008'
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: shipment-order-without-shipping
+                    message: 'Order does not include shipping.'
+                    instance: payload
+                  -
+                    errorCode: shipment-cannot-be-saved
+                    message: 'Shipment cannot be saved.'
+                    instance: payload
+                  -
+                    errorCode: shipment-invalid-shipping
+                    message: 'Order contains invalid shipping.'
+                    instance: payload
+                  -
+                    errorCode: shipment-bank-account-not-exist
+                    message: 'Shipper bank account not exist.'
+                    instance: payload
+                  -
+                    errorCode: shipment-bank-account-not-exist
+                    message: 'Default shipper bank account does not exist.'
+                    instance: payload
+                  -
+                    errorCode: shipment-address-not-exist
+                    message: 'Default address does not exist.'
+                    instance: payload
+                  -
+                    errorCode: shipment-already-exists
+                    message: 'Shipment already exists.'
+                    instance: payload
+                  -
+                    errorCode: shipment-validation-failed
+                    message: 'Invalid country of order, allowed countries: CZ.'
+                    instance: data.orderCode
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+      summary: 'Shipment insertion by order code'
+      operationId: createShipmentByOrderCode
+      description: '[DEPRECATED] Use `POST /api/shipments` instead. Creates a new shipment for the order identified by its code.'
+      tags:
+        - Delivery
+      parameters:
+        -
+          name: code
+          in: path
+          description: 'Order code.'
+          required: true
+          example: '2024000008'
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/shipments/{guid}/cancel-request':
+    post:
+      responses:
+        202:
+          description: Accepted
+        404:
+          description: 'Not Found'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                example:
+                  data: null
+                  errors:
+                    -
+                      errorCode: shipment-not-found
+                      message: |-
+                        Shipment with guid "93bc0dbe-7481-11e8-8216-002590dad85e"
+                        not found.
+                      instance: payload
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                example:
+                  data: null
+                  errors:
+                    -
+                      errorCode: invalid-request-data
+                      message: 'Unknown error.'
+                      instance: integration-call
+      summary: 'Shipment cancellation request'
+      operationId: shipmentCancellationRequest
+      description: |-
+        Requests cancellation of shipment. Cancellation request, if valid, is
+        accepted via API - it means we try to process this request within the
+        carrier. The final state of this request can be checked in the [Shipment
+        detail](#tag/Delivery/operation/getShipmentDetail) endpoint.
+      tags:
+        - Delivery
+      parameters:
+        -
+          name: guid
+          in: path
+          description: 'Shipment GUID.'
+          required: true
+          example: 93bc0dbe-7481-11e8-8216-002590dad85e
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/shipments/order/{code}/shipping-options':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - shippingOptions
+                    properties:
+                      shippingOptions:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - shippingId
+                            - methodName
+                            - maxShipment
+                            - carrierAddresses
+                            - bankAccounts
+                          properties:
+                            shippingId:
+                              type: integer
+                              description: 'Shipping ID'
+                              examples:
+                                - 258
+                            methodName:
+                              type: string
+                              description: 'Shipping method name'
+                              examples:
+                                - 'PPL (Shoptet Logistics) CZ Smart'
+                            carrierCode:
+                              type: string
+                              description: 'Carrier code'
+                              examples:
+                                - logistics-ppl
+                            serviceCode:
+                              type: string
+                              description: 'Service code'
+                              examples:
+                                - logistics-ppl-parcel-cz-private-home-delivery
+                            maxShipment:
+                              type: integer
+                              description: 'Maximum number of shipments'
+                              examples:
+                                - 3
+                            carrierAddresses:
+                              type: array
+                              items:
+                                type: object
+                                additionalProperties: false
+                                required:
+                                  - id
+                                  - address
+                                properties:
+                                  id:
+                                    type: integer
+                                    description: 'shipper address identifier'
+                                    examples:
+                                      - 1
+                                  address:
+                                    type: string
+                                    description: 'shipper address string'
+                                    examples:
+                                      - 'PPL CZ, a.s., U Pergamenky 1522/2, Praha 7, 170 00'
+                            bankAccounts:
+                              type: array
+                              items:
+                                type: object
+                                additionalProperties: false
+                                required:
+                                  - id
+                                  - bankAccount
+                                properties:
+                                  id:
+                                    type: integer
+                                    description: 'shipper bank account identifier'
+                                    examples:
+                                      - 1
+                                  bankAccount:
+                                    type: string
+                                    description: 'shipper bank account (IBAN)'
+                                    examples:
+                                      - CZ6508000000192000145399
+                            branch:
+                              type: string
+                              description: 'shipping branch'
+                              examples:
+                                - integration
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                example:
+                  data: null
+                  errors:
+                    -
+                      errorCode: order-not-found
+                      message: 'Order "2024000008" not found.'
+                      instance: '2024000008'
+      summary: 'Shipment shipping options by order code'
+      operationId: getShipmentShippingOptionsByOrderCode
+      description: 'Returns available shipping options for the given order.'
+      tags:
+        - Delivery
+      parameters:
+        -
+          name: code
+          in: path
+          description: 'Order code.'
+          required: true
+          example: '2024000008'
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  /api/shipments/carriers:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - shipmentCarriers
+                    additionalProperties: false
+                    properties:
+                      shipmentCarriers:
+                        type: array
+                        additionalProperties: false
+                        items:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            id:
+                              type: integer
+                              description: 'Shipment carrier ID'
+                              examples:
+                                - 110
+                            name:
+                              type: string
+                              description: 'Shipment carrier name'
+                              examples:
+                                - PPL
+                            code:
+                              type: string
+                              description: 'Shipment carrier code'
+                              examples:
+                                - logistics-ppl
+                            type:
+                              type: string
+                              description: 'type of carrier, for possible values see [Shipment carrier types](#section/code-lists/shipment-carrier-types) code list'
+                              examples:
+                                - integration
+                            hasHomeDelivery:
+                              type: boolean
+                              description: '`true` if carrier supports home delivery'
+                            hasPickupPoints:
+                              type: boolean
+                              description: '`true` if carrier supports pickup points'
+                            hasCollection:
+                              type: boolean
+                              description: '`true` if carrier supports collection (pickup from sender)'
+                            maxWeight:
+                              type: integer
+                              description: 'max weight of shipment'
+                              examples:
+                                - 30
+                            activationStatus:
+                              type: string
+                              description: 'activation status, possible values are: `active`, `inactive`, `activation_in_progress`, `missing_credentials`, and `rejected`'
+                              examples:
+                                - active
+                            countries:
+                              type: array
+                              items:
+                                $ref: '#/components/schemas/shipmentCarrierCountry'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+      summary: 'List of shipment carriers'
+      operationId: getListOfShipmentCarriers
+      description: |-
+        List of all active shipment carriers.
+
+        The list can be filtered according to carrier type (branch).
+      tags:
+        - Delivery
+      parameters:
+        -
+          name: type
+          in: query
+          description: 'Carrier type (branch) filtering.'
+          required: false
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/shipments/carriers/{code}/{type}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - name
+                      - description
+                      - services
+                      - activationStatus
+                      - methods
+                    properties:
+                      name:
+                        type: string
+                        description: 'Shipment carrier name'
+                        examples:
+                          - PPL
+                      description:
+                        type: string
+                        description: 'Shipment carrier description'
+                        examples:
+                          - 'Carrier description'
+                      services:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - serviceId
+                            - name
+                            - description
+                            - deliveryType
+                            - hasCollection
+                            - countries
+                          properties:
+                            serviceId:
+                              type: integer
+                              description: 'carrier service identifier'
+                              examples:
+                                - 171
+                            name:
+                              type: string
+                              description: 'carrier service name'
+                              examples:
+                                - 'Parcel CZ Business'
+                            description:
+                              type: string
+                              description: 'Carrier service description'
+                              examples:
+                                - 'Carrier service description'
+                            deliveryType:
+                              type: string
+                              description: 'delivery type, possible values are: `address`, `pickup`, `pallet`, and `electronic`'
+                              examples:
+                                - address
+                            hasCollection:
+                              type: boolean
+                              description: 'determines whether collection can be ordered'
+                              examples:
+                                - true
+                            countries:
+                              type: array
+                              items:
+                                $ref: '#/components/schemas/shipmentCarrierCountry'
+                      activationStatus:
+                        type: string
+                        description: 'activation status, possible values are: `active`, `inactive`, `activation_in_progress`, `missing_credentials`, and `rejected`'
+                        examples:
+                          - active
+                      methods:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - methodId
+                            - serviceName
+                            - methodName
+                            - groupName
+                            - state
+                          properties:
+                            methodId:
+                              type: integer
+                              description: 'carrier method identifier'
+                              examples:
+                                - 171
+                            serviceName:
+                              type: string
+                              description: 'carrier service name'
+                              examples:
+                                - 'Parcel CZ Smart'
+                            methodName:
+                              type: string
+                              description: 'carrier method name'
+                              examples:
+                                - 'PPL (Shoptet Logistics) CZ Smart'
+                            groupName:
+                              type: string
+                              description: 'carrier method group name'
+                              examples:
+                                - Maloobchod
+                            state:
+                              type: string
+                              description: 'state of carrier method, possible values are: `visible`, `hidden`, and `invalid`'
+                              examples:
+                                - visible
+                      addresses:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/shipmentAddress'
+                      bankAccounts:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - id
+                            - logisticsBankAccountId
+                            - carrierId
+                            - countryCode
+                            - currencyCode
+                            - isDefault
+                            - iban
+                          properties:
+                            id:
+                              type: integer
+                              description: 'carrier bank account identifier'
+                              examples:
+                                - 171
+                            logisticsBankAccountId:
+                              type: integer
+                              description: 'carrier logistics bank account identifier'
+                              examples:
+                                - 10
+                            carrierId:
+                              type: integer
+                              description: 'carrier identifier'
+                              examples:
+                                - 110
+                            countryCode:
+                              type: string
+                              description: 'bank account country code'
+                              examples:
+                                - CZ
+                            currencyCode:
+                              type: string
+                              description: 'bank account currency code'
+                              examples:
+                                - CZK
+                            isDefault:
+                              type: boolean
+                              description: '`true` if carrier bank account is set as default'
+                            iban:
+                              type: string
+                              description: 'bank account IBAN'
+                              examples:
+                                - CZ6508000000000192834123
+                            bban:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'bank account BBAN'
+                              examples:
+                                - 19-2000145399/0800
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                example:
+                  data: null
+                  errors:
+                    -
+                      errorCode: shipment-carrier-not-found
+                      message: 'Carrier ID "110" of type "integration" not found.'
+                      instance: payload
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                example:
+                  data: null
+                  errors:
+                    -
+                      errorCode: shipment-carrier-type-invalid-type
+                      message: |-
+                        Invalid type "invalidType" given. Valid values are "core,
+                        external, integration, integration_product_contract,
+                        balikobot, system".
+                      instance: payload
+      summary: 'Shipment carrier detail'
+      operationId: getShipmentCarrierDetail
+      description: 'Returns detail of a single shipment carrier identified by its numeric ID and type.'
+      tags:
+        - Delivery
+      parameters:
+        -
+          name: code
+          in: path
+          description: 'Shipment carrier identifier.'
+          required: true
+          example: '110'
+          schema:
+            type: string
+        -
+          name: type
+          in: path
+          description: |-
+            Type of shipment carrier, for possible values see [Shipment carrier
+            types](#section/code-lists/shipment-carrier-types) code list.
+          required: true
+          example: integration
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/shipments/carriers/{code}/close':
+    post:
+      responses:
+        202:
+          description: Accepted
+        404:
+          description: 'Not Found'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                example:
+                  data: null
+                  errors:
+                    -
+                      errorCode: shipment-carrier-not-found
+                      message: 'Carrier ID "110" not found.'
+                      instance: payload
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            'application/json; charset=utf-8':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                example:
+                  data: null
+                  errors:
+                    -
+                      errorCode: closing-shipments-failed
+                      message: 'Unable to close shipments for carrier ID "110".'
+                      instance: payload
+      summary: 'Close carrier shipments'
+      operationId: closeCarrierShipments
+      description: |-
+        Closes (moves to transportation stage) of all created shipments for
+        given carrier ID.
+      tags:
+        - Delivery
+      parameters:
+        -
+          name: code
+          in: path
+          description: 'Shipment carrier identifier.'
+          required: true
+          example: '110'
           schema:
             type: string
         -
@@ -48246,44 +49428,79 @@ components:
           type:
             - integer
             - 'null'
+          description: 'carrier address identifier'
+          examples:
+            - 1
         name:
           type: string
+          description: 'carrier address name'
+          examples:
+            - 'Usk, a.s.'
         countryCode:
           type: string
+          description: 'address country code'
+          examples:
+            - CZ
         street:
           type: string
+          description: 'address street'
+          examples:
+            - Dlouhá
         city:
           type:
             - string
             - 'null'
+          description: 'address city'
+          examples:
+            - Praha
         zipCode:
           type:
             - string
             - 'null'
+          description: 'address ZIP code'
+          examples:
+            - '295 01'
         houseNumber:
           type:
             - string
             - 'null'
+          description: 'address house number'
+          examples:
+            - '6'
         contactPhone:
           type:
             - string
             - 'null'
+          description: 'contact phone'
+          examples:
+            - '+420123456789'
         senderName:
           type: string
+          description: 'sender name'
         contactPerson:
           type: string
+          description: 'contact person name'
         contactEmail:
           type:
             - string
             - 'null'
+          description: 'contact email'
+          examples:
+            - johny@shoptet.cz
         isDefault:
           type:
             - boolean
             - 'null'
+          description: '`true` if carrier address is set as default, can be `null`'
+          examples:
+            - true
         type:
           type:
             - string
             - 'null'
+          description: 'type of carrier address, can be `null`, for possible values see [Shipment carrier types](#section/code-lists/shipment-carrier-types) code list'
+          examples:
+            - core
     shipmentCustomer:
       type: object
       additionalProperties: false
@@ -48294,38 +49511,65 @@ components:
           type:
             - string
             - 'null'
+          description: 'customer name, can be `null`'
+          examples:
+            - 'John Doe'
         company:
           type:
             - string
             - 'null'
+          description: 'company name, can be `null`'
+          examples:
+            - 'Company, Ltd.'
         street:
           type:
             - string
             - 'null'
+          description: 'customer street, can be `null`'
+          examples:
+            - 'Street 543'
         city:
           type:
             - string
             - 'null'
+          description: 'customer city, can be `null`'
+          examples:
+            - Prague
         zipCode:
           type:
             - string
             - 'null'
+          description: 'customer ZIP code, can be `null`'
+          examples:
+            - '110 00'
         countryCode:
           type:
             - string
             - 'null'
+          description: 'customer country code, can be `null`'
+          examples:
+            - CZ
         phone:
           type:
             - string
             - 'null'
+          description: 'customer phone, can be `null`'
+          examples:
+            - '+420123456789'
         email:
           type:
             - string
             - 'null'
+          description: 'customer email, can be `null`'
+          examples:
+            - john@example.org
         note:
           type:
             - string
             - 'null'
+          description: 'customer note, can be `null`'
+          examples:
+            - 'some customer note'
     shipmentSenderRecipientAddress:
       type:
         - object
@@ -48393,8 +49637,14 @@ components:
       properties:
         value:
           $ref: '#/components/schemas/typePriceNullable'
+          description: 'shipment value, can be `null`'
+          examples:
+            - '1000.00'
         currencyCode:
           type: string
+          description: 'currency code'
+          examples:
+            - CZK
     shipmentCoDPrice:
       type:
         - object
@@ -48406,8 +49656,14 @@ components:
       properties:
         value:
           $ref: '#/components/schemas/typePriceNullable'
+          description: 'the max limit of COD, can be `null`'
+          examples:
+            - '1000.00'
         currencyCode:
           type: string
+          description: 'currency code'
+          examples:
+            - CZK
     shipmentPackage:
       type: object
       additionalProperties: false
@@ -48416,42 +49672,72 @@ components:
           type:
             - number
             - 'null'
+          description: 'package width, can be `null`'
+          examples:
+            - 30
         height:
           type:
             - number
             - 'null'
+          description: 'package height, can be `null`'
+          examples:
+            - 20
         depth:
           type:
             - number
             - 'null'
+          description: 'package depth, can be `null`'
+          examples:
+            - 10
         weight:
           type:
             - number
             - 'null'
+          description: 'package weight, can be `null`'
+          examples:
+            - 1
         name:
           type:
             - string
             - 'null'
+          description: 'name of shipment package, can be `null`'
+          examples:
+            - 'Custom packaging'
         packagingId:
           type:
             - integer
             - 'null'
+          description: 'package identifier, can be `null`'
+          examples:
+            - 468
         labelUrl:
           type:
             - string
             - 'null'
+          description: 'URL of the package label, can be `null`'
+          examples:
+            - 'https://www.example.org/label'
         labelZpl:
           type:
             - string
             - 'null'
+          description: 'label ZPL content, can be `null`'
+          examples:
+            - '^XA^FO50,50^ADN,36,20^FDHello World^FS^XZ'
         trackingNumber:
           type:
             - string
             - 'null'
+          description: 'tracking number, can be `null`'
+          examples:
+            - NR0001462551Y
         trackingUrl:
           type:
             - string
             - 'null'
+          description: 'tracking URL, can be `null`'
+          examples:
+            - 'https://www.balikovna.cz/cs/sledovat-balik/-/balik/NR0001462551Y'
     shipmentPackageWithHistory:
       type: object
       additionalProperties: false
@@ -48462,44 +49748,75 @@ components:
           type:
             - number
             - 'null'
+          description: 'package width, can be `null`'
+          examples:
+            - 30
         height:
           type:
             - number
             - 'null'
+          description: 'package height, can be `null`'
+          examples:
+            - 20
         depth:
           type:
             - number
             - 'null'
+          description: 'package depth, can be `null`'
+          examples:
+            - 10
         weight:
           type:
             - number
             - 'null'
+          description: 'package weight, can be `null`'
+          examples:
+            - 1
         name:
           type:
             - string
             - 'null'
+          description: 'name of shipment package, can be `null`'
+          examples:
+            - 'Custom packaging'
         packagingId:
           type:
             - integer
             - 'null'
+          description: 'package identifier, can be `null`'
+          examples:
+            - 468
         labelUrl:
           type:
             - string
             - 'null'
+          description: 'URL of the package label, can be `null`'
+          examples:
+            - 'https://www.example.org/label'
         labelZpl:
           type:
             - string
             - 'null'
+          description: 'label ZPL content, can be `null`'
+          examples:
+            - '^XA^FO50,50^ADN,36,20^FDHello World^FS^XZ'
         trackingNumber:
           type:
             - string
             - 'null'
+          description: 'tracking number, can be `null`'
+          examples:
+            - NR0001462551Y
         trackingUrl:
           type:
             - string
             - 'null'
+          description: 'tracking URL, can be `null`'
+          examples:
+            - 'https://www.balikovna.cz/cs/sledovat-balik/-/balik/NR0001462551Y'
         history:
           type: array
+          description: 'shipment history'
           items:
             $ref: '#/components/schemas/shipmentHistory'
     shipmentHistory:
@@ -48514,14 +49831,25 @@ components:
       properties:
         fromStatus:
           type: string
+          description: 'status before change'
+          examples:
+            - created
         toStatus:
           type: string
+          description: 'status after change'
+          examples:
+            - in_transit
         realDatetime:
           $ref: '#/components/schemas/typeDateTimeNullable'
+          description: 'real date and time'
         providerDatetime:
           $ref: '#/components/schemas/typeDateTimeNullable'
+          description: 'provider date and time'
         note:
           type: string
+          description: 'shipment history note'
+          examples:
+            - 'Shipment is in Depo AB 1'
     shipmentCarrierCountry:
       type: object
       additionalProperties: false
@@ -48533,14 +49861,24 @@ components:
       properties:
         countryCode:
           type: string
+          description: 'carrier country code'
+          examples:
+            - CZ
         maxCod:
           $ref: '#/components/schemas/typePriceNullable'
+          description: 'the max limit of COD, can be `null`'
         codCurrencyCode:
           type:
             - string
             - 'null'
+          description: 'currency code of COD, can be `null`'
+          examples:
+            - CZK
         maxWeight:
           type: integer
+          description: 'max weight of shipment'
+          examples:
+            - 31
     onlineStoreCountry:
       type:
         - object
@@ -51117,6 +52455,10 @@ x-tagGroups:
       - 'Related products'
       - 'Product related files'
       - 'Product sets'
+  -
+    name: Delivery
+    tags:
+      - Delivery
   -
     name: Customers
     tags:
