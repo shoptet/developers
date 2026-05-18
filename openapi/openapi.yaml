@@ -31136,8 +31136,7 @@ paths:
                 data:
                   type: object
                   additionalProperties: false
-                  required:
-                    - url
+                  minProperties: 1
                   properties:
                     url:
                       type: string
@@ -42644,6 +42643,7 @@ components:
         - url
         - created
         - updated
+        - sendPayload
       properties:
         id:
           type: integer
