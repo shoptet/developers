@@ -3369,6 +3369,21 @@ paths:
                             description: "If `true`, the name of the recipient's contact person will be shown on the issued documents. Available only if module `invoicing` is active."
                             examples:
                               - true
+                          showRecipientEmail:
+                            type: boolean
+                            description: "If `true`, the recipient's email address will be shown on the issued documents. Available only if module `invoicing` is active."
+                            examples:
+                              - true
+                          showRecipientPhone:
+                            type: boolean
+                            description: "If `true`, the recipient's phone number will be shown on the issued documents. Available only if module `invoicing` is active."
+                            examples:
+                              - true
+                          showRecipientDeliveryAddress:
+                            type: boolean
+                            description: "If `true`, the recipient's delivery address will be shown on the issued documents. Available only if module `invoicing` is active."
+                            examples:
+                              - true
                       logoUrl:
                         type:
                           - string
