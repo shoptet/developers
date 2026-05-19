@@ -15304,7 +15304,7 @@ paths:
                     type: 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
-      summary: 'Shipment insertion'
+      summary: 'Creation of shipment'
       operationId: createShipment
       description: |-
         In the `packages` field, you can send an object containing three
@@ -15349,14 +15349,14 @@ paths:
                       type:
                         - integer
                         - 'null'
-                      description: 'shipping ID; required; you can get this ID via [Shipment shipping options](#tag/Delivery/operation/getShipmentShippingOptionsByOrderCode)'
+                      description: 'shipping ID; required; you can get this ID via [Shipment shipping options](#tag/delivery/getshipmentshippingoptionsbyordercode)'
                       examples:
                         - 250
                     addressId:
                       type:
                         - integer
                         - 'null'
-                      description: 'address ID; required; you can get this ID via [Shipment shipping options](#tag/Delivery/operation/getShipmentShippingOptionsByOrderCode)'
+                      description: 'address ID; required; you can get this ID via [Shipment shipping options](#tag/delivery/getshipmentshippingoptionsbyordercode)'
                       examples:
                         - 1
                     bankAccountId:
@@ -15543,7 +15543,7 @@ paths:
                     type: 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
-      summary: 'Shipment detail'
+      summary: 'Detail of shipment'
       operationId: getShipmentDetail
       description: 'Returns detail of a single shipment identified by its GUID.'
       tags:
@@ -15663,7 +15663,7 @@ paths:
                     type: 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
-      summary: 'Shipment insertion by order code'
+      summary: 'Creation of shipment by order code'
       operationId: createShipmentByOrderCode
       description: '[DEPRECATED] Use `POST /api/shipments` instead. Creates a new shipment for the order identified by its code.'
       tags:
@@ -15728,7 +15728,7 @@ paths:
         Requests cancellation of shipment. Cancellation request, if valid, is
         accepted via API - it means we try to process this request within the
         carrier. The final state of this request can be checked in the [Shipment
-        detail](#tag/Delivery/operation/getShipmentDetail) endpoint.
+        detail](#tag/delivery/getshipmentdetail) endpoint.
       tags:
         - Delivery
       parameters:
@@ -16185,7 +16185,7 @@ paths:
                         external, integration, integration_product_contract,
                         balikobot, system".
                       instance: payload
-      summary: 'Shipment carrier detail'
+      summary: 'Detail of shipment carrier'
       operationId: getShipmentCarrierDetail
       description: 'Returns detail of a single shipment carrier identified by its numeric ID and type.'
       tags:
