@@ -766,9 +766,9 @@ info:
     salesChannel:create | Sales channel create event | GUID of sales channel
     salesChannel:update | Sales channel update event | GUID of sales channel
     salesChannel:delete | Sales channel delete event | GUID of sales channel
-    shipment:create | Shipment confirmation event. Carrier confirmed the shipment (tracking number assigned, label ready) | Shipment ID
-    shipment:update | Shipment status change event (in transit, delivered, returned, closed, cancel requested, etc.) | Shipment ID
-    shipment:fail | Shipment failure event. Status changed to failed | Shipment ID
+    shipment:create | Shipment confirmation event. Carrier confirmed the shipment (tracking number assigned, label ready) | GUID of Shipment
+    shipment:update | Shipment status change event (in transit, delivered, returned, closed, cancel requested, etc.) | GUID of Shipment
+    shipment:fail | Shipment failure event. Status changed to failed | GUID of Shipment
     shippingMethod:change | Shipping method change event | Shipping method GUID
     sectionArticle:create | Article section create event | ID of article section
     sectionArticle:update | Article section update event | ID of article section
@@ -15252,8 +15252,8 @@ paths:
                           - 'null'
                         description: 'URL to check and create blocking request until shipment is done. This feature is not available by default and this field is always null. To enable this feature consult your use case with your Shoptet contact.'
                         examples:
-                          - 'https://logistics-api.myshoptet.com/gls-shipment-addon/checkShipment?eshopId=100000&shipmentIds=123'
-                          - 'https://logistics-api.myshoptet.com/gls-shipment-addon/checkShipment?eshopId=100000&shipmentIds=456'
+                          -
+                            - 'https://example.com/check-shipment-example?ids=123'
                         items:
                           type: string
                   errors:
@@ -15589,8 +15589,8 @@ paths:
                           - 'null'
                         description: 'URL to check and create blocking request until shipment is done. This feature is not available by default and this field is always null. To enable this feature consult your use case with your Shoptet contact.'
                         examples:
-                          - 'https://logistics-api.myshoptet.com/gls-shipment-addon/checkShipment?eshopId=100000&shipmentIds=123'
-                          - 'https://logistics-api.myshoptet.com/gls-shipment-addon/checkShipment?eshopId=100000&shipmentIds=456'
+                          -
+                            - 'https://example.com/check-shipment-example?ids=123'
                         items:
                           type: string
                   errors:
