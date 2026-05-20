@@ -724,6 +724,9 @@ info:
     customer:enableOrders | An event enabled the customer's future orders. Throws `409 Conflict` when try to register simultaneously with `customer:update` | Customer GUID
     customer:import | Import of 1 and more customers was executed | Fixed string "customers"
     customer:delete | Customer was deleted | Customer GUID
+    customerGroup:create | Customer group creation event | ID of customer group
+    customerGroup:update | Customer group change event | ID of customer group
+    customerGroup:delete | Customer group deleting event | ID of customer group
     deliveryNote:create | Delivery note creation event  | Number (`code`) of delivery note
     deliveryNote:delete | Delivery note deleting event    | Number (`code`) of delivery note
     deliveryNote:update | Delivery note change event      | Number (`code`) of delivery note
