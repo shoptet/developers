@@ -29112,6 +29112,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: customer-address-limit-exceeded
+                    message: 'Maximum number of addresses for the customer has been exceeded.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Update of customer'
       operationId: updateCustomer
       description: ''
@@ -29846,6 +29870,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: customer-address-limit-exceeded
+                    message: 'Maximum number of addresses for the customer has been exceeded.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Creation of delivery address'
       operationId: createDeliveryAddress
       description: ''
