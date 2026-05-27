@@ -21220,6 +21220,7 @@ paths:
                             - billCompany
                             - billFullName
                             - price
+                            - paid
                           properties:
                             code:
                               type: string
@@ -21272,6 +21273,13 @@ paths:
                             taxDate:
                               $ref: '#/components/schemas/typeDateNullable'
                               description: 'taxation date in ISO 8601 format'
+                            paid:
+                              type:
+                                - boolean
+                                - 'null'
+                              description: 'flag, whether the invoice was paid. In addition to `true` a `false`, can also be `null`, if the payment status is unknown.'
+                              examples:
+                                - true
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -22659,6 +22667,7 @@ paths:
                             - billFullName
                             - price
                             - changeTime
+                            - paid
                           properties:
                             code:
                               type: string
@@ -22703,6 +22712,13 @@ paths:
                             changeTime:
                               $ref: '#/components/schemas/typeDateTimeNullable'
                               description: 'date of last change, in ISO 8601 format'
+                            paid:
+                              type:
+                                - boolean
+                                - 'null'
+                              description: 'flag, whether the proforma invoice was paid. In addition to `true` a `false`, can also be `null`, if the payment status is unknown.'
+                              examples:
+                                - true
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -52066,6 +52082,7 @@ components:
         - items
         - documentRemark
         - vatPayer
+        - paid
       additionalProperties: false
       properties:
         code:
@@ -52163,6 +52180,13 @@ components:
         proofPayments:
           $ref: '#/components/schemas/proofPaymentsForInvoice'
           description: 'List of linked proof payments'
+        paid:
+          type:
+            - boolean
+            - 'null'
+          description: 'flag, whether the invoice was paid. In addition to `true` a `false`, can also be `null`, if the payment status is unknown.'
+          examples:
+            - true
     pricelistDetail:
       type: object
       additionalProperties: false
