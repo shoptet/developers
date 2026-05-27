@@ -504,7 +504,7 @@ info:
     endpoints - you specify filename returned in response of upload job.
 
 
-    Please note that currently only images (png, jpg, gif) are allowed filetypes
+    Please note that currently only images (png, jpg, gif, webp) are allowed filetypes
     for file upload.
 
 
@@ -40662,7 +40662,7 @@ paths:
         In case of image upload, response tag is "image", any other file types has response key "file" as here:
 
 
-        IMAGE: JPG, PNG, GIF
+        IMAGE: JPG, PNG, GIF, WEBP
 
 
         ```
