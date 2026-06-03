@@ -2969,6 +2969,7 @@ paths:
                           - codeLength
                           - isCodeRandom
                           - numberSeriesStartFrom
+                          - fullVatBreakdownExport
                         properties:
                           codePrefix:
                             type:
@@ -3018,6 +3019,11 @@ paths:
                                 - 'second parameter'
                             items:
                               type: string
+                          fullVatBreakdownExport:
+                            type: boolean
+                            description: 'If `true`, full VAT breakdown is enabled in document exports.'
+                            examples:
+                              - true
                       proformaInvoice:
                         additionalProperties: false
                         type:
