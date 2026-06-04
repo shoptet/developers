@@ -169,7 +169,18 @@ info:
     You can create API access tokens simply in the eshop administration. Send
     them in the request header `Shoptet-Private-API-Token`.
 
-    You can automatically access all API endpoints.
+    Private API tokens use **endpoint group rights** to control access. Each
+    token is assigned one or more endpoint groups, and each group grants either
+    read, write, or read+write access to the endpoints it contains.
+
+    When new token is created, all available endpoint groups are granted
+    automatically, so the token can access all API endpoints out of the box.
+    Access can be restricted by removing individual endpoint groups in the
+    eshop administration under `Access to API`.
+
+    If the token does not have the required right for an endpoint, you will
+    receive a HTTP status code 403 Forbidden with the error code
+    `invalid-token-no-rights`.
 
 
     ## Rate limiting
