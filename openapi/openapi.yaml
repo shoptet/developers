@@ -775,9 +775,6 @@ info:
     proofPayment:create | Proof of payment creation event | Number (`code`) of proof payment | no
     proofPayment:delete | Proof of payment deleting event | Number (`code`) of proof payment | no
     proofPayment:update | Proof of payment change event   | Number (`code`) of proof payment | no
-    product:create | Product creation event | String (`guid`) of product | yes
-    product:update | Product change event | String (`guid`) of product | yes
-    product:delete | Product deleting event | String (`guid`) of product | no
     quantityDiscount:create | Quantity discount creation event | ID of quantity discount | no
     quantityDiscount:update | Quantity discount change event | ID of quantity discount | no
     quantityDiscount:delete | Quantity discount deleting event | ID of quantity discount | no
