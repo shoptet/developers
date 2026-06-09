@@ -34849,94 +34849,7 @@ paths:
                       coupons:
                         type: array
                         items:
-                          type: object
-                          additionalProperties: false
-                          required:
-                            - code
-                            - creationTime
-                            - discountType
-                            - amount
-                            - ratio
-                            - minPrice
-                            - currency
-                            - template
-                            - shippingPrice
-                            - validFrom
-                            - validTo
-                            - reusable
-                            - usedCount
-                            - remark
-                          properties:
-                            code:
-                              type: string
-                              description: 'code of discount coupon'
-                              examples:
-                                - DC14585431
-                            creationTime:
-                              $ref: '#/components/schemas/typeDateTimeNullable'
-                              description: 'date and time, when the discount coupon was created'
-                            discountType:
-                              type: string
-                              enum:
-                                - percentual
-                                - fixed
-                              description: 'type of discount. Percentual (`percentual`) or absolute discount (`fixed`)'
-                              examples:
-                                - percentual
-                            amount:
-                              $ref: '#/components/schemas/typePriceNullable'
-                              description: 'amount of absolute discount (default eshop VAT rate is used)'
-                            ratio:
-                              oneOf:
-                                -
-                                  $ref: '#/components/schemas/typePriceRatio'
-                                -
-                                  type: 'null'
-                              description: 'amount of percentual discount'
-                            minPrice:
-                              $ref: '#/components/schemas/typePriceNullable'
-                              description: 'minimum price of order (default eshop VAT rate is used)'
-                            currency:
-                              $ref: '#/components/schemas/typeCurrencyCodeNullable'
-                              description: 'currency of fixed discount.'
-                            template:
-                              $ref: '#/components/schemas/typeGuid'
-                              description: 'template used for the discount coupon creation.'
-                            shippingPrice:
-                              type:
-                                - string
-                                - 'null'
-                              enum:
-                                - cart
-                                - free
-                                - beforeDiscount
-                                - null
-                              description: 'how the transport prices are calculated: according to the cart before discounts (beforeDiscount), according to the displayed value of the cart (cart), or free (free)'
-                              examples:
-                                - cart
-                            validFrom:
-                              $ref: '#/components/schemas/typeDateNullable'
-                              description: 'starting date of coupon validity'
-                            validTo:
-                              $ref: '#/components/schemas/typeDateNullable'
-                              description: 'ending date of coupon validity'
-                            reusable:
-                              type: boolean
-                              description: 'Is the discount coupon reusable?'
-                              examples:
-                                - true
-                            usedCount:
-                              type: integer
-                              description: 'number of times the discount coupon has been used'
-                              examples:
-                                - 0
-                            remark:
-                              type:
-                                - string
-                                - 'null'
-                              description: 'remark for the discount coupon.'
-                              examples:
-                                - 'Note: This is a test discount coupon'
+                          $ref: '#/components/schemas/discountCoupon'
                   errors:
                     $ref: '#/components/schemas/Errors'
                   metadata:
@@ -35008,7 +34921,7 @@ paths:
                             $ref: '#/components/schemas/typePriceNullable'
                             description: 'Amount of fixed discount (default eshop VAT rate is used). This items needs to be omitted when `discountType` is set to `percentual`'
                             examples:
-                              - '100.0'
+                              - '100.00'
                           ratio:
                             type:
                               - string
@@ -35021,7 +34934,273 @@ paths:
                             $ref: '#/components/schemas/typePriceNullable'
                             description: 'Minimum price of order (default eshop VAT rate is used)'
                             examples:
-                              - '100.0'
+                              - '100.00'
+                          currency:
+                            $ref: '#/components/schemas/typeCurrencyCodeNullable'
+                            description: 'Currency of fixed discount. It can be null only when `discountType` is set to `percentual` and `minPrice` is set to null'
+                            examples:
+                              - CZK
+                          template:
+                            $ref: '#/components/schemas/typeGuid'
+                            description: 'GUID of discount coupon template'
+                          shippingPrice:
+                            type: string
+                            enum:
+                              - cart
+                              - free
+                              - beforeDiscount
+                            description: 'How the transport prices are calculated: according to the cart before discounts (beforeDiscount), according to the displayed value of the cart (cart), or free (free)'
+                            examples:
+                              - cart
+                          validFrom:
+                            $ref: '#/components/schemas/typeDateNullable'
+                            description: 'Starting date of coupon validity'
+                          validTo:
+                            $ref: '#/components/schemas/typeDateNullable'
+                            description: 'Ending date of coupon validity'
+                          reusable:
+                            type: boolean
+                            description: 'Is the discount coupon reusable?'
+                            examples:
+                              - true
+                          remark:
+                            type:
+                              - string
+                              - 'null'
+                            description: 'Discount coupon note'
+                            examples:
+                              - 'This is a discount coupon for the first purchase.'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - coupons
+                    properties:
+                      coupons:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/discountCoupon'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+              examples:
+                duplicateCode:
+                  value:
+                    data:
+                      coupons:
+                        -
+                          code: DISCOUNT10
+                          amount: '100.00'
+                          minPrice: null
+                          creationTime: '2024-01-15T10:00:00+0100'
+                          validFrom: null
+                          validTo: null
+                          ratio: null
+                          template: 01b39ad8-8686-11e9-968c-08002774f818
+                          currency: CZK
+                          reusable: true
+                          usedCount: 0
+                          remark: null
+                          discountType: fixed
+                          shippingPrice: cart
+                    errors:
+                      -
+                        errorCode: discount-coupon-code-duplicated
+                        message: 'Discount coupon code "DISCOUNT10" is duplicated.'
+                        instance: 'data.coupons[1].code'
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+              examples:
+                missingModule:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: missing-module
+                        message: 'Method requires active discountCoupons module in eshop.'
+                        instance: discountCoupons
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+              examples:
+                couponNotFound:
+                  value:
+                    data:
+                      coupons: []
+                    errors:
+                      -
+                        errorCode: discount-coupon-not-found
+                        message: 'Discount coupon with code "UNKNOWN" was not found.'
+                        instance: 'data.coupons[0].code'
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+                validationErrors:
+                  value:
+                    data:
+                      coupons: []
+                    errors:
+                      -
+                        errorCode: invalid-request-data
+                        message: 'For "percentual" discount type you cannot provide "amount" property'
+                        instance: 'data.coupons[0].amount'
+                      -
+                        errorCode: invalid-request-data
+                        message: 'For "fixed" discount type you cannot provide "ratio" property'
+                        instance: 'data.coupons[1].ratio'
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Field "ratio" is required when "discountType" is "percentual".'
+                        instance: 'data.coupons[2].ratio'
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Field "amount" is required when "discountType" is "fixed".'
+                        instance: 'data.coupons[3].amount'
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Missing "currency" field. It is required when price is specified in body.'
+                        instance: 'data.coupons[4].currency'
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Field "discountType" is required when "currency" is provided without "minPrice".'
+                        instance: 'data.coupons[5].discountType'
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Invalid value number "0.00" for property "amount". Value must be higher than zero.'
+                        instance: 'data.coupons[6].amount'
+                      -
+                        errorCode: invalid-request-data
+                        message: 'No fields to update were provided.'
+                        instance: 'data.coupons[7]'
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Bulk discount coupon update'
+      operationId: bulkUpdateDiscountCoupons
+      description: |-
+        Bulk partial update of existing discount coupons. Each coupon in the request
+        must include `code` as the identifier. All remaining fields are optional and
+        applied as a partial update — only provided fields are changed.
+
+        When `discountType` is `percentual`, `amount` must not be provided. When
+        `discountType` is `fixed`, `ratio` must not be provided.
+
+        The `currency` field  is required when `discountType` is `fixed` or `minPrice`
+        is not null.
+
+        Invalid coupons or coupons not found by `code` are skipped and reported in `errors[]`.
+      tags:
+        - 'Discount coupons'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - coupons
+                  properties:
+                    coupons:
+                      type: array
+                      description: 'Discount coupons. Minimal 1 item, maximal 999 items.'
+                      minItems: 1
+                      maxItems: 999
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - code
+                        properties:
+                          code:
+                            type: string
+                            minLength: 1
+                            maxLength: 16
+                            description: 'Code of the discount coupon to update. Used as the identifier.'
+                            examples:
+                              - DISCOUNT10
+                          discountType:
+                            type: string
+                            enum:
+                              - percentual
+                              - fixed
+                            description: 'Type of discount. Percentual (percentual) or fixed discount (fixed)'
+                            examples:
+                              - percentual
+                          amount:
+                            $ref: '#/components/schemas/typePriceNullable'
+                            description: 'Amount of fixed discount (default eshop VAT rate is used). This items needs to be omitted when `discountType` is set to `percentual`'
+                            examples:
+                              - '100.00'
+                          ratio:
+                            type:
+                              - string
+                              - 'null'
+                            pattern: '[0-1]\.[0-9]{4}$'
+                            description: 'Amount of percentual discount. This items needs to be omitted when `discountType` is set to `fixed`. 4 decimal places accuracy, from `0.0000` (0% discount) to `1.0000` (100% discount).'
+                            examples:
+                              - '0.1000'
+                          minPrice:
+                            $ref: '#/components/schemas/typePriceNullable'
+                            description: 'Minimum price of order (default eshop VAT rate is used)'
+                            examples:
+                              - '100.00'
                           currency:
                             $ref: '#/components/schemas/typeCurrencyCodeNullable'
                             description: 'Currency of fixed discount. It can be null only when `discountType` is set to `percentual` and `minPrice` is set to null'
