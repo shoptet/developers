@@ -25508,15 +25508,27 @@ paths:
                     $ref: '#/components/schemas/Errors'
                   metadata:
                     $ref: '#/components/schemas/Metadata'
-              example:
-                data: null
-                errors:
-                  -
-                    errorCode: invalid-request-data
-                    message: 'Field cannot be empty string.'
-                    instance: data.reasonRemark
-                metadata:
-                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+              examples:
+                invalid-request-data-1:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Field cannot be empty string.'
+                        instance: data.reasonRemark
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+                invalid-request-data-2:
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Provided item amount for id \"123\" is greater than current document item amount.'
+                        instance: integration-call
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Credit note from invoice creation'
       operationId: createCreditNoteFromInvoice
       description: |-
@@ -25843,7 +25855,7 @@ paths:
                 additionalProperties: false
       summary: 'Creation of credit note item'
       operationId: createCreditNoteItem
-      description: 'Creates a new credit note item to an existing credit note.'
+      description: 'Creates a new credit note item to an existing credit, only billing or shipping item types are allowed.'
       tags:
         - 'Credit notes'
       parameters:
@@ -25868,7 +25880,6 @@ paths:
                 data:
                   type: object
                   additionalProperties: false
-                  minProperties: 1
                   required:
                     - itemType
                     - name
@@ -25877,13 +25888,12 @@ paths:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'item type, required (allowed `product` or `product-set` only)'
+                      description: 'item type, required (allowed `billing` or `shipping` only)'
+                      enum:
+                        - billing
+                        - shipping
                       examples:
-                        - product
-                    code:
-                      type: string
-                      examples:
-                        - '2018000012'
+                        - billing
                     amount:
                       $ref: '#/components/schemas/typeAmountNullable'
                       description: 'name of item, required'
@@ -25894,20 +25904,6 @@ paths:
                       description: 'name of item, required'
                       examples:
                         - 'Item name'
-                    variantName:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'name of variant (can be `null`)'
-                      examples:
-                        - white
-                    amountUnit:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'unit of amount (`kg`, `ks`) (can be `null`)'
-                      examples:
-                        - kg
                     price:
                       type: string
                       description: 'price of item, 2 decimal places accuracy (can be `null`), default value `0.00`'
@@ -25924,9 +25920,6 @@ paths:
                     vatRate:
                       $ref: '#/components/schemas/typeVatRate'
                       description: 'VAT rate in percent'
-                    weight:
-                      $ref: '#/components/schemas/typeWeightRequest'
-                      description: 'weight of the item, 3 decimal places accuracy (can be `null`)'
                     remark:
                       type:
                         - string
@@ -25968,6 +25961,46 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: credit-note-item-price-lower-than-zero
+                    message: 'Price must be greater or equal than zero.'
+                    instance: data.price
+                  -
+                    errorCode: credit-note-item-greater-than-invoice
+                    message: 'Price must be equal or lower than connected invoice price.'
+                    instance: data.price
+                  -
+                    errorCode: credit-note-item-amount-lower-than-invoice
+                    message: 'Amount must be equal or greater than connected invoice price.'
+                    instance: data.amount
+                  -
+                    errorCode: credit-note-item-amount-greater-than-zero
+                    message: 'Amount must be lower than zero.'
+                    instance: data.amount
+                  -
+                    errorCode: credit-note-item-invalid-vat-rate
+                    message: 'Unsupported "tax" value "99.00" given. Supported values are "12.00, 21.00".'
+                    instance: data.vatRate
+                  -
+                    errorCode: credit-note-item-mismatch
+                    message: 'Credit note item with ID 1 doesn\''t belong to the credit note with code "001".'
+                    instance: data.vatRate
       summary: 'Update of credit note item'
       operationId: updateCreditNoteItem
       description: |-
@@ -26010,37 +26043,12 @@ paths:
                   additionalProperties: false
                   minProperties: 1
                   properties:
-                    code:
-                      type: string
-                      examples:
-                        - '2018000012'
                     amount:
-                      $ref: '#/components/schemas/typeAmountNullable'
-                      description: 'amount of item, 3 decimal places accuracy, required. For credit note you will probably use negative amount. (can be `null`)'
-                    name:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'name of item (can be `null`)'
-                      examples:
-                        - 'Item name'
-                    variantName:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'name of variant (can be `null`)'
-                      examples:
-                        - white
-                    amountUnit:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'unit of amount (can be `null`)'
-                      examples:
-                        - 'kg, ks'
+                      $ref: '#/components/schemas/typeAmount'
+                      description: 'amount of item, 3 decimal places accuracy. For credit note use negative amount. Value cannot be greater than amount of original invoice item.'
                     price:
                       type: string
-                      description: 'price of item, 3 decimal places accuracy (can be `null`), default value `0.00`'
+                      description: 'price of item, without vat, 3 decimal places accuracy. Value cannot be greater than price of original invoice item or lower than 0.'
                       examples:
                         - '125.00'
                     includingVat:
@@ -26051,26 +26059,6 @@ paths:
                     vatRate:
                       $ref: '#/components/schemas/typeVatRate'
                       description: 'VAT rate in percent'
-                    priceRatio:
-                      $ref: '#/components/schemas/typePriceRatio'
-                      description: 'value of discount of price, 4 decimal places accuracy, (from `0.0000` to `1.0000`), e.g. `0.8500` means 85% discount (can be `null`)'
-                    weight:
-                      $ref: '#/components/schemas/typeWeightRequest'
-                      description: 'weight of the item, 3 decimal places accuracy (can be `null`)'
-                    remark:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'item note (can be `null`)'
-                      examples:
-                        - 'Item note'
-                    additionalField:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'field for additional info (can be `null`)'
-                      examples:
-                        - 'additional info'
     delete:
       responses:
         200:
