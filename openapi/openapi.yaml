@@ -17957,8 +17957,6 @@ paths:
                     billingAddress:
                       type: object
                       additionalProperties: false
-                      required:
-                        - countryCode
                       properties:
                         company:
                           type:
@@ -18028,7 +18026,7 @@ paths:
                         countryCode:
                           type: string
                           minLength: 1
-                          description: "Customer's country code"
+                          description: '(string, optional) - country of the customer. Optional, the default delivery country is used as the default value, taken from eshop settings.'
                           examples:
                             - CZ
                         regionName:
@@ -18149,7 +18147,7 @@ paths:
                         countryCode:
                           type: string
                           minLength: 1
-                          description: "Customer's country code"
+                          description: 'country of the customer. Optional, the default delivery country is used as the default value, taken from eshop settings.'
                           examples:
                             - CZ
                         regionName:
@@ -29979,9 +29977,9 @@ paths:
                 data:
                   type: object
                   additionalProperties: false
-                  minProperties: 1
                   required:
                     - countryCode
+                  minProperties: 1
                   properties:
                     fullName:
                       type:
@@ -30058,9 +30056,7 @@ paths:
                     countryCode:
                       type: string
                       minLength: 1
-                      description: "customer's country code"
-                      examples:
-                        - CZ
+                      description: 'country (can be `null`)'
                     regionName:
                       type:
                         - string
@@ -30264,7 +30260,7 @@ paths:
                     countryCode:
                       type: string
                       minLength: 1
-                      description: "customer's country code"
+                      description: 'country (can be `null`)'
                       examples:
                         - CZ
                     regionName:
@@ -44407,7 +44403,9 @@ components:
           examples:
             - '120 00'
         countryCode:
-          type: string
+          type:
+            - string
+            - 'null'
           description: 'tree-character ISO country code (ISO 4217)'
           examples:
             - CZ
@@ -44501,7 +44499,9 @@ components:
           examples:
             - '120 00'
         countryCode:
-          type: string
+          type:
+            - string
+            - 'null'
           description: 'tree-character ISO country code (ISO 4217)'
           examples:
             - CZ
@@ -44629,7 +44629,7 @@ components:
         countryCode:
           type: string
           minLength: 1
-          description: "customer's country code"
+          description: 'country (can be `null`)'
           examples:
             - CZ
         regionName:
@@ -44747,8 +44747,10 @@ components:
           examples:
             - '25088'
         countryCode:
-          type: string
-          description: "customer's country code"
+          type:
+            - string
+            - 'null'
+          description: 'country (can be `null`)'
           examples:
             - CZ
         regionName:
@@ -51206,8 +51208,6 @@ components:
           type: object
           additionalProperties: false
           description: 'invoicing address'
-          required:
-            - countryCode
           properties:
             company:
               type:
@@ -51285,7 +51285,7 @@ components:
             countryCode:
               type: string
               minLength: 1
-              description: "Customer's country code"
+              description: '(string, optional) - country of the customer. Optional, the default delivery country is used as the default value, taken from eshop settings.'
               examples:
                 - CZ
             regionName:
@@ -51422,7 +51422,8 @@ components:
                 countryCode:
                   type:
                     - string
-                  description: "Customer's country code"
+                    - 'null'
+                  description: 'country of the customer. Optional, the default delivery country is used as the default value, taken from eshop settings.'
                   examples:
                     - CZ
                 regionName:
