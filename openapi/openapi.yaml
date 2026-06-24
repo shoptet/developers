@@ -14332,7 +14332,7 @@ paths:
                   - metadata
                 additionalProperties: false
       summary: 'Setting gifts to product'
-      operationId: steGiftsToProduct
+      operationId: setGiftsToProduct
       parameters:
         -
           name: guid
