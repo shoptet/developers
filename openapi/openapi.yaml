@@ -15347,6 +15347,18 @@ paths:
                         errorCode: shipment-validation-failed
                         message: 'Missing delivery point of order.'
                         instance: data.orderCode
+                      -
+                        errorCode: shipment-order-without-shipping
+                        message: 'Order does not include shipping.'
+                        instance: payload
+                      -
+                        errorCode: shipment-address-not-exist
+                        message: 'Default address does not exist.'
+                        instance: payload
+                      -
+                        errorCode: shipment-shipping-service-not-supported
+                        message: 'The selected shipping service does not support shipments.'
+                        instance: payload
               schema:
                 type: object
                 properties:
