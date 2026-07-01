@@ -15134,6 +15134,7 @@ paths:
                                   - disable_order_status_email_notification
                                   - disable_shipment_status_email_notification
                                   - enable_update_in_detail_pages
+                                  - payment_method_linkable
                               description: 'List of abilities of the sales channel.'
                             currencies:
                               type: array
@@ -27012,6 +27013,7 @@ paths:
                                 - disable_order_status_email_notification
                                 - disable_shipment_status_email_notification
                                 - enable_update_in_detail_pages
+                                - payment_method_linkable
                             description: 'List of abilities of the sales channel.'
                           defaultCurrency:
                             type:
@@ -27291,6 +27293,7 @@ paths:
                                 - disable_order_status_email_notification
                                 - disable_shipment_status_email_notification
                                 - enable_update_in_detail_pages
+                                - payment_method_linkable
                             description: 'List of abilities of the sales channel.'
                           defaultCurrency:
                             type:
