@@ -797,6 +797,9 @@ info:
     supplier:create | Supplier creation event | String (`guid`) of supplier | no
     supplier:update | Supplier change event | String (`guid`) of supplier | no
     supplier:delete | Supplier deletion event | String (`guid`) of supplier | no
+    warranty:create | Warranty creation event | Warranty ID | no
+    warranty:update | Warranty change event   | Warranty ID | no
+    warranty:delete | Warranty deleting event | Warranty ID | no
 
     (*) These webhooks are considered beta/experimental, for more information, please visit the X-url
 
