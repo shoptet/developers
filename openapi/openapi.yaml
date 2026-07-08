@@ -18311,7 +18311,7 @@ paths:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'Item type. Mandatory field. See also [Types of order items](#section/code-lists/types-of-order-items) code list. Only `product`, `product-set`, `service`, `bazar`, `volume-discount` or `discount-coupon` item type is allowed.'
+                      description: 'Item type. Mandatory field. See also [Types of order items](#section/code-lists/types-of-order-items) code list. Only `product`, `product-set`, `service`, `bazar`, `volume-discount`, `discount-coupon` or `gift` item type is allowed.'
                       examples:
                         - product
                     code:
@@ -18654,7 +18654,7 @@ paths:
                     itemType:
                       type: string
                       minLength: 1
-                      description: 'Item type. Mandatory field; see also [Types of order items](#section/code-lists/types-of-order-items) code list. Only `product`, `product-set`, `service`, `bazar`, `volume-discount` or `discount-coupon` item type is allowed.'
+                      description: 'Item type. Mandatory field; see also [Types of order items](#section/code-lists/types-of-order-items) code list. Only `product`, `product-set`, `service`, `bazar`, `volume-discount`, `discount-coupon` or `gift` item type is allowed.'
                       examples:
                         - product
                     code:
