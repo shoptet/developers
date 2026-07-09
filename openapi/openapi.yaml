@@ -46340,7 +46340,6 @@ components:
               - priority
               - description
               - changeTime
-              - gallery
             properties:
               name:
                 type: string
@@ -46377,11 +46376,6 @@ components:
               isMainImage:
                 type: boolean
                 description: 'determines whether it is the main image'
-              gallery:
-                type: string
-                description: 'name of the gallery the image belongs to (e.g. "shop" for the standard product gallery, "shop360" for the 360° gallery); matches the gallery segment in the image URL.'
-                examples:
-                  - shop
         flags:
           type: array
           description: 'product flags'
