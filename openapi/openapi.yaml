@@ -19063,7 +19063,7 @@ paths:
             key to identify, which surcharge parameter in relation to order
             item, should be delete
           required: true
-          example: '04e876'
+          example: .Inf
           schema:
             type: string
         -
