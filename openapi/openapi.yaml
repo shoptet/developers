@@ -35973,6 +35973,7 @@ paths:
                             - categories
                             - brands
                             - productFlags
+                            - productSelectionMode
                           properties:
                             guid:
                               $ref: '#/components/schemas/typeGuid'
@@ -36054,6 +36055,14 @@ paths:
                                     description: '`required` or `forbidden`'
                                     examples:
                                       - required
+                            productSelectionMode:
+                              type: string
+                              enum:
+                                - parameters
+                                - specificProducts
+                              description: 'Determines how the coupon is applied. `parameters` uses categories, brands and product flags. `specificProducts` applies only to listed products.'
+                              examples:
+                                - parameters
                   errors:
                     $ref: '#/components/schemas/Errors'
                   metadata:
@@ -36092,6 +36101,8 @@ paths:
                       - categories
                       - brands
                       - productFlags
+                      - productSelectionMode
+                      - products
                     properties:
                       guid:
                         $ref: '#/components/schemas/typeGuid'
@@ -36173,10 +36184,74 @@ paths:
                               description: '`required` or `forbidden`'
                               examples:
                                 - required
+                      productSelectionMode:
+                        type: string
+                        enum:
+                          - parameters
+                          - specificProducts
+                        description: 'Determines how the coupon is applied. `parameters` uses categories, brands and product flags. `specificProducts` applies only to listed products.'
+                        examples:
+                          - parameters
+                      products:
+                        type:
+                          - array
+                          - 'null'
+                        description: 'list of products, for which the discount coupons shall be available.'
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - guid
+                            - name
+                          properties:
+                            guid:
+                              $ref: '#/components/schemas/typeGuid'
+                            name:
+                              type: string
+                              examples:
+                                - 'Batman mug'
                   errors:
                     $ref: '#/components/schemas/Errors'
                   metadata:
                     $ref: '#/components/schemas/Metadata'
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              examples:
+                tooManyProducts:
+                  summary: 'Too many products'
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: validation-error
+                        message: 'Maximum number of products per coupon template is 1000.'
+                        instance: ''
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+                productNotFound:
+                  summary: 'Product not found'
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: validation-error
+                        message: 'Product(s) "bffa3b98-d968-11e0-b04f-57a43310b768" not found.'
+                        instance: ''
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Discount coupons template insertion'
       operationId: createDiscountCouponsTemplate
       description: ''
@@ -36250,10 +36325,205 @@ paths:
                             description: '`required` or `forbidden`'
                             examples:
                               - required
+                    productSelectionMode:
+                      type: string
+                      enum:
+                        - parameters
+                        - specificProducts
+                      description: 'Determines how the coupon is applied. `parameters` uses categories, brands and product flags. `specificProducts` applies only to products listed in `productGuids`. Defaults to `parameters`.'
+                      examples:
+                        - specificProducts
+                    productGuids:
+                      type:
+                        - array
+                        - 'null'
+                      items:
+                        $ref: '#/components/schemas/typeGuid'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/discount-coupons/templates/{guid}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - guid
+                      - title
+                      - customerGroup
+                      - categories
+                      - brands
+                      - productFlags
+                      - productSelectionMode
+                      - products
+                    properties:
+                      guid:
+                        $ref: '#/components/schemas/typeGuid'
+                        description: 'discount coupons template GUID'
+                      title:
+                        type: string
+                        description: 'name of discount coupons template'
+                        examples:
+                          - 'Luxury goods'
+                      customerGroup:
+                        type:
+                          - object
+                          - 'null'
+                        required:
+                          - id
+                          - name
+                        description: 'group of users for whom the discount coupons shall be available.'
+                        properties:
+                          id:
+                            type: integer
+                            description: 'customer group ID'
+                            examples:
+                              - 1
+                          name:
+                            type: string
+                            description: 'customer group name'
+                            examples:
+                              - 'Velkoobchodní odběratel'
+                      categories:
+                        type:
+                          - array
+                          - 'null'
+                        description: 'list of categories, for which the discount coupons shall be available.'
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - guid
+                            - name
+                          properties:
+                            guid:
+                              $ref: '#/components/schemas/typeGuid'
+                            name:
+                              type: string
+                              examples:
+                                - Watch
+                      brands:
+                        type:
+                          - array
+                          - 'null'
+                        description: 'brands, for which the discount can be used.'
+                        items:
+                          $ref: '#/components/schemas/brandNamed'
+                      productFlags:
+                        type:
+                          - array
+                          - 'null'
+                        description: 'discount parameters.'
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - code
+                            - title
+                            - condition
+                          properties:
+                            code:
+                              type: string
+                              description: 'parameter code'
+                              examples:
+                                - akademiks
+                            title:
+                              type: string
+                              description: 'parameter name'
+                              examples:
+                                - Akademiks
+                            condition:
+                              type: string
+                              description: '`required` or `forbidden`'
+                              examples:
+                                - required
+                      productSelectionMode:
+                        type: string
+                        enum:
+                          - parameters
+                          - specificProducts
+                        description: 'Determines how the coupon is applied. `parameters` uses categories, brands and product flags. `specificProducts` applies only to listed products.'
+                        examples:
+                          - parameters
+                      products:
+                        type:
+                          - array
+                          - 'null'
+                        description: 'list of products, for which the discount coupons shall be available.'
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - guid
+                            - name
+                          properties:
+                            guid:
+                              $ref: '#/components/schemas/typeGuid'
+                            name:
+                              type: string
+                              examples:
+                                - 'Batman mug'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: discount-coupon-template-not-found
+                    message: |-
+                      Discount coupon template
+                      "bffa3b98-d968-11e0-b04f-57a43310b768" was not found.
+                    instance: bffa3b98-d968-11e0-b04f-57a43310b768
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Discount coupons template detail'
+      operationId: getDiscountCouponsTemplate
+      description: |-
+        Returns a single discount coupon template by `guid`, including the list of
+        specific products assigned to it.
+      tags:
+        - 'Discount coupons'
+      parameters:
+        -
+          name: guid
+          in: path
+          description: 'discount coupon template guid'
+          required: true
+          example: b6e09a7a-6cb5-11eb-89aa-08002746ad91
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     delete:
       responses:
         200:
