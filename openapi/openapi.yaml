@@ -4289,6 +4289,8 @@ paths:
                       description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
                       examples:
                         - true
+                    hsCode:
+                      $ref: '#/components/schemas/typeHsCodeNullable'
                     supplierGuid:
                       $ref: '#/components/schemas/typeGuid'
                       minLength: 1
@@ -43313,6 +43315,15 @@ components:
       description: "Variant's code. Must be unique if set. After processing it will be converted to uppercase. Generated automatically if not set."
       examples:
         - '0035'
+    typeHsCodeNullable:
+      type:
+        - string
+        - 'null'
+      pattern: '^\d{6,10}$'
+      description: 'Harmonized system code with 6–10 digits (accepting leading zeros).'
+      examples:
+        - '95030099'
+        - '060910'
     paginator:
       type: object
       additionalProperties: false
@@ -45831,6 +45842,7 @@ components:
         - variants
         - supplier
         - internalNote
+        - hsCode
       properties:
         guid:
           $ref: '#/components/schemas/typeGuidUnlimited'
@@ -45937,6 +45949,8 @@ components:
           description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
           examples:
             - true
+        hsCode:
+          $ref: '#/components/schemas/typeHsCodeNullable'
         defaultCategory:
           type: object
           additionalProperties: false
@@ -47070,6 +47084,8 @@ components:
           description: 'whether the preauthorization is required; available only if shoptet pay module is enabled'
           examples:
             - true
+        hsCode:
+          $ref: '#/components/schemas/typeHsCodeNullable'
         supplierGuid:
           $ref: '#/components/schemas/typeGuidNullable'
           minLength: 1
