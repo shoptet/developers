@@ -39993,6 +39993,67 @@ paths:
                       description: 'Name of file in [Files upload](#section/basic-principles/files-upload) storage to be set as article open-graph image. When set to null, image will be removed.'
                       examples:
                         - image.png
+  /api/discussions/settings:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - settings
+                    additionalProperties: false
+                    properties:
+                      settings:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/discussionSettings'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Module "Discussion" is not active.'
+                    instance: discussion
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Discussion settings'
+      operationId: getDiscussionSettings
+      description: 'Discussion settings configured in the administration for each discussion context (product, article, section article): whether discussions are enabled, whether posts require authorization before publishing, whether only registered users may post, whether customers can reply to existing posts, and the pagination limit. Requires "discussion" module to be active.'
+      tags:
+        - Discussions
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/discussions-posts:
     get:
       responses:
@@ -48985,6 +49046,51 @@ components:
           description: 'flag whether the post is authorized (visible on the web)'
           examples:
             - true
+    discussionSettings:
+      type: object
+      additionalProperties: false
+      required:
+        - context
+        - active
+        - authorizationRequired
+        - onlyRegisteredUsers
+        - usersCanAnswer
+        - itemsPerPage
+      properties:
+        context:
+          type: string
+          enum:
+            - product
+            - article
+            - section_article
+          description: 'discussion context the settings apply to'
+          examples:
+            - product
+        active:
+          type: boolean
+          description: 'flag whether discussions are enabled for this context'
+          examples:
+            - true
+        authorizationRequired:
+          type: boolean
+          description: 'flag whether posts require authorization (moderation) before being published'
+          examples:
+            - false
+        onlyRegisteredUsers:
+          type: boolean
+          description: 'flag whether only registered users may post (anonymous posting disabled)'
+          examples:
+            - false
+        usersCanAnswer:
+          type: boolean
+          description: 'flag whether customers can reply to existing discussion posts'
+          examples:
+            - true
+        itemsPerPage:
+          type: integer
+          description: 'number of discussion posts displayed per page'
+          examples:
+            - 20
     pageList:
       type: object
       additionalProperties: false
