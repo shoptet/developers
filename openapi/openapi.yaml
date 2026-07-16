@@ -41382,6 +41382,131 @@ paths:
             type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/reviews/settings:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - showDiscussion
+                      - authorizationType
+                      - onlyRegisteredUsers
+                      - commentAndFullNameRequired
+                      - sendConfirmationEmail
+                      - showVerificationInfo
+                      - reviewsPerPage
+                      - storeRatingEnabled
+                      - storeRatingCommentsRequired
+                      - storeRatingShowVerificationInfo
+                      - verificationIconAllowed
+                    additionalProperties: false
+                    properties:
+                      showDiscussion:
+                        type: boolean
+                        description: 'Whether the advanced product rating with discussion is shown on the product detail.'
+                        examples:
+                          - true
+                      authorizationType:
+                        enum:
+                          - required
+                          - not_required
+                          - not_required_verified
+                        description: "Approval mode for product reviews: 'required' - every review must be authorized; 'not_required' - reviews are published without authorization; 'not_required_verified' - authorization is not required for verified purchases."
+                        examples:
+                          - required
+                      onlyRegisteredUsers:
+                        type: boolean
+                        description: 'Whether only registered (logged-in) customers may submit a product review. When true, anonymous reviews are not allowed.'
+                        examples:
+                          - false
+                      commentAndFullNameRequired:
+                        type: boolean
+                        description: 'Whether a comment and full name are required to submit a product review.'
+                        examples:
+                          - false
+                      sendConfirmationEmail:
+                        type: boolean
+                        description: 'Whether a confirmation email is sent to the author after submitting a product review.'
+                        examples:
+                          - false
+                      showVerificationInfo:
+                        type: boolean
+                        description: 'Whether information about verification is shown next to product reviews.'
+                        examples:
+                          - false
+                      reviewsPerPage:
+                        type: integer
+                        description: 'Number of product reviews displayed per page on the storefront.'
+                        examples:
+                          - 20
+                      storeRatingEnabled:
+                        type: boolean
+                        description: 'Whether store (project) rating is enabled.'
+                        examples:
+                          - true
+                      storeRatingCommentsRequired:
+                        type: boolean
+                        description: 'Whether a comment and name are required to submit a store rating.'
+                        examples:
+                          - false
+                      storeRatingShowVerificationInfo:
+                        type: boolean
+                        description: 'Whether information about verification is shown next to the store rating.'
+                        examples:
+                          - false
+                      verificationIconAllowed:
+                        type: boolean
+                        description: 'Feature flag that gates the display of the verification icon/information for reviews.'
+                        examples:
+                          - false
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active rating module in project.'
+                    instance: rating
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Reviews settings'
+      operationId: getReviewsSettings
+      description: "Returns the reviews settings configured in the administration Rating Settings page, covering both product reviews and store rating. This endpoint is available only when the 'Rating' module is active. The endpoint is read-only."
+      tags:
+        - Reviews
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/reviews/products:
     get:
       responses:
