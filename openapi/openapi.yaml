@@ -17818,6 +17818,30 @@ paths:
                     instance: '0000000001'
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: order-withdrawal-present
+                    message: 'Order with code "0000000001" cannot be deleted as a withdrawal from the purchase contract has been requested for it.'
+                    instance: '0000000001'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Order deletion'
       operationId: deleteOrder
       description: ''
@@ -18864,6 +18888,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: order-item-withdrawal-present
+                    message: 'Order item 198 cannot be deleted because a withdrawal from the purchase contract has been requested for it.'
+                    instance: request
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Order item delete'
       operationId: deleteOrderItem
       description: ''
