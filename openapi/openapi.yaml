@@ -5371,6 +5371,32 @@ paths:
                     instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        423:
+          description: Locked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: concurrent-categories-update
+                    message: |-
+                      Categories of product "4030" are being updated concurrently
+                      by another request. Please retry this request.
+                    instance: '4030'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product update'
       operationId: updateProduct
       description: |-
@@ -5399,6 +5425,10 @@ paths:
 
 
         **Maximum number of variants per product is 512.**
+
+
+        If the product's categories are being updated by another concurrent
+        request at the same time, a 423 code is returned. Retry the request.
       tags:
         - Products
       parameters:
