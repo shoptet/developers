@@ -597,7 +597,13 @@ info:
     `seoName`, which also contains a description
 
     of the image - you will be redirected to the same image. The `cdnName` is
-    intended for use with the `cdnUrl` only.
+    intended for use with the `cdnPath` only.
+
+    `cdnName` contains a signed URL for the `big` cut. For other cuts, use the
+    `signedCdnNames` map, which is keyed by cut code (e.g. `big`, `detail`,
+    `thumbnail`). Each value is a pre-signed filename that can be appended to
+    the matching cut's `cdnPath` from `/api/eshop?include=imageCuts`. Old-format
+    bare-hash URLs remain valid on the CDN.
 
     The fields look like: (excerpt)
 
@@ -606,7 +612,11 @@ info:
         "name": "106.png",
         "description": "shamrock 2115611 640",
         "seoName": "106_shamrock-2115611-640.png",
-        "cdnName": "106_shamrock-2115611-640.png?5b2a41f5"
+        "cdnName": "106_shamrock-2115611-640.png?ff=1&x=1024&y=768&q=85&ts=5b2a41f5&sg=cce48299",
+        "signedCdnNames": {
+            "big": "106_shamrock-2115611-640.png?ff=1&x=1024&y=768&q=85&ts=5b2a41f5&sg=cce48299",
+            "detail": "106_shamrock-2115611-640.png?ff=1&x=423&y=318&q=85&ts=5b2a41f5&sg=265606b9"
+        }
     ```
 
 
@@ -3797,6 +3807,7 @@ paths:
                                 - name
                                 - seoName
                                 - cdnName
+                                - signedCdnNames
                                 - priority
                                 - description
                                 - changeTime
@@ -3814,9 +3825,20 @@ paths:
                                     - 100_purple-apple.jpg
                                 cdnName:
                                   type: string
-                                  description: 'same as `seoName` with attached hashed last image change time.'
+                                  description: "seoName with signed CDN query parameters for the `big` cut. Combine with the cut's `cdnPath` from `/api/eshop?include=imageCuts` to form the full URL. Old-format URLs (bare hash) remain valid on the CDN."
                                   examples:
-                                    - '100_purple-apple.jpg?59393c3a'
+                                    - '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                                signedCdnNames:
+                                  type:
+                                    - object
+                                    - 'null'
+                                  additionalProperties:
+                                    type: string
+                                  description: "Per-cut signed CDN filenames, keyed by cut code (e.g. `big`, `thumbnail`). Combine each value with the matching cut's `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
+                                  examples:
+                                    -
+                                      big: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                                      thumbnail: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
                                 priority:
                                   type: integer
                                   description: "the key for the sequence of images matching the sequence in administration - it's not necessarily from the first, and the series may contain gaps."
@@ -6107,6 +6129,7 @@ paths:
                             - changeTime
                             - seoName
                             - cdnName
+                            - signedCdnNames
                             - isMainImage
                             - gallery
                           properties:
@@ -6139,9 +6162,20 @@ paths:
                                 - 100_purple-apple.jpg
                             cdnName:
                               type: string
-                              description: 'same as `seoName` with attached hashed last image change time. `name`, `seoName` and `cdnName` can be entered in the URL - redirect will deliver the same image.'
+                              description: "seoName with signed CDN query parameters for the `big` cut. Combine with the cut''s `cdnPath` from `/api/eshop?include=imageCuts` to form the full URL. Old-format URLs (bare hash) remain valid on the CDN."
                               examples:
-                                - '100_purple-apple.jpg?59393c3a'
+                                - '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                            signedCdnNames:
+                              type:
+                                - object
+                                - 'null'
+                              additionalProperties:
+                                type: string
+                              description: "Per-cut signed CDN filenames, keyed by cut code (e.g. `big`, `thumbnail`). Combine each value with the matching cut''s `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
+                              examples:
+                                -
+                                  big: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                                  thumbnail: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
                             isMainImage:
                               type: boolean
                             gallery:
@@ -6293,6 +6327,7 @@ paths:
                             - changeTime
                             - seoName
                             - cdnName
+                            - signedCdnNames
                             - isMainImage
                             - gallery
                           properties:
@@ -6325,9 +6360,20 @@ paths:
                                 - 100_purple-apple.jpg
                             cdnName:
                               type: string
-                              description: 'same as `seoName` with attached hashed last image change time. `name`, `seoName` and `cdnName` can be entered in the URL - redirect will deliver the same image.'
+                              description: "seoName with signed CDN query parameters for the `big` cut. Combine with the cut''s `cdnPath` from `/api/eshop?include=imageCuts` to form the full URL. Old-format URLs (bare hash) remain valid on the CDN."
                               examples:
-                                - '100_purple-apple.jpg?59393c3a'
+                                - '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                            signedCdnNames:
+                              type:
+                                - object
+                                - 'null'
+                              additionalProperties:
+                                type: string
+                              description: "Per-cut signed CDN filenames, keyed by cut code (e.g. `big`, `thumbnail`). Combine each value with the matching cut''s `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
+                              examples:
+                                -
+                                  big: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                                  thumbnail: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
                             isMainImage:
                               type: boolean
                             gallery:
@@ -7137,6 +7183,7 @@ paths:
         |images.changeTime                     |yes                     |                                       |
         |images.seoName                        |yes                     |                                       |
         |images.cdnName                        |yes                     |                                       |
+        |images.signedCdnNames                 |yes                     |                                       |
         |descriptiveParameters                 |yes                     |                                       |
         |descriptiveParameters.name            |yes                     |                                       |
         |descriptiveParameters.value           |yes                     |                                       |
@@ -46922,6 +46969,7 @@ components:
               - name
               - seoName
               - cdnName
+              - signedCdnNames
               - priority
               - description
               - changeTime
@@ -46939,9 +46987,20 @@ components:
                   - 100_purple-apple.jpg
               cdnName:
                 type: string
-                description: 'same as `seoName` with attached hashed last image change time. `name`, `seoName` and `cdnName` can be entered in the URL - redirect will deliver the same image.'
+                description: "seoName with signed CDN query parameters for the `big` cut. Combine with the cut's `cdnPath` from `/api/eshop?include=imageCuts` to form the full URL. Old-format URLs (bare hash) remain valid on the CDN."
                 examples:
-                  - '100_purple-apple.jpg?59393c3a'
+                  - '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+              signedCdnNames:
+                type:
+                  - object
+                  - 'null'
+                additionalProperties:
+                  type: string
+                description: "Per-cut signed CDN filenames, keyed by cut code (e.g. `big`, `thumbnail`). Combine each value with the matching cut's `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
+                examples:
+                  -
+                    big: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                    thumbnail: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
               priority:
                 type:
                   - integer
@@ -48476,6 +48535,7 @@ components:
             - name
             - seoName
             - cdnName
+            - signedCdnNames
             - priority
             - description
             - changeTime
@@ -48492,9 +48552,20 @@ components:
                 - 100_purple-apple.jpg
             cdnName:
               type: string
-              description: 'same as `seoName` with attached hashed last image change time. `name`, `seoName` and `cdnName` can be entered in the URL - redirect will deliver the same image.'
+              description: "seoName with signed CDN query parameters for the `big` cut. Combine with the cut's `cdnPath` from `/api/eshop?include=imageCuts` to form the full URL. Old-format URLs (bare hash) remain valid on the CDN."
               examples:
-                - '100_purple-apple.jpg?59393c3a'
+                - '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+            signedCdnNames:
+              type:
+                - object
+                - 'null'
+              additionalProperties:
+                type: string
+              description: "Per-cut signed CDN filenames, keyed by cut code (e.g. `big`, `thumbnail`). Combine each value with the matching cut's `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
+              examples:
+                -
+                  big: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                  thumbnail: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
             priority:
               type: integer
               description: "the key for the sequence of images matching the sequence in administration - it's not necessarily from the first, and the series may contain gaps. (can be `null`)."
