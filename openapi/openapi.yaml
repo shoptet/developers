@@ -42695,7 +42695,12 @@ paths:
         - Reviews
       parameters:
         -
-          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 100. Max value is 200.'
+          example: 100
+          schema:
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
