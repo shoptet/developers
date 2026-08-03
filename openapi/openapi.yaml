@@ -5807,6 +5807,123 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-async-endpoint: true
+  /api/products/images/batch:
+    delete:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/product-images.jsonl" not found.'
+                    instance: batchFileUrlPath
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: product-images-batch-delete
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: product-images-batch-delete
+      summary: 'Product image BATCH delete'
+      operationId: productImageBatchDelete
+      description: |-
+        This endpoint allows you to delete multiple product images at once. Batch delete is processed
+        asynchronously.
+
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+
+        File with data must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one
+        item in JSON format. Maximum size of file is 100MB.
+
+
+        Each JSON row must contain `productGuid` and `gallery` (`shop` or `shop360`). Optionally it may contain
+        `imageName` (the image file name). When `imageName` is provided, only that image is deleted. When
+        `imageName` is omitted, all images of the product in the given gallery are deleted.
+
+
+        The request body may contain a `removeReference` flag (default `false`) that applies to the whole batch.
+        When `true`, images referenced by product variants are deleted and the variant reference is cleared
+        automatically. When `false`, a referenced single image is refused (the row is logged as an error), and
+        referenced images are skipped when deleting all images of a gallery.
+
+
+        Asynchronous job processes the jsonl file row by row and tries to validate and delete each item. If there is
+        any error (e.g. unknown product or image), the row is skipped and the error is logged, but processing of
+        other rows continues.
+
+
+        In Log, every item is identified by its position in file (starting from 1).
+      tags:
+        - Products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - batchFileUrlPath
+              properties:
+                batchFileUrlPath:
+                  type: string
+                  description: 'Url to batch file with product images data. File must be in JSONL format.'
+                  examples:
+                    - 'https://cdn.myshoptet.com/batch-product-images-delete.jsonl'
+                removeReference:
+                  type: boolean
+                  default: false
+                  description: 'When true, images referenced by product variants are deleted and the variant reference is cleared automatically. When false (default), a referenced single image is refused (the row is logged as an error), and referenced images are skipped when deleting all images of a gallery.'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      x-shoptet-async-endpoint: true
   '/api/products/code/{code}':
     get:
       responses:
