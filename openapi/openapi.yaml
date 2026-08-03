@@ -43627,14 +43627,12 @@ components:
       minLength: 1
     typeFilename:
       type: string
-      minLength: 1
       maxLength: 255
       pattern: '^[0-9a-zA-Z_\-.]+$'
     typeFilenameNullable:
       type:
         - string
         - 'null'
-      minLength: 1
       maxLength: 255
       pattern: '^[0-9a-zA-Z_\-.]+$'
       examples:
@@ -43651,7 +43649,6 @@ components:
     typeVariantCodeRequest:
       type: string
       pattern: '^[a-zA-Z0-9_\/ \-\.]+$'
-      minLength: 1
       maxLength: 64
       description: "Variant's code. Must be unique if set. After processing it will be converted to uppercase. Generated automatically if not set."
       examples:
