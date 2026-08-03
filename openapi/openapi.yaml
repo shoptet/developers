@@ -4640,7 +4640,7 @@ paths:
                             default: false
                           ossVatLevels:
                             type: array
-                            description: 'OSS Tax setup'
+                            description: 'OSS Tax setup. Available in OSS mode only.'
                             items:
                               type: object
                               additionalProperties: false
@@ -47900,7 +47900,7 @@ components:
                   - true
               ossVatLevels:
                 type: array
-                description: 'OSS Tax setup'
+                description: 'OSS Tax setup. Available in OSS mode only.'
                 items:
                   type: object
                   additionalProperties: false
