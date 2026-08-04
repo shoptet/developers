@@ -18139,6 +18139,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: record-already-changed
+                    message: 'Order has been changed before update.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Order head change'
       operationId: updateOrderHead
       description: |-
@@ -18858,6 +18882,30 @@ paths:
                     errorCode: currency-not-found
                     message: 'Currency code "BHJ" not found.'
                     instance: data.currency
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: record-already-changed
+                    message: 'Order has been changed before update.'
+                    instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
@@ -20364,6 +20412,30 @@ paths:
                     errorCode: order-not-found
                     message: 'Order "2018000012" not found.'
                     instance: '2018000012'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: record-already-changed
+                    message: 'Order has been changed before update.'
+                    instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Update of order status'
@@ -24000,17 +24072,29 @@ paths:
           description: Conflict
           content:
             application/json:
-              example:
-                data: null
-                errors:
-                  -
-                    errorCode: proof-payments-closed
-                    message: |-
-                      Proof payment with code "P--0000000000-1" is closed. Unlock
-                      proof payment first.
-                    instance: P--0000000000-1
-                metadata:
-                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+              examples:
+                'Document closed':
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: proof-payments-closed
+                        message: |-
+                          Proof payment with code "P--0000000000-1" is closed. Unlock
+                          proof payment first.
+                        instance: P--0000000000-1
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+                'Record already changed':
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: record-already-changed
+                        message: 'Proof of payment has been changed before update.'
+                        instance: payload
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
               schema:
                 type: object
                 properties:
@@ -25554,6 +25638,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: record-already-changed
+                    message: 'Credit note has been changed before update.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
           description: 'Unprocessable Entity'
           content:
