@@ -600,10 +600,10 @@ info:
     intended for use with the `cdnPath` only.
 
     `cdnName` contains a signed URL for the `big` cut. For other cuts, use the
-    `signedCdnNames` map, which is keyed by cut code (e.g. `big`, `detail`,
-    `thumbnail`). Each value is a pre-signed filename that can be appended to
-    the matching cut's `cdnPath` from `/api/eshop?include=imageCuts`. Old-format
-    bare-hash URLs remain valid on the CDN.
+    `signedCdnNames` array. Each element has a `type` (the cut code, e.g. `big`,
+    `detail`, `thumbnail`) and a `name` (the pre-signed filename) that can be
+    appended to the matching cut's `cdnPath` from `/api/eshop?include=imageCuts`.
+    Old-format bare-hash URLs remain valid on the CDN.
 
     The fields look like: (excerpt)
 
@@ -613,10 +613,10 @@ info:
         "description": "shamrock 2115611 640",
         "seoName": "106_shamrock-2115611-640.png",
         "cdnName": "106_shamrock-2115611-640.png?ff=1&x=1024&y=768&q=85&ts=5b2a41f5&sg=cce48299",
-        "signedCdnNames": {
-            "big": "106_shamrock-2115611-640.png?ff=1&x=1024&y=768&q=85&ts=5b2a41f5&sg=cce48299",
-            "detail": "106_shamrock-2115611-640.png?ff=1&x=423&y=318&q=85&ts=5b2a41f5&sg=265606b9"
-        }
+        "signedCdnNames": [
+            {"type": "big", "name": "106_shamrock-2115611-640.png?ff=1&x=1024&y=768&q=85&ts=5b2a41f5&sg=cce48299"},
+            {"type": "detail", "name": "106_shamrock-2115611-640.png?ff=1&x=423&y=318&q=85&ts=5b2a41f5&sg=265606b9"}
+        ]
     ```
 
 
@@ -3830,15 +3830,27 @@ paths:
                                     - '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
                                 signedCdnNames:
                                   type:
-                                    - object
+                                    - array
                                     - 'null'
-                                  additionalProperties:
-                                    type: string
-                                  description: "Per-cut signed CDN filenames, keyed by cut code (e.g. `big`, `thumbnail`). Combine each value with the matching cut's `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
+                                  items:
+                                    type: object
+                                    required:
+                                      - type
+                                      - name
+                                    properties:
+                                      type:
+                                        type: string
+                                      name:
+                                        type: string
+                                  description: "Per-cut signed CDN filenames. Combine each `name` value with the matching cut's `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
                                   examples:
                                     -
-                                      big: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
-                                      thumbnail: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
+                                      -
+                                        type: big
+                                        name: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                                      -
+                                        type: thumbnail
+                                        name: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
                                 priority:
                                   type: integer
                                   description: "the key for the sequence of images matching the sequence in administration - it's not necessarily from the first, and the series may contain gaps."
@@ -6284,15 +6296,27 @@ paths:
                                 - '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
                             signedCdnNames:
                               type:
-                                - object
+                                - array
                                 - 'null'
-                              additionalProperties:
-                                type: string
-                              description: "Per-cut signed CDN filenames, keyed by cut code (e.g. `big`, `thumbnail`). Combine each value with the matching cut''s `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
+                              items:
+                                type: object
+                                required:
+                                  - type
+                                  - name
+                                properties:
+                                  type:
+                                    type: string
+                                  name:
+                                    type: string
+                              description: "Per-cut signed CDN filenames. Combine each `name` value with the matching cut''s `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
                               examples:
                                 -
-                                  big: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
-                                  thumbnail: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
+                                  -
+                                    type: big
+                                    name: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                                  -
+                                    type: thumbnail
+                                    name: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
                             isMainImage:
                               type: boolean
                             gallery:
@@ -6482,15 +6506,27 @@ paths:
                                 - '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
                             signedCdnNames:
                               type:
-                                - object
+                                - array
                                 - 'null'
-                              additionalProperties:
-                                type: string
-                              description: "Per-cut signed CDN filenames, keyed by cut code (e.g. `big`, `thumbnail`). Combine each value with the matching cut''s `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
+                              items:
+                                type: object
+                                required:
+                                  - type
+                                  - name
+                                properties:
+                                  type:
+                                    type: string
+                                  name:
+                                    type: string
+                              description: "Per-cut signed CDN filenames. Combine each `name` value with the matching cut''s `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
                               examples:
                                 -
-                                  big: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
-                                  thumbnail: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
+                                  -
+                                    type: big
+                                    name: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                                  -
+                                    type: thumbnail
+                                    name: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
                             isMainImage:
                               type: boolean
                             gallery:
@@ -47111,15 +47147,27 @@ components:
                   - '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
               signedCdnNames:
                 type:
-                  - object
+                  - array
                   - 'null'
-                additionalProperties:
-                  type: string
-                description: "Per-cut signed CDN filenames, keyed by cut code (e.g. `big`, `thumbnail`). Combine each value with the matching cut's `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
+                items:
+                  type: object
+                  required:
+                    - type
+                    - name
+                  properties:
+                    type:
+                      type: string
+                    name:
+                      type: string
+                description: "Per-cut signed CDN filenames. Combine each `name` value with the matching cut's `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
                 examples:
                   -
-                    big: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
-                    thumbnail: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
+                    -
+                      type: big
+                      name: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                    -
+                      type: thumbnail
+                      name: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
               priority:
                 type:
                   - integer
@@ -48676,15 +48724,27 @@ components:
                 - '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
             signedCdnNames:
               type:
-                - object
+                - array
                 - 'null'
-              additionalProperties:
-                type: string
-              description: "Per-cut signed CDN filenames, keyed by cut code (e.g. `big`, `thumbnail`). Combine each value with the matching cut's `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
+              items:
+                type: object
+                required:
+                  - type
+                  - name
+                properties:
+                  type:
+                    type: string
+                  name:
+                    type: string
+              description: "Per-cut signed CDN filenames. Combine each `name` value with the matching cut's `cdnPath` from `/api/eshop?include=imageCuts` to form a correctly-signed URL. `null` when cut configuration is temporarily unavailable."
               examples:
                 -
-                  big: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
-                  thumbnail: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
+                  -
+                    type: big
+                    name: '100_purple-apple.jpg?ff=1&x=1024&y=768&q=85&ts=59393c3a&sg=df3f0411'
+                  -
+                    type: thumbnail
+                    name: '100_purple-apple.jpg?ff=1&x=300&y=300&q=85&ts=59393c3a&sg=ab12cd34'
             priority:
               type: integer
               description: "the key for the sequence of images matching the sequence in administration - it's not necessarily from the first, and the series may contain gaps. (can be `null`)."
