@@ -21314,7 +21314,7 @@ paths:
 
         **The `settings` parameter:**
 
-        In the `settings` parameter, you can set the suppress parameters for a specific row/record.
+        Default suppress params for each row can be defined in URL params same as in [Order insertion](#tag/orders/createorder) endpoint. In the `settings` parameter, you can modify suppress parameters for specific row/record.
 
         **All params in `settings` can be in 3 states:**
 
@@ -21322,7 +21322,7 @@ paths:
 
         - `false` - _false_ value is applied.
 
-        - _parameter is missing_ - the default value _false_ is applied.
+        - _parameter is missing_ - The value from corresponding request parameter is used, if corresponding request parameter is not defined the value is set to `false`.
 
         **The `data` parameter:**
 
