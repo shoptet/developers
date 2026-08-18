@@ -5677,7 +5677,7 @@ paths:
         In Log, every item is identified by its position in file (starting from 1).
 
 
-        See [Product batch delete schema](/shoptet-api/openapi/batch/productbatchdelete) for more details.
+        See [Product batch delete schema](/shoptet-api/openapi/batch/productbatchdeleteschema) for more details.
       tags:
         - Products
       requestBody:
