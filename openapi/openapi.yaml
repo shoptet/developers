@@ -15484,6 +15484,14 @@ paths:
                               description: 'Shipment status, for possible values see [Shipment statuses](#section/code-lists/shipment-statuses) code list'
                               examples:
                                 - requested
+                            shipmentType:
+                              type: string
+                              enum:
+                                - standard
+                                - return
+                              description: 'Shipment type. `return` is a return label (customer sends goods back to the shop).'
+                              examples:
+                                - standard
                             serviceCode:
                               type: string
                               description: 'Service code'
@@ -15790,6 +15798,7 @@ paths:
                       - guid
                       - carrierAddress
                       - status
+                      - shipmentType
                       - serviceCode
                       - customer
                       - packages
@@ -15819,6 +15828,14 @@ paths:
                         description: 'Shipment status, for possible values see [Shipment statuses](#section/code-lists/shipment-statuses) code list'
                         examples:
                           - requested
+                      shipmentType:
+                        type: string
+                        enum:
+                          - standard
+                          - return
+                        description: 'Shipment type. `return` is a return label (customer sends goods back to the shop).'
+                        examples:
+                          - standard
                       serviceCode:
                         type: string
                         description: 'Service code'
