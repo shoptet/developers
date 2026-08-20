@@ -14919,6 +14919,16 @@ paths:
         - providing e. g. `data.price.buyPrice: null` will remove the price
 
 
+        - on projects with the zero-price feature flag enabled, a literal `0`
+        stores a genuine price of zero instead of clearing it — for
+        `data.price.price` / `data.price.commonPrice` this is an orderable,
+        free item; `data.price.buyPrice` (and `data.prices.purchasePrice.price`)
+        is the purchase cost and does not affect orderability. Use `null` to
+        remove a price. Projects without the flag enabled (the default) keep
+        the legacy behavior, where a literal `0` removes the price the same
+        way `null` does
+
+
         In case the request will be properly formatted, but an error occurs for
         one of the records, the correct records
 
