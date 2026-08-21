@@ -4173,6 +4173,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'Maximum number of variants per product is 512.'
                     instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The property heureka is not allowed. An active Heureka module is required.'
+                    instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product insertion'
@@ -4653,6 +4657,21 @@ paths:
                             examples:
                               - true
                             default: false
+                          heureka:
+                            type: object
+                            additionalProperties: false
+                            description: 'Heureka visibility settings. Applied only when the Heureka module is active.'
+                            properties:
+                              feedExcluded:
+                                type: boolean
+                                description: 'Flag, whether the variant is hidden from the Heureka comparison feed.'
+                                examples:
+                                  - true
+                              cartExcluded:
+                                type: boolean
+                                description: 'Flag, whether the variant is hidden from Heureka Marketplace.'
+                                examples:
+                                  - true
                           ossVatLevels:
                             type: array
                             description: 'OSS Tax setup. Available in OSS mode only.'
@@ -5406,6 +5425,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'Maximum number of variants per product is 512.'
                     instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The property heureka is not allowed. An active Heureka module is required.'
+                    instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         423:
@@ -6074,6 +6097,10 @@ paths:
                   -
                     errorCode: invalid-request-data
                     message: 'The property consumptionTaxId is not allowed. Module "consumptionTax" required.'
+                    instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The property heureka is not allowed. An active Heureka module is required.'
                     instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
@@ -47404,6 +47431,24 @@ components:
                       - 'null'
                     examples:
                       - true
+              heureka:
+                type: object
+                additionalProperties: false
+                description: 'Heureka visibility settings'
+                required:
+                  - feedExcluded
+                  - cartExcluded
+                properties:
+                  feedExcluded:
+                    type: boolean
+                    description: 'Flag, whether the variant is hidden from the Heureka comparison feed.'
+                    examples:
+                      - true
+                  cartExcluded:
+                    type: boolean
+                    description: 'Flag, whether the variant is hidden from Heureka Marketplace.'
+                    examples:
+                      - true
               atypicalBilling:
                 type: boolean
                 description: 'Has atypical billing?'
@@ -48393,6 +48438,21 @@ components:
                 description: 'When enabled, pickup lockers cannot be selected in the cart.'
                 examples:
                   - true
+              heureka:
+                type: object
+                additionalProperties: false
+                description: 'Heureka visibility settings. Applied only when the Heureka module is active.'
+                properties:
+                  feedExcluded:
+                    type: boolean
+                    description: 'Flag, whether the variant is hidden from the Heureka comparison feed.'
+                    examples:
+                      - true
+                  cartExcluded:
+                    type: boolean
+                    description: 'Flag, whether the variant is hidden from Heureka Marketplace.'
+                    examples:
+                      - true
               ossVatLevels:
                 type: array
                 description: 'OSS Tax setup. Available in OSS mode only.'
