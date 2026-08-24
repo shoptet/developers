@@ -4294,6 +4294,15 @@ paths:
                       description: "Product's additional name. Optional. Maximal length of 150 characters."
                       examples:
                         - 'Velice kvalitní a dobrá čokoláda.'
+                    xmlFeedName:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 255
+                      description: "Name to be sent to product search engine feeds instead of the product's name shown on the e-shop. If the product has variants, the variant name is appended."
+                      examples:
+                        - 'Velká čokoláda Twist'
                     metaTitle:
                       type:
                         - string
@@ -47074,9 +47083,9 @@ components:
           type:
             - string
             - 'null'
-          description: 'Name of xml feed'
+          description: "Name to be sent to product search engine feeds instead of the product's name shown on the e-shop. If the product has variants, the variant name is appended."
           examples:
-            - our-feed.xml
+            - 'Velká čokoláda Twist'
         metaTitle:
           type: string
           description: 'Meta (seo) title'
@@ -48094,6 +48103,15 @@ components:
           description: "Product's additional name. Optional. Maximal length of 150 characters."
           examples:
             - 'Velice kvalitní a dobrá čokoláda.'
+        xmlFeedName:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: "Name to be sent to product search engine feeds instead of the product's name shown on the e-shop. If the product has variants, the variant name is appended."
+          examples:
+            - 'Velká čokoláda Twist'
         metaTitle:
           type:
             - string
