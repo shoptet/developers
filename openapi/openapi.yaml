@@ -43353,6 +43353,34 @@ paths:
         - Reviews
       parameters:
         -
+          name: dateFrom
+          in: query
+          description: 'Filter reviews with creation date after date.'
+          example: '2019-09-05T00:00:00%2B0100'
+          schema:
+            type: string
+        -
+          name: dateTo
+          in: query
+          description: 'Filter reviews with creation date before date.'
+          example: '2019-09-05T00:00:00%2B0100'
+          schema:
+            type: string
+        -
+          name: visible
+          in: query
+          description: 'Filter reviews by visibility.'
+          example: true
+          schema:
+            type: boolean
+        -
+          name: orderCode
+          in: query
+          description: 'Order identifier to filter reviews by.'
+          example: '2011000002'
+          schema:
+            type: string
+        -
           name: itemsPerPage
           in: query
           description: 'Returned items per page. Default value is 100. Max value is 200.'
