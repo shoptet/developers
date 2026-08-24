@@ -17780,7 +17780,12 @@ paths:
     patch:
       responses:
         200:
-          description: OK
+          description: |-
+            OK — at least one order got its new status. Orders that were skipped or left unchanged are
+            reported in `errors`, one entry per order code: `invalid-request-data` when the code does not
+            exist, `database-conflict` or `record-already-changed` when the order was modified concurrently
+            (both worth retrying), and `unknown-error` when the order could not be saved for another reason
+            (retrying will not help). An empty `errors` array means every requested order was updated.
           content:
             application/json:
               schema:
@@ -17822,6 +17827,38 @@ paths:
                     errorCode: invalid-request-data
                     message: 'Orders with codes 2017000040, 2017000041, 2017000042, 2017000043, 2017000044, 2017000045 do not exist. Skipped.'
                     instance: data.orderCodes
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: |-
+            Conflict — none of the requested orders got its new status because every one of them was
+            modified concurrently. When only some of them conflict the response is `200` instead, with one
+            error entry per affected order code, because each order is committed on its own and the rest
+            were applied. Both cases are safe to retry for the reported order codes only.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: database-conflict
+                    message: 'Status of order "2017000040" was not changed because of a transient database conflict. Please retry.'
+                    instance: '2017000040'
+                  -
+                    errorCode: record-already-changed
+                    message: 'Status of order "2017000041" was not changed because the order was modified concurrently. Please retry.'
+                    instance: '2017000041'
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
@@ -20483,6 +20520,10 @@ paths:
                     errorCode: record-already-changed
                     message: 'Order has been changed before update.'
                     instance: payload
+                  -
+                    errorCode: database-conflict
+                    message: 'A transient database conflict occurred. Please retry the request.'
+                    instance: database
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Update of order status'
