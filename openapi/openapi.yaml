@@ -23096,7 +23096,7 @@ paths:
                         type: string
                         examples:
                           - O-2018000053-01
-  '/api_orders_{code}_proforma-invoice.yaml':
+  '/api/orders/{code}/proforma-invoice':
     post:
       responses:
         201:
