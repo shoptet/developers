@@ -38888,6 +38888,188 @@ paths:
             type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
+  '/api/discount-coupons/templates/{guid}/products':
+    put:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - products
+                    properties:
+                      products:
+                        type:
+                          - array
+                          - 'null'
+                        description: 'list of products, for which the discount coupons shall be available.'
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - guid
+                            - name
+                          properties:
+                            guid:
+                              $ref: '#/components/schemas/typeGuid'
+                            name:
+                              type: string
+                              examples:
+                                - 'Batman mug'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: discount-coupon-template-not-found
+                    message: |-
+                      Discount coupon template
+                      "bffa3b98-d968-11e0-b04f-57a43310b768" was not found.
+                    instance: bffa3b98-d968-11e0-b04f-57a43310b768
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: discount-coupon-template-system-type
+                    message: |-
+                      It is not possible to update discount coupon template
+                      "bffa3b98-d968-11e0-b04f-57a43310b768" as it is system type.
+                    instance: bffa3b98-d968-11e0-b04f-57a43310b768
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              examples:
+                tooManyProducts:
+                  summary: 'Too many products'
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Maximum number of products per coupon template is 1000.'
+                        instance: payload
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+                productNotFound:
+                  summary: 'Product not found'
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: invalid-request-data
+                        message: 'Product(s) "bffa3b98-d968-11e0-b04f-57a43310b768" not found.'
+                        instance: payload
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Discount coupons template products update'
+      operationId: updateDiscountCouponsTemplateProducts
+      description: |-
+        Replaces the list of specific products assigned to the discount coupon
+        template as per entered `guid`, and switches its `productSelectionMode`
+        to `specificProducts`. An empty `productGuids` array clears the list,
+        so the coupon matches no products. Does not affect the template's
+        title, customer group, categories, brands or product flags. If
+        successful, returns the code 200 with the updated product list and
+        the template's `productSelectionMode`.
+
+        If the discount coupon template does not exist within the e-shop, a 404
+        code is returned.
+
+        If the discount coupon template is a system type template, a 409 code
+        is returned.
+      tags:
+        - 'Discount coupons'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - productGuids
+                  properties:
+                    productGuids:
+                      type: array
+                      description: 'Sets the template to `specificProducts` mode and restricts it to these products. An empty array clears the list, so the coupon matches no products.'
+                      items:
+                        $ref: '#/components/schemas/typeGuid'
+      parameters:
+        -
+          name: guid
+          in: path
+          description: 'discount coupon template guid'
+          required: true
+          example: b6e09a7a-6cb5-11eb-89aa-08002746ad91
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/xy-discounts:
     get:
       responses:
