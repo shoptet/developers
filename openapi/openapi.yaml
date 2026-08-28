@@ -16189,6 +16189,12 @@ paths:
                     instance: data.orderCode
                   -
                     errorCode: shipment-validation-failed
+                    message: |-
+                      Cash on delivery is not allowed for multi-piece shipments for
+                      the selected carrier.
+                    instance: data.packages
+                  -
+                    errorCode: shipment-validation-failed
                     message: 'Invalid country of order, allowed countries: CZ.'
                     instance: data.orderCode
                   -
