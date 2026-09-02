@@ -39692,7 +39692,7 @@ paths:
                           - all-categories
                       enableInCashdesk:
                         type: boolean
-                        description: 'Enable X+Y discounts in cashdesk, please note this option is not present for HU eshops'
+                        description: 'Enable X+Y discounts in cashdesk, present only when the cashDesk or cashRegister module is active'
                         examples:
                           - true
                   errors:
@@ -39708,7 +39708,7 @@ paths:
       operationId: getXYDiscountsSettings
       description: |-
         Lists & updates settings of X + Y discounts.
-        Please note, that `enableInCashdesk` setting is not supported on HU projects.
+        Please note, that `enableInCashdesk` is only present when the cashDesk or cashRegister module is active.
       tags:
         - 'XY discounts'
       parameters:
@@ -39762,7 +39762,7 @@ paths:
                           - all-categories
                       enableInCashdesk:
                         type: boolean
-                        description: 'Enable X+Y discounts in cashdesk, please note this option is not present for HU eshops'
+                        description: 'Enable X+Y discounts in cashdesk, present only when the cashDesk or cashRegister module is active'
                         examples:
                           - true
                   errors:
@@ -39801,8 +39801,8 @@ paths:
         Updates settings for X + Y discounts. All settings are optional, but at
         least one should be present.
 
-        Please note, that updating "enableInCashdesk" setting on HU projects
-        will throw an exception.
+        Please note, that updating "enableInCashdesk" will throw an exception
+        unless the cashDesk or cashRegister module is active.
 
 
         If you're targeting a discount to a specific category, right now, we
