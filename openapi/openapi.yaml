@@ -4683,6 +4683,12 @@ paths:
                                 description: 'Flag, whether the variant is hidden from Heureka Marketplace.'
                                 examples:
                                   - true
+                          nonReturnable:
+                            type: boolean
+                            description: 'Product cannot be returned (excluded from order withdrawal)?'
+                            examples:
+                              - true
+                            default: false
                           ossVatLevels:
                             type: array
                             description: 'OSS Tax setup. Available in OSS mode only.'
@@ -49245,6 +49251,11 @@ components:
                 description: 'When enabled, pickup lockers cannot be selected in the cart.'
                 examples:
                   - true
+              nonReturnable:
+                type: boolean
+                description: 'Product cannot be returned (excluded from order withdrawal)?'
+                examples:
+                  - true
               perStockAmounts:
                 type:
                   - array
@@ -50243,6 +50254,11 @@ components:
                     description: 'Flag, whether the variant is hidden from Heureka Marketplace.'
                     examples:
                       - true
+              nonReturnable:
+                type: boolean
+                description: 'Product cannot be returned (excluded from order withdrawal)?'
+                examples:
+                  - true
               ossVatLevels:
                 type: array
                 description: 'OSS Tax setup. Available in OSS mode only.'
@@ -50867,6 +50883,7 @@ components:
         - itemId
         - warrantyDescription
         - amountCompleted
+        - nonReturnable
       properties:
         productGuid:
           oneOf:
@@ -51089,6 +51106,11 @@ components:
           examples:
             - 1.0
           deprecated: true
+        nonReturnable:
+          type: boolean
+          description: 'Item cannot be returned (excluded from order withdrawal); order-time snapshot of the product flag.'
+          examples:
+            - true
         surchargeParametersTexts:
           type: array
           description: 'List of custom surcharge parameters names'
