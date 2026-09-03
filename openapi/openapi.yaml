@@ -44736,6 +44736,18 @@ paths:
                       description: 'IP address of the client who made the review'
                       examples:
                         - 213.46.237.24
+                    authorized:
+                      type: boolean
+                      description: 'Flag whether the review is authorized.'
+                      default: false
+                      examples:
+                        - false
+                    visible:
+                      type: boolean
+                      description: 'Flag whether the review is visible on web.'
+                      default: true
+                      examples:
+                        - true
                     reaction:
                       type: object
                       additionalProperties: false
