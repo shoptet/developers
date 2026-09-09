@@ -34748,15 +34748,19 @@ paths:
                 properties:
                   data:
                     type: object
+                    additionalProperties: false
                     required:
                       - guid
                       - name
                       - description
+                      - shippingCompany
+                      - trackingUrl
+                      - visible
                       - visibility
+                      - priority
                       - wholesale
                       - logoUrl
-                      - shippingCompany
-                    additionalProperties: false
+                      - priceList
                     properties:
                       guid:
                         $ref: '#/components/schemas/typeGuid'
@@ -34773,29 +34777,15 @@ paths:
                         description: 'additional information about the shipping method. (can be null)'
                         examples:
                           - 'Delivery within 48 hours'
-                      visibility:
-                        type: boolean
-                        description: 'Is the shipping method visible?'
-                        examples:
-                          - true
-                      wholesale:
-                        type: boolean
-                        description: 'Is the shipping method available for wholesale customers?'
-                        examples:
-                          - true
-                      logoUrl:
-                        type:
-                          - string
-                          - 'null'
-                        description: 'URL of the shipping company logo'
-                        examples:
-                          - 'https://www.example.com/logo.png'
                       shippingCompany:
-                        type: object
+                        type:
+                          - object
+                          - 'null'
                         required:
                           - id
                           - code
                           - name
+                        description: 'Shipping company'
                         additionalProperties: false
                         properties:
                           id:
@@ -34813,6 +34803,136 @@ paths:
                             description: 'shipping company name.'
                             examples:
                               - 'IN TIME'
+                      trackingUrl:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'package trace link pattern. Read-only — it comes from the carrier codebook and cannot be set per shipping method.'
+                        examples:
+                          - 'http://www.ppl.cz/main2.aspx?cls=Package&idSearch=#PACKAGE_NUMBER#'
+                      visible:
+                        type: boolean
+                        description: 'Is the shipping method visible?'
+                        examples:
+                          - true
+                      visibility:
+                        type: boolean
+                        deprecated: true
+                        description: '[DEPRECATED] use `visible`. Carries the same value, kept for backwards compatibility.'
+                        examples:
+                          - true
+                      priority:
+                        type:
+                          - integer
+                          - 'null'
+                        description: 'sequence within the list'
+                        examples:
+                          - 16
+                      wholesale:
+                        type: boolean
+                        description: 'Is the shipping method available for wholesale customers?'
+                        examples:
+                          - true
+                      logoUrl:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'URL of the shipping company logo'
+                        examples:
+                          - 'https://www.example.com/logo.png'
+                      priceList:
+                        type: object
+                        description: 'Pricing and pricelist settings of the created shipping method. Values reflect the stored configuration, not the final price charged to the customer (which the storefront derives from `price`, `includingVat` and the e-shop VAT-display mode).'
+                        additionalProperties: false
+                        required:
+                          - allowFreeShipping
+                          - priceTiers
+                          - pairedPaymentMethodGuids
+                        properties:
+                          allowFreeShipping:
+                            type: boolean
+                            description: "Whether this method's price is zeroed when an external free-shipping condition applies (e.g. a free-delivery discount coupon, or a product flagged for free shipping)."
+                            examples:
+                              - true
+                          priceTiers:
+                            type: array
+                            description: 'Price tiers by weight and/or order price, per country/region and currency.'
+                            items:
+                              type: object
+                              additionalProperties: false
+                              required:
+                                - countryCode
+                                - regionId
+                                - regionName
+                                - currencyCode
+                                - priceFrom
+                                - priceUntil
+                                - weightFrom
+                                - weightUntil
+                                - price
+                                - includingVat
+                                - taxClassId
+                                - vatRate
+                              properties:
+                                countryCode:
+                                  type: string
+                                  description: 'Country code the tier applies to.'
+                                  examples:
+                                    - cz
+                                regionId:
+                                  type:
+                                    - integer
+                                    - 'null'
+                                  description: 'Region identifier the tier applies to. (can be null)'
+                                  examples:
+                                    - 5
+                                regionName:
+                                  type:
+                                    - string
+                                    - 'null'
+                                  description: 'Region name the tier applies to. (can be null)'
+                                  examples:
+                                    - Praha
+                                currencyCode:
+                                  type: string
+                                  description: 'Currency code the tier price is defined in.'
+                                  examples:
+                                    - CZK
+                                priceFrom:
+                                  $ref: '#/components/schemas/typePriceNullable'
+                                  description: 'Lower bound of the order price range the tier applies to. (can be null)'
+                                priceUntil:
+                                  $ref: '#/components/schemas/typePriceNullable'
+                                  description: 'Upper bound of the order price range the tier applies to. (can be null)'
+                                weightFrom:
+                                  $ref: '#/components/schemas/typeWeightUnlimited'
+                                  description: 'Lower bound of the weight range (kg) the tier applies to. Applied only when the e-shop uses weight-dependent shipping pricing. (can be null)'
+                                weightUntil:
+                                  $ref: '#/components/schemas/typeWeightUnlimited'
+                                  description: 'Upper bound of the weight range (kg) the tier applies to. Applied only when the e-shop uses weight-dependent shipping pricing. (can be null)'
+                                price:
+                                  $ref: '#/components/schemas/typePrice'
+                                  description: 'Shipping price for the tier. Value 0.00 means free shipping.'
+                                includingVat:
+                                  type: boolean
+                                  description: 'Whether the configured `price` includes VAT.'
+                                  examples:
+                                    - true
+                                taxClassId:
+                                  type:
+                                    - integer
+                                    - 'null'
+                                  description: 'Tax class identifier applied to the tier price. (can be null)'
+                                  examples:
+                                    - 1
+                                vatRate:
+                                  $ref: '#/components/schemas/typeVatRateNullable'
+                                  description: "VAT rate (percentage) of the tier's tax class in the e-shop default tax zone. (can be null)"
+                          pairedPaymentMethodGuids:
+                            type: array
+                            description: 'GUIDs of payment methods paired with this shipping method.'
+                            items:
+                              $ref: '#/components/schemas/typeGuid'
                   errors:
                     $ref: '#/components/schemas/Errors'
                   metadata:
@@ -34822,10 +34942,95 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Country with code "xx" not found.'
+                    instance: data.priceList.priceTiers.0.countryCode
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Wholesale method requires active wholesale module in eshop.'
+                    instance: wholesale
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: sales-channel-not-found
+                    message: 'Sales channel with GUID "0199bdfd-0979-71fb-85ce-e483c61d391b" not found.'
+                    instance: data.salesChannelGuids.0
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: shipping-method-creation-failed
+                    message: 'Shipping method could not be created.'
+                    instance: data
       summary: 'Adding a shipping method'
       operationId: createShippingMethod
       description: |-
-        Adds a new shipping method for the specific e-shop.
+        Adds a new shipping method for the specific e-shop, including its complete
+        configuration — pricing, allowed payment methods,
+
+        sales-channel bindings and listing position. A method created with a full
+        request body needs no follow-up setup in the administration.
+
 
         Should you wish to implement an addon implementing a shipping method,
         contact our partner support and request the creation
@@ -34834,8 +35039,7 @@ paths:
 
 
         The request body includes the mandatory attributes `name` and
-        `shippingMethodCode` (or deprecated `shippingCompanyCode`). The other
-        parameters are not
+        `shippingMethodCode`. The other parameters are not
 
         mandatory and their default values will be used:
 
@@ -34843,16 +35047,43 @@ paths:
         - `description` - `null`
 
 
-        - `visibility` - `false`
+        - `visible` - `false`
 
 
         - `wholesale` - `false`
 
 
+        - `priority` - `null` (the method is appended to the end of the listing)
+
+
+        - `atypicalProductAllowed` - `false`
+
+
+        - `cPostBoxSize` - `null`
+
+
+        - `salesChannelGuids` - the primary market's sales channel when the method
+        is visible, otherwise none
+
+
         - `logo` - `null`
 
 
-        - `minimalShippingPrice` - `0.00`
+        - `priceList.allowFreeShipping` - `true`
+
+
+        - `priceList.pairedPaymentMethodGuids` - every payment method of the same
+        retail/wholesale group
+
+
+        - `priceList.priceTiers` - a single tier for the default country, currency
+        and tax class, priced `0.00`
+
+
+        The `priceList` object mirrors the one returned by
+        `GET /api/shipping-methods/{guid}?include=priceList`, so the same structure
+
+        can be read back after creation.
 
 
         Send the logo of the shipping method as the file content, encoded with
@@ -34860,6 +35091,26 @@ paths:
 
 
         **Please note that `name` cannot be longer than 255 characters.**
+
+
+        **Deprecated request fields** — still accepted, do not use in new
+        integrations:
+
+
+        - `visibility` - use `visible` instead. Sending both with contradicting
+        values is rejected with `invalid-parameter`.
+
+
+        - `minimalShippingPrice` - use `priceList.priceTiers` instead. The two
+        cannot be combined.
+
+
+        **Deprecated response field** — `visibility` carries the same value as
+        `visible`; read `visible`.
+
+
+        `trackingUrl` is read-only. It comes from the carrier codebook and cannot be
+        set per shipping method.
       tags:
         - 'Shipping methods'
       requestBody:
@@ -34897,9 +35148,15 @@ paths:
                       description: 'type of shipping method (operator) - identifier assigned by Shoptet'
                       examples:
                         - intime-colli-small
+                    visible:
+                      type: boolean
+                      description: 'whether the shipping method will be visible. When the `Sales channel` module is active, visibility follows the sales-channel bindings instead — see `salesChannelGuids`.'
+                      examples:
+                        - true
                     visibility:
                       type: boolean
-                      description: 'whether the shipping method will be visible'
+                      deprecated: true
+                      description: '[DEPRECATED] use `visible`. Both are accepted; sending contradicting values is rejected with `invalid-parameter`.'
                       examples:
                         - true
                     wholesale:
@@ -34907,6 +35164,38 @@ paths:
                       description: 'flag, whether the shipping method is available for wholesale customers (`false` = for retail)'
                       examples:
                         - true
+                    priority:
+                      type:
+                        - integer
+                        - 'null'
+                      minimum: 1
+                      maximum: 65535
+                      description: '1-based position of the method within the visible listing of its retail/wholesale group. When omitted the method is appended to the end. A position beyond the end of the listing is clamped to last.'
+                      examples:
+                        - 3
+                    atypicalProductAllowed:
+                      type: boolean
+                      description: 'flag, whether products marked as atypical (oversized) may be shipped with this method. Defaults to `false`.'
+                      examples:
+                        - false
+                    cPostBoxSize:
+                      type:
+                        - string
+                        - 'null'
+                      enum:
+                        - S
+                        - M
+                        - L
+                        - XL
+                        - null
+                      description: 'Česká pošta box size. Applies only to Česká pošta box services and is ignored otherwise.'
+                      examples:
+                        - M
+                    salesChannelGuids:
+                      type: array
+                      description: "GUIDs of the sales channels the shipping method is offered in. Requires the active `Sales channel` module. When omitted, a visible method is bound to the primary market's sales channel."
+                      items:
+                        $ref: '#/components/schemas/typeGuid'
                     logo:
                       type: object
                       required:
@@ -34927,7 +35216,83 @@ paths:
                             - iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABaElEQVR42mNk===
                     minimalShippingPrice:
                       $ref: '#/components/schemas/typePriceNullable'
-                      description: 'number indicating minimum price of shipping in the default currency'
+                      deprecated: true
+                      description: '[DEPRECATED] use `priceList.priceTiers`. Number indicating minimum price of shipping in the default currency; creates a single price tier for the default country, currency and tax class. Cannot be combined with `priceList.priceTiers`.'
+                    priceList:
+                      type: object
+                      additionalProperties: false
+                      description: 'Pricing configuration of the shipping method. Mirrors the `priceList` object of `GET /api/shipping-methods/{guid}?include=priceList`.'
+                      properties:
+                        allowFreeShipping:
+                          type: boolean
+                          description: "Whether this method's price is zeroed when an external free-shipping condition applies (e.g. a free-delivery discount coupon, or a product flagged for free shipping). Defaults to `true`."
+                          examples:
+                            - true
+                        pairedPaymentMethodGuids:
+                          type: array
+                          description: 'GUIDs of the payment methods allowed with this shipping method. When omitted, every payment method of the same retail/wholesale group is paired. An empty array pairs none.'
+                          items:
+                            $ref: '#/components/schemas/typeGuid'
+                        priceTiers:
+                          type: array
+                          description: 'Price tiers by weight and/or order price, per country/region and currency. When omitted, a single tier for the default country, currency and tax class is created from `minimalShippingPrice` (or 0.00).'
+                          items:
+                            type: object
+                            required:
+                              - countryCode
+                              - currencyCode
+                              - price
+                            additionalProperties: false
+                            properties:
+                              countryCode:
+                                type: string
+                                minLength: 2
+                                description: 'Country code the tier applies to.'
+                                examples:
+                                  - cz
+                              regionId:
+                                type:
+                                  - integer
+                                  - 'null'
+                                minimum: 1
+                                description: 'Region identifier the tier applies to. Must belong to `countryCode`. (can be null)'
+                                examples:
+                                  - 5
+                              currencyCode:
+                                type: string
+                                minLength: 3
+                                maxLength: 3
+                                description: 'Currency code the tier price is defined in.'
+                                examples:
+                                  - CZK
+                              priceFrom:
+                                $ref: '#/components/schemas/typePriceNullable'
+                                description: 'Lower bound of the order price range the tier applies to. (can be null)'
+                              priceUntil:
+                                $ref: '#/components/schemas/typePriceNullable'
+                                description: 'Upper bound of the order price range the tier applies to. (can be null)'
+                              weightFrom:
+                                $ref: '#/components/schemas/typeWeightUnlimited'
+                                description: 'Lower bound of the weight range (kg) the tier applies to. Applied only when the e-shop uses weight-dependent shipping pricing. (can be null)'
+                              weightUntil:
+                                $ref: '#/components/schemas/typeWeightUnlimited'
+                                description: 'Upper bound of the weight range (kg) the tier applies to. Applied only when the e-shop uses weight-dependent shipping pricing. (can be null)'
+                              price:
+                                $ref: '#/components/schemas/typePrice'
+                                description: 'Shipping price for the tier. Value 0.00 means free shipping. Must not be negative.'
+                              includingVat:
+                                type: boolean
+                                description: 'Whether the supplied `price` includes VAT. Defaults to the e-shop setting.'
+                                examples:
+                                  - true
+                              taxClassId:
+                                type:
+                                  - integer
+                                  - 'null'
+                                minimum: 1
+                                description: 'Tax class identifier applied to the tier price. Defaults to the e-shop default tax class. (can be null)'
+                                examples:
+                                  - 1
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
