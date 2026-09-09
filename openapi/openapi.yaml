@@ -37575,9 +37575,9 @@ paths:
                               - string
                               - 'null'
                             pattern: '[0-1]\.[0-9]{4}$'
-                            description: 'Amount of percentual discount. This items needs to be omitted when `discountType` is set to `fixed`. 4 decimal places accuracy, from `0.0000` (0% discount) to `1.0000` (100% discount).'
+                            description: 'Coefficient applied to the price to get the remaining (discounted) price, i.e. `price * ratio`. This items needs to be omitted when `discountType` is set to `fixed`. 4 decimal places accuracy, from `0.0000` (100% discount, price reduced to zero) to `1.0000` (no discount). E.g. to apply a 10% discount, set `0.9000`.'
                             examples:
-                              - '0.1000'
+                              - '0.9000'
                           minPrice:
                             $ref: '#/components/schemas/typePriceNullable'
                             description: 'Minimum price of order (default eshop VAT rate is used)'
@@ -37828,9 +37828,9 @@ paths:
                               - string
                               - 'null'
                             pattern: '[0-1]\.[0-9]{4}$'
-                            description: 'Amount of percentual discount. This items needs to be omitted when `discountType` is set to `fixed`. 4 decimal places accuracy, from `0.0000` (0% discount) to `1.0000` (100% discount).'
+                            description: 'Coefficient applied to the price to get the remaining (discounted) price, i.e. `price * ratio`. This items needs to be omitted when `discountType` is set to `fixed`. 4 decimal places accuracy, from `0.0000` (100% discount, price reduced to zero) to `1.0000` (no discount). E.g. to apply a 10% discount, set `0.9000`.'
                             examples:
-                              - '0.1000'
+                              - '0.9000'
                           minPrice:
                             $ref: '#/components/schemas/typePriceNullable'
                             description: 'Minimum price of order (default eshop VAT rate is used)'
@@ -38445,9 +38445,9 @@ paths:
                         - string
                         - 'null'
                       pattern: '[0-1]\.[0-9]{4}$'
-                      description: 'Amount of percentual discount. This items needs to be omitted when `discountType` is set to `fixed`. 4 decimal places accuracy, from `0.0000` (0% discount) to `1.0000` (100% discount).'
+                      description: 'Coefficient applied to the price to get the remaining (discounted) price, i.e. `price * ratio`. This items needs to be omitted when `discountType` is set to `fixed`. 4 decimal places accuracy, from `0.0000` (100% discount, price reduced to zero) to `1.0000` (no discount). E.g. to apply a 10% discount, set `0.9000`.'
                       examples:
-                        - '0.1000'
+                        - '0.9000'
                     minPrice:
                       $ref: '#/components/schemas/typePriceNullable'
                       description: 'Minimum price of order (default eshop VAT rate is used)'
@@ -53931,7 +53931,7 @@ components:
               $ref: '#/components/schemas/typePriceRatio'
             -
               type: 'null'
-          description: 'amount of percentual discount'
+          description: 'Coefficient applied to the price to get the remaining (discounted) price, i.e. `price * ratio`. From `0.0000` (100% discount, price reduced to zero) to `1.0000` (no discount).'
         minPrice:
           $ref: '#/components/schemas/typePriceNullable'
           description: 'minimum price of order (default eshop VAT rate is used)'
