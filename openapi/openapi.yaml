@@ -16021,7 +16021,7 @@ paths:
         -
           name: type
           in: query
-          description: 'supported values: `in_store`, `online_store`, `marketplace`'
+          description: 'supported values: `in_store`, `online_store`, `marketplace`, `system`'
           example: in_store
           schema:
             type: string
