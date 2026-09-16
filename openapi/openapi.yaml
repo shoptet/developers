@@ -50715,6 +50715,11 @@ components:
                       description: 'Id of stock. Required if stocksLocations is set. Must fit existing stock Id. Check List of Stocks.'
                       examples:
                         - 1
+                    amount:
+                      $ref: '#/components/schemas/typeAmountNullable'
+                      description: 'Initial quantity in stock. Allowed only for a newly created variant, 0 if not set. For an existing variant use Stock movements instead.'
+                      examples:
+                        - '50.000'
                     location:
                       type:
                         - string
