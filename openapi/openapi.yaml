@@ -784,10 +784,10 @@ info:
     product:create (*) | Product creation event | String (`guid`) of product | no
     product:update (*) | Product change event | String (`guid`) of product | no
     product:delete (*) | Product deleting event | String (`guid`) of product | no
-    productVariant:create (*) | Product variant creation event | Variant code | no
-    productVariant:update (*) | Product variant change event | Variant code | no
-    productVariant:delete (*) | Product variant deleting event | Variant code | no
-    productVariantPrice:update (*) | Product variant price change event | Variant code | no
+    productVariant:create (*) | Product variant creation event | Product `guid` and variant `code` separated by a pipe character | no
+    productVariant:update (*) | Product variant change event | Product `guid` and variant `code` separated by a pipe character | no
+    productVariant:delete (*) | Product variant deleting event | Product `guid` and variant `code` separated by a pipe character | no
+    productVariantPrice:update (*) | Product variant price change event | Product `guid` and variant `code` separated by a pipe character | no
     productReview:create | Product review creation event | ID of product review | no
     proofPayment:create | Proof of payment creation event | Number (`code`) of proof payment | no
     proofPayment:delete | Proof of payment deleting event | Number (`code`) of proof payment | no
@@ -854,10 +854,10 @@ info:
     product:massCreate (*) | Mass create of products event | Json serialized list of string (`guid`) of products
     product:massUpdate (*) | Mass change of products event | Json serialized list of string (`guid`) of products
     product:massDelete (*) | Mass delete of products event | Json serialized list of string (`guid`) of products
-    productVariant:massCreate (*) | Mass create of product variants event | Json serialized list of variant codes
-    productVariant:massUpdate (*) | Mass change of product variants event | Json serialized list of variant codes
-    productVariant:massDelete (*) | Mass delete of product variants event | Json serialized list of variant codes
-    productVariantPrice:massUpdate (*) | Mass change of product variant prices event | Json serialized list of variant codes
+    productVariant:massCreate (*) | Mass create of product variants event | Json serialized list of product `guid` and variant `code` separated by a pipe character
+    productVariant:massUpdate (*) | Mass change of product variants event | Json serialized list of product `guid` and variant `code` separated by a pipe character
+    productVariant:massDelete (*) | Mass delete of product variants event | Json serialized list of product `guid` and variant `code` separated by a pipe character
+    productVariantPrice:massUpdate (*) | Mass change of product variant prices event | Json serialized list of product `guid` and variant `code` separated by a pipe character
     quantityDiscount:massDelete | Mass delete of quantity discount event | Json serialized list of quantity discounts IDs
     quantityDiscount:massUpdate | Mass change of quantity discount event | Json serialized list of quantity discounts IDs 
 
