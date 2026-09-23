@@ -6128,7 +6128,7 @@ paths:
 
         In Log, every item is identified by its position in file (starting from 1).
       tags:
-        - Products
+        - 'Product images'
       requestBody:
         content:
           application/json:
@@ -6148,6 +6148,113 @@ paths:
                   default: false
                   description: 'When true, images referenced by product variants are deleted and the variant reference is cleared automatically. When false (default), a referenced single image is refused (the row is logged as an error), and referenced images are skipped when deleting all images of a gallery.'
       parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      x-shoptet-async-endpoint: true
+    post:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/product-images.jsonl" not found.'
+                    instance: batchFileUrlPath
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: product-images-batch-insert
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: product-images-batch-insert
+      summary: 'Product image BATCH insert'
+      operationId: productImageBatchInsert
+      description: |-
+        This endpoint allows you to insert multiple product images to multiple product/galleries at once. Batch is processed
+        asynchronously.
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+        File with data must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one
+        item in JSON format. Maximum size of file is 100MB.
+
+        Asynchronous job processes the jsonl file row by row and tries to validate and insert each item. If there is
+        any error (e.g. unknown product or gallery), the row is skipped and the error is logged, but processing of
+        other rows continues.
+
+        In Log, every item is identified by its position in file (starting from 1).
+
+        See [Product image batch insert](/shoptet-api/openapi/batch/productimagebatchinsert) for more details.
+      tags:
+        - 'Product images'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - batchFileUrlPath
+              properties:
+                batchFileUrlPath:
+                  type: string
+                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  examples:
+                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+      parameters:
+        -
+          name: clearImages
+          in: query
+          description: 'Remove all original images in products gallery before processing new ones'
+          example: true
+          schema:
+            type: boolean
+            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-async-endpoint: true
@@ -50288,6 +50395,45 @@ components:
           type: string
           minLength: 1
           maxLength: 255
+    productImageBatchInsert:
+      type: object
+      additionalProperties: false
+      required:
+        - productGuid
+        - gallery
+        - images
+      properties:
+        productGuid:
+          $ref: '#/components/schemas/typeGuidUnlimited'
+          description: 'unique product indicator'
+        gallery:
+          type: string
+          description: 'name of the gallery the image belongs to (e.g. "shop" for the standard product gallery, "shop360" for the 360° gallery).'
+          examples:
+            - shop
+        images:
+          type: array
+          minItems: 1
+          maxItems: 100
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - sourceUrl
+            properties:
+              sourceUrl:
+                type: string
+                description: 'url of the image to download'
+                minLength: 1
+                maxLength: 2000
+              priority:
+                type: integer
+                description: 'priority of the image'
+                minimum: 1
+                maximum: 65535
+              description:
+                type: string
+                description: 'description of the image'
     productUpdate:
       type: object
       minProperties: 1
@@ -56462,6 +56608,13 @@ components:
       allOf:
         -
           $ref: '#/components/schemas/productBatchDelete'
+    productImageBatchInsertSchema:
+      title: 'Product image batch insert'
+      x-tags:
+        - Batch
+      allOf:
+        -
+          $ref: '#/components/schemas/productImageBatchInsert'
     productSnapshot:
       title: Product
       x-tags:
