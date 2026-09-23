@@ -730,17 +730,17 @@ info:
     availability:create | Availability creation event | Availability ID | no
     availability:update | Availability change event   | Availability ID | no
     availability:delete | Availability deleting event | Availability ID | no
-    brand:create | Brand creation event | String (`code`) - brand unique code | no
-    brand:update | Brand change event     | String (`code`) - brand unique code | no
+    brand:create | Brand creation event | String (`code`) - brand unique code | yes
+    brand:update | Brand change event     | String (`code`) - brand unique code | yes
     brand:delete | Brand deleting event   | String (`code`) - brand unique code | no
-    category:create | Category creation event | String (`guid`) of product category | no
-    category:update | Category change event     | String (`guid`) of product category | no
+    category:create | Category creation event | String (`guid`) of product category | yes
+    category:update | Category change event     | String (`guid`) of product category | yes
     category:delete | Category deleting event   | String (`guid`) of product category | no
-    creditNote:create | Credit note creation event | Number (`code`) of credit note | no
+    creditNote:create | Credit note creation event | Number (`code`) of credit note | yes
     creditNote:delete | Credit note deleting event   | Number (`code`) of credit note | no
-    creditNote:update | Credit note change event     | Number (`code`) of credit note | no
-    customer:create | New customer was created | Customer GUID | no
-    customer:update | Customer was updated. Throws `409 Conflict` when try to register simultaneously with `customer:disableOrders` or `customer:enableOrders` | Customer GUID | no
+    creditNote:update | Credit note change event     | Number (`code`) of credit note | yes
+    customer:create | New customer was created | Customer GUID | yes
+    customer:update | Customer was updated. Throws `409 Conflict` when try to register simultaneously with `customer:disableOrders` or `customer:enableOrders` | Customer GUID | yes
     customer:disableOrders | An event disabled the customer, and his future orders will be automatically cancelled. Throws `409 Conflict` when try to register simultaneously with `customer:update` | Customer GUID | no
     customer:enableOrders | An event enabled the customer's future orders. Throws `409 Conflict` when try to register simultaneously with `customer:update` | Customer GUID | no
     customer:import | Import of 1 and more customers was executed | Fixed string "customers" | no
@@ -748,52 +748,51 @@ info:
     customerGroup:create | Customer group creation event | ID of customer group | no
     customerGroup:update | Customer group change event | ID of customer group | no
     customerGroup:delete | Customer group deleting event | ID of customer group | no
-    deliveryNote:create | Delivery note creation event  | Number (`code`) of delivery note | no
+    deliveryNote:create | Delivery note creation event  | Number (`code`) of delivery note | yes
     deliveryNote:delete | Delivery note deleting event    | Number (`code`) of delivery note | no
-    deliveryNote:create | Delivery note creation event  | Number (`code`) of delivery note | no
-    deliveryNote:update | Delivery note change event      | Number (`code`) of delivery note | no
-    discountCoupon:create | Discount coupon creating event | String (`code`) - discount coupon unique code | no
+    deliveryNote:update | Delivery note change event      | Number (`code`) of delivery note | yes
+    discountCoupon:create | Discount coupon creating event | String (`code`) - discount coupon unique code | yes
     discountCoupon:delete | Discount coupon deleting event      | String (`code`) of discount coupon | no
-    discountCoupon:update | Discount coupon updating event | String (`code`) - discount coupon unique code | no
+    discountCoupon:update | Discount coupon updating event | String (`code`) - discount coupon unique code | yes
     eshop:currencies | Currencies settings change event | ID of eshop | no
     eshop:billingInformation | Billing information (i.e. eshop billing address) change event | ID of eshop | no
     eshop:settingsInformation | Eshop settings change event. Whenever some attribute from `data.settings` response section of GET eshop detail change | ID of eshop | no
     eshop:design | Design settings (template, colors, fonts, layout) | ID of eshop | no
     eshop:mandatoryFields | Mandatory fields of customer were updated | ID of eshop | no
     eshop:projectDomain | Domain of eshop was changed | ID of eshop | no
-    invoice:create | Invoice creation event  | Number (`code`) of invoice | no
+    invoice:create | Invoice creation event  | Number (`code`) of invoice | yes
     invoice:delete | Invoice deleting event    | Number (`code`) of invoice | no
-    invoice:update | Invoice change event      | Number (`code`) of invoice | no
+    invoice:update | Invoice change event      | Number (`code`) of invoice | yes
     job:finished | The asynchronous request was finished | Job `id` | no
     mailingListEmail:create | E-mail addition event into the e-mail distribution list | Name (`code`) of e-mail distribution list | no
     mailingListEmail:delete | E-mail deleting event from the e-mail distribution list | Name (`code`) of e-mail distribution | no
     order:cancel | Order cancel event. Webhook is emitted when order status is set to `canceled`. Throws `409 Conflict` when try to register simultaneously with `order:update` | Number (`code`) of order | no
-    order:create | Order creation event | Number (`code`) of order | no
+    order:create | Order creation event | Number (`code`) of order | yes
     order:delete | Order deleting event   | Number (`code`) of order | no
     order:paid | Order paid event. Not emitted if a new order with paid status is created (register `order:create`/`order:massCreate`). Emitted only if the unpaid state is changed to paid during order update.   | Number (`code`) of order | no
-    order:update | Order change event. Throws `409 Conflict` when try to register simultaneously with `order:cancel` | Number (`code`) of order | no
+    order:update | Order change event. Throws `409 Conflict` when try to register simultaneously with `order:cancel` | Number (`code`) of order | yes
     orderHistoryRemarks:change | Order history remarks have been changed. Emitted when order remark is created or deleted | Number (`code`) of order | no
     orderStatusesList:change | Order status list change event. Emitted when order status is created, updated or deleted | Order status `ID` | no
     pricelist:create | Pricelist creation event | ID of pricelist | no
     pricelist:delete | Pricelist deleting event | ID of pricelist | no
     paymentMethod:change | Payment method change event | Payment method GUID | no
-    proformaInvoice:create | Proforma invoice creation event | Number (`code`) of proforma invoice | no
+    proformaInvoice:create | Proforma invoice creation event | Number (`code`) of proforma invoice | yes
     proformaInvoice:delete | Proforma invoice deleting event   | Number (`code`) of proforma invoice | no
-    proformaInvoice:update | Proforma invoice change event     | Number (`code`) of proforma invoice | no
+    proformaInvoice:update | Proforma invoice change event     | Number (`code`) of proforma invoice | yes
     projectReview:create | Project review creation event | ID of project review | no
-    product:create (*) | Product creation event | String (`guid`) of product | no
-    product:update (*) | Product change event | String (`guid`) of product | no
+    product:create (*) | Product creation event | String (`guid`) of product | yes
+    product:update (*) | Product change event | String (`guid`) of product | yes
     product:delete (*) | Product deleting event | String (`guid`) of product | no
     productVariant:create (*) | Product variant creation event | Product `guid` and variant `code` separated by a pipe character | no
     productVariant:update (*) | Product variant change event | Product `guid` and variant `code` separated by a pipe character | no
     productVariant:delete (*) | Product variant deleting event | Product `guid` and variant `code` separated by a pipe character | no
     productVariantPrice:update (*) | Product variant price change event | Product `guid` and variant `code` separated by a pipe character | no
     productReview:create | Product review creation event | ID of product review | no
-    proofPayment:create | Proof of payment creation event | Number (`code`) of proof payment | no
+    proofPayment:create | Proof of payment creation event | Number (`code`) of proof payment | yes
     proofPayment:delete | Proof of payment deleting event | Number (`code`) of proof payment | no
-    proofPayment:update | Proof of payment change event   | Number (`code`) of proof payment | no
-    quantityDiscount:create | Quantity discount creation event | ID of quantity discount | no
-    quantityDiscount:update | Quantity discount change event | ID of quantity discount | no
+    proofPayment:update | Proof of payment change event   | Number (`code`) of proof payment | yes
+    quantityDiscount:create | Quantity discount creation event | ID of quantity discount | yes
+    quantityDiscount:update | Quantity discount change event | ID of quantity discount | yes
     quantityDiscount:delete | Quantity discount deleting event | ID of quantity discount | no
     salesChannel:create | Sales channel create event | GUID of sales channel | no
     salesChannel:update | Sales channel update event | GUID of Shipment | no
@@ -802,8 +801,8 @@ info:
     shipment:update | Shipment status change event (in transit, delivered, returned, closed, cancel requested, etc.) | Shipment ID | no
     shipment:fail | Shipment failure event. Status changed to failed | Shipment ID | no
     shippingMethod:change | Shipping method change event | Shipping method GUID | no
-    sectionArticle:create | Article section create event | ID of article section | no
-    sectionArticle:update | Article section update event | ID of article section | no
+    sectionArticle:create | Article section create event | ID of article section | yes
+    sectionArticle:update | Article section update event | ID of article section | yes
     sectionArticle:delete | Article section delete event | ID of article section | no
     shippingRequest:cancelled | Shipping request was not chosen for order delivery | `shippingRequestCode` associated with the cart | no
     shippingRequest:confirmed | Shipping request was chosen for order delivery | `shippingRequestCode` associated with the cart | no
@@ -1593,6 +1592,14 @@ tags:
           }
       }
       ```
+
+      The payload is fetched with all optional `include` parameters applied for
+      `order`, `product`, `invoice`, `creditNote`, `deliveryNote` and
+      `proformaInvoice` events, so it is richer than a default GET response for
+      those entities. The remaining payload-supported entities (`brand`,
+      `category`, `customer`, `discountCoupon`, `proofPayment`,
+      `quantityDiscount`, `sectionArticle`) are fetched without any `include`
+      parameters.
 
       If the payload cannot be fetched at delivery time (e.g. due to a
       transient error), the notification is still sent without the `payload`
@@ -34329,6 +34336,10 @@ paths:
                     errorCode: webhook-event-already-registered
                     message: 'Webhook already exists for this event.'
                     instance: 'order:create'
+                  -
+                    errorCode: webhook-send-payload-not-supported
+                    message: 'Event "shippingMethod:change" does not support sendPayload.'
+                    instance: 'shippingMethod:change'
       summary: 'Registration of new webhook'
       operationId: registerNewWebhook
       description: |-
@@ -34391,7 +34402,7 @@ paths:
                         enum:
                           - full
                           - null
-                        description: 'When set to `full`, the webhook notification body will include a `payload` field with the full entity data. Only supported for events marked as payload-supported in the [Webhook event types](#section/code-lists/webhook-event-types) code list. For other events, this field has no effect.'
+                        description: 'When set to `full`, the webhook notification body will include a `payload` field with the full entity data. Only supported for events marked as payload-supported in the [Webhook event types](#section/code-lists/webhook-event-types) code list. Setting it for an unsupported event is rejected with the `webhook-send-payload-not-supported` error.'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -34484,6 +34495,42 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              examples:
+                'Unsupported sendPayload':
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: webhook-send-payload-not-supported
+                        message: 'Event "order:delete" does not support sendPayload.'
+                        instance: 'order:delete'
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+                'Invalid webhook url':
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: webhook-url-wrong-format
+                        message: 'Host in webhook url "https://192.168.1.1/webhook/test/?event=updated" is not valid.'
+                        instance: 'https://192.168.1.1/webhook/test/?event=updated'
+                    metadata:
+                      requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
         404:
           description: 'Not Found'
           content:
@@ -34513,6 +34560,9 @@ paths:
       description: |-
         Modification of the existing webhook. The `id` of the webhook serves as
         the identifier. Using just one call, only one webhook can be modified.
+
+        Setting `sendPayload` for an event that does not support it fails with
+        `400` and the `webhook-send-payload-not-supported` error.
 
 
         **Please note that `url` cannot be longer than 2000 characters.**
@@ -34555,7 +34605,7 @@ paths:
                       enum:
                         - full
                         - null
-                      description: 'When set to `full`, the webhook notification body will include a `payload` field with the full entity data. Only supported for events marked as payload-supported in the [Webhook event types](#section/code-lists/webhook-event-types) code list. For other events, this field has no effect.'
+                      description: 'When set to `full`, the webhook notification body will include a `payload` field with the full entity data. Only supported for events marked as payload-supported in the [Webhook event types](#section/code-lists/webhook-event-types) code list. Setting it for an unsupported event is rejected with the `webhook-send-payload-not-supported` error.'
     delete:
       responses:
         200:
