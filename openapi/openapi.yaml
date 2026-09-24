@@ -6236,7 +6236,7 @@ paths:
 
         In Log, every item is identified by its position in file (starting from 1).
 
-        See [Product image batch insert](/shoptet-api/openapi/batch/productimagebatchinsert) for more details.
+        See [Product image batch insert](/shoptet-api/openapi/batch/productimagebatchinsertschema) for more details.
       tags:
         - 'Product images'
       requestBody:
