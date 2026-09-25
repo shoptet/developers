@@ -1946,7 +1946,7 @@ paths:
                             description: 'default pricelist'
                           eshopLanguage:
                             type: string
-                            description: 'Default language code of the e-shop. Unavailable when module foreignLanguages is active and initialized.'
+                            description: 'Default language code of the e-shop. Use the `languages` section instead when module foreignLanguages is active and initialized.'
                             examples:
                               - cs
                           timezone:
@@ -2577,7 +2577,7 @@ paths:
                                 - 'https://cdn-api.myshoptet.com/usr/classic.shoptet.cz/user/shop/big/'
                       languages:
                         type: array
-                        description: 'Supported languages in eshop. Available only if module Foreign languages is active and initialized.'
+                        description: 'Supported languages in eshop. Filled only if module Foreign languages is active AND initialized; otherwise an empty array is returned and you have to follow the `eshopLanguage` attribute.'
                         items:
                           type: object
                           additionalProperties: false
@@ -2707,7 +2707,7 @@ paths:
         about the chapter [Product images](#section/Product-images).
 
 
-        **Please note that languages section has meaning only if module foreign languages (Cizí jazyky) is enabled on current eshop. Otherwise you have to follow "eshopLanguage" attribute.**
+        **Please note that the `languages` section has meaning only if the module foreign languages (Cizí jazyky) is both enabled AND initialized on the current eshop. If the module is enabled but not initialized yet, `languages` is returned as an empty array. In that case you have to follow the "eshopLanguage" attribute.**
 
         Value | Section
         --------|------
