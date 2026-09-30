@@ -1361,7 +1361,13 @@ tags:
     name: 'Price lists'
     description: |-
       Price lists are used for setting up different prices for products for
-      different customer groups.
+      different customer groups. This section covers the price list itself —
+      listing, creating and deleting one.
+  -
+    name: 'Price list prices'
+    description: |-
+      The prices inside a price list: reading them, updating them one request
+      at a time or in batch, and exporting them as a snapshot.
   -
     name: Brands
     description: |-
@@ -16049,6 +16055,882 @@ paths:
                   examples:
                     - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
       x-shoptet-async-endpoint: true
+  /api/price-lists:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - priceLists
+                    properties:
+                      priceLists:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/pricelist'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+      summary: 'List of price lists'
+      operationId: getPriceLists
+      description: |-
+        Listing of all price lists set up in e-shop. Does not contain the
+        paging, always lists all price lists.
+      tags:
+        - 'Price lists'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/pricelist'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+      summary: 'Price list insertion'
+      operationId: createPriceListEntity
+      description: ''
+      tags:
+        - 'Price lists'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 128
+                      description: 'Name of the price list'
+                      examples:
+                        - 'Hlavní ceník'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/price-lists/{id}':
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'It is not possible to delete default pricelist.'
+                    instance: integration-call
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        423:
+          description: Locked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-blocked
+                    message: |-
+                      Product import is running now. Removing pricelists has
+                      been temporarily prohibited.
+                    instance: integration-call
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Price list delete'
+      operationId: deletePriceListEntity
+      description: |-
+        Deletion of a price list can fail with error `423` in case of running
+        import.
+
+
+        Note that `GET` and `PATCH` on this path are reserved for reading and
+        updating the price list entity itself and are not served yet — they
+        currently answer `405 Method Not Allowed`. To read or update the prices
+        inside a price list, use `/api/price-lists/{id}/prices`.
+      tags:
+        - 'Price lists'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Price list ID'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/price-lists/{id}/prices':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - prices
+                    properties:
+                      prices:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/priceListPrice'
+                      paginator:
+                        $ref: '#/components/schemas/paginator'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+      summary: 'Price list prices'
+      operationId: getPriceListPrices
+      description: 'Prices of every product (variant) in the given price list, with info on discounts and limitations of purchase (minimum and maximum amount).'
+      tags:
+        - 'Price list prices'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Price list ID'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          name: code
+          in: query
+          description: 'Product variant code'
+          example: 106/BIL
+          schema:
+            type: string
+        -
+          name: guid
+          in: query
+          description: 'Product GUID'
+          example: 94fe7ffc-7481-11e8-8216-002590dad85e
+          schema:
+            type: string
+        -
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default and max value is 100.'
+          example: 50
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-code-not-found
+                    message: "The product with code '43/BILL' doesn't exist. Code skipped."
+                    instance: 43/BILL
+                  -
+                    errorCode: invalid-request-data
+                    message: |-
+                      Input data for code '43/BIL' is not correct. Code
+                      skipped.
+                    instance: 43/BIL
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Input data for code "0001" is not correct. Cannot set "price.buyPrice" and "prices.purchasePrice" at the same time. Please use "prices.purchasePrice" only as buy price is deprecated. Code skipped.'
+                    instance: '0001'
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Input data for code "0001" is not correct. Invalid "vatRate" value. Code skipped.'
+                    instance: '0001'
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Input data for code "0001" is not correct. Invalid "purchasePriceVatRate" value. Code skipped.'
+                    instance: '0001'
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-not-found
+                    message: 'Pricelist with id "11" not found.'
+                    instance: '11'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Update price list prices'
+      operationId: updatePriceListPrices
+      description: |-
+        This endpoint allows updating price fields and other attributes of the prices in a price list, per product (variant).
+
+        You can request multiple updates at once; the maximum is 300 updates per request.
+
+        The request must contain a product variant code `code` and at least one of the `price`, `priceWithVat`, `priceWithoutVat`, `orderableAmount` or `sales` objects.
+        Send only fields you want to change, the others will stay untouched. Be aware of the difference between
+
+
+        - not providing a field: the field will not be changed
+
+
+        - providing e. g. `data.price.buyPrice: null` will remove the price
+
+
+        - on projects with the zero-price feature flag enabled, a literal `0`
+        stores a genuine price of zero instead of clearing it — for
+        `data.price.price` / `data.price.commonPrice` this is an orderable,
+        free item; `data.price.buyPrice` (and `data.prices.purchasePrice.price`)
+        is the purchase cost and does not affect orderability. Use `null` to
+        remove a price. Projects without the flag enabled (the default) keep
+        the legacy behavior, where a literal `0` removes the price the same
+        way `null` does
+
+
+        In case the request will be properly formatted, but an error occurs for one of the records, the correct records
+        will be updated, the response will be `200 OK` and there will be records in the `errors` array for each failed
+        record. If all records are incorrect, the response code will be `400 BAD REQUEST` instead.
+
+
+        If you set `includingVat` or `vatRate` field, current data for product (or variant) will be recalculated. (even through untouched by your request)
+
+        Object `price` directly sets price of product, without recalculating.
+
+        Object `priceWithVat` sets price of product, respecting it is price **with** VAT and thus recalculating if needed.
+
+        Object `priceWithoutVat` sets price of product, respecting it is price **without** VAT and thus recalculating if needed.
+
+
+        Note, that you can change `buyPrice` only for default price list! For others price lists, value stays `null`.
+
+
+        For non-vat payer e-shops, `vatRate` and `includingVat` fields are forbidden to use and fields `price`, `priceWithVat` and `priceWithoutVat`
+        all works the same.
+
+        In order to change the currency of the prices, you will need to have the Currencies module (Cizí měny) activated on the customer's e-shop.
+        Note that if you change the currency code of the price list, all prices will not be recalculated to the new currency; only the currency code will be changed.
+      tags:
+        - 'Price list prices'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Price list ID'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: '#/components/schemas/pricelistUpdate'
+  '/api/price-lists/{id}/prices/batch':
+    patch:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - data
+                  - errors
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/pricelists.jsonl" not found.'
+                    instance: batchFileUrlPath
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: pricelist-batch-update
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: pricelist-batch-update
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-url
+                    message: 'Invalid or disallowed URL "https://jsonlines.org/pricelists.jsonl".'
+                    instance: batchFileUrlPath
+        500:
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-import-unexpected-error
+                    message: 'Unknown error.'
+                    instance: pricelist-batch-update
+      summary: 'Batch price list prices update'
+      operationId: updatePriceListPricesBatch
+      description: |-
+        This endpoint allows updating multiple prices at once. Price fields and other attributes of the prices in a price list, per product (variant), can be updated. Batch update is processed asynchronously in same way as for example products snapshot, but it does not have `resultUrl` with prices to download in response. Instead, you can check attribute `log` which contains successfully updated prices and errors.
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+        File with data for update must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one price list price in JSON format. Maximum size of file is 100MB.
+
+        Structure of JSON row is same as structure of JSON for a single price list prices update. See [Price list prices update schema](https://api.docs.shoptet.com/shoptet-api/openapi/price-list-prices/updatepricelistprices) for more details.
+
+        Asynchronous job process jsonl file row by row and try to validate and save data. If there is any error, row is skipped and error is logged, but it does not stop processing of other rows.
+
+        In Log, every product is identified by its position in file (starting from 1).
+
+        The request must contain a product variant code `code` and at least one of the `price`, `priceWithVat`, `priceWithoutVat`, `orderableAmount` or `sales` objects. Send only fields you want to change, the others will stay untouched. Be aware of the difference between
+
+        - not providing a field: the field will not be changed
+
+        - providing e. g. `data.price.buyPrice: null` will remove the price
+
+        If you set `includingVat` or `vatRate` field, current data for product (or variant) will be recalculated. (even through untouched by your request)
+
+        Object `price` directly sets price of product, without recalculating.
+
+        Object `priceWithVat` sets price of product, respecting it is price **with** VAT and thus recalculating if needed.
+
+        Object `priceWithoutVat` sets price of product, respecting it is price **without** VAT and thus recalculating if needed.
+
+        Note, that you can change `buyPrice` only for default price list! For others price lists, value stays `null`.
+
+        For non-vat payer e-shops, `vatRate` and `includingVat` fields are forbidden to use and fields `price`, `priceWithVat` and `priceWithoutVat` all works the same.
+
+        In order to change the currency of the prices, you will need to have the Currencies module activated on the customer's e-shop.
+
+        Note that if you change the currency code of the price list, all prices will not be recalculated to the new currency; only the currency code will be changed.
+      tags:
+        - 'Price list prices'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Price list ID'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - batchFileUrlPath
+              properties:
+                batchFileUrlPath:
+                  type: string
+                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  examples:
+                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+      x-shoptet-async-endpoint: true
+  '/api/price-lists/{id}/prices/snapshot':
+    get:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: required-webhook-registration
+                    message: 'Webhook for job:finished is not registered. Please register job:finished webhook.'
+                    instance: 'job:finished'
+                  -
+                    errorCode: too-many-enqueued-jobs
+                    message: 'Too many enqueued jobs, please try again later.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: duplicated-job-enqueued
+                    message: 'Job "pricelist-snapshot" with same parameters is already enqueued and waiting for process. Please try again, after job is done.'
+                    instance: pricelist-snapshot
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Snapshot of all prices in a price list'
+      operationId: getPriceListPricesSnapshot
+      description: |-
+        Using this endpoint, you can get all prices in the given price list asynchronously, with the same information per price as the Price list prices endpoint. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer’s portal.
+
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each price taking one line of output file.
+
+
+        One price in the response has the same format as one item of the price list prices response. See [Price list price snapshot schema](/shoptet-api/openapi/snapshot/pricelistpricesnapshot) for more details.
+
+
+        The job is the same as the one behind `/api/pricelists/{id}/snapshot`, so a snapshot already running on that path will make this one answer `409`.
+
+
+        Result file is compressed using GZIP.
+      tags:
+        - 'Price list prices'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Price list ID'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          name: codeFrom
+          in: query
+          description: 'Export prices with code after given value'
+          example: '0000000006'
+          schema:
+            type: string
+        -
+          name: codeTo
+          in: query
+          description: 'Export prices with code before given value'
+          example: '0000000006'
+          schema:
+            type: string
+        -
+          name: actionPriceDateFrom
+          in: query
+          description: 'Export prices with active action price date after date'
+          example: '2019-09-05'
+          schema:
+            type: string
+        -
+          name: actionPriceDateTo
+          in: query
+          description: 'Export prices with active action price before date'
+          example: '2019-09-05'
+          schema:
+            type: string
+        -
+          name: vatRate
+          in: query
+          description: 'Export prices with given vat rate'
+          example: '21.0'
+          schema:
+            type: string
+        -
+          name: currencyCode
+          in: query
+          description: 'Export prices with given currency code'
+          example: CZK
+          schema:
+            type: string
+        -
+          name: orderableMinAmount
+          in: query
+          description: 'Export prices with orderable minimal amount'
+          example: 10
+          schema:
+            type: number
+        -
+          name: orderableMinAmountFrom
+          in: query
+          description: |-
+            Export prices with orderable minimal amount amount after
+            given value
+          example: 10
+          schema:
+            type: number
+        -
+          name: orderableMinAmountTo
+          in: query
+          description: |-
+            Export prices with orderable minimal amount before given
+            value
+          example: 100
+          schema:
+            type: number
+        -
+          name: orderableMaxAmount
+          in: query
+          description: 'Export prices with orderable maximal amount'
+          example: 20
+          schema:
+            type: number
+        -
+          name: orderableMaxAmountFrom
+          in: query
+          description: |-
+            Export prices with orderable maximal amount after given
+            value
+          example: 20
+          schema:
+            type: number
+        -
+          name: orderableMaxAmountTo
+          in: query
+          description: |-
+            Export prices with orderable maximal amount before given
+            value
+          example: 200
+          schema:
+            type: number
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/priceListPriceSnapshot'
+  /api/price-lists/prices/snapshot:
+    get:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: required-webhook-registration
+                    message: 'Webhook for job:finished is not registered. Please register job:finished webhook.'
+                    instance: 'job:finished'
+                  -
+                    errorCode: too-many-enqueued-jobs
+                    message: 'Too many enqueued jobs, please try again later.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: duplicated-job-enqueued
+                    message: 'Job "products-snapshot-pricelist" with same parameters is already enqueued and waiting for process. Please try again, after job is done.'
+                    instance: products-snapshot-pricelist
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Snapshot of all prices across all price lists'
+      operationId: getAllPriceListPricesSnapshot
+      description: |-
+        Using this endpoint, you can get list of all products with basic data such as product guid, id, code and its prices across all price lists.
+
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each product taking one line of output file. See [Product price list price snapshot schema](/shoptet-api/openapi/snapshot/productpricelistpricesnapshot) for more details.
+
+
+        The job is the same as the one behind `/api/products/snapshot/pricelists`, so a snapshot already running on that path will make this one answer `409`.
+
+
+        Result file is compressed using GZIP.
+      tags:
+        - 'Price list prices'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/productPriceListPriceSnapshot'
   /api/sales-channels:
     get:
       responses:
@@ -49578,6 +50460,44 @@ components:
           description: 'price list name'
           examples:
             - 'Hlavní ceník'
+    priceListPrice:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/pricelistDetail'
+    priceListPriceSnapshot:
+      title: 'Price list price'
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/pricelistDetail'
+    productPriceListPriceSnapshot:
+      title: 'Product price list price'
+      x-tags:
+        - Snapshot
+      required:
+        - productGuid
+        - productId
+      properties:
+        productGuid:
+          $ref: '#/components/schemas/typeGuidUnlimited'
+          description: 'unique product indicator'
+        productId:
+          type: integer
+          description: 'product identifier'
+          examples:
+            - 2
+      allOf:
+        -
+          $ref: '#/components/schemas/pricelistDetail'
+    priceListPriceBatchUpdate:
+      title: 'Price list price update'
+      x-tags:
+        - Batch
+      allOf:
+        -
+          $ref: '#/components/schemas/pricelistUpdate'
     variantPrice:
       type: object
       additionalProperties: false
@@ -57236,6 +58156,7 @@ x-tagGroups:
       - 'Alternative products'
       - Brands
       - 'Price lists'
+      - 'Price list prices'
       - Products
       - 'Product availabilities'
       - 'Product gifts'
