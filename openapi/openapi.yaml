@@ -29670,30 +29670,6 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type:
-                      - object
-                      - 'null'
-                  errors:
-                    $ref: '#/components/schemas/Errors'
-                  metadata:
-                    $ref: '#/components/schemas/Metadata'
-              example:
-                data: null
-                errors:
-                  -
-                    errorCode: missing-module
-                    message: 'Module "Sales channel" is not active.'
-                    instance: salesChannel
-                metadata:
-                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         404:
           description: 'Not Found'
           content:
@@ -29720,7 +29696,7 @@ paths:
                     $ref: '#/components/schemas/Metadata'
       summary: 'Sales channel detail'
       operationId: getSalesChannelsDetail
-      description: 'Information about the detail of the sales channels. Module `Sales Channel` is required.'
+      description: 'Information about the detail of the sales channels.'
       tags:
         - 'Sales channels'
       parameters:
@@ -29950,30 +29926,6 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type:
-                      - object
-                      - 'null'
-                  errors:
-                    $ref: '#/components/schemas/Errors'
-                  metadata:
-                    $ref: '#/components/schemas/Metadata'
-              example:
-                data: null
-                errors:
-                  -
-                    errorCode: missing-module
-                    message: 'Module "Sales channel" is not active.'
-                    instance: salesChannel
-                metadata:
-                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         404:
           description: 'Not Found'
           content:
@@ -30000,7 +29952,7 @@ paths:
                     $ref: '#/components/schemas/Metadata'
       summary: 'Sales channel detail by ID'
       operationId: getSalesChannelsDetailById
-      description: 'Information about the detail of the sales channels. Module `Sales Channel` is required.'
+      description: 'Information about the detail of the sales channels.'
       tags:
         - 'Sales channels'
       parameters:
