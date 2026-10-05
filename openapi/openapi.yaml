@@ -36318,13 +36318,14 @@ paths:
                         - intime-colli-small
                     visible:
                       type: boolean
-                      description: 'whether the shipping method will be visible. When the `Sales channel` module is active, visibility follows the sales-channel bindings instead — see `salesChannelGuids`.'
+                      deprecated: true
+                      description: "[DEPRECATED] use `salesChannelGuids` — visibility follows the sales-channel bindings. Ignored when `salesChannelGuids` is sent. Sent alone, it still works for now: `true` binds the method to the primary market's sales channel, `false` binds it nowhere."
                       examples:
                         - true
                     visibility:
                       type: boolean
                       deprecated: true
-                      description: '[DEPRECATED] use `visible`. Both are accepted; sending contradicting values is rejected with `invalid-parameter`.'
+                      description: '[DEPRECATED] use `salesChannelGuids`. Alias of `visible`; sending contradicting values is rejected with `invalid-parameter`.'
                       examples:
                         - true
                     wholesale:
@@ -37090,13 +37091,14 @@ paths:
                         - intime-colli-small
                     visible:
                       type: boolean
-                      description: 'whether the shipping method will be visible. When the `Sales channel` module is active, visibility is derived from the sales-channel bindings instead, so sending only `visible` has no effect there — send `salesChannelGuids`.'
+                      deprecated: true
+                      description: '[DEPRECATED] use `salesChannelGuids` — visibility follows the sales-channel bindings. Ignored when `salesChannelGuids` is sent. Sent alone, it still works for now: `false` detaches the method from every market sales channel, `true` keeps the current markets, or binds the method to the primary market when it has none.'
                       examples:
                         - true
                     visibility:
                       type: boolean
                       deprecated: true
-                      description: '[DEPRECATED] use `visible`. Both are accepted; sending contradicting values is rejected with `invalid-parameter`.'
+                      description: '[DEPRECATED] use `salesChannelGuids`. Alias of `visible`; sending contradicting values is rejected with `invalid-parameter`.'
                       examples:
                         - true
                     priority:
