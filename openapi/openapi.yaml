@@ -24121,6 +24121,9 @@ paths:
                     taxDate:
                       $ref: '#/components/schemas/typeDateNullable'
                       description: 'Date of taxation. Default is today.'
+                    creationTime:
+                      $ref: '#/components/schemas/typeDateTimeNullable'
+                      description: 'Date on which was invoice issued. Default is now.'
                     constSymbol:
                       $ref: '#/components/schemas/typeConstSymbol'
                       description: 'Const symbol. Only numbers are allowed (max length 4).'
@@ -24396,6 +24399,9 @@ paths:
                     taxDate:
                       $ref: '#/components/schemas/typeDate'
                       description: 'Date of taxation. Default is today.'
+                    creationTime:
+                      $ref: '#/components/schemas/typeDateTimeNullable'
+                      description: 'Date on which was invoice issued. Default is now.'
                     constSymbol:
                       $ref: '#/components/schemas/typeConstSymbol'
                       description: 'Const symbol. Only numbers are allowed (max length 4).'
