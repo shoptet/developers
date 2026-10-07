@@ -47096,101 +47096,7 @@ paths:
                       reviews:
                         type: array
                         items:
-                          type: object
-                          required:
-                            - id
-                            - date
-                            - orderCode
-                            - rating
-                            - description
-                            - fullName
-                            - email
-                            - customerGuid
-                            - visible
-                            - reaction
-                          properties:
-                            id:
-                              type: integer
-                              description: 'Review id.'
-                              examples:
-                                - 1
-                            date:
-                              $ref: '#/components/schemas/typeDateTimeNullable'
-                              description: 'Review creation date.'
-                            orderCode:
-                              type:
-                                - 'null'
-                                - string
-                              description: 'Order code related to review. Can be null.'
-                              examples:
-                                - '2011000002'
-                            rating:
-                              type: integer
-                              description: "Number from 1 to 5 representing starts of review's rating."
-                              examples:
-                                - 5
-                            description:
-                              type:
-                                - 'null'
-                                - string
-                              examples:
-                                - 'Snack was very good'
-                            fullName:
-                              type:
-                                - 'null'
-                                - string
-                              description: "Fullname of review's author. Can be null."
-                              examples:
-                                - 'John Doe'
-                            email:
-                              type:
-                                - 'null'
-                                - string
-                              description: "Email of the review author. If it's a registered customer and the review email is empty, it's filled with the customer's main account email. Can be null."
-                              examples:
-                                - johndoe@email.tld
-                            customerGuid:
-                              type:
-                                - 'null'
-                                - string
-                              description: 'Customer guid related to review. Can be null.'
-                              examples:
-                                - 443cad54-73bc-11e8-8216-002590dad85e
-                            visible:
-                              type: boolean
-                              description: 'flag, whether the review is visible'
-                              examples:
-                                - false
-                            reaction:
-                              type: object
-                              additionalProperties: false
-                              required:
-                                - reactionCreated
-                                - reactionFullName
-                                - reactionEmail
-                                - reactionText
-                              properties:
-                                reactionCreated:
-                                  $ref: '#/components/schemas/typeDateTimeNullable'
-                                  description: 'Date of creation of reaction. Can be null.'
-                                reactionFullName:
-                                  type:
-                                    - 'null'
-                                    - string
-                                  examples:
-                                    - 'John Doe'
-                                reactionEmail:
-                                  type:
-                                    - 'null'
-                                    - string
-                                  examples:
-                                    - johndoe@email.tld
-                                reactionText:
-                                  type:
-                                    - 'null'
-                                    - string
-                                  examples:
-                                    - 'Thank you for your review!'
+                          $ref: '#/components/schemas/reviewProjectList'
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -47511,6 +47417,174 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/reviews/project/snapshot:
+    get:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "dateFrom" parameter. Should be in ISO 8601 format, e.g.: 2018-06-23T13:15:37%2B0200'
+                    instance: dateFrom
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "visible" parameter. Only values "true", "false" are available'
+                    instance: visible
+                  -
+                    errorCode: missing-parameter
+                    message: 'Missing value for parameter "orderCode".'
+                    instance: orderCode
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Unsupported query parameters found: page'
+                    instance: query-params
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active rating module in project.'
+                    instance: rating
+                  -
+                    errorCode: rating-not-enabled
+                    message: 'The project must have store ratings enabled. They are currently disabled.'
+                    instance: settings
+                  -
+                    errorCode: required-webhook-registration
+                    message: 'Webhook for job:finished is not registered. Please register job:finished webhook.'
+                    instance: 'job:finished'
+                  -
+                    errorCode: too-many-enqueued-jobs
+                    message: 'Too many enqueued jobs, please try again later.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: duplicated-job-enqueued
+                    message: 'Job "project-reviews-snapshot" with same parameters is already enqueued and waiting for process. Please try again, after job is done.'
+                    instance: project-reviews-snapshot
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'List of all project reviews'
+      operationId: getListOfAllProjectReviews
+      description: |-
+        Using this endpoint, you can get list of all project reviews in the same format as the List of project reviews endpoint returns them. This endpoint is available only when the 'Rating' module is active. Also, the project must have store ratings enabled in the administration settings.
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each project review taking one line of output file.
+
+
+        One project review in response has the same format as one item of the List of project reviews response. See [Project review snapshot schema](/shoptet-api/openapi/snapshot/reviewprojectsnapshot) for more details.
+
+
+        Result file is compressed using GZIP.
+      tags:
+        - Reviews
+      parameters:
+        -
+          name: dateFrom
+          in: query
+          description: 'Filter reviews with creation date after date.'
+          example: '2019-09-05T00:00:00%2B0100'
+          schema:
+            type: string
+        -
+          name: dateTo
+          in: query
+          description: 'Filter reviews with creation date before date.'
+          example: '2019-09-05T00:00:00%2B0100'
+          schema:
+            type: string
+        -
+          name: visible
+          in: query
+          description: 'Filter reviews by visibility.'
+          example: true
+          schema:
+            type: boolean
+        -
+          name: orderCode
+          in: query
+          description: 'Order identifier to filter reviews by.'
+          example: '2011000002'
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/definitions/reviewProjectSnapshot'
   '/api/reviews/project/{reviewId}':
     patch:
       responses:
@@ -54008,6 +54082,102 @@ components:
           description: 'page og:image'
           examples:
             - 'https://www.some-eshop-url.com/image.jpg'
+    reviewProjectList:
+      type: object
+      required:
+        - id
+        - date
+        - orderCode
+        - rating
+        - description
+        - fullName
+        - email
+        - customerGuid
+        - visible
+        - reaction
+      properties:
+        id:
+          type: integer
+          description: 'Review id.'
+          examples:
+            - 1
+        date:
+          $ref: '#/components/schemas/typeDateTimeNullable'
+          description: 'Review creation date.'
+        orderCode:
+          type:
+            - 'null'
+            - string
+          description: 'Order code related to review. Can be null.'
+          examples:
+            - '2011000002'
+        rating:
+          type: integer
+          description: "Number from 1 to 5 representing starts of review's rating."
+          examples:
+            - 5
+        description:
+          type:
+            - 'null'
+            - string
+          examples:
+            - 'Snack was very good'
+        fullName:
+          type:
+            - 'null'
+            - string
+          description: "Fullname of review's author. Can be null."
+          examples:
+            - 'John Doe'
+        email:
+          type:
+            - 'null'
+            - string
+          description: "Email of the review author. If it's a registered customer and the review email is empty, it's filled with the customer's main account email. Can be null."
+          examples:
+            - johndoe@email.tld
+        customerGuid:
+          type:
+            - 'null'
+            - string
+          description: 'Customer guid related to review. Can be null.'
+          examples:
+            - 443cad54-73bc-11e8-8216-002590dad85e
+        visible:
+          type: boolean
+          description: 'flag, whether the review is visible'
+          examples:
+            - false
+        reaction:
+          type: object
+          additionalProperties: false
+          required:
+            - reactionCreated
+            - reactionFullName
+            - reactionEmail
+            - reactionText
+          properties:
+            reactionCreated:
+              $ref: '#/components/schemas/typeDateTimeNullable'
+              description: 'Date of creation of reaction. Can be null.'
+            reactionFullName:
+              type:
+                - 'null'
+                - string
+              examples:
+                - 'John Doe'
+            reactionEmail:
+              type:
+                - 'null'
+                - string
+              examples:
+                - johndoe@email.tld
+            reactionText:
+              type:
+                - 'null'
+                - string
+              examples:
+                - 'Thank you for your review!'
     reviewProject:
       type: object
       additionalProperties: false
@@ -58100,6 +58270,13 @@ components:
       allOf:
         -
           $ref: '#/components/schemas/quantityDiscount'
+    reviewProjectSnapshot:
+      title: 'Project review'
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/reviewProjectList'
 x-tagGroups:
   -
     name: Orders
