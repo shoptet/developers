@@ -11829,6 +11829,14 @@ paths:
                             description: "Is price of parameter's values including VAT."
                             examples:
                               - true
+                          subscription:
+                            type:
+                              - boolean
+                              - 'null'
+                            description: 'Indicates whether this surcharge parameter is a subscription (recurring payment)'
+                            examples:
+                              - true
+                              - false
                           googleMapping:
                             $ref: '#/components/schemas/googleMappingType'
                             description: 'Possible parameter mapping with google.'
