@@ -36919,8 +36919,8 @@ paths:
                 errors:
                   -
                     errorCode: shipping-method-not-owned
-                    message: 'This shipping method belongs to another service and cannot be modified.'
-                    instance: guid
+                    message: 'This shipping method is not owned by your service and cannot be modified.'
+                    instance: b57f91bb-e920-11e0-baa3-7dc668b75ca8
         404:
           description: 'Not Found'
           content:
@@ -37173,6 +37173,122 @@ paths:
                                 description: 'Tax class identifier applied to the tier price. Defaults to the e-shop default tax class. (can be null)'
                                 examples:
                                   - 1
+      parameters:
+        -
+          name: guid
+          in: path
+          required: true
+          description: 'Unique identifier of the shipping method.'
+          example: b57f91bb-e920-11e0-baa3-7dc668b75ca8
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    delete:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                    additionalProperties: false
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: shipping-method-not-owned
+                    message: 'This shipping method is not owned by your service and cannot be deleted.'
+                    instance: b57f91bb-e920-11e0-baa3-7dc668b75ca8
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: shipping-method-not-found
+                    message: 'Shipping method with GUID "b57f91bb-e920-11e0-baa3-7dc668b75ca8" not found.'
+                    instance: b57f91bb-e920-11e0-baa3-7dc668b75ca8
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: shipping-method-deletion-blocked
+                    message: 'Default shipping method cannot be deleted.'
+                    instance: b57f91bb-e920-11e0-baa3-7dc668b75ca8
+      summary: 'Shipping method deletion'
+      operationId: deleteShippingMethod
+      description: |-
+        Removes an existing shipping method, so that an addon can clean up the methods it provisioned
+        instead of leaving the merchant to delete them by hand in the administration.
+
+
+        **The delete is soft.** The method disappears from the storefront, from the administration and
+        from `GET /api/shipping-methods`, and the GUID stops resolving — but orders that were already
+        placed with it go on showing it. Deleting a method never rewrites order history.
+
+
+        **Ownership.** A token belonging to an addon may only delete the shipping methods created from
+        that addon's own shipping service; anything else is rejected with `shipping-method-not-owned`.
+        A merchant's own API token is not restricted this way.
+
+
+        **The default method cannot be deleted.** The e-shop's default retail and default wholesale
+        shipping methods are rejected with `shipping-method-deletion-blocked`, whoever asks. Point the
+        default at another method in the administration first.
+      tags:
+        - 'Shipping methods'
       parameters:
         -
           name: guid
