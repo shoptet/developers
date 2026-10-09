@@ -51356,7 +51356,9 @@ components:
                       examples:
                         - image.jpg
                     valuePriority:
-                      type: integer
+                      type:
+                        - integer
+                        - 'null'
                       description: 'priority of the parameter value.'
                       examples:
                         - 1
