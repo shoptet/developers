@@ -4167,7 +4167,7 @@ paths:
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
-          description: 'Unprocessable Entity'
+          description: 'Unprocessable Entity. With `per-pricelist-prices-limit-exceeded` the product has already been created, do not retry the request, fetch the product without the `perPricelistPrices` include instead.'
           content:
             application/json:
               schema:
@@ -4191,6 +4191,10 @@ paths:
                   -
                     errorCode: invalid-request-data
                     message: 'The property heureka is not allowed. An active Heureka module is required.'
+                    instance: payload
+                  -
+                    errorCode: per-pricelist-prices-limit-exceeded
+                    message: 'Unable to process request with perPricelistPrices include, the number of variant and price list combinations exceeds the limit of 125000.'
                     instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
@@ -4840,7 +4844,7 @@ paths:
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
-          description: 'Unprocessable Entity'
+          description: 'Unprocessable Entity. With `per-pricelist-prices-limit-exceeded` the product has already been copied, do not retry the request, fetch the copy without the `perPricelistPrices` include instead.'
           content:
             application/json:
               schema:
@@ -4861,6 +4865,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'Stocks cannot be copied without pricelist. Property `pricelist` must be set to `true`.'
                     instance: stocks
+                  -
+                    errorCode: per-pricelist-prices-limit-exceeded
+                    message: 'Unable to process request with perPricelistPrices include, the number of variant and price list combinations exceeds the limit of 125000.'
+                    instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product copy'
@@ -5141,7 +5149,7 @@ paths:
         relatedVideos         | The response will also contain related videos.
         relatedFiles          | The response will also contain related files.
         perStockAmounts       | The response will also contain amounts/claims per individual stocks. Requires the "stock" module to be enabled on the current e-shop.
-        perPricelistPrices    | The response will also contain prices per individual price lists.
+        perPricelistPrices    | The response will also contain prices per individual price lists. The job fails if the number of variant and price list combinations is too large to process.
 
         Use `productCodes` or `productGuids` request parameter to get the list of specific products. Product codes/GUIDs are separated by a comma. If you use this query parameter, other filters are not applied, and the set of particular products is returned. Please note that these parameters **accepts max. 50 product codes/GUIDs in request parameter** and cannot be combined.
 
@@ -5416,6 +5424,30 @@ paths:
                     instance: consumptionTax
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: per-pricelist-prices-limit-exceeded
+                    message: 'Unable to process request with perPricelistPrices include, the number of variant and price list combinations exceeds the limit of 125000.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product detail'
       operationId: getProductDetail
       description: |-
@@ -5518,7 +5550,7 @@ paths:
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
-          description: 'Unprocessable Entity'
+          description: 'Unprocessable Entity. With `per-pricelist-prices-limit-exceeded` the product has already been updated, fetch it without the `perPricelistPrices` include instead.'
           content:
             application/json:
               schema:
@@ -5542,6 +5574,10 @@ paths:
                   -
                     errorCode: invalid-request-data
                     message: 'The property heureka is not allowed. An active Heureka module is required.'
+                    instance: payload
+                  -
+                    errorCode: per-pricelist-prices-limit-exceeded
+                    message: 'Unable to process request with perPricelistPrices include, the number of variant and price list combinations exceeds the limit of 125000.'
                     instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
@@ -6311,6 +6347,30 @@ paths:
                     instance: consumptionTax
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: per-pricelist-prices-limit-exceeded
+                    message: 'Unable to process request with perPricelistPrices include, the number of variant and price list combinations exceeds the limit of 125000.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product detail by code'
       operationId: getProductDetailByCode
       description: |-
@@ -6386,7 +6446,7 @@ paths:
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
-          description: 'Unprocessable Entity'
+          description: 'Unprocessable Entity. With `per-pricelist-prices-limit-exceeded` the product has already been updated, fetch it without the `perPricelistPrices` include instead.'
           content:
             application/json:
               schema:
@@ -6410,6 +6470,10 @@ paths:
                   -
                     errorCode: invalid-request-data
                     message: 'The property heureka is not allowed. An active Heureka module is required.'
+                    instance: payload
+                  -
+                    errorCode: per-pricelist-prices-limit-exceeded
+                    message: 'Unable to process request with perPricelistPrices include, the number of variant and price list combinations exceeds the limit of 125000.'
                     instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
