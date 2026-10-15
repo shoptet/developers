@@ -16186,9 +16186,68 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-name-duplicated
+                    message: 'Pricelist "Hlavní ceník" already exists.'
+                    instance: data.name
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Currency code "QQQ" not found.'
+                    instance: data.currency
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Price list insertion'
       operationId: createPriceListEntity
-      description: ''
+      description: |-
+        `currency` is optional. Omit it, or send `null`, to create the price list
+        without one, in which case the e-shop default currency applies. A code
+        the e-shop does not know answers `422 invalid-request-data`.
+
+
+        Setting a currency here does not convert any price; it only records which
+        currency the price list is kept in. Nothing in the e-shop reads it yet.
+
+
+        `name` must be unique across the e-shop; a name another price list already
+        uses answers `409 pricelist-name-duplicated`.
       tags:
         - 'Price lists'
       requestBody:
@@ -16212,10 +16271,291 @@ paths:
                       description: 'Name of the price list'
                       examples:
                         - 'Hlavní ceník'
+                    currency:
+                      $ref: '#/components/schemas/typeCurrencyCodeNullable'
+                      description: 'Currency the price list is kept in. Requires the active `currencies` module; without it, setting one answers `403 missing-module`. Omit it or send `null` to leave the price list without one, in which case the e-shop default currency applies. Nothing in the e-shop reads this value yet; it is recorded for the multishop work that will build on it.'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/price-lists/{id}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - priceList
+                    properties:
+                      priceList:
+                        $ref: '#/components/schemas/priceListEntity'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-not-found
+                    message: 'Pricelist with id "99" not found.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Price list detail'
+      operationId: getPriceListEntity
+      description: |-
+        The price list itself, not the prices in it. For those use
+        `/api/price-lists/{id}/prices`.
+
+
+        `isDefault` marks the e-shop default price list, which is the only one
+        where `buyPrice` is writable.
+
+
+        `currency` is the currency the price list is kept in; `null` means the
+        e-shop default currency applies. Nothing in the e-shop reads it yet; it is
+        recorded for the multishop work that will build on it.
+
+
+        `salesChannels` lists the channels the price list serves and which of them
+        it is primary for. `customerGroups`
+        lists the groups that have this price list as their default; it is
+        read-only here and is set from the customer group side, via
+        `PATCH /api/customers/groups/{id}`.
+      tags:
+        - 'Price lists'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Price list ID'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+    patch:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - priceList
+                    properties:
+                      priceList:
+                        $ref: '#/components/schemas/priceListEntity'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-not-found
+                    message: 'Pricelist with id "99" not found.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-name-duplicated
+                    message: 'Pricelist "Hlavní ceník" already exists.'
+                    instance: data.name
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Missing request data. Method PATCH requires request data.'
+                    instance: request-data
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Must contain a minimum of 1 properties'
+                    instance: data
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Currency code "QQQ" not found.'
+                    instance: data.currency
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Sales channel with guid "00000000-0000-0000-0000-000000000000" not found.'
+                    instance: data.salesChannels
+                  -
+                    errorCode: sales-channel-type-invalid
+                    message: 'Sales channel with guid "0199bdfd-0979-71fb-85ce-e483c61d391b" is of type "system". Price lists can only be assigned to channels of type "online_store", "in_store" or "marketplace".'
+                    instance: data.salesChannels
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Price list update'
+      operationId: updatePriceListEntity
+      description: |-
+        Updates the price list itself, not the prices in it. For those use
+        `PATCH /api/price-lists/{id}/prices`.
+
+
+        Every field is optional and send only what changes; a field left out is
+        left as it is. The response is the whole entity, in the same shape `GET`
+        returns it. At least one field is required, so a request with no body, or
+        one whose `data` is empty, answers `422 invalid-request-data`.
+
+
+        `currency` records which currency the price list is kept in. **It does not
+        convert or recalculate any price.** Each price row carries its own
+        `currencyCode`; the two are independent and setting one does not change the
+        other. Send `null` to clear it, after which the e-shop default currency
+        applies. Nothing in the e-shop reads this value yet.
+
+
+        `salesChannels` replaces the current assignment rather than adding to it,
+        so send the full list; an empty array detaches the price list from every
+        channel. `isPrimary` can only be set, not cleared: to stop a price list
+        being a channel's primary one, make another price list primary for that
+        channel.
+
+
+        A price list can be assigned to channels of type `online_store`, `in_store`
+        and `marketplace`. A `system` channel is an integration such as Heureka or
+        Aukro and answers `422 sales-channel-type-invalid`, which is distinct from a
+        guid the e-shop does not have at all.
+
+
+        An unknown price list answers `404 pricelist-not-found`. A `currency` or a
+        sales channel guid the e-shop does not have answers
+        `422 invalid-request-data` with `instance` naming the field, and a name
+        another price list already uses `409 pricelist-name-duplicated`. A request answered with any of those
+        leaves the price list exactly as it was; the fields of one request are
+        never applied in part.
+      tags:
+        - 'Price lists'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  additionalProperties: false
+                  minProperties: 1
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 128
+                      description: 'Name of the price list. Must be unique across the e-shop and cannot consist only of whitespace.'
+                      examples:
+                        - Velkoobchod
+                    currency:
+                      $ref: '#/components/schemas/typeCurrencyCodeNullable'
+                      description: 'Currency the price list is kept in. Requires the active `currencies` module; without it, setting one answers `403 missing-module`, while clearing it with `null` is always allowed. Changing it does not convert any price: the `currencyCode` of each price row is independent. Nothing in the e-shop reads this value yet; it is recorded for the multishop work that will build on it.'
+                    salesChannels:
+                      type: array
+                      description: 'Sales channels the price list serves. The list replaces the current assignment rather than adding to it, so an empty array detaches the price list from every channel. Accepts channels of type `online_store`, `in_store` and `marketplace`; a `system` channel is an integration such as Heureka or Aukro and is rejected. Each channel may be listed at most once; naming the same guid twice is rejected rather than resolved to one of the two values.'
+                      items:
+                        $ref: '#/components/schemas/priceListSalesChannelAssignment'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Price list ID'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     delete:
       responses:
         200:
@@ -16295,10 +16635,8 @@ paths:
         import.
 
 
-        Note that `GET` and `PATCH` on this path are reserved for reading and
-        updating the price list entity itself and are not served yet — they
-        currently answer `405 Method Not Allowed`. To read or update the prices
-        inside a price list, use `/api/price-lists/{id}/prices`.
+        To delete prices inside a price list rather than the price list itself,
+        use `/api/price-lists/{id}/prices`.
       tags:
         - 'Price lists'
       parameters:
@@ -50687,6 +51025,82 @@ components:
       allOf:
         -
           $ref: '#/components/schemas/pricelistDetail'
+    priceListEntity:
+      title: 'Price list'
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - guid
+        - name
+        - currency
+        - isDefault
+        - salesChannels
+        - customerGroups
+      properties:
+        id:
+          type: integer
+          description: 'price list identifier'
+          examples:
+            - 1
+        guid:
+          $ref: '#/components/schemas/typeGuidNullable'
+          description: 'price list GUID. Null on price lists created before GUIDs were introduced.'
+        name:
+          type: string
+          description: 'price list name'
+          examples:
+            - 'Hlavní ceník'
+        currency:
+          $ref: '#/components/schemas/typeCurrencyCodeNullable'
+          description: 'currency the price list is kept in; null means the e-shop default currency applies. Independent of the `currencyCode` of individual price rows: setting either converts nothing and does not change the other. Nothing in the e-shop reads this value yet; it is recorded for the multishop work that will build on it.'
+        isDefault:
+          type: boolean
+          description: 'whether this is the e-shop default price list'
+          examples:
+            - true
+        salesChannels:
+          type: array
+          description: 'sales channels the price list is assigned to'
+          items:
+            $ref: '#/components/schemas/priceListSalesChannelAssignment'
+        customerGroups:
+          type: array
+          description: 'customer groups whose default price list this is'
+          items:
+            $ref: '#/components/schemas/priceListCustomerGroup'
+    priceListSalesChannelAssignment:
+      type: object
+      additionalProperties: false
+      required:
+        - guid
+        - isPrimary
+      properties:
+        guid:
+          $ref: '#/components/schemas/typeGuid'
+          description: 'sales channel GUID'
+        isPrimary:
+          type: boolean
+          description: 'whether the price list is the primary one for that sales channel'
+          examples:
+            - true
+    priceListCustomerGroup:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          description: 'customer group identifier'
+          examples:
+            - 1
+        name:
+          type: string
+          description: 'customer group name in the requested language'
+          examples:
+            - 'Koncový zákazník'
     priceListPriceSnapshot:
       title: 'Price list price'
       x-tags:
@@ -52997,7 +53411,7 @@ components:
               - 106/BIL
           currencyCode:
             type: string
-            description: 'Currency code. List of available currencies within the e-shop can be found in [Eshop info](#tag/eshop/geteshopinfo) endpoint.'
+            description: "Currency code. List of available currencies within the e-shop can be found in [Eshop info](#tag/eshop/geteshopinfo) endpoint. Independent of the price list's own `currency` (see `GET /api/price-lists/{id}`): setting either converts nothing and does not change the other."
             examples:
               - CZK
           vatRate:
@@ -58021,6 +58435,7 @@ components:
             - '0006'
         currencyCode:
           $ref: '#/components/schemas/typeCurrencyCode'
+          description: "Currency this price is stored in. Independent of the price list's own `currency` (see `GET /api/price-lists/{id}`): setting either converts nothing and does not change the other."
           examples:
             - CZK
         includingVat:
