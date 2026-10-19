@@ -844,6 +844,7 @@ info:
     category:massCreate | Mass create of product categories event | Json serialized list of string (`guid`) of product categories
     category:massUpdate | Mass change of product categories event      | Json serialized list of string (`guid`) of product categories
     category:massDelete | Mass delete of product categories event      | Json serialized list of string (`guid`) of product categories
+    customer:massCreate | Mass create of customers event | Json serialized list of string (`guid`) of customers
     discountCoupon:massCreate | Mass create of discount coupons event | Json serialized list of string (`code`) of discount coupons
     discountCoupon:massDelete | Mass delete of discount coupons event      | Json serialized list of string (`code`) of discount coupons
     invoice:massUpdate | Mass change of invoices event      | Json serialized list of number (`code`) of invoices
@@ -5907,9 +5908,9 @@ paths:
               properties:
                 batchFileUrlPath:
                   type: string
-                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  description: 'Url to the batch file with the data to be processed. File must be in JSONL format - one record per line.'
                   examples:
-                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+                    - 'https://cdn.myshoptet.com/batch-data.jsonl'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -6076,9 +6077,9 @@ paths:
               properties:
                 batchFileUrlPath:
                   type: string
-                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  description: 'Url to the batch file with the data to be processed. File must be in JSONL format - one record per line.'
                   examples:
-                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+                    - 'https://cdn.myshoptet.com/batch-data.jsonl'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -6292,9 +6293,9 @@ paths:
               properties:
                 batchFileUrlPath:
                   type: string
-                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  description: 'Url to the batch file with the data to be processed. File must be in JSONL format - one record per line.'
                   examples:
-                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+                    - 'https://cdn.myshoptet.com/batch-data.jsonl'
       parameters:
         -
           name: clearImages
@@ -8587,9 +8588,9 @@ paths:
               properties:
                 batchFileUrlPath:
                   type: string
-                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  description: 'Url to the batch file with the data to be processed. File must be in JSONL format - one record per line.'
                   examples:
-                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+                    - 'https://cdn.myshoptet.com/batch-data.jsonl'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -8761,9 +8762,9 @@ paths:
               properties:
                 batchFileUrlPath:
                   type: string
-                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  description: 'Url to the batch file with the data to be processed. File must be in JSONL format - one record per line.'
                   examples:
-                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+                    - 'https://cdn.myshoptet.com/batch-data.jsonl'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -16123,9 +16124,9 @@ paths:
               properties:
                 batchFileUrlPath:
                   type: string
-                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  description: 'Url to the batch file with the data to be processed. File must be in JSONL format - one record per line.'
                   examples:
-                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+                    - 'https://cdn.myshoptet.com/batch-data.jsonl'
       x-shoptet-async-endpoint: true
   /api/price-lists:
     get:
@@ -17040,9 +17041,9 @@ paths:
               properties:
                 batchFileUrlPath:
                   type: string
-                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  description: 'Url to the batch file with the data to be processed. File must be in JSONL format - one record per line.'
                   examples:
-                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+                    - 'https://cdn.myshoptet.com/batch-data.jsonl'
       x-shoptet-async-endpoint: true
   '/api/price-lists/{id}/prices/snapshot':
     get:
@@ -23568,9 +23569,9 @@ paths:
               properties:
                 batchFileUrlPath:
                   type: string
-                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  description: 'Url to the batch file with the data to be processed. File must be in JSONL format - one record per line.'
                   examples:
-                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+                    - 'https://cdn.myshoptet.com/batch-data.jsonl'
   /api/orders/gifts:
     get:
       responses:
@@ -31716,9 +31717,9 @@ paths:
               properties:
                 batchFileUrlPath:
                   type: string
-                  description: 'Url to batch file with products data. File must be in JSONL format.'
+                  description: 'Url to the batch file with the data to be processed. File must be in JSONL format - one record per line.'
                   examples:
-                    - 'https://cdn.myshoptet.com/batch-products-update.jsonl'
+                    - 'https://cdn.myshoptet.com/batch-data.jsonl'
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
@@ -31997,91 +31998,118 @@ paths:
                 - data
               properties:
                 data:
-                  type: object
-                  additionalProperties: false
-                  required:
-                    - account
-                  minProperties: 1
-                  properties:
-                    remark:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      description: 'remark for the customer (can be `null`)'
-                      examples:
-                        - remark
-                    priceRatio:
-                      minLength: 1
-                      $ref: '#/components/schemas/typePriceRatio'
-                      description: 'additional discount - 4 decimal places accuracy, (from `0.0000` to `1.0000`), 0.7800 = discount 22%; 1.0000 = no discount'
-                    birthDate:
-                      type:
-                        - string
-                        - 'null'
-                      description: 'date of birth. In YYYY-MM-DD format.  (can be `null`)'
-                      examples:
-                        - '1974-03-14'
-                    disabledOrders:
-                      type: boolean
-                      description: 'Ordering disabled? If so, newly created orders will be cancelled automatically.'
-                      examples:
-                        - true
-                    customerGroupCode:
-                      type: string
-                      minLength: 1
-                      description: 'customer group code, group must exists if set.'
-                      examples:
-                        - retail
-                    pricelistId:
-                      type: integer
-                      description: 'Price list identifier'
-                      examples:
-                        - 1
-                    billingAddress:
-                      $ref: '#/components/schemas/billingAddressCustomer'
-                      description: 'billing address'
-                    account:
-                      type: object
-                      additionalProperties: false
-                      required:
-                        - email
-                      properties:
-                        fullName:
-                          type:
-                            - string
-                            - 'null'
-                          minLength: 1
-                          maxLength: 128
-                          description: 'full name (can be `null`)'
-                          examples:
-                            - 'Jan Novak'
-                        email:
-                          type: string
-                          minLength: 1
-                          maxLength: 128
-                          description: 'email address'
-                          examples:
-                            - jan.novak@gmail.com
-                        phone:
-                          type:
-                            - string
-                            - 'null'
-                          minLength: 1
-                          maxLength: 30
-                          description: 'phone number (can be `null`)'
-                          examples:
-                            - '420777888999'
-                        authorized:
-                          type: boolean
-                          description: 'Is the account authorized? Default: true'
-                          examples:
-                            - true
-                        emailVerified:
-                          type: boolean
-                          description: 'Is the email verified by eshop owner? Needed for pairing orders created in past. Default: false'
-                          examples:
-                            - true
+                  $ref: '#/components/schemas/customerCreate'
+  /api/customers/batch:
+    post:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: file-not-found
+                    message: 'File "https://jsonlines.org/customers.jsonl" not found.'
+                    instance: batchFileUrlPath
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: batch-job-already-running
+                    message: 'Concurrent job already running!'
+                    instance: customers-batch-create
+                  -
+                    errorCode: another-import-is-running
+                    message: 'Another import is running. Please try again later.'
+                    instance: customers-batch-create
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Customer BATCH creation'
+      operationId: customerBatchCreation
+      description: |-
+        This endpoint allows you to create multiple customers at once. Batch creation is processed asynchronously in same way  as for example products snapshot, but it does not have `resultUrl` in response. Instead, you can check attribute  `log` which contains successfully created customers and errors.
+
+        See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+        File with data for insert must be in JSONL ([jsonlines](https://jsonlines.org/)) format. Each line must contain one customer in JSON format. Maximum size of file is 100MB. The base structure of a JSON row contains 2 main parameters `settings` and `data`.
+
+        **The `settings` parameter:**
+
+        Both fields are optional and apply to this row only - they have the same names as the query parameters on the [Creation of customer](#tag/customers/createcustomer) endpoint:
+
+        - `sendRegistrationEmail` - optional, default `false`. Set to `true` to send the registration e-mail for this row.
+        - `suppressMandatoryFieldsCheck` - optional, default `false`. Set to `true` to skip mandatory fields checking for this row.
+
+        **The `data` parameter:**
+
+        Structure of the `data` parameter is the same as the structure of JSON for single [Creation of customer](#tag/customers/createcustomer) endpoint, plus one batch-only addition: `data.account.language` - optional, preferred customer language. Affects, among other things, the language of the registration e-mail. Falls back to the shop's default language if not set. The row fails with an error if set to an invalid language.
+
+        See [Customer batch create schema](/shoptet-api/openapi/batch/customerbatchcreate) for more details.
+
+        The asynchronous job processes the JSONL file row by row and tries to validate and save the data. If there is any error, the row is skipped and the error is logged, but it does not stop the processing of other rows. In the log, every customer is identified by its position in the file (starting from 1).
+      tags:
+        - Customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - batchFileUrlPath
+              properties:
+                batchFileUrlPath:
+                  type: string
+                  description: 'Url to the batch file with the data to be processed. File must be in JSONL format - one record per line.'
+                  examples:
+                    - 'https://cdn.myshoptet.com/batch-data.jsonl'
+      x-shoptet-async-endpoint: true
   /api/customers/snapshot:
     get:
       responses:
@@ -32653,7 +32681,7 @@ paths:
                     email:
                       type: string
                       minLength: 1
-                      maxLength: 128
+                      maxLength: 100
                       description: 'email address'
                       examples:
                         - jan.novak@gmail.com
@@ -32902,7 +32930,7 @@ paths:
                     email:
                       type: string
                       minLength: 1
-                      maxLength: 128
+                      maxLength: 100
                       description: 'email address'
                       examples:
                         - jan.novak@gmail.com
@@ -33082,6 +33110,10 @@ paths:
                     errorCode: customer-address-limit-exceeded
                     message: 'Maximum number of addresses for the customer has been exceeded.'
                     instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Invalid countryCode value "XX". Country not found.'
+                    instance: data.countryCode
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Creation of delivery address'
@@ -33110,103 +33142,7 @@ paths:
                 - data
               properties:
                 data:
-                  type: object
-                  additionalProperties: false
-                  minProperties: 1
-                  required:
-                    - countryCode
-                  properties:
-                    fullName:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'full name (can be `null`)'
-                      examples:
-                        - 'John Lard'
-                    company:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'company (can be `null`)'
-                      examples:
-                        - 'Lard Shop'
-                    street:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'street (can be `null`)'
-                      examples:
-                        - 'Lard street'
-                    houseNumber:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'house number (can be `null`)'
-                      examples:
-                        - '5647'
-                    city:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'city/town (can be `null`)'
-                      examples:
-                        - Čelákovice
-                    district:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'region (can be `null`)'
-                      examples:
-                        - Prague-East
-                    additional:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'additional info (can be `null`)'
-                      examples:
-                        - Arcade
-                    zip:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'ZIP/postal code (can be `null`)'
-                      examples:
-                        - '25088'
-                    countryCode:
-                      type: string
-                      minLength: 1
-                      description: "customer's country code"
-                      examples:
-                        - CZ
-                    regionName:
-                      type:
-                        - string
-                        - 'null'
-                      minLength: 1
-                      maxLength: 255
-                      description: 'region name (can be `null`)'
-                      examples:
-                        - 'Central Bohemia'
-                    isDefault:
-                      type: boolean
-                      examples:
-                        - true
+                  $ref: '#/components/schemas/deliveryAddressCustomerCreate'
   '/api/customers/{guid}/delivery-addresses/{addressGuid}':
     get:
       responses:
@@ -50468,6 +50404,105 @@ components:
           type: boolean
           examples:
             - true
+    deliveryAddressCustomerCreate:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      required:
+        - countryCode
+      properties:
+        fullName:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'full name (can be `null`)'
+          examples:
+            - 'John Lard'
+        company:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'company (can be `null`)'
+          examples:
+            - 'Lard Shop'
+        street:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'street (can be `null`)'
+          examples:
+            - 'Lard street'
+        houseNumber:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'house number (can be `null`)'
+          examples:
+            - '5647'
+        city:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'city/town (can be `null`)'
+          examples:
+            - Čelákovice
+        district:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'region (can be `null`)'
+          examples:
+            - Prague-East
+        additional:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'additional info (can be `null`)'
+          examples:
+            - Arcade
+        zip:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'ZIP/postal code (can be `null`)'
+          examples:
+            - '25088'
+        countryCode:
+          type: string
+          minLength: 1
+          description: "customer's country code"
+          examples:
+            - CZ
+        regionName:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'region name (can be `null`)'
+          examples:
+            - 'Central Bohemia'
+        isDefault:
+          type: boolean
+          description: "Set this address as the customer's default delivery address."
+          examples:
+            - true
     documentItemsWithPrice:
       type: object
       additionalProperties: false
@@ -57942,6 +57977,95 @@ components:
           description: 'link to the customer details in administration'
           examples:
             - 'https://www.domena-eshopu.cz/admin/zakaznici-detail?id=16'
+    customerCreate:
+      type: object
+      additionalProperties: false
+      required:
+        - account
+      minProperties: 1
+      properties:
+        remark:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 65535
+          description: 'remark for the customer (can be `null`)'
+          examples:
+            - remark
+        priceRatio:
+          minLength: 1
+          $ref: '#/components/schemas/typePriceRatio'
+          description: 'additional discount - 4 decimal places accuracy, (from `0.0000` to `1.0000`), 0.7800 = discount 22%; 1.0000 = no discount'
+        birthDate:
+          type:
+            - string
+            - 'null'
+          description: 'date of birth. In YYYY-MM-DD format.  (can be `null`)'
+          examples:
+            - '1974-03-14'
+        disabledOrders:
+          type: boolean
+          description: 'Ordering disabled? If so, newly created orders will be cancelled automatically.'
+          examples:
+            - true
+        customerGroupCode:
+          type: string
+          minLength: 1
+          description: 'customer group code, group must exists if set.'
+          examples:
+            - retail
+        pricelistId:
+          type: integer
+          description: 'Price list identifier'
+          examples:
+            - 1
+        billingAddress:
+          $ref: '#/components/schemas/billingAddressCustomer'
+          description: 'billing address'
+        account:
+          $ref: '#/components/schemas/customerAccount'
+    customerAccount:
+      type: object
+      additionalProperties: false
+      required:
+        - email
+      properties:
+        fullName:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 128
+          description: 'full name (can be `null`)'
+          examples:
+            - 'Jan Novak'
+        email:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: 'email address'
+          examples:
+            - jan.novak@gmail.com
+        phone:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 30
+          description: 'phone number (can be `null`)'
+          examples:
+            - '420777888999'
+        authorized:
+          type: boolean
+          description: 'Is the account authorized? Default: true'
+          examples:
+            - true
+        emailVerified:
+          type: boolean
+          description: 'Is the email verified by eshop owner? Needed for pairing orders created in past. Default: false'
+          examples:
+            - true
     deliveryNote:
       type: object
       additionalProperties: false
@@ -58687,6 +58811,50 @@ components:
       allOf:
         -
           $ref: '#/components/schemas/customer'
+    customerBatchCreate:
+      title: 'Customer create'
+      x-tags:
+        - Batch
+      type: object
+      additionalProperties: false
+      required:
+        - data
+      properties:
+        settings:
+          type: object
+          additionalProperties: false
+          properties:
+            sendRegistrationEmail:
+              type: boolean
+              default: false
+              description: 'Send the registration e-mail to the newly created customer.'
+              examples:
+                - true
+            suppressMandatoryFieldsCheck:
+              type: boolean
+              default: false
+              description: 'Suppress mandatory fields checking during customer creation.'
+              examples:
+                - true
+        data:
+          properties:
+            account:
+              properties:
+                language:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                  description: "Preferred customer language. Affects, among other things, the language of the registration e-mail. Falls back to the shop's default language if not set. Row fails with an error if set to an invalid language."
+                  examples:
+                    - cs
+              $ref: '#/components/schemas/customerAccount'
+            deliveryAddresses:
+              type: array
+              description: 'Delivery addresses to create for the customer. At most one item can have "isDefault" set to true.'
+              items:
+                $ref: '#/components/schemas/deliveryAddressCustomerCreate'
+          $ref: '#/components/schemas/customerCreate'
     deliveryNoteSnapshot:
       title: 'Delivery note'
       x-tags:
