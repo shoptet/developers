@@ -38330,6 +38330,7 @@ paths:
                             - paymentType
                             - visible
                             - wholesale
+                            - inPersonPayment
                             - logoUrl
                           properties:
                             guid:
@@ -38395,6 +38396,11 @@ paths:
                               description: 'Is the payment method available for wholesale?'
                               examples:
                                 - true
+                            inPersonPayment:
+                              type: boolean
+                              description: 'Is the payment settled in person (cash, terminal, QR at the counter)? Used for fiscal reporting'
+                              examples:
+                                - false
                             logoUrl:
                               type:
                                 - string
@@ -38543,6 +38549,7 @@ paths:
                       - description
                       - visibility
                       - wholesale
+                      - inPersonPayment
                       - logoUrl
                       - paymentType
                     additionalProperties: false
@@ -38579,6 +38586,11 @@ paths:
                         description: 'Is the payment method available for wholesale?'
                         examples:
                           - true
+                      inPersonPayment:
+                        type: boolean
+                        description: 'Is the payment settled in person (cash, terminal, QR at the counter)? Used for fiscal reporting'
+                        examples:
+                          - false
                       logoUrl:
                         type:
                           - string
@@ -38645,6 +38657,9 @@ paths:
         - `wholesale` - `false`
 
 
+        - `inPersonPayment` - `false` (set `true` for methods settled in person, e.g. cash or a terminal at the counter; used for fiscal reporting)
+
+
         - `logo` - `null`
 
 
@@ -38709,6 +38724,11 @@ paths:
                       description: 'flag, whether the payment method is available for wholesale customers (`true` = for retail)'
                       examples:
                         - true
+                    inPersonPayment:
+                      type: boolean
+                      description: 'whether the payment is settled in person (cash, terminal, QR at the counter), used for fiscal reporting'
+                      examples:
+                        - false
                     logo:
                       type: object
                       required:
