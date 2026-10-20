@@ -36024,6 +36024,7 @@ paths:
                             - priority
                             - wholesale
                             - logoUrl
+                            - salesChannelGuids
                           properties:
                             guid:
                               $ref: '#/components/schemas/typeGuid'
@@ -36075,7 +36076,7 @@ paths:
                                 - 'http://www.ppl.cz/main2.aspx?cls=Package&idSearch=#PACKAGE_NUMBER#'
                             visible:
                               type: boolean
-                              description: 'Is the shipping method visible?'
+                              description: "Is the shipping method visible? Relative to the requested sales channel — or, when none is given, any of the project's delivery-linkable channels. A channel that is not delivery-linkable (e.g. in-store, marketplace) always yields false, even when passed explicitly."
                               examples:
                                 - true
                             priority:
@@ -36097,6 +36098,11 @@ paths:
                               description: 'URL of the shipping company logo'
                               examples:
                                 - 'https://www.example.com/logo.png'
+                            salesChannelGuids:
+                              type: array
+                              description: 'GUIDs of the sales channels the shipping method is offered in — symmetric with `salesChannelGuids` on the POST request.'
+                              items:
+                                $ref: '#/components/schemas/typeGuid'
                       wholesaleActive:
                         type: boolean
                         description: 'flag, whether the wholesale shipping methods are permitted'
@@ -36232,6 +36238,7 @@ paths:
                       - priority
                       - wholesale
                       - logoUrl
+                      - salesChannelGuids
                       - priceList
                     properties:
                       guid:
@@ -36284,7 +36291,7 @@ paths:
                           - 'http://www.ppl.cz/main2.aspx?cls=Package&idSearch=#PACKAGE_NUMBER#'
                       visible:
                         type: boolean
-                        description: 'Is the shipping method visible?'
+                        description: "Is the shipping method visible? Relative to the requested sales channel — or, when none is given, any of the project's delivery-linkable channels. A channel that is not delivery-linkable (e.g. in-store, marketplace) always yields false, even when passed explicitly."
                         examples:
                           - true
                       visibility:
@@ -36312,6 +36319,11 @@ paths:
                         description: 'URL of the shipping company logo'
                         examples:
                           - 'https://www.example.com/logo.png'
+                      salesChannelGuids:
+                        type: array
+                        description: 'GUIDs of the sales channels the shipping method is offered in — symmetric with `salesChannelGuids` on the POST request.'
+                        items:
+                          $ref: '#/components/schemas/typeGuid'
                       priceList:
                         type: object
                         description: 'Pricing and pricelist settings of the created shipping method. Values reflect the stored configuration, not the final price charged to the customer (which the storefront derives from `price`, `includingVat` and the e-shop VAT-display mode).'
@@ -36666,7 +36678,7 @@ paths:
                         - M
                     salesChannelGuids:
                       type: array
-                      description: "GUIDs of the sales channels the shipping method is offered in. Requires the active `Sales channel` module. When omitted, a visible method is bound to the primary market's sales channel."
+                      description: "GUIDs of the sales channels the shipping method is offered in. When omitted, a visible method is bound to the primary market's sales channel."
                       items:
                         $ref: '#/components/schemas/typeGuid'
                     logo:
@@ -36792,6 +36804,7 @@ paths:
                       - priority
                       - wholesale
                       - logoUrl
+                      - salesChannelGuids
                     properties:
                       guid:
                         $ref: '#/components/schemas/typeGuid'
@@ -36843,7 +36856,7 @@ paths:
                           - 'http://www.ppl.cz/main2.aspx?cls=Package&idSearch=#PACKAGE_NUMBER#'
                       visible:
                         type: boolean
-                        description: 'Is the shipping method visible?'
+                        description: "Is the shipping method visible? Relative to the requested sales channel — or, when none is given, any of the project's delivery-linkable channels. A channel that is not delivery-linkable (e.g. in-store, marketplace) always yields false, even when passed explicitly."
                         examples:
                           - true
                       priority:
@@ -36865,6 +36878,11 @@ paths:
                         description: 'URL of the shipping company logo'
                         examples:
                           - 'https://www.example.com/logo.png'
+                      salesChannelGuids:
+                        type: array
+                        description: 'GUIDs of the sales channels the shipping method is offered in — symmetric with `salesChannelGuids` on the POST request.'
+                        items:
+                          $ref: '#/components/schemas/typeGuid'
                       priceList:
                         type: object
                         description: 'Pricing and pricelist settings of the shipping method as configured in the administration. Present only when requested via the `include=priceList` query parameter. Values reflect the stored configuration, not the final price charged to the customer (which the storefront derives from `price`, `includingVat` and the e-shop VAT-display mode).'
@@ -36971,6 +36989,36 @@ paths:
           description: 'Not Found'
           content:
             application/json:
+              examples:
+                'Shipping method not found':
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: shipping-method-not-found
+                        message: 'Shipping method with GUID "b57f91bb-e920-11e0-baa3-7dc668b75ca8" not found.'
+                        instance: b57f91bb-e920-11e0-baa3-7dc668b75ca8
+                'Sales channel not found':
+                  value:
+                    data: null
+                    errors:
+                      -
+                        errorCode: sales-channel-not-found
+                        message: 'Sales channel with GUID "0199bdfd-0979-71fb-85ce-e483c61d391b" not found.'
+                        instance: salesChannelGuid
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
               schema:
                 type: object
                 properties:
@@ -36984,9 +37032,9 @@ paths:
                 data: null
                 errors:
                   -
-                    errorCode: shipping-method-not-found
-                    message: 'Shipping method with GUID "b57f91bb-e920-11e0-baa3-7dc668b75ca8" not found.'
-                    instance: b57f91bb-e920-11e0-baa3-7dc668b75ca8
+                    errorCode: sales-channel-guid-invalid
+                    message: 'Sales channel GUID "invalid" is not valid.'
+                    instance: salesChannelGuid
       summary: 'Shipping method detail'
       operationId: getShippingMethodDetail
       description: |-
@@ -36994,12 +37042,12 @@ paths:
 
         Pricing and pricelist settings (price tiers by weight/price, per-country/region pricing and
         paired payment methods) are returned only when requested via the `include=priceList` query
-        parameter.
+        parameter. Pricing is defined per method, not per channel, so the returned pricelist is the
+        same regardless of `salesChannelGuid`.
 
-        Unlike the list endpoint (`/api/shipping-methods`, which can be filtered by `salesChannelGuid`),
-        this detail endpoint is channel-agnostic: it returns the method by GUID regardless of sales
-        channel. Pricing is defined per method, not per channel, so the returned pricelist is the same
-        across channels.
+        The `visible` field, like on the list endpoint (`/api/shipping-methods`), reflects sales-channel
+        membership. When `salesChannelGuid` is omitted, `visible` is `true` if the method is attached to
+        any of the project's sales channels; pass `salesChannelGuid` to scope it to one specific channel.
       tags:
         - 'Shipping methods'
       parameters:
@@ -37020,6 +37068,13 @@ paths:
             type: string
             enum:
               - priceList
+        -
+          name: salesChannelGuid
+          in: query
+          description: "Sales channel GUID. Optional parameter; if not provided, `visible` reflects membership in any of the project's sales channels."
+          example: 0199bdfd-0979-71fb-85ce-e483c61d391b
+          schema:
+            type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
     patch:
@@ -37044,6 +37099,7 @@ paths:
                       - priority
                       - wholesale
                       - logoUrl
+                      - salesChannelGuids
                     properties:
                       guid:
                         $ref: '#/components/schemas/typeGuid'
@@ -37095,7 +37151,7 @@ paths:
                           - 'http://www.ppl.cz/main2.aspx?cls=Package&idSearch=#PACKAGE_NUMBER#'
                       visible:
                         type: boolean
-                        description: 'Is the shipping method visible?'
+                        description: "Is the shipping method visible? Relative to the requested sales channel — or, when none is given, any of the project's delivery-linkable channels. A channel that is not delivery-linkable (e.g. in-store, marketplace) always yields false, even when passed explicitly."
                         examples:
                           - true
                       priority:
@@ -37117,6 +37173,11 @@ paths:
                         description: 'URL of the shipping company logo'
                         examples:
                           - 'https://www.example.com/logo.png'
+                      salesChannelGuids:
+                        type: array
+                        description: 'GUIDs of the sales channels the shipping method is offered in — symmetric with `salesChannelGuids` on the POST request.'
+                        items:
+                          $ref: '#/components/schemas/typeGuid'
                       priceList:
                         type: object
                         description: 'Pricing and pricelist settings of the shipping method as configured in the administration. Present only when requested via the `include=priceList` query parameter. Values reflect the stored configuration, not the final price charged to the customer (which the storefront derives from `price`, `includingVat` and the e-shop VAT-display mode).'
@@ -37432,7 +37493,7 @@ paths:
                         - M
                     salesChannelGuids:
                       type: array
-                      description: 'GUIDs of the sales channels the shipping method is offered in. Requires the active `Sales channel` module. Replaces the current bindings; an empty array detaches the method from every sales channel.'
+                      description: 'GUIDs of the sales channels the shipping method is offered in. Replaces the current bindings; an empty array detaches the method from every sales channel.'
                       items:
                         $ref: '#/components/schemas/typeGuid'
                     priceList:
