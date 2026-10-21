@@ -18665,6 +18665,8 @@ paths:
                           required:
                             - code
                             - guid
+                            - internalOrderNumber
+                            - marketplaceExternalOrderId
                             - creationTime
                             - changeTime
                             - fullName
@@ -18690,6 +18692,20 @@ paths:
                               description: 'global unique permanent order identifier (can be `null` for old orders)'
                               examples:
                                 - c5012051-d7ca-11e0-9a5c-feab5ed617ed
+                            internalOrderNumber:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'Custom identifier for this order used for internal accounting or matching, distinct from `externalCode`, which identifies the order in an external system.'
+                              examples:
+                                - INT-2026-042
+                            marketplaceExternalOrderId:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'Identifier of the order in the marketplace it originated from, distinct from `externalCode`. Can be null.'
+                              examples:
+                                - ALG-9988776
                             creationTime:
                               $ref: '#/components/schemas/typeDateTimeNullable'
                               description: 'date and time, when the order was created. ISO 8601 format.'
@@ -20435,6 +20451,15 @@ paths:
                       description: 'time of order creation. Optional, current time is the default value.'
                       examples:
                         - '2018-01-21T14:15:47+0100'
+                    internalOrderNumber:
+                      type:
+                        - string
+                        - 'null'
+                      minLength: 1
+                      maxLength: 255
+                      description: 'Custom identifier for this order used for internal accounting or matching, distinct from `externalCode`, which identifies the order in an external system.'
+                      examples:
+                        - INT-2026-042
                     email:
                       type:
                         - string
@@ -56618,6 +56643,8 @@ components:
         - code
         - guid
         - externalCode
+        - internalOrderNumber
+        - marketplaceExternalOrderId
         - creationTime
         - changeTime
         - email
@@ -56653,9 +56680,23 @@ components:
           type:
             - string
             - 'null'
-          description: 'Identification of the order in external system (or `null`).'
+          description: "Identification of the order in external system (or `null`). Distinct from `internalOrderNumber` (the merchant's own custom identifier) and `marketplaceExternalOrderId` (the order's identifier in a marketplace)."
           examples:
             - '1234'
+        internalOrderNumber:
+          type:
+            - string
+            - 'null'
+          description: 'Custom identifier for this order used for internal accounting or matching, distinct from `externalCode`, which identifies the order in an external system.'
+          examples:
+            - INT-2026-042
+        marketplaceExternalOrderId:
+          type:
+            - string
+            - 'null'
+          description: 'Identifier of the order in the marketplace it originated from, distinct from `externalCode`. Can be null.'
+          examples:
+            - ALG-9988776
         creationTime:
           $ref: '#/components/schemas/typeDateTimeNullable'
           description: 'date and time, when the order was created. ISO 8601 format.'
@@ -57203,7 +57244,7 @@ components:
           type: string
           minLength: 1
           maxLength: 255
-          description: 'order identification within the external system (mandatory, must be unique).'
+          description: "order identification within the external system (mandatory, must be unique). Distinct from `internalOrderNumber` (the merchant's own custom identifier) and `marketplaceExternalOrderId` (the order's identifier in a marketplace)."
           examples:
             - X123
         cashDeskOrder:
@@ -57250,6 +57291,15 @@ components:
           description: 'customer birth date (optional, if not made mandatory by the e-shop settings).'
           examples:
             - '1990-01-01'
+        internalOrderNumber:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 255
+          description: 'Custom identifier for this order used for internal accounting or matching, distinct from `externalCode`, which identifies the order in an external system.'
+          examples:
+            - INT-2026-042
         vatPayer:
           type: boolean
           examples:
@@ -58164,6 +58214,7 @@ components:
         - code
         - isValid
         - orderCode
+        - internalOrderNumber
         - creationTime
         - changeTime
         - billingAddress
@@ -58190,6 +58241,13 @@ components:
           description: 'purchase order number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
           examples:
             - '2017000090'
+        internalOrderNumber:
+          type:
+            - string
+            - 'null'
+          description: 'Custom identifier for this order used for internal accounting or matching, distinct from `externalCode`, which identifies the order in an external system.'
+          examples:
+            - INT-2026-042
         creationTime:
           $ref: '#/components/schemas/typeDateTimeNullable'
           description: 'date of issue, in ISO 8601 format'
@@ -58386,6 +58444,7 @@ components:
         - isValid
         - paid
         - orderCode
+        - internalOrderNumber
         - creationTime
         - changeTime
         - dueDate
@@ -58429,6 +58488,13 @@ components:
           description: 'purchase order number (can be `null`). Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
           examples:
             - '2017000017'
+        internalOrderNumber:
+          type:
+            - string
+            - 'null'
+          description: 'Custom identifier for this order used for internal accounting or matching, distinct from `externalCode`, which identifies the order in an external system.'
+          examples:
+            - INT-2026-042
         creationTime:
           $ref: '#/components/schemas/typeDateTimeNullable'
           description: 'date of issue, in ISO 8601 format'
@@ -58508,6 +58574,7 @@ components:
         - isValid
         - proformaInvoiceCodes
         - orderCode
+        - internalOrderNumber
         - creationTime
         - changeTime
         - dueDate
@@ -58550,6 +58617,13 @@ components:
           description: 'purchase order number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
           examples:
             - '2017000017'
+        internalOrderNumber:
+          type:
+            - string
+            - 'null'
+          description: 'Custom identifier for this order used for internal accounting or matching, distinct from `externalCode`, which identifies the order in an external system.'
+          examples:
+            - INT-2026-042
         creationTime:
           $ref: '#/components/schemas/typeDateTimeNullable'
           description: 'date of issue, in ISO 8601 format'
