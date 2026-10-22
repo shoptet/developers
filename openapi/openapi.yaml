@@ -1212,7 +1212,7 @@ info:
     ```
 
     ### Handling Rate Limits
-    When the API rate limit is exceeded, the SDK throws a `RateLimitExceededException`. You can handle this exception by retrying the request after the suggested `Retry-After` date. For more information, see the [Rate Limiting](https://api.docs.shoptet.com/openapi/section/basic-principles/rate-limiting) section in the API documentation.
+    When the API rate limit is exceeded, the SDK throws a `RateLimitExceededException`. You can handle this exception by retrying the request after the suggested `Retry-After` date. For more information, see the [Rate Limiting](https://api.docs.shoptet.com/shoptet-api/openapi/section/basic-principles/rate-limiting) section in the API documentation.
     ```php
       try {
           // ... Prepare the order entity
@@ -24973,7 +24973,7 @@ paths:
       description: |-
         Linking proforma invoices to invoice. Proforma invoices must be related to the order, must be in same currency as the order, must be valid and cannot be linked to another invoice. Multiple proforma invoices are allowed to link to the invoice.
         This endpoint has several sections, which are only sent when requested in the `include` parameter (see
-        [Requested sections](#section/basic-principles-of-working-with-api/Section-on-demand)).
+        [Requested sections](#section/basic-principles/section-on-demand)).
 
         Value | Section
         --------|------
