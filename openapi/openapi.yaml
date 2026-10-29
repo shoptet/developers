@@ -775,6 +775,7 @@ info:
     orderHistoryRemarks:change | Order history remarks have been changed. Emitted when order remark is created or deleted | Number (`code`) of order | no
     orderStatusesList:change | Order status list change event. Emitted when order status is created, updated or deleted | Order status `ID` | no
     pricelist:create | Pricelist creation event | ID of pricelist | no
+    pricelist:update | Pricelist change event. Emitted when the pricelist name, currency or sales channel assignment changes, not when its prices change | ID of pricelist | no
     pricelist:delete | Pricelist deleting event | ID of pricelist | no
     paymentMethod:change | Payment method change event | Payment method GUID | no
     proformaInvoice:create | Proforma invoice creation event | Number (`code`) of proforma invoice | yes
