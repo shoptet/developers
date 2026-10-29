@@ -17398,6 +17398,7 @@ paths:
                           required:
                             - id
                             - guid
+                            - parentGuid
                             - name
                             - type
                             - abilities
@@ -17414,6 +17415,9 @@ paths:
                             guid:
                               $ref: '#/components/schemas/typeGuid'
                               description: 'Sales channel GUID.'
+                            parentGuid:
+                              $ref: '#/components/schemas/typeGuidNullable'
+                              description: 'GUID of the parent sales channel. `null` for root channels. Set for example for cash desks (child `in_store` channels) and points to their store.'
                             name:
                               type: string
                               description: 'Sales channel name.'
@@ -29954,6 +29958,7 @@ paths:
                         required:
                           - id
                           - guid
+                          - parentGuid
                           - name
                           - type
                           - abilities
@@ -29970,6 +29975,9 @@ paths:
                           guid:
                             $ref: '#/components/schemas/typeGuid'
                             description: 'Sales channel GUID.'
+                          parentGuid:
+                            $ref: '#/components/schemas/typeGuidNullable'
+                            description: 'GUID of the parent sales channel. `null` for root channels. Set for example for cash desks (child `in_store` channels) and points to their store.'
                           name:
                             type: string
                             description: 'Sales channel name.'
@@ -30210,6 +30218,7 @@ paths:
                         required:
                           - id
                           - guid
+                          - parentGuid
                           - name
                           - type
                           - abilities
@@ -30226,6 +30235,9 @@ paths:
                           guid:
                             $ref: '#/components/schemas/typeGuid'
                             description: 'Sales channel GUID.'
+                          parentGuid:
+                            $ref: '#/components/schemas/typeGuidNullable'
+                            description: 'GUID of the parent sales channel. `null` for root channels. Set for example for cash desks (child `in_store` channels) and points to their store.'
                           name:
                             type: string
                             description: 'Sales channel name.'
