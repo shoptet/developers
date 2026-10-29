@@ -30136,7 +30136,9 @@ paths:
                             $ref: '#/components/schemas/inStoreContact'
                             description: 'In store contact information.'
                           categoryId:
-                            type: integer
+                            type:
+                              - integer
+                              - 'null'
                             description: 'Project category identifier.'
                             examples:
                               - 2
@@ -30396,7 +30398,9 @@ paths:
                             $ref: '#/components/schemas/inStoreContact'
                             description: 'In store contact information.'
                           categoryId:
-                            type: integer
+                            type:
+                              - integer
+                              - 'null'
                             description: 'Project category identifier.'
                             examples:
                               - 2
