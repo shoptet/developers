@@ -56321,7 +56321,7 @@ components:
           type:
             - integer
             - 'null'
-          description: 'package identifier, can be `null`'
+          description: 'identifier of the order package, can be `null`'
           examples:
             - 468
         labelUrl:
@@ -56397,7 +56397,7 @@ components:
           type:
             - integer
             - 'null'
-          description: 'package identifier, can be `null`'
+          description: 'identifier of the order package, can be `null`'
           examples:
             - 468
         labelUrl:
