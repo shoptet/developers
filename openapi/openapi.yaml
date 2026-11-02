@@ -913,6 +913,7 @@ info:
     One Stop Shop |
     Mini One Stop Shop |
     Reverse charge |
+    Triangular transaction |
     Outside the EU |
 
     ## Shipment carrier types
@@ -57728,7 +57729,7 @@ components:
                 - '1.0000'
         vatMode:
           type: string
-          description: 'VAT mode, `Normal` is used by default, possible values: `Normal`, `One Stop Shop`*, `Reverse charge`, `Outside the EU`. Please note, that `One Stop Shop` value requires eshop `OSS` setting to be `true`.'
+          description: 'VAT mode, `Normal` is used by default, possible values: `Normal`, `One Stop Shop`*, `Reverse charge`, `Triangular transaction`, `Outside the EU`. Please note, that `One Stop Shop` value requires eshop `OSS` setting to be `true`.'
           examples:
             - Normal
         items:
@@ -58466,7 +58467,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'VAT mode, can be null, possible values: `Normal`, `One Stop Shop`, `Mini One Stop Shop`, `Reverse charge`, `Outside the EU`'
+          description: 'VAT mode, can be null, possible values: `Normal`, `One Stop Shop`, `Mini One Stop Shop`, `Reverse charge`, `Triangular transaction`, `Outside the EU`'
           examples:
             - Normal
         reasonRemark:
@@ -58733,7 +58734,7 @@ components:
           type:
             - string
             - 'null'
-          description: 'VAT mode, can be null, possible values: `Normal`, `One Stop Shop`, `Mini One Stop Shop`, `Reverse charge`, `Outside the EU`'
+          description: 'VAT mode, can be null, possible values: `Normal`, `One Stop Shop`, `Mini One Stop Shop`, `Reverse charge`, `Triangular transaction`, `Outside the EU`'
           examples:
             - Normal
         proofPayments:
