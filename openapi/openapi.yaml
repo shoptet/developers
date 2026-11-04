@@ -759,7 +759,7 @@ info:
     eshop:settingsInformation | Eshop settings change event. Whenever some attribute from `data.settings` response section of GET eshop detail change | ID of eshop | no
     eshop:design | Design settings (template, colors, fonts, layout) | ID of eshop | no
     eshop:mandatoryFields | Mandatory fields of customer were updated | ID of eshop | no
-    eshop:projectDomain | Domain of eshop was changed | ID of eshop | no
+    eshop:projectDomain | Domain of eshop was changed. **DEPRECATED!** Management moved under Sales channels. Use `salesChannel:*` webhooks instead | ID of eshop | no
     eshop:language | Foreign languages of eshop were changed (language added, removed, its settings, visibility, order or the default language changed). Not covered by `eshop:settingsInformation`, as languages are not part of `data.settings` | ID of eshop | yes (subset of GET eshop detail, see `eshopLanguageWebhookPayload` in **Webhook payloads**)
     invoice:create | Invoice creation event  | Number (`code`) of invoice | yes
     invoice:delete | Invoice deleting event    | Number (`code`) of invoice | no
@@ -797,8 +797,8 @@ info:
     quantityDiscount:update | Quantity discount change event | ID of quantity discount | yes
     quantityDiscount:delete | Quantity discount deleting event | ID of quantity discount | no
     salesChannel:create | Sales channel create event | GUID of sales channel | no
-    salesChannel:update | Sales channel update event | GUID of Shipment | no
-    salesChannel:delete | Sales channel delete event | GUID of Shipment | no
+    salesChannel:update | Sales channel update event, including a connected, changed or disconnected custom domain of an online store | GUID of sales channel | no
+    salesChannel:delete | Sales channel delete event | GUID of sales channel | no
     shipment:create | Shipment confirmation event. Carrier confirmed the shipment (tracking number assigned, label ready) | GUID of Shipment | no
     shipment:update | Shipment status change event (in transit, delivered, returned, closed, cancel requested, etc.) | Shipment ID | no
     shipment:fail | Shipment failure event. Status changed to failed | Shipment ID | no
