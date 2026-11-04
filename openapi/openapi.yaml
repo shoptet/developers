@@ -43,6 +43,9 @@ info:
     and authorization principles.
 
 
+    ### Date and time in query parameters
+    Date-time values in query parameters (e.g. `creationTimeFrom=2019-09-05T00:00:00+02:00`) use the ISO 8601 format. The `+` sign of the time zone offset has to be URL-encoded as `%2B`, otherwise it is received as a space and the value is rejected.
+
     ### For Addons
 
 
@@ -3519,6 +3522,10 @@ paths:
                               - true
                           sortItems:
                             type: string
+                            enum:
+                              - byProductName
+                              - byProductCode
+                              - byStockLocation
                             description: 'Determines how items are sorted in documents, printout, and inventory. Available only if module `invoicing` is active.'
                             examples:
                               - byProductName
@@ -5325,7 +5332,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/productSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/productSnapshot'
   /api/products/snapshot/pricelists:
     get:
       responses:
@@ -5419,7 +5426,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/productPricelistSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/productPricelistSnapshot'
   '/api/products/{guid}':
     get:
       responses:
@@ -7994,6 +8001,17 @@ paths:
             type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
+        -
+          name: language
+          in: query
+          description: |-
+            Language of the translatable fields in the response (e.g. `cs`). If not provided,
+            the default language of the e-shop is used. Requires the "Foreign Languages" module;
+            without it the request fails with the `missing-module` error.
+          required: false
+          example: cs
+          schema:
+            type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -15996,7 +16014,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/pricelistSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/pricelistSnapshot'
   '/api/pricelists/{id}/batch':
     patch:
       responses:
@@ -17279,7 +17297,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/priceListPriceSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/priceListPriceSnapshot'
   /api/price-lists/prices/snapshot:
     get:
       responses:
@@ -17376,7 +17394,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/productPriceListPriceSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/productPriceListPriceSnapshot'
   /api/sales-channels:
     get:
       responses:
@@ -18957,7 +18975,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
         -
           name: creationTimeTo
           in: query
@@ -18966,7 +18984,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
         -
           name: codeFrom
           in: query
@@ -19021,7 +19039,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
         -
           name: changeTimeTo
           in: query
@@ -19030,7 +19048,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
         -
           name: sourceId
           in: query
@@ -19632,7 +19650,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/orderHistorySnapshot'
+      x-shoptet-response-ref: '#/components/schemas/orderHistorySnapshot'
   /api/orders/snapshot:
     get:
       responses:
@@ -19827,14 +19845,14 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
         -
           name: creationTimeTo
           in: query
           description: |-
             Purchase order filtering, according to date of creation. ISO 8601
             format ("2017-12-12T22:08:01+0100").
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -19891,7 +19909,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
         -
           name: changeTimeTo
           in: query
@@ -19900,7 +19918,7 @@ paths:
             format ("2017-12-12T22:08:01+0100").
           schema:
             type: string
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
         -
           name: sourceId
           in: query
@@ -19913,7 +19931,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/orderSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/orderSnapshot'
   /api/orders/status-change:
     patch:
       responses:
@@ -23215,6 +23233,17 @@ paths:
         - Orders
       parameters:
         -
+          name: language
+          in: query
+          description: |-
+            Language of the translatable fields in the response (e.g. `cs`). If not provided,
+            the default language of the e-shop is used. Requires the "Foreign Languages" module;
+            without it the request fails with the `missing-module` error.
+          required: false
+          example: cs
+          schema:
+            type: string
+        -
           $ref: '#/components/parameters/DefaultContentType'
   /api/orders/sources:
     get:
@@ -23826,7 +23855,10 @@ paths:
                           - true
                       productGifts:
                         type: string
-                        description: 'set if gifts are dependent on each product or whole order, possible values are `per-amount` and `per-order'
+                        enum:
+                          - per-amount
+                          - per-order
+                        description: 'set if gifts are dependent on each product or whole order'
                         examples:
                           - per-amount
                   errors:
@@ -23880,7 +23912,10 @@ paths:
                           - true
                       productGifts:
                         type: string
-                        description: 'set if gifts are dependent on each product or whole order, possible values are `per-amount` and `per-order'
+                        enum:
+                          - per-amount
+                          - per-order
+                        description: 'set if gifts are dependent on each product or whole order'
                         examples:
                           - per-amount
                   errors:
@@ -24081,14 +24116,14 @@ paths:
           name: changeTimeFrom
           in: query
           description: 'filtering invoices updated after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeTo
           in: query
           description: 'filtering invoices updated before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -24262,28 +24297,28 @@ paths:
           name: creationTimeFrom
           in: query
           description: 'Export invoices created after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: creationTimeTo
           in: query
           description: 'Export invoices created before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeFrom
           in: query
           description: 'Export invoices updated after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeTo
           in: query
           description: 'Export invoices updated before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -24401,7 +24436,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/invoiceSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/invoiceSnapshot'
   '/api/invoices/{code}':
     get:
       responses:
@@ -25608,14 +25643,14 @@ paths:
           name: changeTimeFrom
           in: query
           description: 'filtering proforma invoices updated after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeTo
           in: query
           description: 'filtering proforma invoices updated before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -25782,28 +25817,28 @@ paths:
           name: creationTimeFrom
           in: query
           description: 'Export proforma invoices created after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: creationTimeTo
           in: query
           description: 'Export proforma invoices created before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeFrom
           in: query
           description: 'Export proforma invoices updated after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeTo
           in: query
           description: 'Export proforma invoices updated before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -25844,7 +25879,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/proformaInvoiceSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/proformaInvoiceSnapshot'
   '/api/proforma-invoices/{code}':
     get:
       responses:
@@ -26832,28 +26867,28 @@ paths:
           name: creationTimeFrom
           in: query
           description: 'Export proof payments created after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: creationTimeTo
           in: query
           description: 'Export proof payments created before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeFrom
           in: query
           description: 'Export proof payments updated after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeTo
           in: query
           description: 'Export proof payments updated before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -26894,7 +26929,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/proofPaymentSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/proofPaymentSnapshot'
   '/api/proof-payments/order/{code}':
     get:
       responses:
@@ -27865,28 +27900,28 @@ paths:
           name: creationTimeFrom
           in: query
           description: 'Export credit notes created after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: creationTimeTo
           in: query
           description: 'Export credit notes created before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeFrom
           in: query
           description: 'Export credit notes updated after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeTo
           in: query
           description: 'Export credit notes updated before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -28005,7 +28040,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/creditNoteSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/creditNoteSnapshot'
   '/api/credit-notes/{code}':
     get:
       responses:
@@ -29393,28 +29428,28 @@ paths:
           name: creationTimeFrom
           in: query
           description: 'filtering delivery notes created after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: creationTimeTo
           in: query
           description: 'filtering delivery notes created before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeFrom
           in: query
           description: 'filtering delivery notes updated after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeTo
           in: query
           description: 'filtering delivery notes updated before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -29542,28 +29577,28 @@ paths:
           name: creationTimeFrom
           in: query
           description: 'Export delivery notes created after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: creationTimeTo
           in: query
           description: 'Export delivery notes created before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeFrom
           in: query
           description: 'Export delivery notes updated after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeTo
           in: query
           description: 'Export delivery notes updated before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -29611,7 +29646,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/deliveryNoteSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/deliveryNoteSnapshot'
   '/api/delivery-notes/{code}':
     get:
       responses:
@@ -31250,6 +31285,17 @@ paths:
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
+          name: language
+          in: query
+          description: |-
+            Language of the translatable fields in the response (e.g. `cs`). If not provided,
+            the default language of the e-shop is used. Requires the "Foreign Languages" module;
+            without it the request fails with the `missing-module` error.
+          required: false
+          example: cs
+          schema:
+            type: string
+        -
           $ref: '#/components/parameters/DefaultContentType'
     post:
       responses:
@@ -31855,7 +31901,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/abandonedCartSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/abandonedCartSnapshot'
   /api/customers:
     get:
       responses:
@@ -32310,7 +32356,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/customerSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/customerSnapshot'
   '/api/customers/{guid}':
     get:
       responses:
@@ -33506,6 +33552,9 @@ paths:
                                 - 1
                             rating:
                               type: string
+                              enum:
+                                - positive
+                                - negative
                               description: 'type of rating'
                               examples:
                                 - positive
@@ -33604,6 +33653,9 @@ paths:
                               - 1
                           rating:
                             type: string
+                            enum:
+                              - positive
+                              - negative
                             description: 'type of rating'
                             examples:
                               - positive
@@ -33682,8 +33734,9 @@ paths:
                       properties:
                         rating:
                           type: string
-                          minLength: 1
-                          maxLength: 255
+                          enum:
+                            - positive
+                            - negative
                           description: 'type of rating'
                           examples:
                             - negative
@@ -33724,6 +33777,9 @@ paths:
                               - 1
                           rating:
                             type: string
+                            enum:
+                              - positive
+                              - negative
                             description: 'type of rating'
                             examples:
                               - positive
@@ -33819,6 +33875,9 @@ paths:
                               - 1
                           rating:
                             type: string
+                            enum:
+                              - positive
+                              - negative
                             description: 'type of rating'
                             examples:
                               - positive
@@ -33900,8 +33959,9 @@ paths:
                   properties:
                     rating:
                       type: string
-                      minLength: 1
-                      maxLength: 255
+                      enum:
+                        - positive
+                        - negative
                       description: 'type of rating'
                       examples:
                         - negative
@@ -34282,6 +34342,17 @@ paths:
       tags:
         - 'Customer groups'
       parameters:
+        -
+          name: language
+          in: query
+          description: |-
+            Language of the translatable fields in the response (e.g. `cs`). If not provided,
+            the default language of the e-shop is used. Requires the "Foreign Languages" module;
+            without it the request fails with the `missing-module` error.
+          required: false
+          example: cs
+          schema:
+            type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
     post:
@@ -35017,7 +35088,7 @@ paths:
                                 - common-header
                                 - common-footer
                                 - order-confirmed
-                              description: '(location) code identifier. Possible values: `common-header`, `common-footer`, `order-confirmed`'
+                              description: 'Location code identifier'
                               examples:
                                 - common-header
                             html:
@@ -35075,7 +35146,7 @@ paths:
                                 - common-header
                                 - common-footer
                                 - order-confirmed
-                              description: '(location) code identifier. Possible values: `common-header`, `common-footer`, `order-confirmed`'
+                              description: 'Location code identifier'
                               examples:
                                 - common-header
                             html:
@@ -35111,12 +35182,6 @@ paths:
                 data: null
                 errors:
                   -
-                    errorCode: template-include-location-invalid
-                    message: |-
-                      Invalid location code: does-not-exist. Possible values:
-                      common-header, common-footer, order-confirmed
-                    instance: location
-                  -
                     errorCode: invalid-parameter
                     message: 'Snippets cannot be empty. No data to update.'
                     instance: payload
@@ -35144,6 +35209,34 @@ paths:
                     errorCode: payload-too-large
                     message: 'Payload is too large. Maximum is 3 changes in one request.'
                     instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Does not have a value in the enumeration ["common-header","common-footer","order-confirmed"]'
+                    instance: 'data.snippets[0].location'
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Must be at most 8192 characters long'
+                    instance: 'data.snippets[0].html'
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Inserting and editing codes'
@@ -35186,7 +35279,11 @@ paths:
                         properties:
                           location:
                             type: string
-                            description: '(location) code identifier. Possible values: `common-header`, `common-footer`, `order-confirmed`'
+                            enum:
+                              - common-header
+                              - common-footer
+                              - order-confirmed
+                            description: 'Location code identifier'
                             examples:
                               - common-header
                           html:
@@ -40347,14 +40444,14 @@ paths:
           name: creationTimeFrom
           in: query
           description: 'Export discount coupons created after date'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: creationTimeTo
           in: query
           description: 'Export discount coupons created before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -40414,7 +40511,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/discountCouponSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/discountCouponSnapshot'
   '/api/discount-coupons/{code}':
     get:
       responses:
@@ -42870,6 +42967,8 @@ paths:
                               - 2
                           discountType:
                             type: string
+                            enum:
+                              - percentual
                             description: 'Type of the discount.'
                             examples:
                               - percentual
@@ -43043,7 +43142,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/quantityDiscountSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/quantityDiscountSnapshot'
   '/api/quantity-discounts/{id}':
     get:
       responses:
@@ -43300,6 +43399,8 @@ paths:
                               - 2
                           discountType:
                             type: string
+                            enum:
+                              - percentual
                             description: 'Type of the discount.'
                             examples:
                               - percentual
@@ -43833,28 +43934,28 @@ paths:
           name: publishDateFrom
           in: query
           description: 'Export articles published after given datetime'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: publishDateTo
           in: query
           description: 'Export articles published before given datetime'
-          example: '2014-11-05T00:00:00%2B0000'
+          example: '2014-11-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeDateFrom
           in: query
           description: 'Export articles updated after given datetime'
-          example: '2014-09-05T00:00:00%2B0000'
+          example: '2014-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeDateTo
           in: query
           description: 'Export articles updated before given datetime'
-          example: '2014-11-05T00:00:00%2B0000'
+          example: '2014-11-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -43867,7 +43968,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/articleSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/articleSnapshot'
   '/api/articles/{articleId}':
     get:
       responses:
@@ -47021,21 +47122,21 @@ paths:
           name: dateFrom
           in: query
           description: 'Filter reviews with creation date after date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: dateTo
           in: query
           description: 'Filter reviews with creation date before date'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
           name: changeTimeFrom
           in: query
           description: 'Filter reviews changed after this date (included)'
-          example: '2019-09-05T00:00:00%2B0000'
+          example: '2019-09-05T00:00:00+00:00'
           schema:
             type: string
         -
@@ -47759,14 +47860,14 @@ paths:
           name: dateFrom
           in: query
           description: 'Filter reviews with creation date after date.'
-          example: '2019-09-05T00:00:00%2B0100'
+          example: '2019-09-05T00:00:00+01:00'
           schema:
             type: string
         -
           name: dateTo
           in: query
           description: 'Filter reviews with creation date before date.'
-          example: '2019-09-05T00:00:00%2B0100'
+          example: '2019-09-05T00:00:00+01:00'
           schema:
             type: string
         -
@@ -48168,14 +48269,14 @@ paths:
           name: dateFrom
           in: query
           description: 'Filter reviews with creation date after date.'
-          example: '2019-09-05T00:00:00%2B0100'
+          example: '2019-09-05T00:00:00+01:00'
           schema:
             type: string
         -
           name: dateTo
           in: query
           description: 'Filter reviews with creation date before date.'
-          example: '2019-09-05T00:00:00%2B0100'
+          example: '2019-09-05T00:00:00+01:00'
           schema:
             type: string
         -
@@ -48195,7 +48296,7 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
-      x-shoptet-response-ref: '#/definitions/reviewProjectSnapshot'
+      x-shoptet-response-ref: '#/components/schemas/reviewProjectSnapshot'
   '/api/reviews/project/{reviewId}':
     patch:
       responses:
@@ -50035,6 +50136,10 @@ components:
             - 3
         status:
           type: string
+          enum:
+            - new
+            - success
+            - failed
           description: 'results of the last attempt to deliver the notification'
           examples:
             - failed
@@ -50697,6 +50802,20 @@ components:
             - '159'
         itemType:
           type: string
+          enum:
+            - product
+            - bazar
+            - service
+            - shipping
+            - billing
+            - discount-coupon
+            - volume-discount
+            - gift
+            - gift-certificate
+            - generic-item
+            - product-set
+            - product-set-item
+            - deposit
           description: 'item type'
           examples:
             - product
@@ -50903,6 +51022,20 @@ components:
             - '159'
         itemType:
           type: string
+          enum:
+            - product
+            - bazar
+            - service
+            - shipping
+            - billing
+            - discount-coupon
+            - volume-discount
+            - gift
+            - gift-certificate
+            - generic-item
+            - product-set
+            - product-set-item
+            - deposit
           description: 'item type'
           examples:
             - product
@@ -51043,6 +51176,20 @@ components:
           description: 'global unique permanent product identifier'
         itemType:
           type: string
+          enum:
+            - product
+            - bazar
+            - service
+            - shipping
+            - billing
+            - discount-coupon
+            - volume-discount
+            - gift
+            - gift-certificate
+            - generic-item
+            - product-set
+            - product-set-item
+            - deposit
           description: 'item type'
           examples:
             - product
@@ -53458,6 +53605,11 @@ components:
             properties:
               provider:
                 type: string
+                enum:
+                  - heureka
+                  - google
+                  - zbozi
+                  - glami
                 description: 'provider type'
                 examples:
                   - heureka
@@ -53890,6 +54042,20 @@ components:
             - '12345678901234'
         itemType:
           type: string
+          enum:
+            - product
+            - bazar
+            - service
+            - shipping
+            - billing
+            - discount-coupon
+            - volume-discount
+            - gift
+            - gift-certificate
+            - generic-item
+            - product-set
+            - product-set-item
+            - deposit
           description: 'Order item type (product, service...). See also [Types of order items](#section/code-lists/types-of-order-items) code list.'
           examples:
             - product
@@ -57175,6 +57341,20 @@ components:
                   - 40/ZEL
               itemType:
                 type: string
+                enum:
+                  - product
+                  - bazar
+                  - service
+                  - shipping
+                  - billing
+                  - discount-coupon
+                  - volume-discount
+                  - gift
+                  - gift-certificate
+                  - generic-item
+                  - product-set
+                  - product-set-item
+                  - deposit
                 description: 'Order item type (product, service...). See also [Types of order items](#section/code-lists/types-of-order-items) code list.'
                 examples:
                   - product
