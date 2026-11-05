@@ -6343,7 +6343,14 @@ paths:
         -
           name: clearImages
           in: query
-          description: 'Remove all original images in products gallery before processing new ones'
+          description: |
+            Synchronize the product gallery with the item instead of appending to it. Images of the gallery that are not
+            listed in the item are removed. An image already stored under the same `sourceUrl` keeps its id; it is
+            downloaded again and its file is replaced only when the content changed or when the stored file is missing
+            or empty. A failed download keeps the stored image and is reported as an item error. New images are added. When not a single listed image could be stored
+            or matched to a stored one, nothing is removed, so a failing source cannot empty the gallery. Without this
+            parameter nothing is removed and a `sourceUrl` that is already stored in the gallery is rejected as already
+            uploaded.
           example: true
           schema:
             type: boolean
