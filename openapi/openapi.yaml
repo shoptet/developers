@@ -17693,6 +17693,14 @@ paths:
                     message: 'Missing delivery country of order.'
                     instance: data.orderCode
                   -
+                    errorCode: shipment-validation-failed
+                    message: 'Order packaging ID "3" does not exist for the order.'
+                    instance: data.packages
+                  -
+                    errorCode: shipment-validation-failed
+                    message: 'Packaging ID "6" does not exist.'
+                    instance: data.packages
+                  -
                     errorCode: shipment-order-without-shipping
                     message: 'Order does not include shipping.'
                     instance: payload
@@ -17724,6 +17732,13 @@ paths:
         - `orderPackagingId` only,
         - `packaging` and `weight`,
         - `width`, `height`, `depth`, and `weight`.
+
+        `orderPackagingId` and `packaging` are two different IDs.
+        `orderPackagingId` is the ID of a package already added to the order and
+        it must belong to the order given by `orderCode`. `packaging` is the ID
+        of a packaging template defined in the e-shop; a new package is added to
+        the order from it. An unknown ID of either kind is rejected with
+        `shipment-validation-failed` and instance `data.packages`.
       tags:
         - Delivery
       requestBody:
@@ -17793,7 +17808,8 @@ paths:
                             properties:
                               orderPackagingId:
                                 type: integer
-                                description: 'packaging ID; required if sent'
+                                minimum: 1
+                                description: 'ID of a package already added to the order (order packaging); it must belong to the order given by `orderCode`. Not the same as `packaging`, which is the ID of a packaging template.'
                                 examples:
                                   - 3
                           -
@@ -17805,7 +17821,8 @@ paths:
                             properties:
                               packaging:
                                 type: integer
-                                description: 'packaging ID; required if sent'
+                                minimum: 1
+                                description: 'ID of a packaging template defined in the e-shop; a new package is added to the order from this template. Not the same as `orderPackagingId`, which is the ID of a package already added to the order.'
                                 examples:
                                   - 6
                               weight:
