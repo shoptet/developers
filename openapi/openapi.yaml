@@ -17704,6 +17704,10 @@ paths:
                     errorCode: shipment-shipping-service-not-supported
                     message: 'The selected shipping service does not support shipments.'
                     instance: payload
+                  -
+                    errorCode: shipment-bank-account-not-exist
+                    message: 'Default shipper bank account does not exist.'
+                    instance: payload
               schema:
                 type: object
                 properties:
