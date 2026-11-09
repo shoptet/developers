@@ -1357,6 +1357,25 @@ tags:
       a number, it is necessary to take into account that this might also
       include letters, a dash, etc.
   -
+    name: EET
+    description: |-
+      Receipts sent to the EET evidence (sales registration) and their delivery
+      state. Requires the active `eetV2` module in the e-shop.
+
+      A record in state `pending` or `sending` is still waiting for the tax
+      administration's answer; `registered`, `rejected` and `failed` are final
+      unless the record is sent again. `lastError` explains a rejection or a
+      failure, `deadlineMissedAt` is set when the legal sending deadline was
+      missed.
+
+      Records sent to the `playground` environment are tests: they are never
+      legally valid, even when confirmed. Use `isLegallyValid` to tell a
+      legally registered receipt apart.
+
+      Amounts in `price` are always in CZK, as price strings with two decimals.
+      A sale in another currency also carries `sourceCurrency` with the original
+      amount and the exchange rate used.
+  -
     name: 'Proof payments'
     description: |-
       The code (`code`) is the proof payments identifier. Although this is
@@ -29388,6 +29407,448 @@ paths:
           description: 'Returning only edit or delete type changed records'
           required: false
           example: edit
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultPageParameter'
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  /api/eet/records:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - records
+                      - paginator
+                    properties:
+                      records:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - id
+                            - receiptNumber
+                            - receiptedAt
+                            - deviceId
+                            - premisesId
+                            - evidenceUnitId
+                            - eic
+                            - environment
+                            - isLegallyValid
+                            - state
+                            - attempts
+                            - lastAttemptAt
+                            - nextAttemptAt
+                            - deadlineAt
+                            - deadlineMissedAt
+                            - pok
+                            - confirmedAt
+                            - lastError
+                            - warnings
+                            - price
+                            - sourceCurrency
+                            - source
+                            - orderCode
+                            - invoiceCode
+                            - creditNoteCode
+                            - paymentMethodGuid
+                            - adminUserId
+                            - transactionId
+                            - creationTime
+                          properties:
+                            id:
+                              type: integer
+                              description: 'EET record identifier'
+                              examples:
+                                - 1024
+                            receiptNumber:
+                              type: string
+                              description: 'receipt number sent to the tax administration'
+                              examples:
+                                - '2026000123'
+                            receiptedAt:
+                              $ref: '#/components/schemas/typeDateTime'
+                              description: 'time of the sale, in ISO 8601 format, with the UTC offset the receipt was issued with'
+                            deviceId:
+                              type: string
+                              description: 'cash desk identifier sent to the tax administration'
+                              examples:
+                                - POKLADNA01
+                            premisesId:
+                              type: integer
+                              description: 'premises identifier assigned by the tax administration'
+                              examples:
+                                - 141
+                            evidenceUnitId:
+                              type: integer
+                              description: "identifier of the e-shop's EET evidence unit the receipt was sent with"
+                              examples:
+                                - 3
+                            eic:
+                              type: string
+                              description: 'tax identification number of the taxpayer'
+                              examples:
+                                - CZ00000019
+                            environment:
+                              type: string
+                              enum:
+                                - playground
+                                - production
+                              description: 'EET environment the record was sent to. A record sent to `playground` is a test and is never legally valid.'
+                              examples:
+                                - production
+                            isLegallyValid:
+                              type: boolean
+                              description: '`true` only when the tax administration confirmed the record in the `production` environment. A playground confirmation is never legally valid.'
+                              examples:
+                                - true
+                            state:
+                              type: string
+                              enum:
+                                - pending
+                                - sending
+                                - registered
+                                - rejected
+                                - failed
+                              description: "delivery state. `pending` and `sending` are still waiting for the tax administration's answer; `registered` was confirmed (see `pok`); `rejected` was refused by the tax administration; `failed` could not be delivered (see `lastError`)."
+                              examples:
+                                - registered
+                            attempts:
+                              type: integer
+                              description: 'number of sending attempts so far'
+                              examples:
+                                - 1
+                            lastAttemptAt:
+                              $ref: '#/components/schemas/typeDateTimeNullable'
+                              description: 'time of the last sending attempt, in ISO 8601 format (can be `null`)'
+                            nextAttemptAt:
+                              $ref: '#/components/schemas/typeDateTimeNullable'
+                              description: 'time of the next scheduled sending attempt, in ISO 8601 format (can be `null`)'
+                            deadlineAt:
+                              $ref: '#/components/schemas/typeDateTime'
+                              description: 'legal deadline for sending the record, in ISO 8601 format'
+                            deadlineMissedAt:
+                              $ref: '#/components/schemas/typeDateTimeNullable'
+                              description: 'time the legal sending deadline was found to be missed, in ISO 8601 format (`null` when the deadline was not missed)'
+                            pok:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'confirmation code (POK) returned by the tax administration when it registered the record (can be `null`)'
+                              examples:
+                                - 987a6be5-6af5-44f3-b4fc-987654321000-02
+                            confirmedAt:
+                              $ref: '#/components/schemas/typeDateTimeNullable'
+                              description: 'time the tax administration confirmed the record, in ISO 8601 format (can be `null`)'
+                            lastError:
+                              type:
+                                - object
+                                - 'null'
+                              additionalProperties: false
+                              required:
+                                - code
+                                - message
+                              description: 'last error returned for the record (can be `null`)'
+                              properties:
+                                code:
+                                  type: integer
+                                  description: "error code. Codes from -999 to 999 come from the tax administration; codes below -1000 are raised on the e-shop's side before or around sending (certificate, transport, malformed response, ...)."
+                                  examples:
+                                    - 4
+                                message:
+                                  type:
+                                    - string
+                                    - 'null'
+                                  description: 'error message (can be `null`)'
+                                  examples:
+                                    - 'Neplatny podpis SOAP zpravy'
+                            warnings:
+                              type: array
+                              description: 'warnings attached to the record'
+                              items:
+                                type: object
+                                additionalProperties: false
+                                required:
+                                  - code
+                                  - message
+                                  - origin
+                                properties:
+                                  code:
+                                    type: integer
+                                    description: 'warning code'
+                                    examples:
+                                      - 1
+                                  message:
+                                    type: string
+                                    description: 'warning message'
+                                    examples:
+                                      - 'DIC poplatnika v datove zprave se neshoduje s DIC v certifikatu'
+                                  origin:
+                                    type: string
+                                    enum:
+                                      - local
+                                      - response
+                                    description: '`local` when the warning was raised before sending, `response` when it came from the tax administration'
+                                    examples:
+                                      - response
+                            price:
+                              type: object
+                              additionalProperties: false
+                              required:
+                                - currencyCode
+                                - total
+                                - amountForLaterDrawdown
+                                - drawdownOrSettlement
+                              description: 'amounts sent to the tax administration, always in CZK'
+                              properties:
+                                currencyCode:
+                                  $ref: '#/components/schemas/typeCurrencyCode'
+                                  description: 'always `CZK`'
+                                total:
+                                  $ref: '#/components/schemas/typePrice'
+                                  description: 'total amount of the sale'
+                                amountForLaterDrawdown:
+                                  $ref: '#/components/schemas/typePriceNullable'
+                                  description: 'amount intended for later drawdown (can be `null`)'
+                                drawdownOrSettlement:
+                                  $ref: '#/components/schemas/typePriceNullable'
+                                  description: 'amount of a drawdown or settlement (can be `null`)'
+                            sourceCurrency:
+                              type:
+                                - object
+                                - 'null'
+                              additionalProperties: false
+                              required:
+                                - currencyCode
+                                - amount
+                                - exchangeRate
+                              description: 'original amount of a sale made in a currency other than CZK (`null` for CZK sales)'
+                              properties:
+                                currencyCode:
+                                  $ref: '#/components/schemas/typeCurrencyCode'
+                                  examples:
+                                    - EUR
+                                amount:
+                                  $ref: '#/components/schemas/typePrice'
+                                  description: 'amount of the sale in the source currency'
+                                  examples:
+                                    - '40.00'
+                                exchangeRate:
+                                  type:
+                                    - string
+                                    - 'null'
+                                  pattern: '^[0-9]+\.[0-9]{9}$'
+                                  description: 'exchange rate from the source currency to CZK used for the receipt (can be `null`)'
+                                  examples:
+                                    - '25.125000000'
+                            source:
+                              type: string
+                              enum:
+                                - cash_register
+                                - pos_terminal
+                                - eshop
+                                - manual
+                                - api
+                              description: 'where the receipt originated'
+                              examples:
+                                - cash_register
+                            orderCode:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'order code (can be `null`). Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
+                              examples:
+                                - '2026000017'
+                            invoiceCode:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'invoice code (can be `null`). Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
+                              examples:
+                                - '2026200011'
+                            creditNoteCode:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'credit note code (can be `null`). Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
+                              examples:
+                                - '0000000006'
+                            paymentMethodGuid:
+                              $ref: '#/components/schemas/typeGuidNullable'
+                              description: 'payment method identifier (can be `null`)'
+                            adminUserId:
+                              type:
+                                - integer
+                                - 'null'
+                              description: 'identifier of the administrator who issued the receipt (can be `null`)'
+                              examples:
+                                - 12
+                            transactionId:
+                              type:
+                                - string
+                                - 'null'
+                              description: 'payment transaction identifier (can be `null`)'
+                              examples:
+                                - TX-2026-000123
+                            creationTime:
+                              $ref: '#/components/schemas/typeDateTime'
+                              description: 'time the record was created, in ISO 8601 format'
+                      paginator:
+                        $ref: '#/components/schemas/paginator'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "states" parameter value "lost".'
+                    instance: states
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active eetV2 module in eshop.'
+                    instance: eetV2
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'List of EET records'
+      operationId: getListOfEetRecords
+      description: |-
+        Returns the receipts sent to the EET evidence (sales registration), newest receipt first, with their delivery state. All filters are optional and are combined with AND.
+
+        The list supports [Paging](#section/basic-principles/paging). The endpoint requires the active `eetV2` module in the e-shop; records stay listed even after the EET evidence is switched off in the e-shop settings.
+      tags:
+        - EET
+      parameters:
+        -
+          name: receiptedAtFrom
+          in: query
+          description: |-
+            time of the sale, in ISO 8601 format, lower limit (inclusive).
+            Optional.
+          example: '2026-10-01T00:00:00+0200'
+          schema:
+            type: string
+        -
+          name: receiptedAtTo
+          in: query
+          description: |-
+            time of the sale, in ISO 8601 format, upper limit (inclusive). Must not
+            be earlier than `receiptedAtFrom`. Optional.
+          example: '2026-10-31T23:59:59+0100'
+          schema:
+            type: string
+        -
+          name: states
+          in: query
+          description: |-
+            filtering according to delivery state; comma-separated list, a record
+            matches any of the given states. Allowed values: `pending`, `sending`,
+            `registered`, `rejected`, `failed`. Optional.
+          example: 'rejected,failed'
+          schema:
+            type: string
+        -
+          name: source
+          in: query
+          description: 'filtering according to where the receipt originated. Optional.'
+          example: cash_register
+          schema:
+            type: string
+            enum:
+              - cash_register
+              - pos_terminal
+              - eshop
+              - manual
+              - api
+        -
+          name: evidenceUnitId
+          in: query
+          description: 'filtering according to EET evidence unit identifier. Optional.'
+          example: 3
+          schema:
+            type: integer
+        -
+          name: deviceId
+          in: query
+          description: 'filtering according to cash desk identifier, exact match. Optional.'
+          example: POKLADNA01
+          schema:
+            type: string
+        -
+          name: paymentMethodGuid
+          in: query
+          description: |-
+            filtering according to payment method identifier. An unknown identifier
+            returns an empty list. Optional.
+          example: 1b02cb8e-d7b5-11e0-9a5c-feab5ed617ed
+          schema:
+            type: string
+        -
+          name: adminUserId
+          in: query
+          description: 'filtering according to administrator identifier. Optional.'
+          example: 12
+          schema:
+            type: integer
+        -
+          name: orderCode
+          in: query
+          description: 'filtering according to order code, exact match. Optional.'
+          example: '2026000017'
           schema:
             type: string
         -
@@ -59726,6 +60187,7 @@ x-tagGroups:
     tags:
       - 'Credit notes'
       - 'Delivery notes'
+      - EET
       - Invoices
       - 'Proforma invoices'
       - 'Proof payments'
