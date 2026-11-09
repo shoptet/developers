@@ -8196,7 +8196,7 @@ paths:
                         - registered
                         - unregistered
                         - admin-only
-                      description: 'defines users of the e-shop who can see the category - `all` = all (default), `registered` = registered users, `unregistered` = non-registered users. Optional.'
+                      description: 'defines users of the e-shop who can see the category - `all` = all (default), `registered` = registered users, `unregistered` = non-registered users, `admin-only` = administrators. Optional.'
                       examples:
                         - all
                     productOrdering:
@@ -8344,6 +8344,17 @@ paths:
           schema:
             type: string
         -
+          name: suppressRedirect
+          in: query
+          description: |-
+            When `indexName` changes, a redirect from the old category URL to the
+            new one is created. Set to `true` to suppress creating the redirect.
+          required: false
+          example: true
+          schema:
+            type: boolean
+            default: false
+        -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
         content:
@@ -8436,6 +8447,30 @@ paths:
                     instance: 5c499200-70ac-11e9-9208-08002774f818
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        423:
+          description: Locked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: concurrent-categories-update
+                    message: 'Concurrent categories update. Please try later.'
+                    instance: 5c499200-70ac-11e9-9208-08002774f818
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product category deletion'
       operationId: deleteProductCategory
       description: |-
@@ -8447,6 +8482,9 @@ paths:
 
         If the category cannot be deleted, because it is used by some product or
         has children, a 409 code is returned.
+
+        If the category tree is being changed by another process at the same time
+        (e.g. a running import), a 423 code is returned. Retry later.
 
         Optional parameter `deleteUsed` allows deleting categories used by
         products. The products are marked as changed.
@@ -8720,11 +8758,11 @@ paths:
                   -
                     errorCode: batch-job-already-running
                     message: 'Concurrent job already running!'
-                    instance: categories-batch-update
+                    instance: categories-products-priorities-batch-update
                   -
                     errorCode: another-import-is-running
                     message: 'Another import is running. Please try again later.'
-                    instance: categories-batch-update
+                    instance: categories-products-priorities-batch-update
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
@@ -30836,15 +30874,26 @@ paths:
                   metadata:
                     $ref: '#/components/schemas/Metadata'
               example:
+                data: null
                 errors:
                   -
                     errorCode: unknown-product
                     message: 'Product "001-non-exists" does not exist. Skipped.'
                     instance: 001-non-exist
                   -
-                    errorCode: unknown-product
-                    message: 'Product "002-non-exists" does not exist. Skipped.'
-                    instance: 002-non-exist
+                    errorCode: stock-change-not-allowed
+                    message: 'Stock change not allowed for product set "002-set". Skipped.'
+                    instance: 002-set
+                  -
+                    errorCode: invalid-request-data
+                    message: 'New stock amount is out of range for product "003". Skipped.'
+                    instance: '003'
+                  -
+                    errorCode: unknown-error
+                    message: 'Some error occurred for product "004". Skipped.'
+                    instance: '004'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         400:
           description: 'Bad Request'
           content:
@@ -30864,15 +30913,53 @@ paths:
                 data: null
                 errors:
                   -
+                    errorCode: invalid-parameter
+                    message: 'Payload cannot be empty. No data to update.'
+                    instance: payload
+                  -
                     errorCode: unknown-product
-                    message: 'Product "82" does not exist. Skipped.'
-                    instance: '82'
+                    message: 'Product "81" does not exist. Skipped.'
+                    instance: '81'
                   -
                     errorCode: stock-change-not-allowed
                     message: |-
                       Stock change not allowed for product set "82".
                       Skipped.
                     instance: '82'
+                  -
+                    errorCode: invalid-request-data
+                    message: 'New stock amount is out of range for product "83". Skipped.'
+                    instance: '83'
+                  -
+                    errorCode: unknown-error
+                    message: 'Some error occurred for product "84". Skipped.'
+                    instance: '84'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        413:
+          description: 'Payload Too Large'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: payload-too-large
+                    message: 'Payload is too large. Maximum is 300 changes in one request.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Update quantity in stock'
       operationId: updateQuantityInStock
       description: |-
@@ -30883,13 +30970,20 @@ paths:
         products/variants).
 
 
+        An empty payload is rejected with `400 BAD REQUEST` (`invalid-parameter`).
+        More than 300 items in one request are rejected with `413 PAYLOAD TOO LARGE`
+        (`payload-too-large`).
+
+
         In case an error occurs for one of the records, the correct records will
         be updated, the response will be `200 OK`
 
         and there will be records in the `errors` array for each failed record.
         If all records are incorrect, the response
 
-        code will be `400 BAD REQUEST` instead.
+        code will be `400 BAD REQUEST` instead. Per-record error codes are
+        `unknown-product`, `stock-change-not-allowed` (product sets),
+        `invalid-request-data` (new amount out of range) and `unknown-error`.
 
 
         Item `productCode` is mandatory. Then one of the three items has to be
@@ -31114,7 +31208,7 @@ paths:
                               type:
                                 - string
                                 - 'null'
-                              description: 'stock position.'
+                              description: 'stock position. `null` when the Stock module is not active.'
                               examples:
                                 - A1
                             changeTime:
@@ -31131,6 +31225,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "changedFrom" parameter. Guaranteed history is 30 days. You requested history from 45 days!'
+                    instance: changedFrom
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         404:
           description: 'Not Found'
           content:
@@ -31203,7 +31321,14 @@ paths:
             return only product supplies, which amount has been changed since date value of this parameter.
 
                                          
-            It support maximum of 30 days in history. (optional, string). ISO 8601 format ("2017-12-12T22:08:01+0100"). Optional.
+            It support maximum of 30 days in history. (optional, string). ISO 8601 format ("2017-12-12T22:08:01+0100"). Optional. A value older than 30 days is rejected with `400` `invalid-parameter`.
+          schema:
+            type: string
+        -
+          name: include
+          in: query
+          description: 'Optional parts of response. Supported value is `changeTime`.'
+          example: changeTime
           schema:
             type: string
         -
@@ -31346,6 +31471,34 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Invalid "indexName" value. Expected value of URL address part.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Value "----" is not a valid e-mail address'
+                    instance: data.contactEmail
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Creation of brand'
       operationId: createBrand
       description: ''
@@ -31418,7 +31571,9 @@ paths:
         -
           name: code
           in: path
-          description: 'brand GUID'
+          description: |-
+            Brand GUID or brand code (`indexName`). The `brand:*` webhooks send the
+            brand code as `eventInstance`, so it can be passed here directly.
           required: true
           example: 1e3f3f3f-3f3f-63ca-b93f-02423f1f0005
           schema:
@@ -31469,6 +31624,34 @@ paths:
                     $ref: '#/components/schemas/Errors'
                   metadata:
                     $ref: '#/components/schemas/Metadata'
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Invalid "indexName" value. Expected value of URL address part.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Value "----" is not a valid e-mail address'
+                    instance: data.contactEmail
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Update of brand'
       operationId: updateBrand
       description: ''
@@ -31478,7 +31661,9 @@ paths:
         -
           name: code
           in: path
-          description: 'brand GUID'
+          description: |-
+            Brand GUID or brand code (`indexName`). The `brand:*` webhooks send the
+            brand code as `eventInstance`, so it can be passed here directly.
           required: true
           example: 1e3f3f3f-3f3f-63ca-b93f-02423f1f0005
           schema:
@@ -31691,7 +31876,9 @@ paths:
         -
           name: code
           in: path
-          description: 'brand GUID'
+          description: |-
+            Brand GUID or brand code (`indexName`). The `brand:*` webhooks send the
+            brand code as `eventInstance`, so it can be passed here directly.
           required: true
           example: 1e3f3f3f-3f3f-63ca-b93f-02423f1f0005
           schema:
@@ -49841,6 +50028,12 @@ components:
         - indexName
         - description
         - brandWeb
+        - postalAddress
+        - contactEmail
+        - europeanResellerPostalAddress
+        - europeanResellerContactEmail
+        - manufacturingCompanyName
+        - europeanResellerManufacturingCompanyName
         - showInCategoriesMenu
         - showInBrandList
         - metaTitle
@@ -53624,7 +53817,7 @@ components:
             - alphabetically
         catalogueMapping:
           type: array
-          description: 'pairing to search engines such as Zboží, Heuréka, Google, etc. (can be `null`)'
+          description: 'pairing to search engines such as Zboží, Heuréka, Google, etc. Empty when the category has no mapping'
           items:
             type: object
             additionalProperties: false
@@ -53741,7 +53934,7 @@ components:
             - registered
             - unregistered
             - admin-only
-          description: 'defines users of the e-shop who can see the category - `all` = all (default), `registered` = registered users, `unregistered` = non-registered users. Optional.'
+          description: 'defines users of the e-shop who can see the category - `all` = all (default), `registered` = registered users, `unregistered` = non-registered users, `admin-only` = administrators. Optional.'
           examples:
             - all
         productOrdering:
