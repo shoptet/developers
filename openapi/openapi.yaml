@@ -32343,6 +32343,129 @@ paths:
           $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
+    post:
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/supplier'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'The property name is required'
+                    instance: data
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'Creation of supplier'
+      operationId: createSupplier
+      description: 'Creates a supplier. The returned `guid` can be used as `supplierGuid` in the product endpoints. Supplier names are not unique.'
+      tags:
+        - Suppliers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: '#/components/schemas/supplierCreate'
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+  '/api/suppliers/{guid}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/supplier'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: supplier-not-found
+                    message: 'Supplier "1e3f3f3f-3f3f-63ca-b93f-02423f1f0005" not found.'
+                    instance: 1e3f3f3f-3f3f-63ca-b93f-02423f1f0005
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+      summary: 'Detail of supplier'
+      operationId: getDetailOfSupplier
+      description: ''
+      tags:
+        - Suppliers
+      parameters:
+        -
+          name: guid
+          in: path
+          description: 'supplier GUID'
+          required: true
+          example: 1e3f3f3f-3f3f-63ca-b93f-02423f1f0005
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/brands:
     get:
       responses:
@@ -50969,6 +51092,19 @@ components:
         name:
           type: string
           description: 'supplier name'
+          examples:
+            - 'Willy Wonka'
+    supplierCreate:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: 'Supplier name. Duplicate names are allowed.'
           examples:
             - 'Willy Wonka'
     brand:
