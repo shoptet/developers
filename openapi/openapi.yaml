@@ -3033,6 +3033,122 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/eshop/soul:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - enabled
+                      - shopSegment
+                      - targetAudience
+                      - toneOfVoice
+                      - differentiation
+                      - benefits
+                      - neverRules
+                    properties:
+                      enabled:
+                        type: boolean
+                        description: 'flag, whether the E-shop Soul profile is enabled; when `false`, all text fields are `null`'
+                        examples:
+                          - true
+                      shopSegment:
+                        type:
+                          - string
+                          - 'null'
+                        maxLength: 500
+                        description: 'what the e-shop sells and in which segment it operates (can be `null`)'
+                        examples:
+                          - 'Ručně šité kožené boty na míru'
+                      targetAudience:
+                        type:
+                          - string
+                          - 'null'
+                        maxLength: 500
+                        description: "who the e-shop's customers are (can be `null`)"
+                        examples:
+                          - 'Ženy 30 až 50 let, které hledají pohodlnou a nadčasovou obuv'
+                      toneOfVoice:
+                        type:
+                          - string
+                          - 'null'
+                        maxLength: 500
+                        description: 'how the e-shop communicates with customers (can be `null`)'
+                        examples:
+                          - 'Osobní a vřelý, bez zbytečného marketingového žargonu'
+                      differentiation:
+                        type:
+                          - string
+                          - 'null'
+                        maxLength: 500
+                        description: 'what sets the e-shop apart from competitors (can be `null`)'
+                        examples:
+                          - 'Každý pár šijeme ručně v naší dílně v Brně'
+                      benefits:
+                        type:
+                          - string
+                          - 'null'
+                        maxLength: 500
+                        description: 'benefits and guarantees the e-shop offers to customers (can be `null`)'
+                        examples:
+                          - 'Doprava zdarma nad 1500 Kč, výměna velikosti do 30 dnů'
+                      neverRules:
+                        type:
+                          - string
+                          - 'null'
+                        maxLength: 500
+                        description: 'things the e-shop never says or promises in its communication (can be `null`)'
+                        examples:
+                          - 'Nikdy neslibovat doručení do 24 hodin'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-token-no-rights
+                    message: 'Your access token "afd..123" has no defined rights for this resource.'
+                    instance: access-token
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'E-shop Soul'
+      operationId: getEshopSoul
+      description: "The merchant's E-shop Soul profile, the brand voice set in the administration: shop segment, target audience, tone of voice, differentiation, benefits, and rules the texts must never break. AI clients use it to write texts in the shop's voice. When the merchant has the profile turned off, `enabled` is `false` and every text field is `null`. An unfilled field is `null` too. Each field holds at most 500 characters. Not related to the Soul template in `/api/eshop/design`."
+      tags:
+        - Eshop
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/eshop/document-settings:
     get:
       responses:
