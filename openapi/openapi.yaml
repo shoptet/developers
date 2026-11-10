@@ -4229,6 +4229,30 @@ paths:
                     instance: shoptetPay
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: 'Conflict. The e-shop has reached the maximum number of products allowed by its tariff.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: product-max-limit
+                    message: 'Maximum products limit (10000) exceeded.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
           description: 'Unprocessable Entity. With `per-pricelist-prices-limit-exceeded` the product has already been created, do not retry the request, fetch the product without the `perPricelistPrices` include instead.'
           content:
@@ -4292,7 +4316,7 @@ paths:
           name: include
           in: query
           description: 'Optional parts of response'
-          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,recyclingFee,consumptionTax,warranty,sortVariants,relatedVideos,perPricelistPrices'
+          example: 'images,variantParameters,allCategories,flags,descriptiveParameters,measureUnit,surchargeParameters,setItems,filteringParameters,recyclingFee,consumptionTax,warranty,sortVariants,relatedVideos,perPricelistPrices,perStockAmounts,alternativeProducts,relatedProducts,relatedFiles,gifts'
           schema:
             type: string
         -
@@ -5853,9 +5877,12 @@ paths:
                         type: string
                   errors:
                     $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
                 required:
                   - data
                   - errors
+                  - metadata
                 additionalProperties: false
         404:
           description: 'Not Found'
@@ -5868,6 +5895,8 @@ paths:
                     errorCode: file-not-found
                     message: 'File "https://jsonlines.org/products.jsonl" not found.'
                     instance: batchFileUrlPath
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         409:
           description: Conflict
           content:
@@ -5881,6 +5910,8 @@ paths:
                       - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
               example:
                 data: null
                 errors:
@@ -5892,6 +5923,8 @@ paths:
                     errorCode: another-import-is-running
                     message: 'Another import is running. Please try again later.'
                     instance: products-batch-delete
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
           description: 'Unprocessable Entity'
           content:
@@ -5905,6 +5938,8 @@ paths:
                       - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
               example:
                 data: null
                 errors:
@@ -5912,6 +5947,8 @@ paths:
                     errorCode: invalid-url
                     message: 'Invalid or disallowed URL "https://jsonlines.org/products.jsonl".'
                     instance: batchFileUrlPath
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         500:
           description: 'Internal Server Error'
           content:
@@ -5925,6 +5962,8 @@ paths:
                       - 'null'
                   errors:
                     $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
               example:
                 data: null
                 errors:
@@ -5932,6 +5971,8 @@ paths:
                     errorCode: batch-import-unexpected-error
                     message: 'Unknown error.'
                     instance: products-batch-delete
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product BATCH delete'
       operationId: productBatchDelete
       description: |-
@@ -7816,6 +7857,42 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-parameter
+                    message: 'Missing "from" parameter.'
+                    instance: from
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "from" parameter. Should be in ISO 8601 format, e.g.: 2018-06-23T13:15:37%2B0200'
+                    instance: from
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "from" parameter. Guaranteed history is 30 days.'
+                    instance: from
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "changeType" parameter value "create".'
+                    instance: changeType
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Last product changes'
       operationId: getLastProductChanges
       description: |-
@@ -9099,6 +9176,7 @@ paths:
                     additionalProperties: false
                     required:
                       - parametricCategories
+                      - paginator
                     properties:
                       parametricCategories:
                         type: array
@@ -10492,6 +10570,34 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Flag title "Action" is not unique, use please different title.'
+                    instance: data.title
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Limit of 50 custom flags was exceeded.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product flag insertion'
       operationId: createProductFlag
       description: ''
@@ -10595,6 +10701,58 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: product-flag-not-found
+                    message: 'Product flag "action" was not found for current language.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Cannot change system parameter.'
+                    instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Flag title "Action" is not unique, use please different title.'
+                    instance: data.title
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product flag update'
       operationId: updateProductFlag
       parameters:
@@ -10658,6 +10816,58 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: product-flag-not-found
+                    message: 'Product flag "action" was not found for current language.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Cannot delete this flag as it is used in some products. Use "force=true" query parameter to bypass this check and delete the flag from the products as well.'
+                    instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Cannot delete system flag.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Product flag delete'
       operationId: deleteProductFlag
       parameters:
@@ -10670,8 +10880,17 @@ paths:
           schema:
             type: string
         -
+          name: force
+          in: query
+          description: 'Delete the flag even if it is assigned to some products; it is removed from those products as well. Without it, deleting a flag in use fails with `422`.'
+          required: false
+          example: true
+          schema:
+            type: boolean
+            default: false
+        -
           $ref: '#/components/parameters/DefaultContentType'
-      description: 'Deletes the flag. System flags cannot be deleted.'
+      description: 'Deletes the flag. System flags cannot be deleted. A flag assigned to some products can be deleted only with the `force` query parameter.'
       tags:
         - Flags
   /api/products/measure-units:
@@ -15577,6 +15796,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-not-found
+                    message: 'Pricelist with id "11" not found.'
+                    instance: '11'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Pricelist detail'
       operationId: getPricelistDetail
       description: 'Price list detail with product prices (variants) and info on discounts and limitations of purchase (minimum and maximum price)'
@@ -15638,12 +15881,12 @@ paths:
                 errors:
                   -
                     errorCode: pricelist-code-not-found
-                    message: "Price list code '43/BILL' doesn't exist. Code skipped."
+                    message: "The product with code '43/BILL' doesn't exist. Code skipped."
                     instance: 43/BILL
                   -
                     errorCode: invalid-request-data
                     message: |-
-                      Input data for code '43/BIL' doesn't correct. Code
+                      Input data for code '43/BIL' is not correct. Code
                       skipped.
                     instance: 43/BIL
                 metadata:
@@ -15667,17 +15910,23 @@ paths:
                 data: null
                 errors:
                   -
+                    errorCode: invalid-parameter
+                    message: 'Payload cannot be empty. No data to update.'
+                    instance: payload
+                  -
                     errorCode: invalid-request-data
-                    message: 'Input data for code "0001" is not correct. Cannot set "price.buyPrice" and "prices.purchasePrice" at the same time. Please use "prices.purchasePrice" only as buy price is deprecated. Code skipped.'
+                    message: 'Input data for code ''0001'' is not correct. Cannot set "price.buyPrice" and "prices.purchasePrice" at the same time. Please use "prices.purchasePrice" only as buy price is deprecated. Code skipped.'
                     instance: '0001'
                   -
                     errorCode: invalid-request-data
-                    message: 'Input data for code "0001" is not correct. Invalid "vatRate" value. Code skipped.'
+                    message: 'Input data for code ''0001'' is not correct. Invalid "vatRate" value. Code skipped.'
                     instance: '0001'
                   -
                     errorCode: invalid-request-data
-                    message: 'Input data for code "0001" is not correct. Invalid "purchasePriceVatRate" value. Code skipped.'
+                    message: 'Input data for code ''0001'' is not correct. Invalid "purchasePriceVatRate" value. Code skipped.'
                     instance: '0001'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         404:
           description: 'Not Found'
           content:
@@ -15700,6 +15949,30 @@ paths:
                     errorCode: pricelist-not-found
                     message: 'Pricelist with id "11" not found.'
                     instance: '11'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        413:
+          description: 'Payload Too Large'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: payload-too-large
+                    message: 'Payload is too large. Maximum is 300 changes in one request.'
+                    instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Update pricelist'
@@ -15815,6 +16088,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-not-found
+                    message: 'Pricelist with id "11" not found.'
+                    instance: '11'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
           description: 'Unprocessable Entity'
           content:
@@ -16444,7 +16741,7 @@ paths:
                   -
                     errorCode: pricelist-not-found
                     message: 'Pricelist with id "99" not found.'
-                    instance: payload
+                    instance: '99'
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Price list detail'
@@ -16528,7 +16825,7 @@ paths:
                   -
                     errorCode: pricelist-not-found
                     message: 'Pricelist with id "99" not found.'
-                    instance: payload
+                    instance: '99'
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         409:
@@ -16697,6 +16994,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-not-found
+                    message: 'Pricelist with id "11" not found.'
+                    instance: '11'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
           description: 'Unprocessable Entity'
           content:
@@ -16800,6 +17121,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: pricelist-not-found
+                    message: 'Pricelist with id "11" not found.'
+                    instance: '11'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Price list prices'
       operationId: getPriceListPrices
       description: 'Prices of every product (variant) in the given price list, with info on discounts and limitations of purchase (minimum and maximum amount).'
@@ -16890,17 +17235,23 @@ paths:
                 data: null
                 errors:
                   -
+                    errorCode: invalid-parameter
+                    message: 'Payload cannot be empty. No data to update.'
+                    instance: payload
+                  -
                     errorCode: invalid-request-data
-                    message: 'Input data for code "0001" is not correct. Cannot set "price.buyPrice" and "prices.purchasePrice" at the same time. Please use "prices.purchasePrice" only as buy price is deprecated. Code skipped.'
+                    message: 'Input data for code ''0001'' is not correct. Cannot set "price.buyPrice" and "prices.purchasePrice" at the same time. Please use "prices.purchasePrice" only as buy price is deprecated. Code skipped.'
                     instance: '0001'
                   -
                     errorCode: invalid-request-data
-                    message: 'Input data for code "0001" is not correct. Invalid "vatRate" value. Code skipped.'
+                    message: 'Input data for code ''0001'' is not correct. Invalid "vatRate" value. Code skipped.'
                     instance: '0001'
                   -
                     errorCode: invalid-request-data
-                    message: 'Input data for code "0001" is not correct. Invalid "purchasePriceVatRate" value. Code skipped.'
+                    message: 'Input data for code ''0001'' is not correct. Invalid "purchasePriceVatRate" value. Code skipped.'
                     instance: '0001'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         404:
           description: 'Not Found'
           content:
@@ -16923,6 +17274,30 @@ paths:
                     errorCode: pricelist-not-found
                     message: 'Pricelist with id "11" not found.'
                     instance: '11'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        413:
+          description: 'Payload Too Large'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: payload-too-large
+                    message: 'Payload is too large. Maximum is 300 changes in one request.'
+                    instance: payload
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Update price list prices'
