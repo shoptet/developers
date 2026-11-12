@@ -29909,6 +29909,123 @@ paths:
           $ref: '#/components/parameters/DefaultPageParameter'
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/eet/evidence-units:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - evidenceUnits
+                    properties:
+                      evidenceUnits:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/eetEvidenceUnit'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "type" parameter value "warehouse".'
+                    instance: type
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Method requires active eetV2 module in eshop.'
+                    instance: eetV2
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'List of EET evidence units'
+      operationId: getListOfEetEvidenceUnits
+      description: |-
+        Returns the e-shop's EET evidence units (registration places), ordered by identifier. There are two kinds: a `store` is bound to an in-store sales channel and registers the sales from its cash desks; a `contactPoint` is not bound to any sales channel and covers places where customers pay on the spot without the cash register (pickup point, warehouse, stand).
+        The endpoint requires the active `eetV2` module in the e-shop.
+      tags:
+        - EET
+      parameters:
+        -
+          name: type
+          in: query
+          description: 'filtering according to the evidence unit type.'
+          example: store
+          schema:
+            type: string
+            enum:
+              - store
+              - contactPoint
+        -
+          name: onlyReady
+          in: query
+          description: |-
+            when `true`, returns only the units that can sign a receipt right now
+            (`isReady`).
+          example: true
+          schema:
+            type: boolean
+            default: false
+        -
+          name: includeDeactivated
+          in: query
+          description: |-
+            when `true`, deactivated units are returned too, with `isActive` set to
+            `false`.
+          example: true
+          schema:
+            type: boolean
+            default: false
+        -
+          $ref: '#/components/parameters/DefaultContentType'
   /api/eet/records:
     get:
       responses:
@@ -60338,6 +60455,94 @@ components:
                     description: 'ordering property'
                     examples:
                       - 1
+    eetEvidenceUnit:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - unitId
+        - name
+        - type
+        - hasAssignedShape
+        - salesChannelGuid
+        - isDefaultForManualDocuments
+        - isReady
+        - isActive
+        - certificate
+      properties:
+        id:
+          type: integer
+          description: 'EET evidence unit identifier'
+          examples:
+            - 3
+        unitId:
+          type: integer
+          description: 'premises identifier assigned by the tax administration, unique per e-shop'
+          examples:
+            - 141
+        name:
+          type: string
+          description: 'name of the evidence unit'
+          examples:
+            - 'Prodejna Praha'
+        type:
+          type: string
+          enum:
+            - store
+            - contactPoint
+          description: '`store` is bound to an in-store sales channel and registers sales from its cash desks; `contactPoint` is not bound to any sales channel (pickup point, warehouse, stand).'
+          examples:
+            - store
+        hasAssignedShape:
+          type: boolean
+          description: '`true` when `unitId` has the shape the tax administration assigns (at least 2 digits, ending with 1–4). Other numbers are accepted, but every receipt sent with them gets warning code 6.'
+          examples:
+            - true
+        salesChannelGuid:
+          $ref: '#/components/schemas/typeGuidNullable'
+          description: 'GUID of the in-store sales channel the unit is bound to (`null` for `contactPoint`)'
+        isDefaultForManualDocuments:
+          type: boolean
+          description: '`true` for the unit used for documents issued by hand in the administration. At most one active unit has it.'
+          examples:
+            - false
+        isReady:
+          type: boolean
+          description: '`true` when the unit is active and bound to a certificate valid now, i.e. can sign a receipt right away. A unit that is not ready still accepts records while its certificate is expired or not yet valid; they wait until a usable certificate is bound. Only a unit without any certificate cannot register records.'
+          examples:
+            - true
+        isActive:
+          type: boolean
+          description: '`false` for a deactivated unit'
+          examples:
+            - true
+        certificate:
+          type:
+            - object
+            - 'null'
+          additionalProperties: false
+          required:
+            - eic
+            - environment
+            - validTo
+          description: 'certificate bound to the unit (`null` while the unit has none)'
+          properties:
+            eic:
+              type: string
+              description: 'tax identification number of the taxpayer'
+              examples:
+                - CZ00000019
+            environment:
+              type: string
+              enum:
+                - playground
+                - production
+              description: 'EET environment the certificate belongs to. Receipts signed with a `playground` certificate are tests and are never legally valid.'
+              examples:
+                - production
+            validTo:
+              $ref: '#/components/schemas/typeDateTime'
+              description: 'end of the certificate validity, in ISO 8601 format'
     abandonedCartSnapshot:
       title: 'Abandoned cart'
       x-tags:
