@@ -731,6 +731,9 @@ info:
 
     Value  | Description | Identifier meaning | Payload supported
     -------- | --------- | --------- | ---------
+    article:create | Article creation event | ID of article | yes
+    article:update | Article change event, including visibility, image, OG image and language changes | ID of article | yes
+    article:delete | Article deleting event, also raised for each article deleted together with its article section | ID of article | no
     availability:create | Availability creation event | Availability ID | no
     availability:update | Availability change event   | Availability ID | no
     availability:delete | Availability deleting event | Availability ID | no
@@ -1629,8 +1632,8 @@ tags:
       The payload is fetched with all optional `include` parameters applied for
       `order`, `product`, `invoice`, `creditNote`, `deliveryNote` and
       `proformaInvoice` events, so it is richer than a default GET response for
-      those entities. The remaining payload-supported entities (`brand`,
-      `category`, `customer`, `discountCoupon`, `proofPayment`,
+      those entities. The remaining payload-supported entities (`article`,
+      `brand`, `category`, `customer`, `discountCoupon`, `proofPayment`,
       `quantityDiscount`, `sectionArticle`) are fetched without any `include`
       parameters.
 
