@@ -5575,7 +5575,10 @@ paths:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'List of all products and pricelist prices'
       operationId: getListOfAllProductsAndPricelistPrices
+      deprecated: true
       description: |-
+        [DEPRECATED] Use `GET /api/price-lists/prices/snapshot` instead.
+
         Using this endpoint, you can get list of all products with basic data such as  product guid, id, code and its prices across all pricelists.
 
 
@@ -15827,7 +15830,11 @@ paths:
                 additionalProperties: false
       summary: 'List of price lists'
       operationId: getListOfPriceLists
+      deprecated: true
       description: |-
+        [DEPRECATED] Use `GET /api/price-lists` instead.
+
+
         Listing of all price lists set up in e-shop. Does not contain the
         paging, always lists all price lists.
       tags:
@@ -15857,7 +15864,8 @@ paths:
                 additionalProperties: false
       summary: 'Pricelist insertion'
       operationId: createPricelist
-      description: ''
+      deprecated: true
+      description: '[DEPRECATED] Use `POST /api/price-lists` instead.'
       tags:
         - 'Price lists'
       requestBody:
@@ -15941,7 +15949,11 @@ paths:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Pricelist detail'
       operationId: getPricelistDetail
-      description: 'Price list detail with product prices (variants) and info on discounts and limitations of purchase (minimum and maximum price)'
+      deprecated: true
+      description: |-
+        [DEPRECATED] Use `GET /api/price-lists/{id}/prices` instead.
+
+        Price list detail with product prices (variants) and info on discounts and limitations of purchase (minimum and maximum price)
       tags:
         - 'Price lists'
       parameters:
@@ -16096,7 +16108,10 @@ paths:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Update pricelist'
       operationId: updatePricelist
+      deprecated: true
       description: |-
+        [DEPRECATED] Use `PATCH /api/price-lists/{id}/prices` instead.
+
         This endpoint allows updating price fields and other attributes from a
         pricelist of a product (variant).
 
@@ -16283,7 +16298,11 @@ paths:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Pricelist delete'
       operationId: deletePricelist
+      deprecated: true
       description: |-
+        [DEPRECATED] Use `DELETE /api/price-lists/{id}` instead.
+
+
         Deletion of pricelist can fail with error `423` in case of running
         import.
       tags:
@@ -16378,7 +16397,10 @@ paths:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'List of all price list details'
       operationId: getListOfAllPricelistDetails
+      deprecated: true
       description: |-
+        [DEPRECATED] Use `GET /api/price-lists/{id}/prices/snapshot` instead.
+
         Using this endpoint, you can get list of all price list details with information on each price (like in Price list Detail endpoint) asynchronously. See how  [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer’s portal.
 
 
@@ -16600,7 +16622,10 @@ paths:
                     instance: pricelist-batch-update
       summary: 'Batch pricelist update'
       operationId: updatePricelistBatch
+      deprecated: true
       description: |-
+        [DEPRECATED] Use `PATCH /api/price-lists/{id}/prices/batch` instead.
+
         This endpoint allows updating multiple prices at once. Price fields and other attributes from a pricelist of a product (variant) can be updated. Batch update  is processed asynchronously in same way as for example products snapshot, but  it does not have `resultUrl` with prices to download in response. Instead, you can check attribute `log` which contains successfully updated prices and errors.
 
         See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
@@ -17194,7 +17219,7 @@ paths:
         import.
 
 
-        To delete prices inside a price list rather than the price list itself,
+        To manage prices inside a price list rather than the price list itself,
         use `/api/price-lists/{id}/prices`.
       tags:
         - 'Price lists'
