@@ -19455,7 +19455,7 @@ paths:
                               $ref: '#/components/schemas/orderPreAuthorization'
                             salesChannelGuid:
                               $ref: '#/components/schemas/typeGuidNullable'
-                              description: 'sales channel guid'
+                              description: 'GUID of the sales channel the order was created in.'
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -19547,6 +19547,13 @@ paths:
           schema:
             type: string
           example: b57f91bb-e920-11e0-baa3-7dc668b75ca8
+        -
+          name: salesChannelGuid
+          in: query
+          description: 'Purchase order filtering, according to sales channel GUID. Requires the active `Sales channel` module.'
+          schema:
+            type: string
+          example: 01987c3e-5f1a-7b2c-9d4e-6f7a8b9c0d1e
         -
           name: creationTimeFrom
           in: query
@@ -20417,6 +20424,13 @@ paths:
           schema:
             type: string
           example: b57f91bb-e920-11e0-baa3-7dc668b75ca8
+        -
+          name: salesChannelGuid
+          in: query
+          description: 'Purchase order filtering, according to sales channel GUID. Requires the active `Sales channel` module.'
+          schema:
+            type: string
+          example: 01987c3e-5f1a-7b2c-9d4e-6f7a8b9c0d1e
         -
           name: creationTimeFrom
           in: query
@@ -58584,7 +58598,7 @@ components:
                 - -1
         salesChannelGuid:
           $ref: '#/components/schemas/typeGuidNullable'
-          description: 'sales channel guid'
+          description: 'GUID of the sales channel the order was created in.'
         price:
           $ref: '#/components/schemas/price'
           description: 'price of the order'
