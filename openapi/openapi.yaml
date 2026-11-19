@@ -19741,7 +19741,7 @@ paths:
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
-          description: 'Consumption tax id not exists / not visible'
+          description: 'Consumption tax id not exists / not visible, sales channel not allowed for order creation'
           content:
             application/json:
               schema:
@@ -19766,6 +19766,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'Consumption tax with id "2" is not visible.'
                     instance: payload
+                  -
+                    errorCode: sales-channel-type-invalid
+                    message: 'Sales channel "b57f91bb-e920-11e0-baa3-7dc668b75ca8" with type "in_store" cannot be used for creating orders via API.'
+                    instance: salesChannelGuid
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Order insertion'
@@ -58955,7 +58959,7 @@ components:
         salesChannelGuid:
           $ref: '#/components/schemas/typeGuidNullable'
           minLength: 1
-          description: 'Sales channel GUID. Requires active module `Sales Channel`. Optional. Sales channels of type `marketplace` and `in_store` are not supported for order creation.'
+          description: 'Sales channel GUID. Requires active module `Sales Channel`. Optional. Accepted sales channels: `online_store` (`market`), `system`, and child `in_store` channels (a cash register under a store). A root `in_store` channel (a store itself) or any `marketplace` channel is rejected with `sales-channel-type-invalid`. Not allowed together with a cash-desk `sourceId`.'
           examples:
             - b57f91bb-e920-11e0-baa3-7dc668b75ca8
         email:
