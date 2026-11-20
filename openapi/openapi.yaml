@@ -37561,8 +37561,9 @@ paths:
                 additionalProperties: false
       summary: 'Webhook notification'
       operationId: getWebhookNotification
+      deprecated: true
       description: |-
-        Returns the notification (invoking) list of webhooks and provides information about these. If you do not have 
+        [DEPRECATED] Returns the notification (invoking) list of webhooks and provides information about these. If you do not have 
         a registered webhook, and the given event happens (for example creation of an order), the registered URLs are 
         called. A notification about a call contains information about the webhook that requested the call, the URL 
         called, the time, delivery status, number of delivery attempts and other information.
