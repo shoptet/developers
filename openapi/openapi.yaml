@@ -24400,6 +24400,72 @@ paths:
         -
           $ref: '#/components/parameters/DefaultContentType'
   '/api/orders/gifts/{id}':
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - gift
+                    properties:
+                      gift:
+                        $ref: '#/components/schemas/orderGift'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                  - data
+                  - errors
+                  - metadata
+                additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: order-gift-not-found
+                    message: 'Order gift with id "2" not found'
+                    instance: '2'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+      summary: 'Detail of order gift'
+      operationId: getOrderGiftDetail
+      description: 'Returns a single order gift by its primary key, with the same fields as an item of the order gifts list.'
+      tags:
+        - 'Order gifts'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID of gift'
+          required: true
+          example: 4
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/DefaultContentType'
     delete:
       responses:
         200:
