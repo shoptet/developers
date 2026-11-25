@@ -8444,6 +8444,130 @@ paths:
       parameters:
         -
           $ref: '#/components/parameters/DefaultContentType'
+  /api/categories/snapshot:
+    get:
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - jobId
+                    properties:
+                      jobId:
+                        examples:
+                          - ad24xod
+                        description: 'token of job'
+                        type: string
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Unsupported query parameters found: visible'
+                    instance: query-params
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: required-webhook-registration
+                    message: 'Webhook for job:finished is not registered. Please register job:finished webhook.'
+                    instance: 'job:finished'
+                  -
+                    errorCode: too-many-enqueued-jobs
+                    message: 'Too many enqueued jobs, please try again later.'
+                    instance: payload
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: duplicated-job-enqueued
+                    message: 'Job "categories-snapshot" with same parameters is already enqueued and waiting for process. Please try again, after job is done.'
+                    instance: categories-snapshot
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+      summary: 'List of all categories'
+      operationId: getListOfAllCategories
+      description: |-
+        Using this endpoint, you can get list of all product categories with detailed info of each category (like in Product category detail endpoint) asynchronously. See how [Asynchronous requests](https://developers.shoptet.com/asynchronous-requests/) work on our developer's portal.
+
+
+        Response will be in [jsonlines](https://jsonlines.org/) format with each category taking one line of output file.
+
+
+        One category in response has the same format as product category detail response. See [Category snapshot schema](/shoptet-api/openapi/snapshot/categorysnapshot) for more details.
+
+
+        All categories of the e-shop are included regardless of their visibility, so the whole category tree can be rebuilt from `parentGuid`. The endpoint takes no filters, same as the list of product categories.
+
+
+        Result file is compressed using GZIP.
+      tags:
+        - Categories
+      parameters:
+        -
+          $ref: '#/components/parameters/DefaultContentType'
+      x-shoptet-snapshot-endpoint: true
+      x-shoptet-response-ref: '#/components/schemas/categorySnapshot'
   '/api/categories/{categoryGuid}':
     get:
       responses:
@@ -61024,6 +61148,13 @@ components:
       allOf:
         -
           $ref: '#/components/schemas/categoryUpdate'
+    categorySnapshot:
+      title: Category
+      x-tags:
+        - Snapshot
+      allOf:
+        -
+          $ref: '#/components/schemas/category'
     categoryProductPriorityBatchUpdate:
       title: 'Category product priority update'
       x-tags:
