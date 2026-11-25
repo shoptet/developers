@@ -19716,8 +19716,40 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Order with code 2018000012 already exists.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Order with externalCode 123 already imported with code 2018000012.'
+                    instance: integration-call
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Can not create order. Too many duplicate order numbers.'
+                    instance: integration-call
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         403:
-          description: 'Consumption tax module is not enabled'
+          description: Forbidden
           content:
             application/json:
               schema:
@@ -19738,10 +19770,38 @@ paths:
                     errorCode: missing-module
                     message: 'It requires active consumptionTax module in eshop when "consumptionTax" is present in order items data.'
                     instance: consumptionTax
+                  -
+                    errorCode: missing-module
+                    message: 'Module "Sales channel" is not active.'
+                    instance: salesChannel
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: sales-channel-not-found
+                    message: 'Sales channel with GUID "0199bdfd-0979-71fb-85ce-e483c61d391b" not found.'
+                    instance: salesChannelGuid
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         422:
-          description: 'Consumption tax id not exists / not visible, sales channel not allowed for order creation'
+          description: 'Unprocessable Entity'
           content:
             application/json:
               schema:
@@ -19766,6 +19826,10 @@ paths:
                     errorCode: invalid-request-data
                     message: 'Consumption tax with id "2" is not visible.'
                     instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Does not match the regex pattern ^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$'
+                    instance: data.salesChannelGuid
                   -
                     errorCode: sales-channel-type-invalid
                     message: 'Sales channel "b57f91bb-e920-11e0-baa3-7dc668b75ca8" with type "in_store" cannot be used for creating orders via API.'
@@ -20160,6 +20224,34 @@ paths:
                     $ref: '#/components/schemas/Errors'
                   metadata:
                     $ref: '#/components/schemas/Metadata'
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "orderCodes" parameter. Expected max. 50 elements, but 55 given.'
+                    instance: orderCodes
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "creationTimeFrom" parameter. Should be in ISO 8601 format, e.g.: 2018-06-23T13:15:37%2B0200'
+                    instance: creationTimeFrom
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         403:
           description: Forbidden
           content:
@@ -20346,6 +20438,34 @@ paths:
                     errorCode: too-many-enqueued-jobs
                     message: 'Too many enqueued jobs, please try again later.'
                     instance: payload
+                  -
+                    errorCode: missing-module
+                    message: 'Module "Sales channel" is not active.'
+                    instance: salesChannel
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: sales-channel-not-found
+                    message: 'Sales channel with GUID "0199bdfd-0979-71fb-85ce-e483c61d391b" not found.'
+                    instance: salesChannelGuid
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
         409:
@@ -20370,6 +20490,30 @@ paths:
                     errorCode: duplicated-job-enqueued
                     message: 'Job "orders-snapshot" with same parameters is already enqueued and waiting for process. Please try again, after job is done.'
                     instance: orders-snapshot
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: sales-channel-guid-invalid
+                    message: 'Sales channel GUID "not-a-guid" is not valid.'
+                    instance: salesChannelGuid
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'List of all orders'
@@ -20399,6 +20543,7 @@ paths:
         `stockLocation`       | Position in the stock
         `surchargeParameters` | Item surcharge parameters
         `productFlags`        | Item product flags
+        `paymentTransactions` | Payment transactions within the order
 
         Use `orderCodes` request parameter to get the list of specific orders. Order codes are separated by a comma. If you use this query parameter, other filters are not applied, and the set of particular orders is returned. Please note that this parameter **accepts max. 50 order codes in request parameter**.
 
@@ -20411,7 +20556,7 @@ paths:
           in: query
           description: |-
             Optional parts of response. Available values are
-            `notes,images,shippingDetails,stockLocation,surchargeParameters`.
+            `notes,images,shippingDetails,stockLocation,surchargeParameters,productFlags,paymentTransactions`.
           schema:
             type: string
         -
@@ -20453,13 +20598,6 @@ paths:
           schema:
             type: string
           example: b57f91bb-e920-11e0-baa3-7dc668b75ca8
-        -
-          name: salesChannelGuid
-          in: query
-          description: 'Purchase order filtering, according to sales channel GUID. Requires the active `Sales channel` module.'
-          schema:
-            type: string
-          example: 01987c3e-5f1a-7b2c-9d4e-6f7a8b9c0d1e
         -
           name: creationTimeFrom
           in: query
@@ -20551,6 +20689,15 @@ paths:
           schema:
             type: integer
           example: -1
+        -
+          name: salesChannelGuid
+          in: query
+          description: |-
+            Purchase order filtering, according to sales channel GUID. Requires the "Sales channel" module; without it
+            the request fails with `403 missing-module`.
+          example: 0199bdfd-0979-71fb-85ce-e483c61d391b
+          schema:
+            type: string
         -
           $ref: '#/components/parameters/DefaultContentType'
       x-shoptet-snapshot-endpoint: true
@@ -20715,11 +20862,12 @@ paths:
         -
           name: suppressSmsSending
           in: query
-          description: 'Suppress sending the linked information SMS messages.'
+          description: |-
+            Controls sending of the linked information SMS messages. When omitted, the automatic SMS setting of the
+            target status decides. `false` sends the SMS regardless of that setting, `true` suppresses it.
           example: true
           schema:
             type: boolean
-            default: false
         -
           $ref: '#/components/parameters/DefaultContentType'
       requestBody:
@@ -20778,6 +20926,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: order-not-found
+                    message: 'Order "2018000012" not found.'
+                    instance: '2018000012'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Order detail'
       operationId: getOrderDetail
       description: |-
@@ -23834,9 +24006,7 @@ paths:
                                   examples:
                                     - true
                                 generateProofPayment:
-                                  type:
-                                    - boolean
-                                    - 'null'
+                                  type: boolean
                                   description: 'proof of payment is generated in this status.'
                                   examples:
                                     - true
@@ -23953,7 +24123,7 @@ paths:
                               examples:
                                 - '201800001'
                             changeTime:
-                              $ref: '#/components/schemas/typeDateTimeNullable'
+                              $ref: '#/components/schemas/typeDateTime'
                               description: 'date and time when the event happened. ISO 8601 format (`2017-12-12T22:08:01+0100`).'
                             changeType:
                               $ref: '#/components/schemas/changeType'
@@ -24061,15 +24231,15 @@ paths:
                               examples:
                                 - 26/BIL
                             amount:
-                              $ref: '#/components/schemas/typeAmountNullable'
+                              $ref: '#/components/schemas/typeAmount'
                               description: 'amount ordered'
                               examples:
-                                - '50'
+                                - '50.000'
                             amountCompleted:
-                              $ref: '#/components/schemas/typePositiveAmountNullable'
+                              $ref: '#/components/schemas/typePositiveAmount'
                               description: 'amount of completed product'
                               examples:
-                                - 1.0
+                                - '1.000'
                       paginator:
                         $ref: '#/components/schemas/paginator'
                   errors:
@@ -24474,11 +24644,7 @@ paths:
             application/json:
               example:
                 data: null
-                errors:
-                  -
-                    errorCode: example-error-code
-                    message: 'Example error message'
-                    instance: instance
+                errors: []
                 metadata:
                   requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
               schema:
@@ -24498,6 +24664,54 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Order gift with id "4" not found'
+                    instance: '4'
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
+        422:
+          description: 'Unprocessable Entity'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Error while deleting order gift!'
+                    instance: request
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Delete order gift'
       operationId: deleteOrderGift
       description: 'Delete order gift item by primary key.'
@@ -59022,7 +59236,7 @@ components:
             - 'null'
           examples:
             - -1
-          description: 'Order source id. Optional. If not indicated, no source will be used (null). If `sourceId` is positive, `cashDeskOnly` must also be set to `true`, otherwise if `sourceId` is negative, `cashDeskOnly` must be set to `false`, otherwise error will be returned. Current possible values of `sourceId` can be determined by calling the list of order sources endpoint, but marketplace sources are not supported for order creation.'
+          description: 'Order source id. Optional. If not indicated, no source will be used (null). If `sourceId` is positive, `cashDeskOrder` must also be set to `true`, otherwise if `sourceId` is negative, `cashDeskOrder` must be set to `false`, otherwise error will be returned. Current possible values of `sourceId` can be determined by calling the list of order sources endpoint, but marketplace sources are not supported for order creation.'
         salesChannelGuid:
           $ref: '#/components/schemas/typeGuidNullable'
           minLength: 1
