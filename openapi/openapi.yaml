@@ -25043,7 +25043,7 @@ paths:
                           properties:
                             code:
                               type: string
-                              description: 'variant code (product)'
+                              description: 'invoice number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
                               examples:
                                 - '2015000001'
                             varSymbol:
@@ -25561,6 +25561,14 @@ paths:
           description: ''
           required: true
           example: '2018000004'
+          schema:
+            type: string
+        -
+          name: include
+          in: query
+          description: 'Sections to include'
+          required: false
+          example: surchargeParameters
           schema:
             type: string
         -
@@ -26559,6 +26567,7 @@ paths:
                     additionalProperties: false
                     required:
                       - proformaInvoices
+                      - paginator
                     properties:
                       proformaInvoices:
                         type: array
@@ -28625,6 +28634,42 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-parameter
+                    message: 'Missing "from" parameter.'
+                    instance: from
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "from" parameter. Should be in ISO 8601 format, e.g.: 2018-06-23T13:15:37%2B0200'
+                    instance: from
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "from" parameter. Guaranteed history is 30 days.'
+                    instance: from
+                  -
+                    errorCode: invalid-parameter
+                    message: 'Invalid "changeType" parameter value "create".'
+                    instance: changeType
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Last proof payments changes'
       operationId: getLastProofPaymentsChanges
       description: |-
@@ -28830,7 +28875,12 @@ paths:
           schema:
             type: string
         -
-          $ref: '#/components/parameters/DefaultItemsPerPageParameter'
+          name: itemsPerPage
+          in: query
+          description: 'Returned items per page. Default value is 20. Max value is 100.'
+          example: 50
+          schema:
+            type: integer
         -
           $ref: '#/components/parameters/DefaultPageParameter'
         -
@@ -30959,7 +31009,7 @@ paths:
                           properties:
                             code:
                               type: string
-                              description: 'variant code (product)'
+                              description: 'delivery note number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
                               examples:
                                 - '00000018'
                             isValid:
@@ -31168,9 +31218,24 @@ paths:
 
 
         One delivery note in response has the same format as delivery note detail response. See [Delivery note snapshot schema](/shoptet-api/openapi/snapshot/deliverynotesnapshot) for more details.
+
+
+        This endpoint has several sections, which are only sent when requested in the `include` parameter (see [Section on demand](#section/basic-principles/section-on-demand)).
+
+
+        Value                 | Section
+        ---                   | ---
+        `surchargeParameters` | Item surcharge parameters
       tags:
         - 'Delivery notes'
       parameters:
+        -
+          name: include
+          in: query
+          description: 'Sections to include'
+          example: surchargeParameters
+          schema:
+            type: string
         -
           name: creationTimeFrom
           in: query
@@ -57473,7 +57538,7 @@ components:
             - '2015000170'
         issueDate:
           $ref: '#/components/schemas/typeDateTimeNullable'
-          description: 'Linked to invoice code (can be `null`)'
+          description: 'issue date of the proof payment (can be `null`)'
         billFullName:
           type:
             - string
@@ -57865,7 +57930,7 @@ components:
             - 'null'
           description: 'VAT mode, can be null, for possible values see [VAT modes](#section/code-lists/vat-modes) code list'
           examples:
-            - normal
+            - Normal
         invoicingExchangeRate:
           $ref: '#/components/schemas/typeExchangeRate'
     proofPaymentsForInvoice:
@@ -60337,7 +60402,7 @@ components:
       properties:
         code:
           type: string
-          description: 'variant code (product)'
+          description: 'delivery note number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
           examples:
             - '00000018'
         isValid:
@@ -60421,7 +60486,7 @@ components:
       properties:
         code:
           type: string
-          description: 'variant code (product) (can be `null`)'
+          description: 'credit note number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
           examples:
             - '00000008'
         isValid:
@@ -60705,12 +60770,14 @@ components:
         - items
         - documentRemark
         - vatPayer
+        - vatMode
+        - proofPayments
         - paid
       additionalProperties: false
       properties:
         code:
           type: string
-          description: 'variant code (product)'
+          description: 'invoice number. Caution! This does not have to be just a number, it can also contain letters, a dash, etc.'
           examples:
             - '2015000001'
         isValid:
