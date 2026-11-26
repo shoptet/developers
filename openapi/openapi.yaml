@@ -4399,6 +4399,10 @@ paths:
                     message: 'The property heureka is not allowed. An active Heureka module is required.'
                     instance: payload
                   -
+                    errorCode: invalid-request-data
+                    message: 'Country code value "SK" is defined more than once in ossVatLevels.'
+                    instance: payload
+                  -
                     errorCode: per-pricelist-prices-limit-exceeded
                     message: 'Unable to process request with perPricelistPrices include, the number of variant and price list combinations exceeds the limit of 125000.'
                     instance: payload
@@ -5785,6 +5789,10 @@ paths:
                     message: 'The property heureka is not allowed. An active Heureka module is required.'
                     instance: payload
                   -
+                    errorCode: invalid-request-data
+                    message: 'Country code value "SK" is defined more than once in ossVatLevels.'
+                    instance: payload
+                  -
                     errorCode: per-pricelist-prices-limit-exceeded
                     message: 'Unable to process request with perPricelistPrices include, the number of variant and price list combinations exceeds the limit of 125000.'
                     instance: payload
@@ -6703,6 +6711,10 @@ paths:
                   -
                     errorCode: invalid-request-data
                     message: 'The property heureka is not allowed. An active Heureka module is required.'
+                    instance: payload
+                  -
+                    errorCode: invalid-request-data
+                    message: 'Country code value "SK" is defined more than once in ossVatLevels.'
                     instance: payload
                   -
                     errorCode: per-pricelist-prices-limit-exceeded
