@@ -2729,6 +2729,48 @@ paths:
                             description: 'default status of order after cash desk payment'
                             examples:
                               - -1
+                      peppol:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - state
+                          - isSendingEnabled
+                          - participantId
+                          - registeredAt
+                          - checkedAt
+                        description: "the e-shop's registration for sending e-invoices through eFaktúra (Slovak e-invoicing over Peppol); requires the module `peppol`"
+                        properties:
+                          state:
+                            type: string
+                            enum:
+                              - notRegistered
+                              - awaitingPortalChoice
+                              - awaitingEmailConfirmation
+                              - awaitingApproval
+                              - active
+                              - deactivated
+                              - failed
+                            description: 'registration step; new values may be added'
+                            examples:
+                              - active
+                          isSendingEnabled:
+                            type: boolean
+                            description: "whether sending e-invoices through Shoptet is switched on; `true` by default, `false` when the merchant switched sending off or while the registration carries another tax ID than the e-shop's current one"
+                            examples:
+                              - true
+                          participantId:
+                            type:
+                              - string
+                              - 'null'
+                            description: "the e-shop's Peppol ID Shoptet sends under; `null` until eFaktúra assigns it, when `state` is `notRegistered`, and while the registration carries another tax ID than the e-shop's current one"
+                            examples:
+                              - '0245:2020202020'
+                          registeredAt:
+                            $ref: '#/components/schemas/typeDateTimeNullable'
+                            description: 'when the merchant started the registration through Shoptet, in ISO 8601 format; `null` when `state` is `notRegistered`'
+                          checkedAt:
+                            $ref: '#/components/schemas/typeDateTimeNullable'
+                            description: 'when Shoptet last checked the registration at eFaktúra, in ISO 8601 format; `null` when `state` is `notRegistered` or before the first check'
                   errors:
                     $ref: '#/components/schemas/Errors'
                   metadata:
@@ -2738,6 +2780,30 @@ paths:
                   - errors
                   - metadata
                 additionalProperties: false
+        403:
+          description: 'Forbidden. The include requires a module that is not active.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type:
+                      - object
+                      - 'null'
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+              example:
+                data: null
+                errors:
+                  -
+                    errorCode: missing-module
+                    message: 'Unable to process request with peppol include as "peppol" module is not active.'
+                    instance: peppol
+                metadata:
+                  requestId: 019c8c34-64f3-7328-af43-bf1e34fa39d7
       summary: 'Eshop info'
       operationId: getEshopInfo
       description: |-
@@ -2763,6 +2829,13 @@ paths:
         imageCuts | The information on image cuts (various sizes of the same image)
         countries | Informations about eshop supported countries (name, validation atterns, ...)
         cashDesk | Informations about eshop cash desk configuration
+        peppol | The e-shop's registration for sending e-invoices through eFaktúra (Slovak e-invoicing over Peppol). Requires the module `peppol`: without it the request fails with `403` `missing-module`, while `include=allIncludeParameters` leaves the key out.
+
+
+        **E-invoices through eFaktúra (`include=peppol`).** Shoptet sends a document as an e-invoice automatically only when `peppol.participantId` is set and `peppol.isSendingEnabled` is `true`. A document issued otherwise is never sent later by Shoptet on its own: the merchant can only send it by hand from the document detail in the administration. Documents created by hand in the administration are not sent automatically either. If your integration sends such a document through its own access point and the merchant later sends it by hand, the buyer receives it twice. Without the module `peppol` the e-shop does not send e-invoices through Shoptet. `peppol.state` alone does not answer it: Shoptet can already send before it reads `active`, for example in `awaitingEmailConfirmation` once eFaktúra lets the e-shop send.
+
+
+        Limit: the reverse does not hold. An e-shop can read a `participantId` with `isSendingEnabled: true` while Shoptet sends nothing: while eFaktúra does not let it send yet (`state` tells how far the registration got), when it is not a Slovak VAT payer, or with the module `nav` or `isdoc` active.
       tags:
         - Eshop
       parameters:
@@ -2770,7 +2843,7 @@ paths:
           name: include
           in: query
           description: 'Sections to include'
-          example: 'orderAdditionalFields,orderStatuses,paymentMethods,shippingMethods,imageCuts,countries,cashDesk'
+          example: 'orderAdditionalFields,orderStatuses,paymentMethods,shippingMethods,imageCuts,countries,cashDesk,peppol'
           schema:
             type: string
         -
